@@ -19,7 +19,7 @@ task :install do
 
   skip_all      = false
   overwrite_all = false
-  backup_all    = true
+  backup_all    = false
 
   linkables.each do |linkable|
     overwrite = false
