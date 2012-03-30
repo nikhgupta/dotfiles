@@ -1,0 +1,102 @@
+#
+# [user] and [github] are overridden by localrc file
+#
+
+[user]
+	name = Nikhil Gupta
+	email = me@nikhgupta.com
+
+[github]
+	user = nikhgupta
+	token = bdcd4d151778e7e526cfa3db2c430e86
+
+[core]
+    pager            = "less -FRSX"
+    filemode         = "true"
+    logallrefupdates = "true"
+    whitespace       = "space-before-tab, trailing-space"
+    editor           = "vim"
+    excludesfile     = "/Users/nikhilgupta/.gitignore_global"
+
+[status]
+    relativePaths  = false
+
+[apply]
+    whitespace     = "nowarn"
+
+[branch]
+    autosetupmerge = true
+
+[diff]
+    renames        = "copies"
+    mnemonicprefix = "true"
+
+[sendemail]
+    smtpserver     = "smtp.gmail.com"
+    smtpserverport = 587
+    smtpencryption = "tls"
+    smtpuser       = "mestoic@gmail.com"
+
+[mergetool]
+    keepBackup     = false
+
+[push]
+    default   = "current"
+
+[help]
+    browser   = "open"
+
+[color]
+    ui        = true
+
+[color "diff"]
+    meta      = "blue bold"
+    frag      = "magenta bold"
+    old       = "red bold"
+    new       = "green bold"
+
+[color "branch"]
+    current   = "yellow reverse"
+    local     = "yellow bold"
+    remote    = "green bold"
+    plain     = "red bold"
+
+[color "status"]
+    added     = "yellow"
+    changed   = "green bold"
+    untracked = "blue bold"
+
+[rerere]
+    enabled   = 1
+
+[format]
+    pretty    = "oneline"
+
+[gist]
+    private   = "no"
+    browse    = "no"
+    extension = "rb"
+
+[alias]
+    b         = "branch"
+    d         = "diff"
+    dc        = "diff --cached"
+    lc        = "log ORIG_HEAD.. --stat --no-merges"
+    lg        = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+    ll        = "log --pretty=oneline --abbrev-commit --max-count=15"
+    fp        = "format-patch --stdout"
+    c         = "commit"
+    ca        = "commit -a"
+    cam       = "commit -am"
+    x         = "checkout HEAD"
+    s         = "status -sb -uno --ignore-submodules=untracked"
+    st        = "status"
+    sa        = "status -sb --ignore-submodules=untracked"
+    co        = "checkout"
+    re        = "rebase -i HEAD~$1"
+    pp        = "pull --prune"
+    serve     = "!git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git"
+    whois     = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis    = "show -s --pretty='tformat:%h (%s, %ad)' --date=short"
+    prune-all = "!git remote | xargs -n 1 git remote prune"
+
