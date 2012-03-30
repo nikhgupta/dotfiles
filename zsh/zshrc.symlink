@@ -29,12 +29,13 @@ function source_file() {
 source_file "$ZSH/oh-my-zsh.sh"
 source_file "$HOME/.private" # for our secret somethings ;)
 
-#linkables=( "vimrc" "zshrc" )
+linkables=( "zshrc" )
+source_file "$HOME/.localrc.before"
 for linkable in $linkables; do source_file "$HOME/.${linkable}.before"; done
 for config_file ($DOTDIR/**/*.zsh) source_file $config_file
 for linkable in $linkables; do source_file "$HOME/.${linkable}.after"; done
-
 source_file "$HOME/.localrc"
+source_file "$HOME/.localrc.after"
 
 # Load RVM into shell
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
