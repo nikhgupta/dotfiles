@@ -54,7 +54,7 @@ set scrolloff=4                 " keep 4 lines off the edges of the screen when 
 set virtualedit=                " allow the cursor to go in to 'invalid' places
 set incsearch                   " show search matches as you type
 set gdefault                    " search/replace 'globally' (on a line) by default
-set listchars=tab:▸\ ,trail:·,extends:#,nbsp:·
+set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
 
 set nolist                      " don't show invisible characters by default,
                                 " but it is enabled for some file types (see later)
@@ -237,11 +237,11 @@ let g:yankring_history_dir = '$HOME/.vim/.tmp'
 nmap <leader>r :YRShow<CR>
 
 " Edit the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>vi :e $MYVIMRC<CR>
+nmap <silent> <leader>sov :w<bar>:so $MYVIMRC<CR>
 " Edit the gvimrc file
-nmap <silent> <leader>egv :e $MYGVIMRC<CR>
-nmap <silent> <leader>sgv :so $MYGVIMRC<CR>
+nmap <silent> <leader>gvi :e $MYGVIMRC<CR>
+nmap <silent> <leader>sog :w<bar>:so $MYVIMRC<bar>:so $MYGVIMRC<CR>
 
 " Clears the search register
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -293,6 +293,39 @@ nnoremap <leader>v V`]
 
 " Gundo.vim
 nnoremap <F5> :GundoToggle<CR>
+
+" really helpful shortcuts
+nmap <leader>fef ggVG=
+
+" cd to the directory containing the file in buffer
+nmap <silent> <leader>cd :lcd %:h<CR>
+
+" Create the directory containing the file in the buffer
+nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
+
+" Some helpers to edit mode
+" http://vimcasts.org/e/14
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+
+" Underline the current line with '='
+nmap <silent> <leader>ul :t.\|s/./=/g\|:nohls<cr>
+
+" adjust viewport as needed
+nmap <leader>v=  <C-w>=                 " equalize all buffers wrt viewport
+nmap <leader>v\| <C-w>\|                " maximize the current viewport horizontally
+nmap <leader>v_  <C-w>_                 " maximize the current viewport vertically
+nmap <leader>v@  <C-w>_<C-w>\|          " maximize the current viewport both ways
+
+" switch to an alternate buffer and  maximize its viewport
+nmap <C-H> <C-w>h<C-w>_<C-w>\|
+nmap <C-J> <C-w>j<C-w>_<C-w>\|
+nmap <C-K> <C-w>k<C-w>_<C-w>\|
+nmap <C-L> <C-w>l<C-w>_<C-w>\|
+
 " }}}
 
 " NERDTree settings {{{
@@ -582,4 +615,60 @@ endfunction
   let g:Powerline_symbols = 'unicode'
   "let g:Powerline_symbols = 'fancy'
 
+" }}}
+
+" Taken from Janus {{{
+" Map command-[ and command-] to indenting or outdenting
+" while keeping the original selection in visual mode
+vmap <D-]> >gv
+vmap <D-[> <gv
+
+nmap <D-]> >>
+nmap <D-[> <<
+
+omap <D-]> >>
+omap <D-[> <<
+
+imap <D-]> <Esc>>>i
+imap <D-[> <Esc><<i
+
+" Bubble single lines
+nmap <D-Up> [e
+nmap <D-Down> ]e
+nmap <D-k> [e
+nmap <D-j> ]e
+
+" Bubble multiple lines
+vmap <D-Up> [egv
+vmap <D-Down> ]egv
+vmap <D-k> [egv
+vmap <D-j> ]egv
+
+" Map Command-# to switch tabs
+map  <D-0> 0gt
+imap <D-0> <Esc>0gt
+map  <D-1> 1gt
+imap <D-1> <Esc>1gt
+map  <D-2> 2gt
+imap <D-2> <Esc>2gt
+map  <D-3> 3gt
+imap <D-3> <Esc>3gt
+map  <D-4> 4gt
+imap <D-4> <Esc>4gt
+map  <D-5> 5gt
+imap <D-5> <Esc>5gt
+map  <D-6> 6gt
+imap <D-6> <Esc>6gt
+map  <D-7> 7gt
+imap <D-7> <Esc>7gt
+map  <D-8> 8gt
+imap <D-8> <Esc>8gt
+map  <D-9> 9gt
+imap <D-9> <Esc>9gt
+" }}}
+
+" Command-Line Mappings {{{
+  " Insert the current directory into a command-line path
+  " Can also use '%%' for similar effect, as we define it above
+  cmap <C-P> <C-R>=expand("%:p:h") . "/"
 " }}}
