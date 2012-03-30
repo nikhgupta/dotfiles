@@ -1,16 +1,20 @@
 My Dot Castle
 =============
 
-    git clone git@github.com:nikhgupta/dotfiles.git ~/.dotfiles
-    cd ~/.dotfiles
-    git submodule update --init
-    export DISPLAY_LOAD_ORDER_REAL=NON_EMPTY
-    rake install && rake reload
+    $INSTALL_LOCATION="~/.dotfiles"
+    mkdir -p $INSTALL_LOCATION && cd $INSTALL_LOCATION
+    git clone git://github.com/nikhgupta/dotfiles.git .
+    rake install
 
-The above commands loads the dotfiles into the current machine while it displays the name of the files as they are sourced into the Shell. This is specially useful at the time of debugging for some issue.
+The above commands loads the dotfiles into the current machine. Although, in
+my opinion, its wiser to install at a location such as: ~/Code/__dotfiles,
+because:
+  - all your code-related data can be stored in a single directory: ~/Code
+  - More importantly, since the folder isn't hidden anymore, you will be
+  	intrigued to make changes to the contents of this folder.
 
 Notes
 -----
-* You can simply set the environment variable `DISPLAY_LOAD_ORDER_REAL` to some `non_empty` value to view which files have been sourced into the current Shell.
-* You can also set the environment variable `DISPLAY_LOAD_ORDER_ALL` to some `non_empty` value to view all the files that will be loaded, if they exist.
-* You are also able to view the load order in the exact order it took place and hence, this will really help with any troubleshooting or while debugging.
+To make real use of this dotfiles repository, please read the included
+SETUP file, since it contains some very important instructions on how to set
+everything up.

@@ -1,41 +1,107 @@
 #!/usr/bin/env zsh
 
-DOTDIR="$HOME/.dotfiles"
-DOTZSH="$DOTDIR/zsh"
-DOTVIM="$DOTDIR/vim"
-SSHKEY="$HOME/.ssh/macbookpro.pub"
-DOTSCRIPTS="$DOTDIR/scripts"
-SITES="$HOME/Sites"
+LANG=en_US.UTF-8
+LC_ALL=en_US.UTF-8
 
-ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="minimal"
-plugins=(brew bundler cap extract gem git git-flow github heroku osx rails3 rvm sprunge)
+# export ZSH_DEBUG=1 # uncomment, if debugging
 
-alias edit="vim"
-# export DISPLAY_LOAD_ORDER_REAL=123
+# directory variables {{{
+  # some useful directories
+  export CODE_DIR="$HOME/Code"
+  export DOT_DIR="$HOME/Code/__dotfiles"
+  export BACKUP_DIR="$HOME/Code/__backups"
+  export FILE_DIR="$HOME/Code/__files"
+  export REPO_DIR="$HOME/Code/__repos"
+  export SCRIPT_DIR="$HOME/Code/scripts"
+  export SNIPPET_DIR="$HOME/Code/snippets"
 
-function source_file() {
-  # if following env var is set, display the complete loading order
-  [[ -n "${DISPLAY_LOAD_ORDER_ALL}" ]] && echo "would now load: $1 (if it exists)"
+  # directories dealing with Dotfiles
+  export ZSH="$HOME/.oh-my-zsh" # do not rename this variable - needed by OH MY ZSH??
+  export DOTZSH="$HOME/Code/__dotfiles/zsh"
+  export DOTVIM="$HOME/Code/__dotfiles/vim"
+# }}}
+#
 
-  # if following env var is set, display files, as we load them.
-  if [[ -s "$1" ]]; then
-    source "$1" # source a file if size is not zero
-    [[ -n "${DISPLAY_LOAD_ORDER_REAL}" ]] && echo "loading file.. $1"
+# remember the location to my SSH key {{{
+  export SSH_KEY="$HOME/.ssh/macbookpro.pub"
+# }}}
+
+# which zsh theme? {{{
+  export ZSH_THEME="blinks"
+# }}}
+
+# which zsh plugins? {{{
+  plugins=(brew bundler gem git git-flow)
+# }}}
+
+# which editor? {{{
+  export EDITOR="subl -w"
+# }}}
+
+function source_file() { # sources a file, provides debugging option {{{
+  if [[ -s "$1" ]]; then # run, if file's size is not zero
+    source "$1"; [[ -n "${ZSH_DEBUG}" ]] && echo "loading file.. $1"
   fi
-}
-# load all the scripts we need
-# we avoid searching for files directly in the whole home folder using 'find' to gain some speed
-source_file "$ZSH/oh-my-zsh.sh"
-source_file "$HOME/.private" # for our secret somethings ;)
+} # }}}
 
-linkables=( "zshrc" )
-source_file "$HOME/.localrc.before"
-for linkable in $linkables; do source_file "$HOME/.${linkable}.before"; done
-for config_file ($DOTDIR/**/*.zsh) source_file $config_file
-for linkable in $linkables; do source_file "$HOME/.${linkable}.after"; done
-source_file "$HOME/.localrc"
-source_file "$HOME/.localrc.after"
+# source some files {{{
+  # load OhMyZSH, because its auwesomeeee :)
+  source_file "$ZSH/oh-my-zsh.sh" 
 
-# Load RVM into shell
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+  # for our secret somethings | symlinked <= $DOTDIR/private.symlink
+  source_file "$HOME/.private" 
+
+  # (create, if required) any specific configuration that needs to be changed.
+  source_file "$HOME/.localrc.before" 
+
+  # sets some of the configuration options
+  source_file "$HOME/.localrc" 
+
+  # (create, if required) anything that needs to run before loading zsh files
+  source_file "$HOME/.zshrc.before" 
+
+  # source all files that have extension 'zsh' in the Dotfiles directory
+  for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
+
+  # (create, if required) specify any other commands or configuration options here...
+  source_file "$HOME/.zshrc.after"   # keep over-riding or custom settings here
+  source_file "$HOME/.localrc.after" # keep over-riding or custom exports here
+# }}}
+
+# if this is not a reloaded shell, add some paths to $PATH {{{
+  add_to_path_nicely() { # $1 -> path, $2 -> add to start?
+    if [ -z "${PATH}" ]; then
+      PATH="$1"
+    elif [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+      if [ -z "$2" ]; then
+        PATH="$PATH:$1"
+      else
+        PATH="$1:$PATH"
+      fi
+    fi
+  }
+    # add pear to our path
+    add_to_path_nicely "/usr/local/pear/bin"
+    
+    # add rvm to our path (useful for scripting)
+    add_to_path_nicely "${HOME}/.rvm/bin"
+
+    # add paths created by homebrew
+    add_to_path_nicely "/usr/local/sbin:/usr/local/bin" at_start
+# }}}
+
+# Load some very essential scripts - I can't live without {{{
+  # Load RVM into our shell - oh! I can throw away my computer without this one little tiny line ;)
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+  # Load Z
+  source_file "$SCRIPT_DIR/shell/z/z.sh"
+
+  # Load Todo.txt
+  source_file "$SCRIPT_DIR/shell/todo.txt-cli/todo_completion"
+  alias t="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $SCRIPT_DIR/shell/todo.txt-cli/todo.cfg"
+  complete -F _todo t
+
+  # Load Syntax Highlighting for Shell
+  source_file $SCRIPT_DIR/shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
+# }}}

@@ -2,3 +2,8 @@
 /vim/.tmp/*
 .netrwhist
 !.notempty
+/vim/wiki/
+.DS_Store
+/vim/bundle/*
+!/vim/bundle/vundle/
+!/vim/bundle/vundle/*

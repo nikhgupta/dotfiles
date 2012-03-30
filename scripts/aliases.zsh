@@ -3,17 +3,14 @@
 # Aliases for some of these scripts
 #
 
-function scriptalias() {
-  use="${3:-bash}"
-  [[ -s "$DOTSCRIPTS/$2" ]] && eval "alias $1='$use $DOTSCRIPTS/$2'"
-}
-
 # mysql
-scriptalias makemysqldb "mysql/makedb.sh" # makemysqldb <dbname> <dbuser|root> <dbpass|password>
-scriptalias dropmysqldb "mysql/dropdb.sh" # dropmysqldb <dbname> <dbuser|root> <dbpass|password>
+alias makesqldb="bash $DOTSCRIPTS/mysql/makedb.sh" # makemysqldb <dbname> <dbuser|root> <dbpass|password>
+alias dropsqldb="bash $DOTSCRIPTS/mysql/dropdb.sh" # dropmysqldb <dbname> <dbuser|root> <dbpass|password>
 
 # shell
-scriptalias randomize "shell/random.sh"
-scriptalias getCake   "shell/getCakePHP.sh"
+alias randomize="bash $DOTSCRIPTS/shell/random.sh"
+alias get_my_ip="bash $DOTSCRIPTS/shell/get_ip.sh"
 
-
+# php
+alias getCake="bash $DOTSCRIPTS/php/getCakePHP.sh"
+alias ctagphp="bash $DOTSCRIPTS/php/ctags.sh"      # ctagphp <tagfilename> 

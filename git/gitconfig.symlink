@@ -1,14 +1,14 @@
 #
-# [user] and [github] are overridden by localrc file
+# The settings in this file can be modified using ~/.private and ~/.localrc.before file
 #
 
 [user]
-	name = Nikhil Gupta
-	email = me@nikhgupta.com
+	name = will_be_replaced_automatically
+	email = will_be_replaced_automatically
 
 [github]
-	user = nikhgupta
-	token = your-github-token
+	user = will_be_replaced_automatically
+	token = will_be_replaced_automatically
 
 [core]
     pager            = "less -FRSX"
@@ -16,7 +16,7 @@
     logallrefupdates = "true"
     whitespace       = "space-before-tab, trailing-space"
     editor           = "vim"
-    excludesfile     = "/Users/nikhilgupta/.gitignore"
+    excludesfile     = "will_be_replaced_automatically"
 
 [status]
     relativePaths  = false
@@ -35,7 +35,7 @@
     smtpserver     = "smtp.gmail.com"
     smtpserverport = 587
     smtpencryption = "tls"
-    smtpuser       = "mestoic@gmail.com"
+    smtpuser       = "will_be_replaced_automatically"
 
 [mergetool]
     keepBackup     = false
@@ -99,4 +99,9 @@
     whois     = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
     whatis    = "show -s --pretty='tformat:%h (%s, %ad)' --date=short"
     prune-all = "!git remote | xargs -n 1 git remote prune"
+    ctags     = "!.git/hooks/ctags"
+    fstart    = "flow feature start"
+    fstop     = "flow feature finish"
 
+[init]
+  templatedir = "will_be_replaced_automatically"

@@ -1,30 +1,45 @@
 " Use a nice font
 set guifont=Menlo:h13
 
-" Remove the toolbar, the right scrollbar and the menu
-set guioptions-=T   " Remove the toolbar
-set guioptions-=r   " Remove the right scrollbar
-set guioptions-=m   " Remove the menu
-set guioptions+=c   " Use console dialogs
+" GUI Options {{{
+  set guioptions-=T   " Remove the toolbar
+  " set guioptions-=r   " Remove the right scrollbar
+  set guioptions-=m   " Remove the menu
+  set guioptions+=c   " Use console dialogs
+" }}}
 
 " Disable cursor blinking and set it to be a block
-set guicursor=a:blinkon0
-set guicursor=a:block-Cursor
+" set guicursor+=a:blinkon0
+" cursor does not blink for nvc modes
+let &guicursor = substitute(&guicursor, 'n-v-c:', '&blinkon0-', '')
+set guicursor+=a:block-Cursor
 
 " Custom tabs label
 set guitablabel=%t\ %m
 
 " set background to light when using GUI
 set background=light
+" set background=dark
 
 " Maximize gvim window
 set lines=999 columns=999
 
+" Reload Gvim configuration automatically {{{
+  if has("autocmd")
+    augroup AutoReloadGVimRC
+      au!
+      au BufWritePost $MYGVIMRC so $MYGVIMRC
+      au BufWritePost $MYGVIMRC call Pl#Load()
+    augroup END
+  endif
+" }}}
+
  " to enable:
   " hex highlighting
   " QFix
-  " Syntax Error Checking
   " change cursor type when in insert mode
+  " when starting using, say: 'mvim .',
+  "   MacVim should have NerdTree in a left pane
   " delete a whole fold
 
 

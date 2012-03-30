@@ -1,7 +1,6 @@
-PROMPT=$'
-%{$fg[blue]%}%2c%{$reset_color%} %{$fg[red]%}$(rvm_prompt_info_custom)%{$reset_color%} $(git_prompt_info)%{$reset_color%}%{$fg_bold[yellow]%}$%{$reset_color%} '
+PROMPT=$'%{$fg[blue]%}%2c%{$reset_color%} %{$fg[red]%}$(rvm_prompt_info_custom)%{$reset_color%} $(git_prompt_info)%{$reset_color%}%{$fg_bold[yellow]%}$%{$reset_color%} '
 
-PROMPT2="%{$fg_blod[black]%}%_> %{$reset_color%}"
+PROMPT2="%{$fg_bold[black]%}%_> %{$reset_color%}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%} "

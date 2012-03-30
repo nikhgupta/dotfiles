@@ -3,17 +3,21 @@
 # Aliases that are universal to my use
 #
 
-# zsh related aliases
-alias reload='source ~/.zshrc'                      # quickly reload the new shell configuration
+# quickly reload this file
+alias reload="source $HOME/.zshrc"
 
-alias zshconfig="edit ~/.zshrc"                     # quickly edit zsh configuration
+# create a handy edit command
+alias edit="$EDITOR"
+
+# zsh related aliases
+alias zshconfig="edit $HOME/.zshrc"                 # quickly edit zsh configuration
 alias zshprompt="edit $DOTZSH/prompt.zsh"           # quickly edit shell prompt
 alias zshaliases="edit $DOTZSH/aliases.zsh"         # quickly edit shell aliases
 alias zshtermalias="edit $DOTZSH/via_terminal.zsh"  # quickly edit custom aliases add from within terminal
 alias zshfunctions="edit $DOTZSH/functions.zsh"     # quickly edit shell functions
 
 # common and most-often used aliases
-alias c=clear; alias cl=c; alias clr=c;             # i love my terminal to be clutterfree most of the times ;)
+alias cl=clear; alias c=clear;                      # i love my terminal to be clutterfree most of the times ;)
 
 # common commands
 alias rm="rm -i"                                    # failsafe :P
@@ -36,6 +40,6 @@ alias lx='ll -XB'                                   # sort by extension
 # cd
 alias up="cd .."                                    # handy shortcut to quicly move up directory tree
 
-alias du1='du -hd 1'                                # disk usage with human sizes and minimal depth
+alias du1='du -hd 1'                                # disk usage with human sizes and minimal depth (prefer: dsize)
 alias fn='find . -name'                             # find files by name, in current directory
-alias hi='history | tail -20'                       # display last 20 commands entered in shell
+alias hi='history | tail'                           # display last commands entered in shell

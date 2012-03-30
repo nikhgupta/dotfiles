@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 require 'rake'
 
+# all my (code-related) backups go inside the '__backups' directory, in a nicely structured way :)
+BACKUP_DIRECTORY = "#{ENV['HOME']}/Code/__backups/__dotfiles/#{Time.now.to_i}"
+
+# function adopted from @holman
+# oh, and very inspiring: http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/
 desc "Hook our dotfiles into system-standard positions."
 task :install do
 
@@ -12,14 +17,17 @@ task :install do
   end
 
   # get/update submodules before installing/updating
-  #system("git submodule update --init")
+  system("git submodule update --init")
 
-  # get a list of linkable files
+  # get a list of linkable files - all these files end with .symlink extension - very original :P
   linkables = Dir.glob('**/**{.symlink}') << "vim" << "gvim"
 
   skip_all      = false
   overwrite_all = false
   backup_all    = false
+
+  # create our backups directory, if it does not yet exists..
+  `mkdir -p "#{BACKUP_DIRECTORY}"`
 
   linkables.each do |linkable|
     overwrite = false
@@ -41,11 +49,18 @@ task :install do
         when 's' then skip          = true
         end
       end
+
       FileUtils.rm_rf(target) if overwrite || overwrite_all
-      `mkdir -p "$HOME/.backup/dotfiles" && mv "$HOME/.#{file}" "$HOME/.backup/dotfiles/.#{file}"` if backup || backup_all
+      `mv "#{target}" "#{BACKUP_DIRECTORY}/"` if backup || backup_all
     end
 
-    system "echo \"linking file.. #{target} --> $PWD/#{linkable}\" && ln -s \"$PWD/#{linkable}\" \"#{target}\"" unless skip || skip_all
+    puts %{echo "linking file.. #{target} --> ./#{linkable}"}
+    if file == "gitconfig" && !skip && !skip_all
+      FileUtils.cp(linkable, target)
+      # setting configuration via git config -g will otherwise make changes to this file, which is versioned :/
+    elsif !skip && !skip_all
+      `ln -s "$PWD/#{linkable}" "#{target}"`
+    end
   end
 end
 
@@ -74,12 +89,5 @@ task :reload do
   system "zsh ~/.zshrc"
 end
 
-task :requirements do
-  # install oh-my-zsh
-  system "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh"
-
-  # install gvim/macvim
-end
-
-task :default => [ "requirements", "install", "reload" ]
+task :default => [ "install" ]
 task :reinstall => [ "uninstall", "install", "reload" ]

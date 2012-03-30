@@ -1,11 +1,23 @@
 #!/usr/bin/env zsh
 
-# PATH additions
-export PATH="~/bin:$PATH"
+# This file stores all the sensitive information
+# that should NOT be commited to the Dotfiles repository
+# on the Github. This file is added to the .gitignore file
 
-# MY DETAILS
-export MY_NAME="Nikhil Gupta"
-export MY_MAIL="me@nikhgupta.com"
-export MY_NICK="nikhgupta"
-export GHTOKEN="your-github-token"
+# my name and my email - all that defines me ;)
+export MY_NAME="Your Name"
+export MY_MAIL="your@email.address"
 
+# 90% times, all the services will have this nick name pointing at me
+# which makes it very essential to track this ;)
+export MY_NICK="your-super-awesome-nick"
+
+# git credentials
+export GIT_AUTHOR_NAME="$MY_NAME"
+export GIT_AUTHOR_EMAIL="$MY_MAIL"
+
+export GIT_COMMITTER_NAME="$MY_NAME"
+export GIT_COMMITTER_EMAIL="$MY_MAIL"
+
+export GITHUB_USER="$MY_NICK"
+export GITHUB_TOKEN="your-github-token"
