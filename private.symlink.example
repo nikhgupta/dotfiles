@@ -4,18 +4,8 @@
 export PATH="~/bin:$PATH"
 
 # MY DETAILS
-MY_NAME="Nikhil Gupta"
-MY_MAIL="me@nikhgupta.com"
-MY_NICK="nikhgupta"
-GHTOKEN="your-github-token"
-
-# Git credentials -- can also be moved to: ~/.gitrc.before
-GIT_AUTHOR_NAME="$MY_NAME"
-GIT_AUTHOR_EMAIL="$MY_MAIL"
-
-GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-
-GITHUB_USER="$MY_NICK"
-GITHUB_TOKEN="$GHTOKEN"
+export MY_NAME="Nikhil Gupta"
+export MY_MAIL="me@nikhgupta.com"
+export MY_NICK="nikhgupta"
+export GHTOKEN="your-github-token"
 
