@@ -3,6 +3,7 @@ My Dot Castle
 
     git clone git@github.com:nikhgupta/dotfiles.git ~/.dotfiles
     cd ~/.dotfiles
+    git submodule update --init
     export DISPLAY_LOAD_ORDER_REAL=NON_EMPTY
     rake install && rake reload
 
