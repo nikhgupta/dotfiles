@@ -28,3 +28,6 @@
 [submodule "vim/bundle/taglist"]
 	path = vim/bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule "vim/colors/getafe"]
+	path = vim/colors/getafe
+	url = https://github.com/vim-scripts/Getafe.git
