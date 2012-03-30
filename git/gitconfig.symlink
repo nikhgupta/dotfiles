@@ -16,7 +16,7 @@
     logallrefupdates = "true"
     whitespace       = "space-before-tab, trailing-space"
     editor           = "vim"
-    excludesfile     = "/Users/nikhilgupta/.gitignore_global"
+    excludesfile     = "/Users/nikhilgupta/.gitignore"
 
 [status]
     relativePaths  = false
