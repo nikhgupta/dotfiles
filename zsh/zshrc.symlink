@@ -12,7 +12,7 @@ ZSH_THEME="minimal"
 plugins=(brew bundler cap extract gem git git-flow github heroku osx rails3 rvm sprunge)
 
 alias edit="vim"
-export DISPLAY_LOAD_ORDER_REAL=123
+# export DISPLAY_LOAD_ORDER_REAL=123
 
 function source_file() {
   # if following env var is set, display the complete loading order
@@ -29,7 +29,7 @@ function source_file() {
 source_file "$ZSH/oh-my-zsh.sh"
 source_file "$HOME/.private" # for our secret somethings ;)
 
-#linkables=( "localrc" "vimrc" "zshrc" )
+#linkables=( "vimrc" "zshrc" )
 for linkable in $linkables; do source_file "$HOME/.${linkable}.before"; done
 for config_file ($DOTDIR/**/*.zsh) source_file $config_file
 for linkable in $linkables; do source_file "$HOME/.${linkable}.after"; done
