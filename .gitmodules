@@ -31,3 +31,6 @@
 [submodule "vim/colors/getafe"]
 	path = vim/colors/getafe
 	url = https://github.com/vim-scripts/Getafe.git
+[submodule "vim/bundle/powerline"]
+	path = vim/bundle/powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
