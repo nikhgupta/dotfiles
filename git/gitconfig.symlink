@@ -8,7 +8,7 @@
 
 [github]
 	user = nikhgupta
-	token = bdcd4d151778e7e526cfa3db2c430e86
+	token = your-github-token
 
 [core]
     pager            = "less -FRSX"
