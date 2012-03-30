@@ -1,0 +1,30 @@
+" Use a nice font
+set guifont=Menlo:h13
+
+" Remove the toolbar, the right scrollbar and the menu
+set guioptions-=T   " Remove the toolbar
+set guioptions-=r   " Remove the right scrollbar
+set guioptions-=m   " Remove the menu
+set guioptions+=c   " Use console dialogs
+
+" Disable cursor blinking and set it to be a block
+set guicursor=a:blinkon0
+set guicursor=a:block-Cursor
+
+" Custom tabs label
+set guitablabel=%t\ %m
+
+" set background to light when using GUI
+set background=light
+
+" Maximize gvim window
+set lines=999 columns=999
+
+ " to enable:
+  " hex highlighting
+  " QFix
+  " Syntax Error Checking
+  " change cursor type when in insert mode
+  " delete a whole fold
+
+

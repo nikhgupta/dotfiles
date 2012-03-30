@@ -15,7 +15,7 @@ task :install do
   #system("git submodule update --init")
 
   # get a list of linkable files
-  linkables = Dir.glob('**/**{.symlink}')
+  linkables = Dir.glob('**/**{.symlink}') << "vim" << "gvim"
 
   skip_all      = false
   overwrite_all = false
@@ -50,8 +50,7 @@ task :install do
 end
 
 task :uninstall do
-  linkables = Dir.glob('**/**{.symlink}')
-
+  linkables = Dir.glob('**/**{.symlink}') << "vim" << "gvim"
   linkables.each do |linkable|
 
     file = linkable.split('/').last.split('.symlink').last
