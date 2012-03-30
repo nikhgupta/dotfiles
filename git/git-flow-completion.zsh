@@ -1,4 +1,4 @@
-#!bash
+#!/usr/bin/env bash
 #
 # git-flow-completion
 # ===================
@@ -192,6 +192,6 @@ __git_flow_list_remote_branches ()
 }
 
 # alias __git_find_on_cmdline for backwards compatibility
-if [ -z "`type -t __git_find_on_cmdline`" ]; then
+if [ -z "`type __git_find_on_cmdline`" ]; then
 	alias __git_find_on_cmdline=__git_find_subcommand
 fi

@@ -75,5 +75,12 @@ task :reload do
   system "zsh ~/.zshrc"
 end
 
-task :default => [ "install", "reload" ]
+task :requirements do
+  # install oh-my-zsh
+  system "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh"
+
+  # install gvim/macvim
+end
+
+task :default => [ "requirements", "install", "reload" ]
 task :reinstall => [ "uninstall", "install", "reload" ]
