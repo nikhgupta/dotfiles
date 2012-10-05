@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dotfiles by nikhgupta</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/nikhgupta/dotfiles">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/nikhgupta/dotfiles/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/nikhgupta/dotfiles/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Dotfiles</h1>
+          <p>My Dot Castle</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/nikhgupta">nikhgupta</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>Installation</h1>
+
+<pre><code>$INSTALL_LOCATION="~/.dotfiles"
+mkdir -p $INSTALL_LOCATION &amp;&amp; cd $INSTALL_LOCATION
+git clone git://github.com/nikhgupta/dotfiles.git .
+rake install
+</code></pre>
+
+<p>The above commands loads the dotfiles into the current machine. Although, in
+my opinion, its wiser to install at a location such as: ~/Code/__dotfiles,
+because:</p>
+
+<ul>
+<li>all your code-related data can be stored in a single directory: ~/Code</li>
+<li>More importantly, since the folder isn't hidden anymore, you will be
+intrigued to make changes to the contents of this folder.</li>
+</ul><h1>How my Development Environment is Setup</h1>
+
+<h2>Homebrew</h2>
+
+<pre><code>ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+brew doctor
+brew install wget ack git git-flow macvim
+</code></pre>
+
+<h2>Everything goes inside ~/Code</h2>
+
+<pre><code>mkdir -p ~/Code/__{files,repos,vagrant}
+mkdir -p ~/Code/{scripts,sites,snippets}
+mkdir -p ~/Code/scripts/shell
+# populate __repos using repo_import script
+# populate __snippets using snippet_import script
+# populate __vagrant  using wget call
+# populate scripts in other ways
+# populate sites via backup?
+</code></pre>
+
+<h2>Solarized</h2>
+
+<pre><code># all these URLs link to specific files in the Solarized repo on Github
+curl -fsSkL http://is.gd/sdMcIS &gt; "/tmp/solarized/Solarized Dark.itermcolors"
+curl -fsSkL http://is.gd/IuUlFQ &gt; "/tmp/solarized/Solarized Light.itermcolors"
+curl -fsSkL http://is.gd/TfM3m8 &gt; ~/Library/Colors/
+open /tmp/solarized/iterm2-colors-solarized/*.itermcolors
+</code></pre>
+
+<h2>iTerm2</h2>
+
+<ul>
+<li>visit here: <a href="http://code.google.com/p/iterm2/downloads/list">http://code.google.com/p/iterm2/downloads/list</a>
+</li>
+<li>download one of the zip files from there and install iTerm2</li>
+<li>open iTerm2 &gt; Preferences &gt; Profiles &gt; Default &gt; Colors &gt; load presets &gt; Solarized Dark</li>
+<li>open iTerm2 &gt; Preferences
+
+<ul>
+<li>&gt; Keys
+
+<ul>
+<li>&gt; Hotkeys &gt; Check both</li>
+<li>&gt; Hotkeys &gt; (Command, tilde)</li>
+</ul>
+</li>
+<li>&gt; Profiles &gt; Hotkey Window 
+
+<ul>
+<li>&gt; Color &gt; load presets &gt; Solarized Light</li>
+<li>&gt; Window &gt; Style &gt; Fullscreen</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>add iTerm2 to run on system startup</li>
+</ul><h2>Oh My Zsh</h2>
+
+<pre><code>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</code></pre>
+
+<h2>RVM (Ruby Version Manager)</h2>
+
+<pre><code>curl -fsSkL https://get.rvm.io | bash -s stable
+</code></pre>
+
+<h2>RubyOnRails</h2>
+
+<pre><code>source ~/.rvm/bin/rvm
+type rvm | head -1    #==&gt; "rvm is a function"
+rvm install 1.9.3
+rvm use 1.9.3@global --default
+rvm use 1.9.3@rails --create &amp;&amp; gem install rails
+</code></pre>
+
+<h2>Todo Manager</h2>
+
+<pre><code>mkdir -p ~/Code/scripts/shell &amp;&amp;
+git clone https://github.com/ginatrapani/todo.txt-cli.git ~/Code/scripts/shell
+</code></pre>
+
+<h2>Z</h2>
+
+<pre><code>mkdir -p ~/Code/scripts/shell &amp;&amp;
+git clone https://github.com/rupa/z.git ~/Code/scripts/shell
+</code></pre>
+
+<h2>Dotfiles</h2>
+
+<pre><code>cd ~/Code/__dotfiles &amp;&amp; 
+git clone https://github.com/nikhgupta/dotfiles.git . &amp;&amp;
+rake install &amp;&amp;
+cd
+</code></pre>
+
+<h2>Syntax Highlighting for Shell</h2>
+
+<pre><code>mkdir -p ~/Code/scripts/shell &amp;&amp;
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/Code/scripts/shell
+</code></pre>
+
+<h2>Ryan Bates' c</h2>
+
+<h2>TextExpander</h2>
+
+<ul>
+<li>link to Dropbox for previous expansion snippets</li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-35356907-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
