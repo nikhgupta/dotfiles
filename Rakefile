@@ -4,23 +4,24 @@ require 'rake'
 # all my (code-related) backups go inside the '__backups' directory, in a nicely structured way :)
 BACKUP_DIRECTORY = "#{ENV['HOME']}/Code/__backups/__dotfiles/#{Time.now.to_i}"
 
+# linkables - files that need to be linked/de-linked
+LINKABLES = ["git/gitconfig", "git/gitignore", "gvim/gvimrc", "localrc", "private", "ruby/gemrc", "vim/vimrc", "zsh/zshrc", "vim", "gvim"]
+
+
 # function adopted from @holman
 # oh, and very inspiring: http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/
 desc "Hook our dotfiles into system-standard positions."
 task :install do
 
   # dont run the installer unless private.symlink file exists
-  unless File.exists?("private.symlink")
-    puts "Could not find 'private.symlink' file in repository"
-    puts "Please, modify and rename private.symlink.example file, before running this install"
+  unless File.exists?("private")
+    puts "Could not find 'private' file in repository"
+    puts "Please, modify and rename 'private.example' file, before running this install"
     exit 1
   end
 
   # get/update submodules before installing/updating
   system("git submodule update --init")
-
-  # get a list of linkable files - all these files end with .symlink extension - very original :P
-  linkables = Dir.glob('**/**{.symlink}') << "vim" << "gvim"
 
   skip_all      = false
   overwrite_all = false
@@ -29,12 +30,12 @@ task :install do
   # create our backups directory, if it does not yet exists..
   `mkdir -p "#{BACKUP_DIRECTORY}"`
 
-  linkables.each do |linkable|
+  LINKABLES.each do |linkable|
     overwrite = false
     backup    = false
     skip      = false
 
-    file = linkable.split('/').last.split('.symlink').last
+    file = linkable.split('/').last
     target = "#{ENV["HOME"]}/.#{file}"
 
     if File.exists?(target) || File.symlink?(target)
@@ -65,10 +66,9 @@ task :install do
 end
 
 task :uninstall do
-  linkables = Dir.glob('**/**{.symlink}') << "vim" << "gvim"
-  linkables.each do |linkable|
+  LINKABLES.each do |linkable|
 
-    file = linkable.split('/').last.split('.symlink').last
+    file = linkable.split('/').last
     target = "#{ENV["HOME"]}/.#{file}"
 
     # Remove all symlinks created during installation
@@ -77,9 +77,12 @@ task :uninstall do
     end
 
     # Replace any backups made during installation
-    if File.exists?("#{ENV["HOME"]}/.backup/dotfiles/.#{file}")
-      `mv "$HOME/.backup/dotfiles/.#{file}" "$HOME/.#{file}"`
-    end
+    # (now obsolete - since we store backups in directories with timestamps in the name)
+    # we can optionally restore the last available backups after asking the user - but laters!
+    #
+    # if File.exists?("#{BACKUP_DIRECTORY}/.#{file}")
+    #    `mv "$HOME/.backup/dotfiles/.#{file}" "$HOME/.#{file}"`
+    # end
 
   end
 end

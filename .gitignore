@@ -1,4 +1,4 @@
-/private.symlink
+/private
 /vim/.tmp/*
 .netrwhist
 !.notempty

@@ -76,15 +76,15 @@ Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-endwise'
 
 " vim script repos
-Bundle 'vim-scripts/YankRing.vim'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'vim-scripts/Getafe'
-Bundle 'vim-scripts/Rename2'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'vim-scripts/ZoomWin'
-Bundle 'vim-scripts/wombat256.vim'
-Bundle 'vim-scripts/csv.vim'
-Bundle 'vim-scripts/closetag.vim'
+Bundle 'YankRing.vim'
+Bundle 'taglist.vim'
+Bundle 'Getafe'
+Bundle 'Rename2'
+Bundle 'vimwiki'
+Bundle 'ZoomWin'
+Bundle 'wombat256.vim'
+Bundle 'csv.vim'
+Bundle 'closetag.vim'
 
 " required by Vundle
 filetype plugin indent on       " enable detection, plugins and indenting in one step
