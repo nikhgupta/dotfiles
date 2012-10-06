@@ -63,6 +63,8 @@ task :install do
       `ln -s "$PWD/#{linkable}" "#{target}"`
     end
   end
+  # figure out a way to do this nicely from inside the install rake task
+  puts "now! please run 'vim +BundleInstall +qall' in your terminal :)"
 end
 
 task :uninstall do
