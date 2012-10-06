@@ -35,7 +35,7 @@ LC_ALL=en_US.UTF-8
 # }}}
 
 # which editor? {{{
-  export EDITOR="subl -w"
+  export EDITOR="vim"
 # }}}
 
 function source_file() { # sources a file, provides debugging option {{{
@@ -99,7 +99,7 @@ function source_file() { # sources a file, provides debugging option {{{
 
   # Load Todo.txt
   source_file "$SCRIPT_DIR/shell/todo.txt-cli/todo_completion"
-  alias t="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $SCRIPT_DIR/shell/todo.txt-cli/todo.cfg"
+  alias t="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $TODO_TXT_CLI_CONFIG_FILE"
   complete -F _todo t
 
   # Load Syntax Highlighting for Shell

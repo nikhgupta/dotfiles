@@ -17,6 +17,7 @@ task :install do
   unless File.exists?("private")
     puts "Could not find 'private' file in repository"
     puts "Please, modify and rename 'private.example' file, before running this install"
+    puts "You can also create a shortcut named 'private' to a file in your Dropbox ;)"
     exit 1
   end
 

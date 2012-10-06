@@ -23,11 +23,14 @@ export GITHUB_USER="$MY_NICK"
 export GITHUB_TOKEN="your-github-token"
 
 # configuration for git.sendemail.smtpuser
-GIT_GMAIL_SMTP_USER="$MY_MAIL"
+export GIT_GMAIL_SMTP_USER="$MY_MAIL"
 
 # global exclude/ignore file for git :)
-GLOBAL_GIT_EXCLUDE_FILE="$HOME/.gitignore"
+export GLOBAL_GIT_EXCLUDE_FILE="$HOME/.gitignore"
 
 # I use a custom template to generate Ctags whenever I checkout a repository
 # you can optionally disable it here!
-GIT_INIT_TEMPLATE_DIR="$DOT_DIR/git/template"
+export GIT_INIT_TEMPLATE_DIR="$DOT_DIR/git/template"
+
+# change the path to the configuration file for Todo.txt-cli script
+export TODO_TXT_CLI_CONFIG_FILE="$HOME/Dropbox/Code/__todos/todo.cfg"

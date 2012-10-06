@@ -7,7 +7,7 @@
 alias reload="source $HOME/.zshrc"
 
 # create a handy edit command
-alias edit="$EDITOR"
+alias edit="vim"
 
 # zsh related aliases
 alias zshconfig="edit $HOME/.zshrc"                 # quickly edit zsh configuration
