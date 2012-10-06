@@ -23,10 +23,6 @@ alias p="ps auwwx | grep"
 alias deleteempty="find . -type d -empty -not -regex '.*\/.git\/.*' -exec {} \; -delete"
 # generate a random md5 string
 alias randmd5='md5 -s $RANDOM | cut -d" " -f4'
-# shrink the command prompt @ usable in small screen state
-alias miniprompt='export PROMPT="%{$fg[green]%}%c%{$reset_color%} %{$fg[yellow]%}$%{$reset_color%} "';
-# grow the command prompt again
-alias niceprompt='source $DOTZSH/prompt.zsh';
 
 # GIT: Create a quick ZIP file from the current commit.
 alias git-packup='git archive --format=zip `git describe` >> ${PWD##*/}.`git describe`.zip && echo "Current commit has been packed into a ZIP file!"';
@@ -39,3 +35,6 @@ alias folder_unlock='chflags nouchg';
 alias subl-reset='rm -rf ~/Library/Application\ Support/Sublime\ Text\ 2/Settings/*';
 alias find_gem='gem list --local | grep';
 alias gitalias='git config -l --global | grep "alias."';
+alias v='vim';
+alias _v='sudo vim';
+alias memhogs='ps aux | tail -n +2 | sort -nr -k 4 | head';

@@ -4,6 +4,7 @@ LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 # export ZSH_DEBUG=1 # uncomment, if debugging
+# export PROMPT_TYPE="nice" # uncomment, if you need to change the prompt
 
 # directory variables {{{
   # some useful directories
@@ -44,7 +45,7 @@ function source_file() { # sources a file, provides debugging option {{{
   fi
 } # }}}
 
-# source some files {{{
+# source some files before ZSH configuration is loaded {{{
   # load OhMyZSH, because its auwesomeeee :)
   source_file "$ZSH/oh-my-zsh.sh" 
 
@@ -59,13 +60,6 @@ function source_file() { # sources a file, provides debugging option {{{
 
   # (create, if required) anything that needs to run before loading zsh files
   source_file "$HOME/.zshrc.before" 
-
-  # source all files that have extension 'zsh' in the Dotfiles directory
-  for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
-
-  # (create, if required) specify any other commands or configuration options here...
-  source_file "$HOME/.zshrc.after"   # keep over-riding or custom settings here
-  source_file "$HOME/.localrc.after" # keep over-riding or custom exports here
 # }}}
 
 # if this is not a reloaded shell, add some paths to $PATH {{{
@@ -99,9 +93,25 @@ function source_file() { # sources a file, provides debugging option {{{
 
   # Load Todo.txt
   source_file "$SCRIPT_DIR/shell/todo.txt-cli/todo_completion"
-  alias t="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $TODO_TXT_CLI_CONFIG_FILE"
-  complete -F _todo t
+  export T="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $TODO_TXT_CLI_CONFIG_FILE" # handy when defining functions that depend on it.
+  alias t="$T"
 
-  # Load Syntax Highlighting for Shell
+  # Load Syntax Highlighting for ZSH
   source_file $SCRIPT_DIR/shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
+
+  # get an indication of our remaining battery charge
+  [ -n "${BATTERY_CHARGE_SCRIPT}" ] && export BATTERY_CHARGE="`python ${BATTERY_CHARGE_SCRIPT} 2>/dev/null`"  
+# }}}
+
+# source some files after ZSH configuration is loaded {{{
+  # source all files that have extension 'zsh' in the Dotfiles directory
+  for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
+
+  # (create, if required) specify any other commands or configuration options here...
+  source_file "$HOME/.zshrc.after"   # keep over-riding or custom settings here
+  source_file "$HOME/.localrc.after" # keep over-riding or custom exports here
+# }}}
+
+# completions go here {{{
+  complete -F _todo t # for todo.txt-cli
 # }}}

@@ -43,3 +43,14 @@ alias up="cd .."                                    # handy shortcut to quicly m
 alias du1='du -hd 1'                                # disk usage with human sizes and minimal depth (prefer: dsize)
 alias fn='find . -name'                             # find files by name, in current directory
 alias hi='history | tail'                           # display last commands entered in shell
+
+# todo.txt-cli
+alias next="t list +next | head -1"                 # list the +next task
+alias tasklist='echo "-- Tasks @priority --" && t list | head -5 && 
+                echo "-- Tasks @terminal --" && t list @terminal | head -n +3 && 
+                echo "---------------------"'       # display top 5 tasks and also 3 tasks related to terminal
+
+# aliases that alter the prompt
+alias promptmini="export PROMPT_TYPE='mini'; source $DOTZSH/prompt.zsh"
+alias promptnice="export PROMPT_TYPE='nice'; source $DOTZSH/prompt.zsh"
+alias promptorig="export PROMPT_TYPE='orig'; source $DOTZSH/prompt.zsh"

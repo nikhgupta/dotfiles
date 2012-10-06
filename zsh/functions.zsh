@@ -103,11 +103,5 @@ function sublpro() {
   fi
 }
 
-# Write the purpose of creating a directory
-function dir_purpose() {
-  if [ -z "${2}" ]; then
-    echo "$1" >> ./.directory.purpose
-  else
-    mkdir -p "./${2}" && echo "$1" >> "./${2}/.directory.purpose"
-  fi
-}
+# functions for todo.txt-cli
+function tn() { eval "$T append $1 @next"; } # add the given task into @next list
