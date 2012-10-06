@@ -83,8 +83,11 @@ todo_count(){
 
 function todo_prompt() {
   local COUNT=$(todo_count $1);
+  local TOTAL=$(todo_count)
   if [[ $COUNT != 0 ]]; then
-    echo "$1: $COUNT";
+    echo "$1: $COUNT | total: $TOTAL";
+  elif [[ $TOTAL != 0 ]]; then
+    echo "total: $TOTAL";
   else
     echo "";
   fi
