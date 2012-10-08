@@ -211,7 +211,7 @@ set wildmode=list:full          " show a list when pressing tab and complete
 set wildignore=*.swp,*.bak,*.pyc,*.class,*/tmp/*,*.so,*.zip
 set title                       " change the terminal's title
 " set visualbell                  " don't beep
-" set noerrorbells                " don't beep
+set noerrorbells                " don't beep
 set showcmd                     " show (partial) command in the last line of the screen
                                 "    this also shows visual selection info
 set nomodeline                  " disable mode lines (security measure)
@@ -306,10 +306,6 @@ nmap <leader>y "+y
 nmap <leader>Y "+yy
 nmap <leader>p "+p
 nmap <leader>P "+P
-
-" YankRing stuff
-let g:yankring_history_dir = '$HOME/.vim/.tmp'
-nmap <leader>r :YRShow<CR>
 
 " Edit the vimrc file
 nmap <leader>vi :e $MYVIMRC<CR>
@@ -838,7 +834,9 @@ imap <D-9> <Esc>9gt
   let Tlist_Use_SingleClick = 1
 
   " YankRing
+  let g:yankring_history_dir = '$HOME/.vim/.tmp'
   let g:yankring_manual_clipboard_check = 0
+  nmap <leader>r :YRShow<CR>
 
   " VimWiki
   let g:vimwiki_list = [{'path': '~/.vim/wiki/'}]

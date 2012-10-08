@@ -105,3 +105,15 @@ function sublpro() {
 
 # functions for todo.txt-cli
 function tn() { eval "$T append $1 @next"; } # add the given task into @next list
+
+# came across some programmers from the Windows world
+# remove those pesky characters and relax our eyes :)
+function dir2unix() {
+  find . -type f -exec dos2unix -k -o {} \;
+}
+
+# search for a file name in current directory structure
+# just an alternative quick shortcut
+function find_in_dir() {
+  find . -iname "*$1*";
+}

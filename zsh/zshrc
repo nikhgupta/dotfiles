@@ -81,7 +81,8 @@ function source_file() { # sources a file, provides debugging option {{{
     add_to_path_nicely "${HOME}/.rvm/bin"
 
     # add paths created by homebrew
-    add_to_path_nicely "/usr/local/sbin:/usr/local/bin" at_start
+    add_to_path_nicely "/usr/local/bin" at_start
+    add_to_path_nicely "/usr/local/sbin" at_start
 # }}}
 
 # Load some very essential scripts - I can't live without {{{

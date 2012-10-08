@@ -45,7 +45,8 @@ alias fn='find . -name'                             # find files by name, in cur
 alias hi='history | tail'                           # display last commands entered in shell
 
 # todo.txt-cli
-alias next="t list +next | head -1"                 # list the +next task
+alias nexttask="t list +next | head -1"             # list the +next task
+alias tasktop="t list | head -1"                    # later, we will create an action for this in todo.txt-cli   
 alias tasklist='echo "-- Tasks @priority --" && t list | head -5 && 
                 echo "-- Tasks @terminal --" && t list @terminal | head -n +3 && 
                 echo "---------------------"'       # display top 5 tasks and also 3 tasks related to terminal
@@ -54,3 +55,7 @@ alias tasklist='echo "-- Tasks @priority --" && t list | head -5 &&
 alias promptmini="export PROMPT_TYPE='mini'; source $DOTZSH/prompt.zsh"
 alias promptnice="export PROMPT_TYPE='nice'; source $DOTZSH/prompt.zsh"
 alias promptorig="export PROMPT_TYPE='orig'; source $DOTZSH/prompt.zsh"
+
+# show progress for file copy (even on local)
+# probably, wont really use unless transferring data in the range of above a GB
+alias copy_progress="rsync --progress -ravz"

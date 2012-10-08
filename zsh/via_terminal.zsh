@@ -38,3 +38,11 @@ alias gitalias='git config -l --global | grep "alias."';
 alias v='vim';
 alias _v='sudo vim';
 alias memhogs='ps aux | tail -n +2 | sort -nr -k 4 | head';
+
+alias wget='wget -c -t 3'; # make wget resume by default
+
+# taken from commandlinefu.com - curated # wont be using much... :/
+alias start_server="python -m SimpleHTTPServer" # serve current directory tree at port http://hostname:8000
+alias current_ip="curl ifconfig.me" # get the current external ip address
+
+alias su="sudo su" # FIXME: is this the correct way to do this??

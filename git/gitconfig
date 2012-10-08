@@ -15,7 +15,7 @@
     filemode         = "true"
     logallrefupdates = "true"
     whitespace       = "space-before-tab, trailing-space"
-    editor           = "vim"
+    editor           = "`which vim`"
     excludesfile     = "will_be_replaced_automatically"
 
 [status]
@@ -37,7 +37,17 @@
     smtpencryption = "tls"
     smtpuser       = "will_be_replaced_automatically"
 
+[diff]
+    tool          = vimdiff
+
+[merge]
+    tool          = vimdiff
+
+[difftool]
+    prompt        = false
+
 [mergetool]
+    prompt         = false
     keepBackup     = false
 
 [push]
@@ -79,8 +89,8 @@
 
 [alias]
     b         = "branch"
-    d         = "diff"
-    dc        = "diff --cached"
+    d         = "difftool"
+    dc        = "difftool --cached"
     lc        = "log ORIG_HEAD.. --stat --no-merges"
     lg        = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
     ll        = "log --pretty=oneline --abbrev-commit --max-count=15"
