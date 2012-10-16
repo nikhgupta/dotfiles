@@ -75,10 +75,11 @@ Bundle 'timcharper/textile.vim'
 Bundle 'spf13/PIV'
 Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-endwise'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'gregsexton/gitv'
 
 " vim script repos
-Bundle 'YankRing.vim'
-Bundle 'taglist.vim'
+" Bundle 'YankRing.vim'
 Bundle 'Getafe'
 Bundle 'Rename2'
 Bundle 'vimwiki'
@@ -136,6 +137,7 @@ set fileformats="unix,dos,mac"
 set formatoptions+=1            " When wrapping paragraphs, don't end lines
                                 "    with 1-letter words (looks stupid)
 set clipboard=unnamed           " allow yanking operations on OS clipboard
+set autochdir
 
 " Use english for spellchecking, but don't spellcheck by default
 if version >= 700
@@ -308,9 +310,9 @@ nmap <leader>p "+p
 nmap <leader>P "+P
 
 " Edit the vimrc file
-nmap <leader>vi :e $MYVIMRC<CR>
+nmap <leader>vi :vs<CR>:e $MYVIMRC<CR>
 " Edit the gvimrc file
-nmap <leader>vg :e $MYGVIMRC<CR>
+nmap <leader>vg :vs<CR>:e $MYGVIMRC<CR>
 " source the current file
 nmap <leader>vs :source %<CR>
 
@@ -371,7 +373,7 @@ nnoremap <leader>ft Vatzf
 nnoremap <leader>v V`]
 
 " Gundo.vim
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <F6> :GundoToggle<CR>
 
 " really helpful shortcuts
 nmap <leader>fef ggVG=
@@ -451,10 +453,6 @@ let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
             \ '\.o$', '\.so$', '\.egg$', '^\.git$' ]
 
 " }}}
-
-" TagList settings {{{
-nmap <leader>l :TlistClose<CR>:TlistToggle<CR>
-nmap <leader>L :TlistClose<CR>
 
 " quit Vim when the TagList window is the last open window
 let Tlist_Exit_OnlyWindow=1         " quit when TagList is the last open window
@@ -832,10 +830,13 @@ imap <D-9> <Esc>9gt
   let Tlist_Show_One_File = 1
   let Tlist_Sort_Type = "order"
   let Tlist_Use_SingleClick = 1
+  nmap <leader>l :TagbarToggle<CR>
 
   " YankRing
   let g:yankring_history_dir = '$HOME/.vim/.tmp'
   let g:yankring_manual_clipboard_check = 0
+  let g:yankring_replace_n_pkey = '<F7>'
+  let g:yankring_replace_n_nkey = '<F8>'
   nmap <leader>r :YRShow<CR>
 
   " VimWiki
@@ -886,5 +887,10 @@ endif
 " }}}
 
 " Added Unsorted
+" FIXME: must replace with environment variables
 let g:snips_author = 'Nikhil Gupta <me@nikhgupta.com>'
+
+nnoremap <F5> "=strftime("%d-%m-%y %H:%M:%S")<CR>P
+inoremap <F5> <C-R>=strftime("%d-%m-%y %H:%M:%S")<CR>
+
 " vim: set ts=2 sw=2 tw=78 :

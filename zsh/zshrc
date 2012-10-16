@@ -3,6 +3,8 @@
 LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
+export PATH="/usr/local/bin:/usr/local/sbin:/Users/nikhgupta/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/pear/bin"
+
 # export ZSH_DEBUG=1 # uncomment, if debugging
 # export PROMPT_TYPE="nice" # uncomment, if you need to change the prompt
 

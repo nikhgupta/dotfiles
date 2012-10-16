@@ -117,3 +117,12 @@ function dir2unix() {
 function find_in_dir() {
   find . -iname "*$1*";
 }
+
+# support for laravel's artisan
+function artisan() {
+  if [ -s artisan ]; then
+    php artisan $@
+  else
+    echo "I'm sorry, but is this a laravel app?? O_o"
+  fi
+}

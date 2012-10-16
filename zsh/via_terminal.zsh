@@ -46,3 +46,7 @@ alias start_server="python -m SimpleHTTPServer" # serve current directory tree a
 alias current_ip="curl ifconfig.me" # get the current external ip address
 
 alias su="sudo su" # FIXME: is this the correct way to do this??
+
+# common misspellings
+alias gti='git';
+alias clera='clear';
