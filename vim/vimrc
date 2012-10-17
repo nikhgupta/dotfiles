@@ -28,9 +28,57 @@ Bundle 'gmarik/vundle'
 
 " load all the bundles from this file - Comments after bundle commands are not allowed!!
 
+" Ctags settings {{{
+
+" find and load tags file up until root
+set tags=./tags;/
+
+" load all tags files in the ~/.ctags directory
+" http://stackoverflow.com/questions/12916743/include-ctags-files-recursively-from-a-directory
+set tags=~/.ctags/*/*/tags;
+
+" don't show ctags for Ruby in a PHP project :)
+" http://stackoverflow.com/questions/12921750/ctags-only-show-relevant-or-contextual-tags
+" augroup TagFileType
+    " autocmd!
+    " autocmd FileType * setl tags<
+    " autocmd FileType * exe 'setl tags+=~/.ctags/' . &filetype . '/*/tags'
+" augroup END
+
+" Easy Code Browsing when we have multiple matching tags
+nnoremap <silent> <leader>j :tnext<cr>zt
+nnoremap <silent> <leader>J :tprev<cr>zt
+nnoremap <silent> <leader>k :pop<cr>zt
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+
+Bundle 'Tagbar'
+let g:tagbar_autofocus = 1
+let g:tagbar_autoshowtag = 1
+let g:tagbar_width = 40
+let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+nmap <leader>l :TagbarToggle<CR>
+
+" Bundle 'easytags.vim'
+" let g:easytags_cmd = '/usr/local/bin/ctags'
+" let g:easytags_dynamic_files = 1
+" let g:easytags_by_filetype = '~/.ctags'
+" let g:easytags_resolve_links = 1
+" " let g:easytags_file = '~/.easytags'
+" }}}
+
+" Color themes {{{
+Bundle 'jnurmine/Zenburn'
+Bundle 'fugalh/desert.vim'
+Bundle 'ciaranm/inkpot'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'minofare/VIM-Railscasts-Color-Theme'
+Bundle 'altercation/vim-colors-solarized'
+" }}}
+
 " Github repositories
 " Bundle 'nvie/vim-flake8'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mileszs/ack.vim'
@@ -45,7 +93,6 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'mattn/gist-vim'
 Bundle 'chrisbra/NrrwRgn'
 Bundle 'ervandew/supertab'
-Bundle 'majutsushi/tagbar'
 Bundle 'tpope/vim-surround'
 Bundle 'ervandew/screen'
 Bundle 'MarcWeber/vim-addon-mw-utils'
@@ -53,11 +100,6 @@ Bundle 'tomtom/tlib_vim'
 Bundle 'garbas/vim-snipmate'
 Bundle 'honza/snipmate-snippets'
 Bundle 'skalnik/vim-vroom'
-Bundle 'jnurmine/Zenburn'
-Bundle 'fugalh/desert.vim'
-Bundle 'ciaranm/inkpot'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'minofare/VIM-Railscasts-Color-Theme'
 Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'kchmck/vim-coffee-script'
@@ -123,7 +165,7 @@ set incsearch                   " show search matches as you type
 set gdefault                    " search/replace 'globally' (on a line) by default
 set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion
 set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
-
+set linebreak
 set nolist                      " don't show invisible characters by default,
                                 " but it is enabled for some file types (see later)
 set pastetoggle=<F2>            " when in insert mode, press <F2> to go to
@@ -144,8 +186,6 @@ if version >= 700
    setlocal spell spelllang=en_us
 endif
 set nospell
-
-set tags=./tags;/
 " }}}
 
 " Folding rules {{{
@@ -220,7 +260,7 @@ set nomodeline                  " disable mode lines (security measure)
 "set ttyfast                     " always use a fast terminal
 set cursorline                  " underline the current line, for quick orientation
 set nofsync                     " improves performance -- let OS decide when to flush disk
-set shell=bash\ -li             " use bash with login shell and interactive mode
+set shell=bash\ -i              " use bash with login shell and interactive mode
                                 "    overwrite in vimrc.after if needed
 
 " Tame the quickfix window (open/close using ,f)
@@ -236,6 +276,32 @@ function! QFixToggle(forced)
     let g:qfix_win = bufnr("$")
   endif
 endfunction
+" }}}
+
+" Set relative numbering {{{
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+" switch manually using Ctrl+n
+nnoremap <C-n> :call NumberToggle()<cr>
+
+" switch on focus gain/lost
+:au FocusLost * :set number
+:au FocusGained * :set relativenumber
+
+" switch on entering/exiting insert mode
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
+" }}}
+
+" Set Todo Markers in Todo.txt {{{
+map <leader>t :exe "!t add " . shellescape(input("Enter todo item: "),1). " +codefix " . shellescape(expand("%:p"), 1) . ":" . line(".")<CR>
 " }}}
 
 " Highlighting {{{
@@ -331,11 +397,6 @@ nmap <leader>z :%s#\<<C-r>=expand("<cword>")<CR>\>#
 nnoremap <silent> n n:call PulseCursorLine()<cr>
 nnoremap <silent> N N:call PulseCursorLine()<cr>
 
-" Easy Code Browsing when we have multiple matching tags
-nnoremap <silent> <leader>j :tnext<cr>zt
-nnoremap <silent> <leader>J :tprev<cr>zt
-nnoremap <silent> <leader>k :pop<cr>zt
-
 " Quickly get out of insert mode without your fingers having to leave the
 " home row (either use 'jj' or 'jk')
 inoremap jj <Esc>
@@ -415,10 +476,6 @@ vnoremap / /\v
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
-" easy tag browsing
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
 " }}}
 
 " NERDTree settings {{{
@@ -451,34 +508,6 @@ let NERDTreeMouseMode=2
 " Don't display these kinds of files
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
             \ '\.o$', '\.so$', '\.egg$', '^\.git$' ]
-
-" }}}
-
-" quit Vim when the TagList window is the last open window
-let Tlist_Exit_OnlyWindow=1         " quit when TagList is the last open window
-let Tlist_GainFocus_On_ToggleOpen=1 " put focus on the TagList window when it opens
-"let Tlist_Process_File_Always=1     " process files in the background, even when the TagList window isn't open
-"let Tlist_Show_One_File=1           " only show tags from the current buffer, not all open buffers
-let Tlist_WinWidth=40               " set the width
-let Tlist_Inc_Winwidth=1            " increase window by 1 when growing
-
-" shorten the time it takes to highlight the current tag (default is 4 secs)
-" note that this setting influences Vim's behaviour when saving swap files,
-" but we have already turned off swap files (earlier)
-"set updatetime=1000
-
-" the default ctags in /usr/bin on the Mac is GNU ctags, so change it to the
-" exuberant ctags version in /usr/local/bin
-let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
-
-" show function/method prototypes in the list
-let Tlist_Display_Prototype=1
-
-" don't show scope info
-let Tlist_Display_Tag_Scope=0
-
-" show TagList window on the right
-let Tlist_Use_Right_Window=1
 
 " }}}
 
@@ -815,22 +844,6 @@ imap <D-9> <Esc>9gt
   vmap <leader>a= :Tabularize /=<CR>
   nmap <leader>a: :Tabularize /:\zs<CR>
   vmap <leader>a: :Tabularize /:\zs<CR>
-
-  " Tagbar
-  let Tlist_Auto_Highlight_Tag = 1
-  let Tlist_Auto_Open = 0
-  let Tlist_Compact_Format = 1
-  let Tlist_Display_Prototype = 0
-  let Tlist_Display_Tag_Scope = 0
-  let Tlist_Exit_OnlyWindow = 1
-  let Tlist_File_Fold_Auto_Close = 1
-  let Tlist_GainFocus_On_ToggleOpen = 1
-  let Tlist_Highlight_Tag_On_BufEnter = 1
-  let Tlist_Max_Tag_Length = 20
-  let Tlist_Show_One_File = 1
-  let Tlist_Sort_Type = "order"
-  let Tlist_Use_SingleClick = 1
-  nmap <leader>l :TagbarToggle<CR>
 
   " YankRing
   let g:yankring_history_dir = '$HOME/.vim/.tmp'

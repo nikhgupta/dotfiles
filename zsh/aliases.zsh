@@ -59,3 +59,6 @@ alias promptorig="export PROMPT_TYPE='orig'; source $DOTZSH/prompt.zsh"
 # show progress for file copy (even on local)
 # probably, wont really use unless transferring data in the range of above a GB
 alias copy_progress="rsync --progress -ravz"
+
+# rebuild ctags index
+alias ctags_reindex="sh ${SCRIPT_DIR}/shell/ctags.sh"
