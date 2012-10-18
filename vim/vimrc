@@ -15,123 +15,286 @@ let mapleader=","
 " Set encoding
 set encoding=utf-8
 
-" load vundle {{{
+" Vundle, Vim Plugins and their settings {{{
 
-" required by Vundle
-filetype off                    " force reloading *after* pathogen loaded
+  " required by Vundle
+  filetype off                    " force reloading *after* pathogen loaded
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+  set rtp+=~/.vim/bundle/vundle/
+  call vundle#rc()
 
-" let vundle manage Vundle
-Bundle 'gmarik/vundle'
+  " let vundle manage Vundle
+  Bundle 'gmarik/vundle'
+  " load all the bundles from this file - Comments after bundle commands are not allowed!!
 
-" load all the bundles from this file - Comments after bundle commands are not allowed!!
+  " Bundles for Color themes {{{
+    Bundle 'jnurmine/Zenburn'
+    Bundle 'fugalh/desert.vim'
+    Bundle 'ciaranm/inkpot'
+    Bundle 'nanotech/jellybeans.vim'
+    Bundle 'minofare/VIM-Railscasts-Color-Theme'
+    Bundle 'altercation/vim-colors-solarized'
+    Bundle 'wombat256.vim'
+    Bundle 'Getafe'
+  " }}}
 
-" Ctags settings {{{
+  " Bundles that make Vim look nicer :) {{{
+    " Powerline configuration {{{
+    Bundle 'Lokaltog/vim-powerline'
+    let g:Powerline_symbols = 'unicode'
+    " }}}
+    Bundle 'nathanaelkane/vim-indent-guides'
+  " }}}
 
-" find and load tags file up until root
-set tags=./tags;/
+  " Some awesome bundle and their settings {{{
 
-" load all tags files in the ~/.ctags directory
-" http://stackoverflow.com/questions/12916743/include-ctags-files-recursively-from-a-directory
-set tags=~/.ctags/*/*/tags;
+    " NERDTree settings {{{
+      Bundle 'scrooloose/nerdtree'
+      " Put focus to the NERD Tree with F3 (tricked by quickly closing it and
+      " immediately showing it again, since there is no :NERDTreeFocus command)
+      nmap <leader>n :NERDTreeClose<CR>:NERDTreeToggle<CR>
+      nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
+      nmap <leader>N :NERDTreeClose<CR>
 
-" don't show ctags for Ruby in a PHP project :)
-" http://stackoverflow.com/questions/12921750/ctags-only-show-relevant-or-contextual-tags
-" augroup TagFileType
-    " autocmd!
-    " autocmd FileType * setl tags<
-    " autocmd FileType * exe 'setl tags+=~/.ctags/' . &filetype . '/*/tags'
-" augroup END
+      " Store the bookmarks file
+      let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
 
-" Easy Code Browsing when we have multiple matching tags
-nnoremap <silent> <leader>j :tnext<cr>zt
-nnoremap <silent> <leader>J :tprev<cr>zt
-nnoremap <silent> <leader>k :pop<cr>zt
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+      " Show the bookmarks table on startup
+      let NERDTreeShowBookmarks=1
 
+      " Show hidden files, too
+      let NERDTreeShowFiles=1
+      let NERDTreeShowHidden=1
 
-Bundle 'Tagbar'
-let g:tagbar_autofocus = 1
-let g:tagbar_autoshowtag = 1
-let g:tagbar_width = 40
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-nmap <leader>l :TagbarToggle<CR>
+      " Quit on opening files from the tree
+      let NERDTreeQuitOnOpen=0
 
-" Bundle 'easytags.vim'
-" let g:easytags_cmd = '/usr/local/bin/ctags'
-" let g:easytags_dynamic_files = 1
-" let g:easytags_by_filetype = '~/.ctags'
-" let g:easytags_resolve_links = 1
-" " let g:easytags_file = '~/.easytags'
-" }}}
+      " Highlight the selected entry in the tree
+      let NERDTreeHighlightCursorline=1
 
-" Color themes {{{
-Bundle 'jnurmine/Zenburn'
-Bundle 'fugalh/desert.vim'
-Bundle 'ciaranm/inkpot'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'minofare/VIM-Railscasts-Color-Theme'
-Bundle 'altercation/vim-colors-solarized'
-" }}}
+      " Use a single click to fold/unfold directories and a double click to open
+      " files
+      let NERDTreeMouseMode=2
 
-" Github repositories
-" Bundle 'nvie/vim-flake8'
-Bundle 'tpope/vim-fugitive'
-Bundle 'scrooloose/nerdtree'
-Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'sjl/gundo.vim'
-Bundle 'duff/vim-scratch'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'mattn/gist-vim'
-Bundle 'chrisbra/NrrwRgn'
-Bundle 'ervandew/supertab'
-Bundle 'tpope/vim-surround'
-Bundle 'ervandew/screen'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/snipmate-snippets'
-Bundle 'skalnik/vim-vroom'
-Bundle 'tpope/vim-rails'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'tpope/vim-cucumber'
-Bundle 'tpope/vim-markdown'
-Bundle 'pangloss/vim-javascript'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-git'
-Bundle 'mmalecki/vim-node.js'
-Bundle 'ajf/puppet-vim'
-Bundle 'skwp/vim-rspec'
-Bundle 'rosstimson/scala-vim-support'
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'timcharper/textile.vim'
-Bundle 'spf13/PIV'
-Bundle 'godlygeek/tabular'
-Bundle 'tpope/vim-endwise'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'gregsexton/gitv'
+      " Don't display these kinds of files
+      let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$' ]
 
-" vim script repos
-" Bundle 'YankRing.vim'
-Bundle 'Getafe'
-Bundle 'Rename2'
-Bundle 'vimwiki'
-Bundle 'ZoomWin'
-Bundle 'wombat256.vim'
-Bundle 'csv.vim'
-Bundle 'closetag.vim'
+    " }}}
 
-" required by Vundle
-filetype plugin indent on       " enable detection, plugins and indenting in one step
+    " Gundo :: awesome redo-undo {{{
+      Bundle 'sjl/gundo.vim'
+      nnoremap <F6> :GundoToggle<CR>
+    " }}}
+
+    " Surround plugin {{{
+      Bundle 'tpope/vim-surround'
+    " }}}
+
+    " Scratch Buffer {{{
+      Bundle 'duff/vim-scratch'
+    " }}}
+
+    " CtrlP - Quickly search for a file/buffer {{{
+      Bundle 'kien/ctrlp.vim'
+      let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+    " }}}
+
+    " Supertab {{{
+      Bundle 'ervandew/supertab'
+      let g:SuperTabSetDefaultCompletionType = "context"
+    " }}}
+
+    " YankRing (disabled) {{{
+      " let g:yankring_history_dir = '$HOME/.vim/.tmp'
+      " let g:yankring_manual_clipboard_check = 0
+      " let g:yankring_replace_n_pkey = '<F7>'
+      " let g:yankring_replace_n_nkey = '<F8>'
+      " nmap <leader>r :YRShow<CR>
+    " }}}
+
+    " VimWiki {{{
+      Bundle 'vimwiki'
+      let g:vimwiki_list = [{'path': '~/.vim/wiki/'}]
+    " }}}
+
+    " ZoomWin {{{
+      Bundle 'ZoomWin'
+
+      " adjust viewport as needed
+      nmap <leader>w=  <C-w>=
+      nmap <leader>w<bar> <C-w><bar>
+      nmap <leader>w_  <C-w>_
+      nmap <leader>w@  <C-w>_<C-w><bar>
+
+      " switch to an alternate buffer and  maximize its viewport
+      nmap <leader>wH <C-w>h<C-w>_<C-w><bar>
+      nmap <leader>wJ <C-w>j<C-w>_<C-w><bar>
+      nmap <leader>wK <C-w>k<C-w>_<C-w><bar>
+      nmap <leader>wL <C-w>l<C-w>_<C-w><bar>
+
+    " }}}
+
+    " Power of Ack in Vim {{{
+      Bundle 'mileszs/ack.vim'
+    " }}}
+
+    " EasyMotion (<leader><leader>) {{{
+      Bundle 'Lokaltog/vim-easymotion'
+      hi link EasyMotionTarget ErrorMsg
+      hi link EasyMotionShade  Comment
+    " }}}
+
+    " Syntastic - easy syntax checking {{{
+      Bundle 'scrooloose/syntastic'
+    " }}}
+
+  " }}}
+
+  " Improve our editing pleasure with some bundles {{{
+
+    " NerdCommenter {{{
+      Bundle 'scrooloose/nerdcommenter'
+      let NERDSpaceDelims = 1
+      " let NERDRemoveExtraSpaces = 1
+    " }}}
+
+    " Tabularize {{{
+      Bundle 'godlygeek/tabular'
+      nmap <leader>a= :Tabularize /=<CR>
+      vmap <leader>a= :Tabularize /=<CR>
+      nmap <leader>a: :Tabularize /:\zs<CR>
+      vmap <leader>a: :Tabularize /:\zs<CR>
+    " }}}
+
+    " Vim Unimpaired {{{
+      " handy pair of brackets
+      Bundle 'tpope/vim-unimpaired'
+    " }}}
+    
+    " CloseTag - for HTML and XML files {{{
+      Bundle 'closetag.vim'
+    " }}}
+
+    " Narrow Region - Only modify a part of the file (no settings specified) {{{
+      Bundle 'chrisbra/NrrwRgn'
+      " TODO: create commands that allow selecting several lines individually
+      " using the :NRPrepare command and then edit them using :NRMulti command
+    " }}}
+
+    " Use Snippets {{{
+      " has dependencies
+      Bundle 'tomtom/tlib_vim'
+      Bundle 'MarcWeber/vim-addon-mw-utils'
+      Bundle 'honza/snipmate-snippets'
+
+      Bundle 'garbas/vim-snipmate'
+    " }}}
+    
+  " }}}
+
+  " Bundles used for Rails development {{{
+    Bundle 'vim-ruby/vim-ruby'
+    Bundle 'tpope/vim-rails'
+    Bundle 'tpope/vim-endwise'
+    Bundle 'tpope/vim-haml'
+    Bundle 'tpope/vim-cucumber'
+    Bundle 'skwp/vim-rspec'
+    Bundle 'kchmck/vim-coffee-script'
+    Bundle 'cakebaker/scss-syntax.vim'
+    " Bundle 'skalnik/vim-vroom'
+  " }}}
+
+  " Bundles used for PHP development {{{
+    Bundle 'spf13/PIV'
+  " }}}
+
+  " Filetype specific bundles {{{
+    Bundle 'csv.vim'
+    Bundle 'tpope/vim-markdown'
+    Bundle 'timcharper/textile.vim'
+    Bundle 'pangloss/vim-javascript'
+    Bundle 'mmalecki/vim-node.js'
+    Bundle 'rosstimson/scala-vim-support'
+    Bundle 'ajf/puppet-vim'
+  " }}}
+
+  " Bundles that help in Ctags management {{{
+
+    " find and load tags file up until root {{{
+    set tags=./tags;/
+    " }}}
+
+    " load all tags files in the ~/.ctags directory {{{
+    " http://stackoverflow.com/questions/12916743/include-ctags-files-recursively-from-a-directory
+    set tags=~/.ctags/*/*/tags;
+    " }}}
+
+    " don't show ctags for Ruby in a PHP project :) {{{
+    " http://stackoverflow.com/questions/12921750/ctags-only-show-relevant-or-contextual-tags
+    " augroup TagFileType
+        " autocmd!
+        " autocmd FileType * setl tags<
+        " autocmd FileType * exe 'setl tags+=~/.ctags/' . &filetype . '/*/tags'
+    " augroup END
+    " }}}
+
+    " Easy Code Browsing when we have multiple matching tags {{{
+    nnoremap <silent> <leader>j :tnext<cr>zt
+    nnoremap <silent> <leader>J :tprev<cr>zt
+    nnoremap <silent> <leader>k :pop<cr>zt
+    map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+    map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+    " }}}
+
+    " Tagbar Settings {{{
+    Bundle 'Tagbar'
+    let g:tagbar_autofocus = 1
+    let g:tagbar_autoshowtag = 1
+    let g:tagbar_width = 40
+    let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+    nmap <leader>l :TagbarToggle<CR>
+    " }}}
+
+    " EasyTags settings (disabled) {{{
+    " Bundle 'easytags.vim'
+    " let g:easytags_cmd = '/usr/local/bin/ctags'
+    " let g:easytags_dynamic_files = 1
+    " let g:easytags_by_filetype = '~/.ctags'
+    " let g:easytags_resolve_links = 1
+    " " let g:easytags_file = '~/.easytags'
+    " }}}
+
+  " }}}
+
+  " Bundles interacting with Git {{{
+    Bundle 'tpope/vim-fugitive'
+    " Gist - for creating small Gist snippets {{{
+    Bundle 'mattn/gist-vim'
+    let g:gist_clip_command = 'pbcopy'
+    let g:gist_detect_filetype = 1
+    let g:gist_open_browser_after_post = 1
+    let g:gist_show_privates = 1
+    let g:github_user = $GITHUB_USER
+    let g:github_token = $GITHUB_TOKEN
+    let g:snips_author = "$MY_NAME <$MY_MAIL>"
+    " }}}
+    Bundle 'tpope/vim-git'
+    Bundle 'gregsexton/gitv'
+  " }}}
+
+  " Other helpful Bundles {{{
+    " Rename current file nicely
+    Bundle 'Rename2'
+
+    " Disabled Plugins {{{
+      " Bundle 'YankRing.vim'
+      " Bundle 'nvie/vim-flake8'
+      " Bundle 'ervandew/screen'
+    " }}}
+  " }}}
+
+  " required by Vundle
+  filetype plugin indent on       " enable detection, plugins and indenting in one step
 " }}}
 
 " Exta settings specified by user, before vim has loaded {{{
@@ -165,21 +328,21 @@ set incsearch                   " show search matches as you type
 set gdefault                    " search/replace 'globally' (on a line) by default
 set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion
 set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
-set linebreak
+set linebreak                   " break long lines at word rather than chars
 set nolist                      " don't show invisible characters by default,
                                 " but it is enabled for some file types (see later)
 set pastetoggle=<F2>            " when in insert mode, press <F2> to go to
                                 "    paste mode, where you can paste mass data
                                 "    that won't be autoindented
 if has('mouse')
-  set mouse=a                     " enable using the mouse if terminal emulator
+  set mouse=a                   " enable using the mouse if terminal emulator
 endif
                                 "    supports it (xterm does)
 set fileformats="unix,dos,mac"
 set formatoptions+=1            " When wrapping paragraphs, don't end lines
                                 "    with 1-letter words (looks stupid)
 set clipboard=unnamed           " allow yanking operations on OS clipboard
-set autochdir
+set autochdir                   " automatically change the working directory
 
 " Use english for spellchecking, but don't spellcheck by default
 if version >= 700
@@ -192,9 +355,18 @@ set nospell
 set foldenable                  " enable folding
 set foldcolumn=2                " add a fold column
 set foldmethod=marker           " detect triple-{ style fold markers
-set foldlevelstart=99            " start out with somethings closed
+set foldlevelstart=1            " start out with somethings closed
+set foldlevel=1
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
                                 " which commands trigger auto-unfold
+
+" Don't screw up folds when inserting text that might affect them, until
+" leaving insert mode. Foldmethod is local to the window. Protect against
+" screwing up folding when switching between windows.
+" http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
 function! MyFoldText()
     let line = getline(v:foldstart)
 
@@ -208,8 +380,9 @@ function! MyFoldText()
 
     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 4
-    return line . ' …' . repeat(" ",fillcharcount) . foldedlinecount . ' '
+    return line . ' ' . repeat("-",fillcharcount) . ' ' . foldedlinecount . ' '
 endfunction
+
 set foldtext=MyFoldText()
 " }}}
 
@@ -225,8 +398,7 @@ set cmdheight=2                 " use a status bar that is 2 rows high
 " Vim behaviour {{{
 set autoread                    " watch for file changes
 " set autowrite                   " auto write file when moving away from it.
-set showcmd                     " display what command you are typing
-set nohidden                      " hide buffers instead of closing them this
+set hidden                      " hide buffers instead of closing them this
                                 "    means that the current buffer can be put
                                 "    to background without being written; and
                                 "    that marks and undo history are preserved
@@ -262,7 +434,9 @@ set cursorline                  " underline the current line, for quick orientat
 set nofsync                     " improves performance -- let OS decide when to flush disk
 set shell=bash\ -i              " use bash with login shell and interactive mode
                                 "    overwrite in vimrc.after if needed
+" }}}
 
+" QuickFix Settings {{{
 " Tame the quickfix window (open/close using ,f)
 nmap <silent> <leader>f :QFix<CR>
 
@@ -302,6 +476,11 @@ autocmd InsertLeave * :set relativenumber
 
 " Set Todo Markers in Todo.txt {{{
 map <leader>t :exe "!t add " . shellescape(input("Enter todo item: "),1). " +codefix " . shellescape(expand("%:p"), 1) . ":" . line(".")<CR>
+" }}}
+
+" Insert current time {{{
+nnoremap <F5> "=strftime("%d-%m-%y %H:%M:%S")<CR>P
+inoremap <F5> <C-R>=strftime("%d-%m-%y %H:%M:%S")<CR>
 " }}}
 
 " Highlighting {{{
@@ -433,8 +612,6 @@ nnoremap <leader>ft Vatzf
 " Reselect text that was just pasted with ,v
 nnoremap <leader>v V`]
 
-" Gundo.vim
-nnoremap <F6> :GundoToggle<CR>
 
 " really helpful shortcuts
 nmap <leader>fef ggVG=
@@ -456,18 +633,6 @@ map <leader>et :tabe %%
 " Underline the current line with '='
 nmap <silent> <leader>ul YpVr=<CR>
 
-" adjust viewport as needed
-nmap <leader>w=  <C-w>=
-nmap <leader>w<bar> <C-w><bar>
-nmap <leader>w_  <C-w>_
-nmap <leader>w@  <C-w>_<C-w><bar>
-
-" switch to an alternate buffer and  maximize its viewport
-nmap <leader>wH <C-w>h<C-w>_<C-w><bar>
-nmap <leader>wJ <C-w>j<C-w>_<C-w><bar>
-nmap <leader>wK <C-w>k<C-w>_<C-w><bar>
-nmap <leader>wL <C-w>l<C-w>_<C-w><bar>
-
 " use really magic mode for patterns
 nnoremap / /\v
 vnoremap / /\v
@@ -475,39 +640,6 @@ vnoremap / /\v
 " Speed up scrolling of the viewport slightly
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
-
-" }}}
-
-" NERDTree settings {{{
-" Put focus to the NERD Tree with F3 (tricked by quickly closing it and
-" immediately showing it again, since there is no :NERDTreeFocus command)
-nmap <leader>n :NERDTreeClose<CR>:NERDTreeToggle<CR>
-nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
-nmap <leader>N :NERDTreeClose<CR>
-
-" Store the bookmarks file
-let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
-
-" Show the bookmarks table on startup
-let NERDTreeShowBookmarks=1
-
-" Show hidden files, too
-let NERDTreeShowFiles=1
-let NERDTreeShowHidden=1
-
-" Quit on opening files from the tree
-let NERDTreeQuitOnOpen=0
-
-" Highlight the selected entry in the tree
-let NERDTreeHighlightCursorline=1
-
-" Use a single click to fold/unfold directories and a double click to open
-" files
-let NERDTreeMouseMode=2
-
-" Don't display these kinds of files
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
-            \ '\.o$', '\.so$', '\.egg$', '^\.git$' ]
 
 " }}}
 
@@ -614,7 +746,7 @@ if has("autocmd")
     augroup ruby_files "{{{
         au!
 
-        autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+        autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 foldmethod=syntax
     augroup end " }}}
 
     augroup rst_files "{{{
@@ -702,7 +834,7 @@ if has("gui_running")
 endif
 " }}}
 
-" Pulse ------------------------------------------------------------------- {{{
+" Pulse Cursor line {{{
 
 function! PulseCursorLine()
     let current_window = winnr()
@@ -742,14 +874,6 @@ endfunction
 
 " }}}
 
-" Powerline configuration ------------------------------------------------- {{{
-
-  "let g:Powerline_symbols = 'compatible'
-  let g:Powerline_symbols = 'unicode'
-  "let g:Powerline_symbols = 'fancy'
-
-" }}}
-
 " Modeline configuration {{{
   " Append modeline after last line in buffer.
   " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX files.
@@ -762,7 +886,7 @@ endfunction
   nnoremap <silent> <leader>ml :call AppendModeline()<CR>
 " }}}
 
-" Taken from Janus {{{
+" Mappings Taken from Janus {{{
 " Map command-[ and command-] to indenting or outdenting
 " while keeping the original selection in visual mode
 vmap <D-]> >gv
@@ -818,48 +942,6 @@ imap <D-9> <Esc>9gt
   cmap <C-P> <C-R>=expand("%:p:h") . "/"
 " }}}
 
-" Settings for other plugins {{{
-
-  " CtrlP - Quickly search for a file/buffer
-  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-
-  " Gist - for creating small Gist snippets
-  let g:gist_clip_command = 'pbcopy'
-  let g:gist_detect_filetype = 1
-  let g:gist_open_browser_after_post = 1
-  let g:gist_show_privates = 1
-  let g:github_user = $GITHUB_USER
-  let g:github_token = $GITHUB_TOKEN
-
-  " Narrow Region - Only modify a part of the file
-  " create commands that allow selecting several lines
-  " individually using the :NRPrepare command
-  " and then edit them using :NRMulti command
-
-  " Supertab
-  let g:SuperTabSetDefaultCompletionType = "context"
-
-  " Tabularize
-  nmap <leader>a= :Tabularize /=<CR>
-  vmap <leader>a= :Tabularize /=<CR>
-  nmap <leader>a: :Tabularize /:\zs<CR>
-  vmap <leader>a: :Tabularize /:\zs<CR>
-
-  " YankRing
-  let g:yankring_history_dir = '$HOME/.vim/.tmp'
-  let g:yankring_manual_clipboard_check = 0
-  let g:yankring_replace_n_pkey = '<F7>'
-  let g:yankring_replace_n_nkey = '<F8>'
-  nmap <leader>r :YRShow<CR>
-
-  " VimWiki
-  let g:vimwiki_list = [{'path': '~/.vim/wiki/'}]
-
-  " NerdCommenter
-  let NERDSpaceDelims = 1
-  " let NERDRemoveExtraSpaces = 1
-" }}}
-
 " View Changes in the Current buffer {{{
  function! s:DiffWithSaved()
     let filetype=&ft
@@ -887,7 +969,7 @@ imap <D-9> <Esc>9gt
 " set extra vi-compatible options
 "set cpoptions+=$     " when changing a line, don't redisplay, but put a '$' at
                      " the end during the change
-set formatoptions-=o " don't start new lines w/ comment leader on pressing 'o'
+" set formatoptions-=o " don't start new lines w/ comment leader on pressing 'o'
 au filetype vim set formatoptions-=o
                      " somehow, during vim filetype detection, this gets set
                      " for vim files, so explicitly unset it again
@@ -898,12 +980,3 @@ if filereadable("$HOME/.vimrc.after")
   source "$HOME/.vimrc.after"
 endif
 " }}}
-
-" Added Unsorted
-" FIXME: must replace with environment variables
-let g:snips_author = 'Nikhil Gupta <me@nikhgupta.com>'
-
-nnoremap <F5> "=strftime("%d-%m-%y %H:%M:%S")<CR>P
-inoremap <F5> <C-R>=strftime("%d-%m-%y %H:%M:%S")<CR>
-
-" vim: set ts=2 sw=2 tw=78 :
