@@ -1,6 +1,7 @@
 # Special File #
 ################
 *.nickers
+*.shell__autoload
 
 # Common files #
 ################

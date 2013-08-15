@@ -2,119 +2,142 @@
 
 LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
+skip_global_compinit=1
 
-export PATH="/usr/local/bin:/usr/local/sbin:/Users/nikhgupta/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/pear/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:/Users/nikhgupta/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/pear/bin:$PATH"
 
 # export ZSH_DEBUG=1 # uncomment, if debugging
 # export PROMPT_TYPE="nice" # uncomment, if you need to change the prompt
 
 # directory variables {{{
-  # some useful directories
-  export CODE_DIR="$HOME/Code"
-  export DOT_DIR="$HOME/Code/__dotfiles"
-  export BACKUP_DIR="$HOME/Code/__backups"
-  export FILE_DIR="$HOME/Code/__files"
-  export REPO_DIR="$HOME/Code/__repos"
-  export SCRIPT_DIR="$HOME/Code/scripts"
-  export SNIPPET_DIR="$HOME/Code/snippets"
+# some useful directories
+export CODE_DIR="$HOME/Code"
+export DOT_DIR="$HOME/Code/__dotfiles"
+export BACKUP_DIR="$HOME/Code/__backups"
+export FILE_DIR="$HOME/Code/__files"
+export REPO_DIR="$HOME/Code/__repos"
+export SCRIPT_DIR="$HOME/Code/scripts"
+export SNIPPET_DIR="$HOME/Code/snippets"
 
-  # directories dealing with Dotfiles
-  export ZSH="$HOME/.oh-my-zsh" # do not rename this variable - needed by OH MY ZSH??
-  export DOTZSH="$HOME/Code/__dotfiles/zsh"
-  export DOTVIM="$HOME/Code/__dotfiles/vim"
+# directories dealing with Dotfiles
+export ZSH="$HOME/.oh-my-zsh" # do not rename this variable - needed by OH MY ZSH??
+export DOTZSH="$HOME/Code/__dotfiles/zsh"
+export DOTVIM="$HOME/Code/__dotfiles/vim"
 # }}}
 #
 
 # remember the location to my SSH key {{{
-  export SSH_KEY="$HOME/.ssh/macbookpro.pub"
+export SSH_KEY="$HOME/.ssh/macbookpro.pub"
 # }}}
 
 # which zsh theme? {{{
-  export ZSH_THEME="blinks"
+export ZSH_THEME="blinks"
 # }}}
 
 # which zsh plugins? {{{
-  plugins=(brew bundler gem git git-flow)
+# plugins=(brew bundler gem git git-flow)
 # }}}
 
 # which editor? {{{
-  export EDITOR="vim"
+export EDITOR="vim"
+# export EDITOR="/usr/local/bin/mate -w"
 # }}}
 
 function source_file() { # sources a file, provides debugging option {{{
-  if [[ -s "$1" ]]; then # run, if file's size is not zero
-    source "$1"; [[ -n "${ZSH_DEBUG}" ]] && echo "loading file.. $1"
-  fi
+if [[ -s "$1" ]]; then # run, if file's size is not zero
+  source "$1"; [[ -n "${ZSH_DEBUG}" ]] && echo "loading file.. $1"
+fi
 } # }}}
 
 # source some files before ZSH configuration is loaded {{{
-  # load OhMyZSH, because its auwesomeeee :)
-  source_file "$ZSH/oh-my-zsh.sh" 
+# load OhMyZSH, because its auwesomeeee :)
+source_file "$ZSH/oh-my-zsh.sh" 
 
-  # for our secret somethings | symlinked <= $DOTDIR/private.symlink
-  source_file "$HOME/.private" 
+# for our secret somethings | symlinked <= $DOTDIR/private.symlink
+source_file "$HOME/.private" 
 
-  # (create, if required) any specific configuration that needs to be changed.
-  source_file "$HOME/.localrc.before" 
+# (create, if required) any specific configuration that needs to be changed.
+source_file "$HOME/.localrc.before" 
 
-  # sets some of the configuration options
-  source_file "$HOME/.localrc" 
+# sets some of the configuration options
+source_file "$HOME/.localrc" 
 
-  # (create, if required) anything that needs to run before loading zsh files
-  source_file "$HOME/.zshrc.before" 
+# (create, if required) anything that needs to run before loading zsh files
+source_file "$HOME/.zshrc.before" 
 # }}}
 
 # if this is not a reloaded shell, add some paths to $PATH {{{
-  add_to_path_nicely() { # $1 -> path, $2 -> add to start?
-    if [ -z "${PATH}" ]; then
-      PATH="$1"
-    elif [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-      if [ -z "$2" ]; then
-        PATH="$PATH:$1"
-      else
-        PATH="$1:$PATH"
-      fi
+add_to_path_nicely() { # $1 -> path, $2 -> add to start?
+  if [ -z "${PATH}" ]; then
+    PATH="$1"
+  elif [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    if [ -z "$2" ]; then
+      PATH=$PATH:$1
+    else
+      PATH=$1:$PATH
     fi
-  }
-    # add pear to our path
-    add_to_path_nicely "/usr/local/pear/bin"
-    
-    # add rvm to our path (useful for scripting)
-    add_to_path_nicely "${HOME}/.rvm/bin"
+  fi
+}
+# add pear to our path
+# add_to_path_nicely "/usr/local/pear/bin"
+# add custom php
+# add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin" at_start
 
-    # add paths created by homebrew
-    add_to_path_nicely "/usr/local/bin" at_start
-    add_to_path_nicely "/usr/local/sbin" at_start
+# add rvm to our path (useful for scripting)
+# add_to_path_nicely "${HOME}/.rvm/bin"
+
+# add paths created by heroku toolbelt
+# add_to_path_nicely "/usr/local/heroku/bin" at_start
+
+# add paths for Haskell binaries
+# add_to_path_nicely "${HOME}/.cabal/bin"
+
+# add paths created by homebrew
+# add_to_path_nicely "/usr/local/sbin" at_start
+# add_to_path_nicely "/usr/local/bin" at_start
 # }}}
 
 # Load some very essential scripts - I can't live without {{{
-  # Load RVM into our shell - oh! I can throw away my computer without this one little tiny line ;)
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# Load RVM into our shell - oh! I can throw away my computer without this one little tiny line ;)
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+__rvm_project_rvmrc
 
-  # Load Z
-  source_file "$SCRIPT_DIR/shell/z/z.sh"
 
-  # Load Todo.txt
-  source_file "$SCRIPT_DIR/shell/todo.txt-cli/todo_completion"
-  export T="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $TODO_TXT_CLI_CONFIG_FILE" # handy when defining functions that depend on it.
-  alias t="$T"
+# Load Z
+source_file "$SCRIPT_DIR/shell/z/z.sh"
 
-  # Load Syntax Highlighting for ZSH
-  source_file $SCRIPT_DIR/shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
+# Load Todo.txt
+source_file "$SCRIPT_DIR/shell/todo.txt-cli/todo_completion"
+export T="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $TODO_TXT_CLI_CONFIG_FILE" # handy when defining functions that depend on it.
+alias t="$T"
 
-  # get an indication of our remaining battery charge
-  [ -n "${BATTERY_CHARGE_SCRIPT}" ] && export BATTERY_CHARGE="`python ${BATTERY_CHARGE_SCRIPT} 2>/dev/null`"  
+# Load Syntax Highlighting for ZSH
+source_file $SCRIPT_DIR/shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  
+
+# get an indication of our remaining battery charge
+[ -n "${BATTERY_CHARGE_SCRIPT}" ] && export BATTERY_CHARGE="`python ${BATTERY_CHARGE_SCRIPT} 2>/dev/null`"  
 # }}}
 
 # source some files after ZSH configuration is loaded {{{
-  # source all files that have extension 'zsh' in the Dotfiles directory
-  for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
+# source all files that have extension 'zsh' in the Dotfiles directory
+for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
 
   # (create, if required) specify any other commands or configuration options here...
   source_file "$HOME/.zshrc.after"   # keep over-riding or custom settings here
   source_file "$HOME/.localrc.after" # keep over-riding or custom exports here
+  # }}}
+
+  # completions go here {{{
+  complete -F _todo t # for todo.txt-cli
+  # }}}
+
+  # tell ZSH to not correct certain commands {{{
+  if [ -f ~/.zsh_nocorrect ]; then
+    while read -r COMMAND; do
+      alias $COMMAND="nocorrect $COMMAND"
+    done < ~/.zsh_nocorrect
+  fi
 # }}}
 
-# completions go here {{{
-  complete -F _todo t # for todo.txt-cli
-# }}}
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

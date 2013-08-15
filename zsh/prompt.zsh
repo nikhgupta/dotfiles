@@ -12,7 +12,7 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[yellow]%}"
 set_prompt_char() {
   git branch >/dev/null 2>/dev/null && echo '±' && return
   hg root >/dev/null 2>/dev/null && echo '☿' && return
-  echo '%(!.!.⚡)'
+  echo '%(!.!.⚡ )'
 }
 # }}}
 
@@ -96,21 +96,21 @@ function todo_prompt() {
 
 # display a count of CODE NOTES e.g. TODO, FIXME, HACK etc. {{{
 function notes_count() {
-  if [[ -z $1 ]]; then
-    local NOTES_PATTERN="TODO|FIXME|HACK";
-  else
-    local NOTES_PATTERN=$1;
-  fi
-  grep -ERn "\b($NOTES_PATTERN)\b" {app,config,lib,spec,test} 2>/dev/null | wc -l | sed 's/ //g'
+  # if [[ -z $1 ]]; then
+    # local NOTES_PATTERN="TODO|FIXME|HACK";
+  # else
+    # local NOTES_PATTERN=$1;
+  # fi
+  # grep -ERn "\b($NOTES_PATTERN)\b" {app,config,lib,spec,test} 2>/dev/null | wc -l | sed 's/ //g'
 }
 
 function notes_prompt() {
-  local COUNT=$(notes_count $1);
-  if [ $COUNT != 0 ]; then
-    echo "$1: $COUNT";
-  else
-    echo "";
-  fi
+  # local COUNT=$(notes_count $1);
+  # if [ $COUNT != 0 ]; then
+    # echo "$1: $COUNT";
+  # else
+    # echo "";
+  # fi
 }
 # }}}
 

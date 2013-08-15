@@ -40,9 +40,15 @@ set encoding=utf-8
 
   " Bundles that make Vim look nicer :) {{{
     " Powerline configuration {{{
-    Bundle 'Lokaltog/vim-powerline'
-    let g:Powerline_symbols = 'unicode'
+      Bundle 'Lokaltog/vim-powerline'
+      let g:Powerline_symbols = 'unicode'
     " }}}
+
+    " Airline configuration (experimental - disabled) {{{
+      " Bundle 'bling/vim-airline'
+      " let g:airline_powerline_fonts = 0
+    " }}}
+
     Bundle 'nathanaelkane/vim-indent-guides'
   " }}}
 
@@ -113,8 +119,8 @@ set encoding=utf-8
     " }}}
 
     " VimWiki {{{
-      Bundle 'vimwiki'
-      let g:vimwiki_list = [{'path': '~/.vim/wiki/'}]
+      " Bundle 'vimwiki'
+      " let g:vimwiki_list = [{'path': '~/Dropbox/wiki/'}]
     " }}}
 
     " ZoomWin {{{
@@ -170,7 +176,7 @@ set encoding=utf-8
       " handy pair of brackets
       Bundle 'tpope/vim-unimpaired'
     " }}}
-    
+
     " CloseTag - for HTML and XML files {{{
       Bundle 'closetag.vim'
     " }}}
@@ -189,7 +195,7 @@ set encoding=utf-8
 
       Bundle 'garbas/vim-snipmate'
     " }}}
-    
+
   " }}}
 
   " Bundles used for Rails development {{{
@@ -216,6 +222,7 @@ set encoding=utf-8
     Bundle 'mmalecki/vim-node.js'
     Bundle 'rosstimson/scala-vim-support'
     Bundle 'ajf/puppet-vim'
+    Bundle 'Vim-R-plugin'
   " }}}
 
   " Bundles that help in Ctags management {{{
