@@ -3,11 +3,11 @@
 LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 skip_global_compinit=1
-
-export PATH="/usr/local/bin:/usr/local/sbin:/Users/nikhgupta/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/pear/bin:$PATH"
+typeset -U path # set $path variable to only have unique values
 
 # export ZSH_DEBUG=1 # uncomment, if debugging
 # export PROMPT_TYPE="nice" # uncomment, if you need to change the prompt
+export HIST_IGNORE_SPACE=true
 
 # directory variables {{{
 # some useful directories
@@ -68,40 +68,37 @@ source_file "$HOME/.zshrc.before"
 
 # if this is not a reloaded shell, add some paths to $PATH {{{
 add_to_path_nicely() { # $1 -> path, $2 -> add to start?
-  if [ -z "${PATH}" ]; then
-    PATH="$1"
-  elif [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-    if [ -z "$2" ]; then
-      PATH=$PATH:$1
-    else
-      PATH=$1:$PATH
-    fi
-  fi
+  newpath=$1; at_start=$2
+  if [ -z "${path}" ]; then path=( "${newpath}" );
+  elif [ -d "${newpath}" ]; then
+    [ -z "${at_start}" ] && path+=( "${newpath}" ) || path=( "${newpath}" "${path[@]}" )
+  else echo "Non-existent directory added to \$PATH: $1"; fi
 }
+
 # add pear to our path
 # add_to_path_nicely "/usr/local/pear/bin"
+
 # add custom php
 # add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin" at_start
 
-# add rvm to our path (useful for scripting)
-# add_to_path_nicely "${HOME}/.rvm/bin"
-
 # add paths created by heroku toolbelt
-# add_to_path_nicely "/usr/local/heroku/bin" at_start
+add_to_path_nicely "/usr/local/heroku/bin" at_start
 
 # add paths for Haskell binaries
 # add_to_path_nicely "${HOME}/.cabal/bin"
 
 # add paths created by homebrew
-# add_to_path_nicely "/usr/local/sbin" at_start
-# add_to_path_nicely "/usr/local/bin" at_start
+add_to_path_nicely "/usr/local/sbin" at_start
+add_to_path_nicely "/usr/local/bin" at_start
+
+# add rvm to our path (useful for scripting)
+add_to_path_nicely "${HOME}/.rvm/bin"
 # }}}
 
 # Load some very essential scripts - I can't live without {{{
 # Load RVM into our shell - oh! I can throw away my computer without this one little tiny line ;)
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 __rvm_project_rvmrc
-
 
 # Load Z
 source_file "$SCRIPT_DIR/shell/z/z.sh"
@@ -139,5 +136,7 @@ for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
   fi
 # }}}
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# better history completion
+# http://superuser.com/questions/417627/oh-my-zsh-history-completion
+bindkey '\e[A' history-beginning-search-backward
+bindkey '\e[B' history-beginning-search-forward

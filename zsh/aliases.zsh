@@ -4,7 +4,7 @@
 #
 
 # quickly reload this file
-alias reload="source $HOME/.zshrc"
+alias reload=" source $HOME/.zshrc"
 
 # create a handy edit command
 alias edit="vim"
@@ -17,7 +17,9 @@ alias zshtermalias="edit $DOTZSH/via_terminal.zsh"  # quickly edit custom aliase
 alias zshfunctions="edit $DOTZSH/functions.zsh"     # quickly edit shell functions
 
 # common and most-often used aliases
-alias cl=clear; alias c=clear;                      # i love my terminal to be clutterfree most of the times ;)
+alias clear=" clear"
+alias cl=" clear"
+alias c=" clear"                                    # i love my terminal to be clutterfree most of the times ;)
 
 # common commands
 alias rm="rm -i"                                    # failsafe :P
@@ -29,7 +31,7 @@ alias x+="sudo chmod +x"                            # quickly make a file execut
 alias x-="sudo chmod -x"                            # quickly make a file un-executable
 
 # ls
-alias ls="ls -F"                                    # append indicators and colorize
+alias ls=" ls -F"                                   # append indicators and colorize
 alias la='ls -A'                                    # almost all
 alias ll='la -lF'                                   # almost all, long listing, indicators
 alias  l="ll -h"                                    # almost all, show size in K, M, G (except . & ..), long listing
@@ -38,7 +40,7 @@ alias lr='ll -R'                                    # recursive ls
 alias lx='ll -XB'                                   # sort by extension
 
 # cd
-alias up="cd .."                                    # handy shortcut to quicly move up directory tree
+alias up=" cd .."                                   # handy shortcut to quicly move up directory tree
 
 alias du1='du -hd 1'                                # disk usage with human sizes and minimal depth (prefer: dsize)
 alias fn='find . -name'                             # find files by name, in current directory
@@ -52,9 +54,9 @@ alias tasklist='echo "-- Tasks @priority --" && t list | head -5 &&
                 echo "---------------------"'       # display top 5 tasks and also 3 tasks related to terminal
 
 # aliases that alter the prompt
-alias promptmini="export PROMPT_TYPE='mini'; source $DOTZSH/prompt.zsh"
-alias promptnice="export PROMPT_TYPE='nice'; source $DOTZSH/prompt.zsh"
-alias promptorig="export PROMPT_TYPE='orig'; source $DOTZSH/prompt.zsh"
+alias promptmini=" export PROMPT_TYPE='mini'; source $DOTZSH/prompt.zsh"
+alias promptnice=" export PROMPT_TYPE='nice'; source $DOTZSH/prompt.zsh"
+alias promptorig=" export PROMPT_TYPE='orig'; source $DOTZSH/prompt.zsh"
 
 # show progress for file copy (even on local)
 # probably, wont really use unless transferring data in the range of above a GB

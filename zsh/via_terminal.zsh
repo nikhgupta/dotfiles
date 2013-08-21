@@ -16,7 +16,7 @@ alias stopftp='sudo killall ftpd';
 
 # $$$ other commands
 # find a process in the activity monitor
-alias p="ps auwwx | grep"
+alias p=" ps auwwx | grep"
 # delete all the empty files from the current directory @ use with caution
 alias deleteempty="find . -type d -empty -not -regex '.*\/.git\/.*' -exec {} \; -delete"
 # recursively delete all the ugly `.DS_Store` files from current directory and its children
@@ -44,7 +44,7 @@ alias current_ip="curl ifconfig.me" # get the current external ip address
 
 # common misspellings
 alias gti='git';
-alias clera='clear';
+alias clera=' clear';
 alias test_apache='sudo bash -x /usr/sbin/apachectl -k restart';
 alias v='vim';
 alias _v='sudo vim';
