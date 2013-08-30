@@ -1,7 +1,5 @@
 # Special File #
 ################
-*.nickers
-*.shell__autoload
 
 # Common files #
 ################
@@ -45,3 +43,12 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+
+# scm revert files
+**.orig
+# Netbeans project directory
+/nbproject/
+# RubyMine project files
+.idea
+# Textmate project files
+/*.tmproj

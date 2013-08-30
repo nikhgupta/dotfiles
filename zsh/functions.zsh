@@ -145,12 +145,14 @@ function newtab() {
 }
 alias nt=newtab
 
-# use rails_app_composer easily
-function rac() {
-  if [ `rvm current` != "ruby-2.0.0-p0@rails" ]; then
-    echo "=============================="
-    print "Caution: "; rvm use 2.0.0-p0@rails
-    echo "=============================="
-  fi
-  rails_apps_composer $@
+# Video Downloads
+function ydl() {
+  download_dir="${HOME}/Downloads/Videos/Scripted"
+  list_file="${HOME}/Code/scripts/downloads/videos.list"
+  opts="-ikwco '${download_dir}/%(extractor)s/%(title)s/%(title)s-%(id)s.%(ext)s' --sub-lang en --no-post-overwrites"
+  opts="${opts} --restrict-filenames --write-info-json --all-subs"
+  if [ -z $1 ]; then opts="${opts} -a ${list_file}"; else opts="${opts} $1"; fi
+  echo "youtube-dl $opts"
+  echo "================"
+  eval youtube-dl $opts
 }
