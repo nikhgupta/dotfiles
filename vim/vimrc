@@ -65,7 +65,6 @@
 "     - https://github.com/vgod/vimrc
 "     - https://github.com/humiaozuzu/dot-vimrc
 "     - https://github.com/sontek/dotfiles
-"     - https://github.com/nvie/vimrc (originally, based on it)
 "     - https://github.com/mathiasbynens/dotfiles
 "     - https://github.com/skwp/dotfiles
 "     - https://github.com/holman/dotfiles
@@ -74,6 +73,7 @@
 "     - https://github.com/garybernhardt/dotfiles
 "     - https://github.com/rtomayko/dotfiles
 "     - https://github.com/gf3/dotfiles
+"     - https://github.com/nvie/vimrc (originally, based on it)
 " }}}
 " Completed: """""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   - recreate folds when reloading a file?
