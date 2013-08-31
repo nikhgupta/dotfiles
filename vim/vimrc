@@ -19,17 +19,67 @@
 "   While much of it is beneficial for general use, I would
 "   recommend picking out the parts you want and understand.
 "
+"   Hello, I am Nikhil Gupta, and
 "   You can find me at http://nikhgupta.com
-
+"
+" NORC: """"""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   To start vim without using this .vimrc file, use:
 "     vim -u NORC
 "
 "   To start vim without loading any .vimrc or plugins, use:
 "     vim -u NONE
-
-"   Use vim settings, rather then vi settings (much better!)
-"   This must be first, because it changes other options as a side effect.
+" }}}
+" Sections: """"""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "
+"     => Variable declaration to be used in this file
+"     => Custom functions to be used in this file
+"     => Load ~/.vimrc.before
+"     => Make this configuration cross-platform
+"     => NeoBundle and other Vim plugins
+"     => Editing behaviour of Vim
+"     => General behaviour of Vim
+"     => Shell behaviour for Vim
+"     => GUI behaviour of Vim
+"     => Syntax highlighting and Search behaviour
+"     => Folding behaviour of Vim
+"     => Matching and Auto-Command behaviours
+"     => Shortcut mappings
+"     => Filetype specific handling
+"     => Common abbreviations / misspellings
+"     => Custom functions
+"     => Reload Vim configuration automatically?
+"     => Extra vi-compatibility
+"     => Load ~/.vimrc.after
+"
+" }}}
+" TODOs: """""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
+"   - make airline work
+"   - use patched fonts for AirLine
+"   - verify and reinstall bundles
+"   - search for a suitable autocompletion bundle
+"   - recreate MyFoldText() function based on: http://git.io/7QA1Dg
+"   - open links in text files using a shortcut
+"   - create sections, vis-a-vis http://git.io/aDaz_g
+"   - read and implement vim configuration from:
+"     - https://github.com/amix/vimrc 
+"     - https://github.com/vgod/vimrc
+"     - https://github.com/humiaozuzu/dot-vimrc
+"     - https://github.com/sontek/dotfiles
+"     - https://github.com/nvie/vimrc (originally, based on it)
+"     - https://github.com/mathiasbynens/dotfiles
+"     - https://github.com/skwp/dotfiles
+"     - https://github.com/holman/dotfiles
+"     - https://github.com/ryanb/dotfiles
+"     - https://github.com/thoughtbot/dotfiles
+"     - https://github.com/garybernhardt/dotfiles
+"     - https://github.com/rtomayko/dotfiles
+"     - https://github.com/gf3/dotfiles
+" }}}
+" Completed: """""""""""""""""""""""""""""""""""""""""""""""""" {{{
+"   - recreate folds when reloading a file?
+"     : use foldlevel and foldlevelstart settings for this purpose
+" }}}
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible                  " No to the total compatibility with the ancient vi
 let mapleader=","                 " change mapleader key configuration
@@ -269,7 +319,7 @@ endif
 " Folding behaviour {{{
 set foldenable                  " enable folding
 set foldcolumn=2                " add a fold column to the left of line-numbers
-set foldlevel=1                 " folds with a higher level will be closed
+set foldlevel=0                 " folds with a higher level will be closed
 set foldlevelstart=0            " start out with everything closed
 set foldmethod=marker           " detect triple-{ style fold markers
 set foldtext=MyFoldText()       " use a custom function for text that appears over folds

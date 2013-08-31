@@ -17,7 +17,24 @@
 " File explorer (needed where ranger is not available)
 " NeoBundleLazy 'Shougo/vimfiler', {'autoload' : { 'commands' : ['VimFiler']}}
 
+" Essential Plugins {{{
+
+  NeoBundle 'matchit.zip'
+
+" }}}
+
+" NeoBundles that make Vim look nicer :) {{{
+
+  " NeoBundle 'nathanaelkane/vim-indent-guides'
+
+  " Airline configuration {{{
+    NeoBundle 'bling/vim-airline'
+    let g:airline_powerline_fonts = 0
+  " }}}
+" }}}
+
 " NeoBundles for Color themes {{{
+  NeoBundle 'Pychimp/vim-luna'
   NeoBundle 'jnurmine/Zenburn'
   NeoBundle 'fugalh/desert.vim'
   NeoBundle 'ciaranm/inkpot'
@@ -27,20 +44,6 @@
   NeoBundle 'wombat256.vim'
   NeoBundle 'Getafe'
   " NeoBundle 'daylerees/colour-schemes', { 'rtp': 'vim-themes/' }
-" }}}
-
-" NeoBundles that make Vim look nicer :) {{{
-  " Powerline configuration {{{
-    NeoBundle 'Lokaltog/vim-powerline'
-    let g:Powerline_symbols = 'unicode'
-  " }}}
-
-  " Airline configuration (experimental - disabled) {{{
-    " NeoBundle 'bling/vim-airline'
-    " let g:airline_powerline_fonts = 0
-  " }}}
-
-  NeoBundle 'nathanaelkane/vim-indent-guides'
 " }}}
 
 " Some awesome NeoBundle and their settings {{{
