@@ -53,15 +53,11 @@
 "
 " }}}
 " TODOs: """""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
-"   - make airline work
-"   - use patched fonts for AirLine
-"   - verify and reinstall bundles
 "   - search for a suitable autocompletion bundle
 "   - recreate MyFoldText() function based on: http://git.io/7QA1Dg
-"   - open links in text files using a shortcut
 "   - create sections, vis-a-vis http://git.io/aDaz_g
 "   - read and implement vim configuration from:
-"     - https://github.com/amix/vimrc 
+"     - https://github.com/amix/vimrc
 "     - https://github.com/vgod/vimrc
 "     - https://github.com/humiaozuzu/dot-vimrc
 "     - https://github.com/sontek/dotfiles
@@ -74,10 +70,15 @@
 "     - https://github.com/rtomayko/dotfiles
 "     - https://github.com/gf3/dotfiles
 "     - https://github.com/nvie/vimrc (originally, based on it)
+"   - verify and reinstall bundles
 " }}}
 " Completed: """""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   - recreate folds when reloading a file?
 "     : use foldlevel and foldlevelstart settings for this purpose
+"   - make airline work
+"   - use patched fonts for AirLine
+"   - open links in text files using a shortcut
+"     : use `gx` to open anything with `g:netrw_browserx_viewer`
 " }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -85,6 +86,7 @@ set nocompatible                  " No to the total compatibility with the ancie
 let mapleader=","                 " change mapleader key configuration
 
 " Declare some variables for easy VimRC configuration {{{
+  let g:is_mac     = has('mac') || has('macunix') || has('macvim')
   let g:is_windows = has('win16') || has('win32') || has('win64')
 " }}}
 
@@ -162,42 +164,6 @@ let mapleader=","                 " change mapleader key configuration
   filetype plugin indent on       " enable detection, plugins and indenting in one step
 " }}}
 
-" Editing behaviour {{{
-set nojoinspaces                " prevents inserting two spaces after punctuation on a join (J)
-set virtualedit=onemore         " allow cursor one character beyond the end of current line
-set fileformats="unix,dos,mac"  " EOL formats that will be tried when starting/reading buffers
-set formatoptions+=1            " When wrapping paragraphs, don't end lines with 1-letter words (looks stupid)
-set backspace=indent,eol,start  " allow backspacing over everything in insert mode
-set pastetoggle=<F2>            " when in insert mode, press <F2> to go to paste mode, where you can paste mass data that won't be autoindented
-set showmatch                   " set show matching parenthesis
-" set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion,  FIXME?
-
-" tab related matters
-set tabstop=2                   " a tab is two spaces
-set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
-set expandtab                   " expand tabs by default (overloadable per file type later)
-
-" indentation related matters
-set autoindent                  " always set autoindenting on
-set shiftwidth=2                " number of spaces to use for autoindenting
-set copyindent                  " copy the previous indentation on autoindenting
-set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
-set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
-
-" spelling related matters
-if has('syntax')
-  setlocal spell spelllang=en_us
-  set nospell                   " do not spell check by default (overridden filetype-wise later)
-endif
-
-" clipboard related matters
-if has ('x') && has ('gui')     " On Linux use + register for copy-paste
-  set clipboard=unnamedplus
-elseif has ('gui')              " On mac and Windows, use * register for copy-paste
-  set clipboard=unnamed
-endif
-" }}}
-
 " Vim behaviour {{{
 " set encoding
 scriptencoding utf-8
@@ -217,8 +183,9 @@ endif
 set number                      " always show line numbers
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
-set whichwrap=b,s,h,l,<,>,[,]   " allow backspace and cursor keys to move to prev/next line
 set linebreak                   " break long lines at word rather than chars, if wrap is on
+set textwidth=80                " wrap after this many characters in a line
+set whichwrap=b,s,h,l,<,>,[,]   " allow backspace and cursor keys to move to prev/next line
 set cursorline                  " underline the current line, for quick orientation
 set scrolloff=3                 " keep lines off the edges of the screen when scrolling
 " set scrolljump=5                " lines to scroll when cursor leaves screen
@@ -252,6 +219,7 @@ set title                       " change the terminal's title
 set ttyfast                     " always use a fast terminal
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
+set t_vb=                       " remove visual bell character
 
 " other really (ir)relevant matters
 set autoread                    " watch for file changes
@@ -260,7 +228,7 @@ set autochdir                   " automatically change the working directory
 set hidden                      " hide buffers instead of closing them this means that the current buffer can be put to background without being written; and that marks and undo history are preserved.
 set switchbuf=useopen,split     " reveal already opened files from the quickfix window instead of opening new buffers, otherwise split current window to make room for new one.
 set history=1000                " remember more commands and search history
-set viminfo='20,\"80            " read/write a .viminfo file, don't store more than 80 lines of registers
+set viminfo='50,%,<200,s100     " save marks for 50 files, save buffers, not more than 200 lines of register and 100 KiB of data
 set nofsync                     " improves performance -- let OS decide when to flush disk
 
 " undo/redo related matters
@@ -273,11 +241,47 @@ endif
 
 " backup related matters
 set nobackup                    " do not keep backup files, it's 70's style cluttering
+set nowritebackup               " do not make a write backup
 set noswapfile                  " do not write annoying intermediate swap files
 set directory=~/.vim/.tmp,/tmp  " store swap files in one of these directories (in case swapfile is ever turned on)
+" }}}
 
-" Restore cursor position upon reopening files
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" Editing behaviour {{{
+set nojoinspaces                " prevents inserting two spaces after punctuation on a join (J)
+set virtualedit=onemore         " allow cursor one character beyond the end of current line
+set fileformats="unix,dos,mac"  " EOL formats that will be tried when starting/reading buffers
+set formatoptions+=1            " When wrapping paragraphs, don't end lines with 1-letter words (looks stupid)
+set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set pastetoggle=<F2>            " when in insert mode, press <F2> to go to paste mode, where you can paste mass data that won't be autoindented
+set showmatch                   " set show matching parenthesis
+set matchtime=2                 " show matching parenthesis for 0.2 seconds
+" set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion,  FIXME?
+syntax enable                   " enable syntax highlighting
+
+" tab related matters
+set tabstop=2                   " a tab is two spaces
+set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
+set expandtab                   " expand tabs by default (overloadable per file type later)
+
+" indentation related matters
+set autoindent                  " always set autoindenting on
+set shiftwidth=2                " number of spaces to use for autoindenting
+set copyindent                  " copy the previous indentation on autoindenting
+set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
+set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
+
+" spelling related matters
+if has('syntax')
+  setlocal spell spelllang=en_us
+  set nospell                   " do not spell check by default (overridden filetype-wise later)
+endif
+
+" clipboard related matters
+if has ('x') && has ('gui')     " On Linux use + register for copy-paste
+  set clipboard=unnamedplus
+elseif has ('gui')              " On mac and Windows, use * register for copy-paste
+  set clipboard=unnamed
+endif
 " }}}
 
 " Shell behaviour {{{
@@ -309,6 +313,7 @@ set incsearch                   " show search matches as you type
 set ignorecase                  " by default, the search should ignore case
 set smartcase                   " ignore case if search pattern is all lowercase, case-sensitive otherwise
 set gdefault                    " search/replace 'globally' (on a line) by default
+set magic                       " use magic mode when searching/replacing
 
 if has("gui_running") || &t_Co > 2
   syntax on                     " switch syntax highlighting on, when the terminal has colors
@@ -343,6 +348,9 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
   autocmd InsertEnter * :set number
   autocmd InsertLeave * :set relativenumber
 
+  " Restore cursor position upon reopening files
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
 " }}}
 
 " Shortcut mappings {{{
@@ -357,6 +365,10 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
     " Swap implementations of ` and ' jump to markers
     nnoremap ' `
     nnoremap ` '
+
+    " Swap implementations of 0 and ^
+    nnoremap 0 ^
+    nnoremap ^ 0
   " }}}
 
   " mappings created to avoid any accidental hits {{{
@@ -427,8 +439,14 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
 
   " editing/formatting related mappings {{{
 
+    " quick save a file
+    nnoremap <leader>w :w!<CR>
+
     " sudo to write
     cmap w!! w !sudo tee % >/dev/null
+
+    " strip all trailing whitespace from a file and save it
+    nnoremap <silent> <leader>W  :%s/\v<C-v><C-m>//e<CR>:retab<CR>:%s/\s\+$//e<CR>:let @/=''<CR>:w<CR>
 
     " view changes in the current buffer as compared to the last saved document
     nnoremap <leader>ds :DiffSaved<CR>
@@ -492,14 +510,15 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
   " search/replace related mappings {{{
 
     " use really magic mode for search patterns
-    nnoremap / /\v
-    vnoremap / /\v
+    " 01-09-13 03:03:06 - using `magic` mode, instead.
+    " nnoremap / /\v
+    " vnoremap / /\v
 
     " run Ack fast
     nnoremap <leader>a :Ack<Space>
 
     " clears the search register
-    nmap <silent> <leader>/ :nohlsearch<CR>
+    nmap <silent> <leader><cr> :nohlsearch<CR>
 
     " keep search matches in the middle of the window and pulse the line when moving
     " to them (no need to map to: Nzz hence)
@@ -514,6 +533,9 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
   " }}}
 
   " clipboard related mappings {{{
+
+    " toggle paste mode on and off
+    map <leader>pp :setlocal paste!<cr>
 
     " yank/paste to the OS clipboard with ,y and ,p
     " (not required, if using 'unnamed' clipboard on OS)
@@ -572,9 +594,6 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
 
   " mappings that provide some special behaviours {{{
 
-    " strip all trailing whitespace from a file and save it
-    nnoremap <silent> <leader>W  :%s/\v<C-v><C-m>//e<CR>:retab<CR>:%s/\s\+$//e<CR>:let @/=''<CR>:w<CR>
-
     " open/close QuickFix window using <l>f
     nmap <silent> <leader>f :QFix<CR>
 
@@ -598,7 +617,7 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
   " }}}
 
   " OSX specific mappings {{{
-  if has('gui_macvim')
+  if g:is_mac
 
     " indentation related
     omap <D-]> >>
@@ -894,14 +913,14 @@ endif
 " }}}
 
 " Reload Vim Configuration automatically (FIXME??) {{{
-  if has("autocmd")
-    augroup AutoReloadVimRC
-      au!
-      " automatically reload vimrc when it's saved
-      au BufWritePost $MYVIMRC so $MYVIMRC
-      au BufWritePost $MYVIMRC call Pl#Load()
-    augroup END
-  endif
+  " if has("autocmd")
+    " augroup AutoReloadVimRC
+      " au!
+      " " automatically reload vimrc when it's saved
+      " au BufWritePost $MYVIMRC so $MYVIMRC
+      " au BufWritePost $MYVIMRC call Pl#Load()
+    " augroup END
+  " endif
 " }}}
 
 " Extra vi-compatibility {{{

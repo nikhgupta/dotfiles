@@ -1,5 +1,5 @@
 " Use a nice font
-set guifont=Menlo:h13
+set guifont=Monaco\ For\ Powerline:h12
 
 " GUI Options {{{
   set guioptions-=T   " Remove the toolbar
