@@ -1,12 +1,12 @@
 " VimProc to asynchronously run commands (NeoBundle, Unite) {{{
-  NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+  " NeoBundle 'Shougo/vimproc', {
+      " \ 'build' : {
+      " \     'windows' : 'make -f make_mingw32.mak',
+      " \     'cygwin' : 'make -f make_cygwin.mak',
+      " \     'mac' : 'make -f make_mac.mak',
+      " \     'unix' : 'make -f make_unix.mak',
+      " \    },
+      " \ }
 " }}}
 
 " Unite. The interface to rule almost everything {{{
@@ -14,25 +14,14 @@
   call SourceIfReadable("~/.vim/unite.vim")
 " }}}
 
-" File explorer (needed where ranger is not available)
-" NeoBundleLazy 'Shougo/vimfiler', {'autoload' : { 'commands' : ['VimFiler']}}
-
-" Essential Plugins {{{
-
-  NeoBundle 'matchit.zip'
-
-" }}}
-
 " NeoBundles that make Vim look nicer :) {{{
-
-  " NeoBundle 'nathanaelkane/vim-indent-guides'
-
-  " Airline configuration {{{
-    NeoBundle 'bling/vim-airline'
+  NeoBundle 'bling/vim-airline' " {{{
+    " settings {{{
     let g:airline_powerline_fonts = 1
     let g:airline_left_alt_sep = ''
     let g:airline_right_alt_sep = ''
     let g:airline_theme = 'solarized'
+    " }}}
   " }}}
 " }}}
 
@@ -49,48 +38,134 @@
   " NeoBundle 'daylerees/colour-schemes', { 'rtp': 'vim-themes/' }
 " }}}
 
-" Some awesome NeoBundle and their settings {{{
+" NeoBundles for File Browsing {{{
 
-  " NERDTree settings {{{
-    NeoBundle 'scrooloose/nerdtree'
-    " Put focus to the NERD Tree with F3 (tricked by quickly closing it and
-    " immediately showing it again, since there is no :NERDTreeFocus command)
-    nmap <leader>n :NERDTreeClose<CR>:NERDTreeToggle<CR>
-    nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
-    nmap <leader>N :NERDTreeClose<CR>
+  NeoBundle 'scrooloose/nerdtree' " {{{
+    " todos: {{{
+    "    - Put focus to the NERD Tree with F2 (tricked by quickly closing it and
+    "      immediately showing it again, since there is no :NERDTreeFocus command)
+    " }}}
+    " settings {{{
+      " change NerdTree's appearance
+      let NERDTreeWinPos    = "left"
+      let NERDTreeWinSize   = 30
+      let NERDChristmasTree = 0
 
-    " Store the bookmarks file
-    let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
+      " Show hidden files, and bookmarks
+      let NERDTreeShowFiles     = 1
+      let NERDTreeShowHidden    = 1
+      let NERDTreeShowBookmarks = 1
 
-    " Show the bookmarks table on startup
-    let NERDTreeShowBookmarks=1
+      " change directory, whenever tree root is changed
+      let NERDTreeChDirMode = 2
 
-    " Show hidden files, too
-    let NERDTreeShowFiles=1
-    let NERDTreeShowHidden=1
+      " Quit on opening files from the tree
+      let NERDTreeQuitOnOpen = 0
 
-    " Quit on opening files from the tree
-    let NERDTreeQuitOnOpen=0
+      " Highlight the selected entry in the tree
+      let NERDTreeHighlightCursorline = 1
 
-    " Highlight the selected entry in the tree
-    let NERDTreeHighlightCursorline=1
+      " Use a single click to fold/unfold directories and a double click to open files
+      let NERDTreeMouseMode = 2
 
-    " Use a single click to fold/unfold directories and a double click to open
-    " files
-    let NERDTreeMouseMode=2
+      " Store the bookmarks file
+      let NERDTreeBookmarksFile = expand("$HOME/.vim/NERDTreeBookmarks")
 
-    " Don't display these kinds of files
-    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$' ]
+      " Don't display these kinds of files
+      let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.DS_Store' ]
+    " }}}
+    " key mappings {{{
+      nmap <leader>n :NERDTreeClose<CR>:NERDTreeToggle<CR>
+      nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
+      nmap <leader>N :NERDTreeClose<CR>
+    " }}}
 
   " }}}
+
+  " File explorer (needed where ranger is not available)
+  " NeoBundleLazy 'Shougo/vimfiler', {'autoload' : { 'commands' : ['VimFiler']}}
+
+" }}}
+
+" Code Completion {{{
+
+  " OmniCompletion behaviour {{{
+    set cot-=preview                "disable doc preview in omnicomplete
+    if has("autocmd") && exists("+omnifunc")
+      " Enable omni completion for filetypes (Ctrl-X Ctrl-O)
+      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      autocmd FileType c set omnifunc=ccomplete#Complete
+      autocmd filetype css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType java set omnifunc=javacomplete#Complete
+
+      " use syntax complete if nothing else available
+      autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+    endif
+  " }}}
+
+  " Use Snippets {{{
+    " has dependencies
+    NeoBundle 'tomtom/tlib_vim'
+    NeoBundle 'MarcWeber/vim-addon-mw-utils'
+    NeoBundle 'honza/snipmate-snippets'
+
+    NeoBundle 'garbas/vim-snipmate'
+  " }}}
+" }}}
+
+" Improve our editing pleasure with some NeoBundles {{{
+
+  " Surround plugin {{{
+    NeoBundle 'tpope/vim-surround'
+  " }}}
+
+  " NerdCommenter {{{
+    NeoBundle 'scrooloose/nerdcommenter'
+    let NERDSpaceDelims = 1
+    " let NERDRemoveExtraSpaces = 1
+  " }}}
+
+  " Tabularize {{{
+    NeoBundle 'godlygeek/tabular'
+    nmap <leader>a= :Tabularize /=<CR>
+    vmap <leader>a= :Tabularize /=<CR>
+    nmap <leader>a: :Tabularize /:\zs<CR>
+    vmap <leader>a: :Tabularize /:\zs<CR>
+  " }}}
+
+  " Vim Unimpaired {{{
+    " handy pair of brackets
+    NeoBundle 'tpope/vim-unimpaired'
+  " }}}
+
+  " CloseTag - for HTML and XML files {{{
+    NeoBundle 'closetag.vim'
+  " }}}
+
+  " Narrow Region - Only modify a part of the file (no settings specified) {{{
+    NeoBundle 'chrisbra/NrrwRgn'
+    " TODO: create commands that allow selecting several lines individually
+    " using the :NRPrepare command and then edit them using :NRMulti command
+  " }}}
+
+" }}}
+
+" Code / Development Helpers {{{
+
+  " Syntastic - easy syntax checking {{{
+    NeoBundle 'scrooloose/syntastic'
+  " }}}
+
+" }}}
+
+" Some awesome NeoBundle and their settings {{{
 
   " Gundo :: awesome redo-undo {{{
     NeoBundle 'sjl/gundo.vim'
     nnoremap <F6> :GundoToggle<CR>
-  " }}}
-
-  " Surround plugin {{{
-    NeoBundle 'tpope/vim-surround'
   " }}}
 
   " Scratch Buffer {{{
@@ -103,11 +178,6 @@
   " CtrlP - Quickly search for a file/buffer {{{
     NeoBundle 'kien/ctrlp.vim'
     let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-  " }}}
-
-  " Supertab {{{
-    NeoBundle 'ervandew/supertab'
-    let g:SuperTabSetDefaultCompletionType = "context"
   " }}}
 
   " YankRing (disabled) {{{
@@ -148,52 +218,6 @@
     NeoBundle 'Lokaltog/vim-easymotion'
     hi link EasyMotionTarget ErrorMsg
     hi link EasyMotionShade  Comment
-  " }}}
-
-  " Syntastic - easy syntax checking {{{
-    NeoBundle 'scrooloose/syntastic'
-  " }}}
-
-" }}}
-
-" Improve our editing pleasure with some NeoBundles {{{
-
-  " NerdCommenter {{{
-    NeoBundle 'scrooloose/nerdcommenter'
-    let NERDSpaceDelims = 1
-    " let NERDRemoveExtraSpaces = 1
-  " }}}
-
-  " Tabularize {{{
-    NeoBundle 'godlygeek/tabular'
-    nmap <leader>a= :Tabularize /=<CR>
-    vmap <leader>a= :Tabularize /=<CR>
-    nmap <leader>a: :Tabularize /:\zs<CR>
-    vmap <leader>a: :Tabularize /:\zs<CR>
-  " }}}
-
-  " Vim Unimpaired {{{
-    " handy pair of brackets
-    NeoBundle 'tpope/vim-unimpaired'
-  " }}}
-
-  " CloseTag - for HTML and XML files {{{
-    NeoBundle 'closetag.vim'
-  " }}}
-
-  " Narrow Region - Only modify a part of the file (no settings specified) {{{
-    NeoBundle 'chrisbra/NrrwRgn'
-    " TODO: create commands that allow selecting several lines individually
-    " using the :NRPrepare command and then edit them using :NRMulti command
-  " }}}
-
-  " Use Snippets {{{
-    " has dependencies
-    NeoBundle 'tomtom/tlib_vim'
-    NeoBundle 'MarcWeber/vim-addon-mw-utils'
-    NeoBundle 'honza/snipmate-snippets'
-
-    NeoBundle 'garbas/vim-snipmate'
   " }}}
 
 " }}}
@@ -292,10 +316,19 @@
 " Other helpful NeoBundles {{{
   " Rename current file nicely
   NeoBundle 'Rename2'
+  NeoBundle 'matchit.zip'
+" }}}
 
-  " Disabled Plugins {{{
+" Disabled Plugins {{{
     " NeoBundle 'YankRing.vim'
     " NeoBundle 'nvie/vim-flake8'
     " NeoBundle 'ervandew/screen'
-  " }}}
+
+    " VimFiler {{{
+        " NeoBundle 'Shougo/vimfiler.vim'
+        " let g:vimfiler_as_default_explorer = 1
+        " nnoremap <silent> [unite]v :<C-u>VimFilerBufferDir -quit<CR>
+        " nnoremap <silent> [unite]p :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
+        " nnoremap <silent> [unite]i :<C-u>VimFiler -split -explorer -status -simple -winwidth=30 -no-quit<CR>
+    " }}}
 " }}}

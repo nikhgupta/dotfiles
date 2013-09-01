@@ -114,3 +114,20 @@ nnoremap <silent> [unite]t  :<C-u>Unite -auto-resize -buffer-name=tags tag tag/f
   "     u     :     open bookmarks, recent files and other files (recursively)
   "     y     :     list available clipboard contents
 " }}}
+
+augroup vimrc
+  autocmd FileType unite call s:unite_my_settings()
+augroup END"
+function! s:unite_my_settings()
+  " nmap <buffer> <ESC> <Plug>(unite_exit)
+  " imap <buffer> jj <Plug>(unite_insert_leave)
+  " imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  " nnoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+  " inoremap <silent><buffer><expr> s unite#smart_map('s', unite#do_action('split'))
+  " nnoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+  " inoremap <silent><buffer><expr> v unite#smart_map('v', unite#do_action('vsplit'))
+  " nnoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  " inoremap <silent><buffer><expr> f unite#smart_map('f', unite#do_action('vimfiler'))
+  " nnoremap <silent><buffer><expr> e unite#smart_map('e', unite#do_action('open'))
+  " inoremap <silent><buffer><expr> e unite#smart_map('e', unite#do_action('open'))
+endfunction

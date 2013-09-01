@@ -1,11 +1,30 @@
-" Use a nice font
-set guifont=Monaco\ For\ Powerline:h12
+" Use a nice font on the specific OS {{{
+if g:is_mac
+  set guifont=Monaco\ For\ Powerline:h12
+elseif g:is_windows
+    set guifont=Bitstream\ Vera\ Sans\ Mono:h11
+elseif g:is_linux
+    set guifont=Monospace\ 11
+endif
+" }}}
 
-" GUI Options {{{
+" Open MacVim in fullscreen mode {{{
+if g:is_macvim
+  set fuoptions=maxvert,maxhorz
+  au GUIEnter * set fullscreen
+endif
+" }}}
+
+" Adjust the GUI accordingly {{{
   set guioptions-=T   " Remove the toolbar
-  " set guioptions-=r   " Remove the right scrollbar
   set guioptions-=m   " Remove the menu
   set guioptions+=c   " Use console dialogs
+
+  " remove scrollbars
+  set guioptions-=r
+  set guioptions-=R
+  set guioptions-=l
+  set guioptions-=L
 " }}}
 
 " Disable cursor blinking and set it to be a block
