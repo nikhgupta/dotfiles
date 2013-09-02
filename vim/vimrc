@@ -73,6 +73,8 @@
 "   - implement sessions http://bit.ly/1e36WmX
 "   - line numbers must use 4 columns
 "   - implement Ranger file browser
+"   - display syntax highlighting in foldtext
+"   - create a command to run arbitrary shell and ruby source and replace content-in-place
 "   - auto-open fold when a search match is found or when it is jumped upon
 "   - integrate a vim-enabled notes manager
 "   - integrate a vim-enabled scripts manager
@@ -85,7 +87,6 @@
 "     - https://github.com/garybernhardt/dotfiles
 "     - https://github.com/rtomayko/dotfiles
 "     - https://github.com/gf3/dotfiles
-"     - https://github.com/nvie/vimrc (originally, based on it)
 "   - verify and reinstall bundles
 " }}}
 " Completed: """""""""""""""""""""""""""""""""""""""""""""""""" {{{
@@ -99,11 +100,36 @@
 "     - https://github.com/humiaozuzu/dot-vimrc
 "     - https://github.com/sontek/dotfiles
 "     - https://github.com/mathiasbynens/dotfiles
+"     - https://github.com/nvie/vimrc (originally, based on it)
 " }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible                                        " No to the total compatibility with the ancient vi
 let mapleader=","                                       " change mapleader key configuration
+
+" Custom functions for easy VimRC configuration {{{
+  " vim: source a file, only if we can read it :) {{{
+  " TODO: change this function to include a _name before
+  "       and name_ file afterwards
+  function! SourceIfReadable(file)
+    if filereadable(expand(a:file))
+      execute "source" expand(a:file)
+    endif
+  endfunction " }}}
+  " vim: ensure that a directory exists {{{
+  function! EnsureExists(path)
+    if !isdirectory(expand(a:path))
+      call mkdir(expand(a:path), 'p')
+    endif
+  endfunction
+  " }}}
+" }}}
+" Declare some variables for easy VimRC configuration {{{
+  let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
+  let g:is_macvim  = has('gui_macvim')
+  let g:is_linux   = has('linux')
+  let g:is_windows = has('win16') || has('win32') || has('win64')
+" }}}
 
 " Cross Platform Compatibility {{{
   " Better Unix / Windows compatibility
@@ -127,29 +153,6 @@ let mapleader=","                                       " change mapleader key c
       set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
     endif
   endif
-" }}}
-" Custom functions for easy VimRC configuration {{{
-  " vim: source a file, only if we can read it :) {{{
-  " TODO: change this function to include a _name before
-  "       and name_ file afterwards
-  function! SourceIfReadable(file)
-    if filereadable(expand(a:file))
-      execute "source" expand(a:file)
-    endif
-  endfunction " }}}
-  " vim: ensure that a directory exists {{{
-  function! EnsureExists(path)
-    if !isdirectory(expand(a:path))
-      call mkdir(expand(a:path), 'p')
-    endif
-  endfunction
-  " }}}
-" }}}
-" Declare some variables for easy VimRC configuration {{{
-  let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
-  let g:is_macvim  = has('gui_macvim')
-  let g:is_linux   = has('linux')
-  let g:is_windows = has('win16') || has('win32') || has('win64')
 " }}}
 
 call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before, if exists
@@ -260,44 +263,45 @@ set wildignore+=tmp/**              " ...
 set wildignore+=*.png,*.jpg,*.gif   " ... phew!!
 
 " completion related matters
-set completeopt=menuone,longest,preview " don't select first item, follow typing in autocomplete
-set pumheight=6                         " Keep a small completion window
+set completeopt+=menuone,longest  " don't select first item, follow typing in autocomplete
+set completeopt-=preview          " disable doc preview in omnicomplete
+set pumheight=6                   " Keep a small completion window
 
 " terminal related matters
-set title                       " change the terminal's title
-set ttyfast                     " always use a fast terminal
-set visualbell                  " don't beep
-set noerrorbells                " don't beep
-set t_vb=                       " remove visual bell character
+set title                         " change the terminal's title
+set ttyfast                       " always use a fast terminal
+set visualbell                    " don't beep
+set noerrorbells                  " don't beep
+set t_vb=                         " remove visual bell character
 
 " other really (ir)relevant matters
-set autoread                    " watch for file changes
-" set autowrite                   " auto write file when moving away from it.
-set autochdir                   " automatically change the working directory
-set hidden                      " hide buffers instead of closing them this means that the current buffer can be put to background without being written; and that marks and undo history are preserved.
-set switchbuf=useopen,split     " reveal already opened files from the quickfix window instead of opening new buffers, otherwise split current window to make room for new one.
-set history=1000                " remember more commands and search history
-set viminfo='50,%,<200,s100     " save marks for 50 files, save buffers, not more than 200 lines of register and 100 KiB of data
-set nofsync                     " improves performance -- let OS decide when to flush disk
+set autoread                      " watch for file changes
+" set autowrite                     " auto write file when moving away from it.
+set autochdir                     " automatically change the working directory
+set hidden                        " hide buffers instead of closing them this means that the current buffer can be put to background without being written; and that marks and undo history are preserved.
+set switchbuf=useopen,split       " reveal already opened files from the quickfix window instead of opening new buffers, otherwise split current window to make room for new one.
+set history=1000                  " remember more commands and search history
+set viminfo='50,%,<200,s100       " save marks for 50 files, save buffers, not more than 200 lines of register and 100 KiB of data
+set nofsync                       " improves performance -- let OS decide when to flush disk
 
 " undo/redo related matters
 if has('persistent_undo')
-    set undofile                " So is persistent undo ...
-    set undolevels=1000         " Maximum number of changes that can be undone
-    set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+    set undofile                  " So is persistent undo ...
+    set undolevels=1000           " Maximum number of changes that can be undone
+    set undoreload=10000          " Maximum number lines to save for undo on a buffer reload
     set undodir=~/.vim/.undo,~/tmp,/tmp
 endif
 
 " shell related matters
-if !g:is_windows        " use bash with login shell and
-  set shell=bash\ -i    " interactive mode overwrite in vimrc.after
-endif                   " if needed
+if !g:is_windows                  " use bash with login shell and
+  set shell=bash\ -i              " interactive mode overwrite in vimrc.after
+endif                             " if needed
 
 " backup related matters
-set nobackup                    " do not keep backup files, it's 70's style cluttering
-set nowritebackup               " do not make a write backup
-set noswapfile                  " do not write annoying intermediate swap files
-set directory=~/.vim/.tmp,/tmp  " store swap files in one of these directories (in case swapfile is ever turned on)
+set nobackup                      " do not keep backup files, it's 70's style cluttering
+set nowritebackup                 " do not make a write backup
+set noswapfile                    " do not write annoying intermediate swap files
+set directory=~/.vim/.tmp,/tmp    " store swap files in one of these directories (in case swapfile is ever turned on)
 " }}}
 " Behaviour: GUI {{{
 set background=dark             " make vim to use dark background on terminal
@@ -390,6 +394,10 @@ if has("gui_running") || &t_Co > 2
   set hlsearch                  " enable highlighting of search items
 endif
 " }}}
+" Behaviour: CTags {{{
+set tags=./tags;/                  " find and load tags file up until root
+set tags+=~/.ctags/*/*/tags;       " load all tags files in the ~/.ctags directory: http://bit.ly/19d59YJ
+" }}}
 
 set exrc                                                " enable per-directory .vimrc files
 set secure                                              " disable unsafe commands in them
@@ -399,4 +407,5 @@ call SourceIfReadable('~/.vim/lib/mappings.vim')        " shortcut key mappings
 call SourceIfReadable('~/.vim/lib/autocommands.vim')    " auto-commands for various filetypes, settings, etc.
 call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
 call SourceIfReadable('~/.vim/lib/autocorrect.vim')     " auto-corrections for spellings
+call SourceIfReadable('~/.vim/lib/tipsandtricks.vim')   " quick tips and tricks go in this file, before classification
 call SourceIfReadable('~/.vimrc.after')                 " useful to override vimrc configuration

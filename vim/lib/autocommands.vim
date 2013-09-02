@@ -1,6 +1,29 @@
 if has("autocmd")
   match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'  " highlight conflict markers
-  augroup miscelleneous           " {{{
+
+  augroup relevant_ctag           " show tags only for the relevant language: http://bit.ly/19d5MBE {{{
+      autocmd!
+      autocmd FileType * setl tags<
+      autocmd FileType * exe 'setl tags+=~/.ctags/' . &filetype . '/*/tags'
+  augroup END " }}}
+  augroup omni_complete           " declare functions used for omni-completion {{{
+    au!
+    if exists('+omnifunc')
+      " Enable omni completion for filetypes (Ctrl-X Ctrl-O)
+      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      autocmd FileType c set omnifunc=ccomplete#Complete
+      autocmd filetype css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType java set omnifunc=javacomplete#Complete
+
+      " use syntax complete if nothing else available
+      autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+    endif
+  augroup end
+" }}}
+  augroup miscelleneous           " miscelleneous auto-commands {{{
     au!
     " toggle relative line numbering
     autocmd FocusLost   * :set number
@@ -10,16 +33,15 @@ if has("autocmd")
 
     " Restore cursor position upon reopening files
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-  augroup end " }}}
-  augroup invisible_chars         " {{{
-    au!
 
     " Show invisible characters in all of these files
     autocmd filetype vim setlocal list
     autocmd filetype python,rst setlocal list
     autocmd filetype ruby setlocal list
     autocmd filetype javascript,css setlocal list
-  augroup end "}}}
+  augroup end " }}}
+
+  " filetype-specific auto-commands
   augroup vim_files               " {{{
       au!
 

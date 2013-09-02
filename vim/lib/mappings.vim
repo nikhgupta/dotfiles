@@ -252,6 +252,14 @@
   cnoremap <C-N> <Down>
 " }}}
 
+" ctags related mappings {{{
+  nnoremap <silent> <leader>j :tnext<cr>zt
+  nnoremap <silent> <leader>J :tprev<cr>zt
+  nnoremap <silent> <leader>k :pop<cr>zt
+  map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+  map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" }}}
+
 " mappings that provide some expected behaviours {{{
   " make p in Visual mode replace the selected text with the yank register
   vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
@@ -322,4 +330,13 @@ if g:is_mac
   map  <D-9> 9gt
   imap <D-9> <Esc>9gt
 endif
+" }}}
+
+" abbreviations: {{{
+  iabbr NG@  Nikhil Gupta
+  iabbr n@@  me@nikhgupta.com
+  iabbr g@@  mestoic@gmail.com
+  iabbr w@@  nikhil@wickeddevelopers.com
+  iabbr nsig --<cr>Nikhil Gupta<cr>me@nikhgupta.com
+  iabbr wsig --<cr>Nikhil Gupta<cr>nikhil@wickeddevelopers.com
 " }}}
