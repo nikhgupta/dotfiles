@@ -82,9 +82,6 @@
 
   " }}}
 
-  " File explorer (needed where ranger is not available)
-  " NeoBundleLazy 'Shougo/vimfiler', {'autoload' : { 'commands' : ['VimFiler']}}
-
 " }}}
 
 " Code Completion {{{
@@ -118,45 +115,35 @@
 
 " Improve our editing pleasure with some NeoBundles {{{
 
-  " Surround plugin {{{
-    NeoBundle 'tpope/vim-surround'
+  NeoBundle 'tpope/vim-surround'         " surround tags with a given string
+  NeoBundle 'tpope/vim-unimpaired'       " handy pair of brackets
+  NeoBundle 'closetag.vim'               " for HTML and XML files
+  NeoBundle 'scrooloose/syntastic'       " easy syntax checking {{{
+    " settings {{{
+      let g:syntastic_error_symbol = '✗'
+      let g:syntastic_warning_symbol = '⚠'
+      let g:syntastic_always_populate_loc_list = 1
+    " }}}
   " }}}
-
-  " NerdCommenter {{{
-    NeoBundle 'scrooloose/nerdcommenter'
-    let NERDSpaceDelims = 1
-    " let NERDRemoveExtraSpaces = 1
+  NeoBundle 'chrisbra/NrrwRgn'           " Only modify a part of the file {{{
+    " todos: {{{
+      "   - create commands that allow selecting several lines individually
+      "     using the :NRPrepare command and then edit them using :NRMulti command
+    " }}}
   " }}}
-
-  " Tabularize {{{
-    NeoBundle 'godlygeek/tabular'
-    nmap <leader>a= :Tabularize /=<CR>
-    vmap <leader>a= :Tabularize /=<CR>
-    nmap <leader>a: :Tabularize /:\zs<CR>
-    vmap <leader>a: :Tabularize /:\zs<CR>
+  NeoBundle 'scrooloose/nerdcommenter'   " easy comments for the naive {{{
+    " settings {{{
+      let NERDSpaceDelims = 1
+      " let NERDRemoveExtraSpaces = 1
+    " }}}
   " }}}
-
-  " Vim Unimpaired {{{
-    " handy pair of brackets
-    NeoBundle 'tpope/vim-unimpaired'
-  " }}}
-
-  " CloseTag - for HTML and XML files {{{
-    NeoBundle 'closetag.vim'
-  " }}}
-
-  " Narrow Region - Only modify a part of the file (no settings specified) {{{
-    NeoBundle 'chrisbra/NrrwRgn'
-    " TODO: create commands that allow selecting several lines individually
-    " using the :NRPrepare command and then edit them using :NRMulti command
-  " }}}
-
-" }}}
-
-" Code / Development Helpers {{{
-
-  " Syntastic - easy syntax checking {{{
-    NeoBundle 'scrooloose/syntastic'
+  NeoBundle 'godlygeek/tabular'          " easily indent your assignments {{{
+    " key mappings {{{
+      nmap <leader>a= :Tabularize /=<CR>
+      vmap <leader>a= :Tabularize /=<CR>
+      nmap <leader>a: :Tabularize /:\zs<CR>
+      vmap <leader>a: :Tabularize /:\zs<CR>
+    " }}}
   " }}}
 
 " }}}
@@ -323,12 +310,10 @@
     " NeoBundle 'YankRing.vim'
     " NeoBundle 'nvie/vim-flake8'
     " NeoBundle 'ervandew/screen'
-
-    " VimFiler {{{
-        " NeoBundle 'Shougo/vimfiler.vim'
-        " let g:vimfiler_as_default_explorer = 1
-        " nnoremap <silent> [unite]v :<C-u>VimFilerBufferDir -quit<CR>
-        " nnoremap <silent> [unite]p :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
-        " nnoremap <silent> [unite]i :<C-u>VimFiler -split -explorer -status -simple -winwidth=30 -no-quit<CR>
-    " }}}
+    " NeoBundle 'Shougo/vimfiler.vim' {{{
+      " let g:vimfiler_as_default_explorer = 1
+      " nnoremap <silent> [unite]v :<C-u>VimFilerBufferDir -quit<CR>
+      " nnoremap <silent> [unite]p :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
+      " nnoremap <silent> [unite]i :<C-u>VimFiler -split -explorer -status -simple -winwidth=30 -no-quit<CR>
+  " }}}
 " }}}
