@@ -42,6 +42,10 @@ if has("autocmd")
   augroup end " }}}
 
   " filetype-specific auto-commands
+  augroup shell_files             " {{{
+    " TODO: let g:is_bash = 1
+    au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
+  " }}}
   augroup vim_files               " {{{
       au!
 
@@ -125,7 +129,9 @@ if has("autocmd")
   augroup javascript_group_files  " {{{
     au!
 
-    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+    autocmd BufNewFile,BufRead *.json setfiletype json
+
+    autocmd filetype javascript set syntax=javascript
 
     autocmd filetype coffee,javascript setlocal listchars=trail:·,extends:#,nbsp:·
     autocmd filetype coffee,javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
@@ -142,7 +148,7 @@ if has("autocmd")
   augroup textile_files           " {{{
     au!
 
-    autocmd filetype textile setlocal tw=78 wrap
+    autocmd filetype textile setlocal tw=78 wrap spell
 
     " Render YAML front matter inside Textile documents as comments
     autocmd filetype textile syntax region frontmatter start=/\%^---$/ end=/^---$/
@@ -151,11 +157,16 @@ if has("autocmd")
   augroup markdown_files          " {{{
     au!
 
-    autocmd filetype markdown,md setlocal tw=78 wrap
+    autocmd BufRead,BufNewFile *.{md,mkd,mkdn,mdown,markdown} setfiletype ghmarkdown
+    autocmd filetype ghmarkdown setlocal tw=78 wrap spell
 
     " Render YAML front matter inside Markdown documents as comments
-    autocmd filetype markdown,md syntax region frontmatter start=/\%^---$/ end=/^---$/
-    autocmd filetype markdown,md highlight link frontmatter Comment
+    autocmd filetype ghmarkdown syntax region frontmatter start=/\%^---$/ end=/^---$/
+    autocmd filetype ghmarkdown highlight link frontmatter Comment
+
+    " md, markdown, and mk are markdown and define buffer-local preview
+    autocmd filetype ghmarkdown setlocal wrap wrapmargin=2 textwidth=72 nolist
+    autocmd filetype ghmarkdown map <buffer> <leader>p :Mm<CR>
   augroup end "}}}
   augroup php_files               " {{{
     au!

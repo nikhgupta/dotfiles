@@ -36,10 +36,6 @@ set guicursor+=a:block-Cursor
 " Custom tabs label
 set guitablabel=%t\ %m
 
-" set background to light when using GUI
-set background=light
-" set background=dark
-
 " Maximize gvim window
 set lines=999 columns=999
 
@@ -48,7 +44,7 @@ set lines=999 columns=999
     augroup AutoReloadGVimRC
       au!
       au BufWritePost $MYGVIMRC so $MYGVIMRC
-      au BufWritePost $MYGVIMRC call Pl#Load()
+      " au BufWritePost $MYGVIMRC call Pl#Load()
     augroup END
   endif
 " }}}

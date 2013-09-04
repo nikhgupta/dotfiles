@@ -1,4 +1,4 @@
-" Credits: """""""""""""""""""""""""""""""""""""""""""""""""""" {{{
+ Credits: """""""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "
 "            _ _    _                       _        _
 "           (_) |  | |                     | |      ( )
@@ -64,6 +64,7 @@
 " }}}
 " TODOs: """""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   - convert common functionality into a plugin
+"   - display whether working in terminal or gui mode inside the airline statusbar
 "   - revisit: http://learnvimscriptthehardway.stevelosh.com/
 "   - search for a suitable autocompletion bundle
 "   - recreate MyFoldText() function based on: http://git.io/7QA1Dg
@@ -81,11 +82,6 @@
 "   - add spelling related mappings to vim (as well as some other togglers)
 "   - read and implement vim configuration from:
 "     - https://github.com/skwp/dotfiles
-"     - https://github.com/holman/dotfiles
-"     - https://github.com/ryanb/dotfiles
-"     - https://github.com/thoughtbot/dotfiles
-"     - https://github.com/garybernhardt/dotfiles
-"     - https://github.com/rtomayko/dotfiles
 "     - https://github.com/gf3/dotfiles
 "   - verify and reinstall bundles
 " }}}
@@ -95,6 +91,13 @@
 "   - make airline work
 "   - use patched fonts for AirLine
 "   - read and implement vim configuration from:
+"     - https://github.com/zenom/dotfiles
+"     - https://github.com/jferris/config_files
+"     - https://github.com/ryanb/dotfiles
+"     - https://github.com/holman/dotfiles
+"     - https://github.com/thoughtbot/dotfiles
+"     - https://github.com/rtomayko/dotfiles
+"     - https://github.com/garybernhardt/dotfiles
 "     - https://github.com/amix/vimrc
 "     - https://github.com/vgod/vimrc
 "     - https://github.com/humiaozuzu/dot-vimrc
@@ -106,6 +109,7 @@
 
 set nocompatible                                        " No to the total compatibility with the ancient vi
 let mapleader=","                                       " change mapleader key configuration
+let maplocalleader = "\\"
 
 " Custom functions for easy VimRC configuration {{{
   " vim: source a file, only if we can read it :) {{{
@@ -156,32 +160,40 @@ let mapleader=","                                       " change mapleader key c
 " }}}
 
 call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before, if exists
-" NeoBundle: Installation and its settings {{{
+" Vundle: Installation and its settings {{{
 
-  " Auto-install NeoBundle, if not found
-  let iCanHazNeoBundle=1
-  let neobundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
-  if !filereadable(neobundle_readme)
-      echo "Installing NeoBundle.."
+  " Auto-install Vundle, if not found
+  let iCanHazVundle=1
+  let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+  if !filereadable(vundle_readme)
+      echo "Installing Vundle.."
       silent !mkdir -p ~/.vim/bundle
-      silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-      let iCanHazNeoBundle=0
+      silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+      let iCanHazVundle=0
   endif
 
-  " call our NeoBundle setup
-  if has('vim_starting')
-      set runtimepath+=~/.vim/bundle/neobundle.vim/
-  endif
-  call neobundle#rc(expand('~/.vim/bundle/'))
+  " turn filetype detection off (MacOSX Fix: http://bit.ly/17MENzJ)
+  filetype on
+  filetype off
 
-  " let NeoBundle manage NeoBundle
-  NeoBundle 'Shougo/neobundle.vim'
+  " initialize Vundle
+  set rtp+=~/.vim/bundle/vundle/
+  call vundle#rc()
+
+  " let Vundle manage Vundle:
+  Bundle 'gmarik/vundle'
 
   " Use local bundles, if available and then, load our bundles
   call SourceIfReadable("~/.vim/lib/_bundles.vim")
   call SourceIfReadable("~/.vim/lib/bundles.vim")
 
-  " required by NeoBundle
+  " install Bundles, if we just installed Vundle
+  if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    :BundleInstall
+  endif
+
+  " required by Vundle
   filetype plugin indent on       " enable detection, plugins and indenting in one step
   syntax on                       " enable syntax highlighting
 " }}}
@@ -208,6 +220,7 @@ set linebreak                   " break long lines at words, when wrap is on
 set textwidth=80                " wrap after this many characters in a line
 set colorcolumn=+1              " highlight end of textwidth
 set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
+set showbreak=↪                 " string to put at the starting of wrapped lines
 set scrolloff=3                 " keep lines off edges of the screen when scrolling
 " set scrolljump=5                " lines to scroll when cursor leaves screen
 set sidescroll=1                " brings characters in view when side scrolling
@@ -215,6 +228,7 @@ set sidescrolloff=15            " start side-scrolling when n chars are left
 
 " look related matters
 set number                      " always show line numbers
+set numberwidth=4               " number of culumns for line numbers
 set showmode                    " always show what mode we're currently editing in
 set report=0                    " always report number of lines changed
 set cursorline                  " highlight the current line, for quick orientation
@@ -257,7 +271,7 @@ set wildignore+=*sass-cache*        " ...
 set wildignore+=*DS_Store*          " ...
 set wildignore+=vendor/rails/**     " ...
 set wildignore+=vendor/cache/**     " ...
-set wildignore+=*.gem               " ...
+set wildignore+=*.gem,*/out/**      " ...
 set wildignore+=log/**              " ...
 set wildignore+=tmp/**              " ...
 set wildignore+=*.png,*.jpg,*.gif   " ... phew!!
@@ -265,6 +279,7 @@ set wildignore+=*.png,*.jpg,*.gif   " ... phew!!
 " completion related matters
 set completeopt+=menuone,longest  " don't select first item, follow typing in autocomplete
 set completeopt-=preview          " disable doc preview in omnicomplete
+" set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion,  FIXME?
 set pumheight=6                   " Keep a small completion window
 
 " terminal related matters
@@ -281,7 +296,7 @@ set autochdir                     " automatically change the working directory
 set hidden                        " hide buffers instead of closing them this means that the current buffer can be put to background without being written; and that marks and undo history are preserved.
 set switchbuf=useopen,split       " reveal already opened files from the quickfix window instead of opening new buffers, otherwise split current window to make room for new one.
 set history=1000                  " remember more commands and search history
-set viminfo='50,%,<200,s100       " save marks for 50 files, save buffers, not more than 200 lines of register and 100 KiB of data
+set viminfo='500,:100,@100,/20,f1,%,<200    " see :h viminfo to understand what this means :)
 set nofsync                       " improves performance -- let OS decide when to flush disk
 
 " undo/redo related matters
@@ -304,20 +319,22 @@ set noswapfile                    " do not write annoying intermediate swap file
 set directory=~/.vim/.tmp,/tmp    " store swap files in one of these directories (in case swapfile is ever turned on)
 " }}}
 " Behaviour: GUI {{{
-set background=dark             " make vim to use dark background on terminal
+set background=dark             " make vim use dark background
 
 " use colorscheme if we have gui or 256 color support
-if &t_Co >= 256 || has("gui_running")
-  colorscheme solarized
+if &t_Co > 2 && &t_Co < 16
+  set t_Co = 16
+endif
+
+if has("gui_running")
+  colorscheme base16-eighties
   " let g:solarized_termcolors=256
   " let g:solarized_termtrans=1
   " let g:solarized_contrast="high"
   " let g:solarized_visibility="high"
-endif
-
-" Exta settings for the graphical version
-if has("gui_running")
   call SourceIfReadable("~/.gvimrc")
+else
+  colorscheme Tomorrow-Night-Eighties
 endif
 " }}}
 " Behaviour: Editor {{{
@@ -332,9 +349,8 @@ set backspace=indent,eol,start  " allow backspacing over everything in insert mo
 set pastetoggle=<F2>            " when in insert mode, press <F2> to go to paste mode
 set showmatch                   " set show matching parenthesis
 set matchtime=2                 " show matching parenthesis for 0.2 seconds
-" set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion,  FIXME?
 " set cinoptions=b1,g0,N-s,t0,(0,W4 " see :h cinoptions-values for details
-set iskeyword+=_,$,@,%,#        " none of these should be word dividers, so make them not be
+set iskeyword+=_,$,@,%,#,-      " none of these should be word dividers, so make them not be
 
 " tab related matters
 set tabstop=4                   " a tab is two spaces
@@ -387,6 +403,7 @@ set incsearch                   " show search matches as you type
 set ignorecase                  " by default, the search should ignore case
 set smartcase                   " ignore case lowercase, else case-sensitive
 set gdefault                    " search/replace globally (on a line) by default
+set synmaxcol=800               " don't try to highlight lines longer than 800 characters.
 set magic                       " use magic mode when searching/replacing
 
 if has("gui_running") || &t_Co > 2
@@ -407,5 +424,5 @@ call SourceIfReadable('~/.vim/lib/mappings.vim')        " shortcut key mappings
 call SourceIfReadable('~/.vim/lib/autocommands.vim')    " auto-commands for various filetypes, settings, etc.
 call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
 call SourceIfReadable('~/.vim/lib/autocorrect.vim')     " auto-corrections for spellings
-call SourceIfReadable('~/.vim/lib/tipsandtricks.vim')   " quick tips and tricks go in this file, before classification
+" call SourceIfReadable('~/.vim/lib/tipsandtricks.vim')   " quick tips and tricks go in this file, before classification
 call SourceIfReadable('~/.vimrc.after')                 " useful to override vimrc configuration

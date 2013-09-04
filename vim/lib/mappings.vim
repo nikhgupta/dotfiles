@@ -274,6 +274,8 @@
   nmap <silent> <leader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
   " nmap <silent> <leader>co /\v^[<\|=>]{7}( .*\|$)<CR>
 
+  " Panic button
+  nnoremap <f9> mzggg?G'z'          " rot13s the current buffer
 " }}}
 
 " Vim related mappings {{{
@@ -334,9 +336,17 @@ endif
 
 " abbreviations: {{{
   iabbr NG@  Nikhil Gupta
-  iabbr n@@  me@nikhgupta.com
-  iabbr g@@  mestoic@gmail.com
-  iabbr w@@  nikhil@wickeddevelopers.com
+  iabbr WD@  Wicked Developers
+
+  iabbr ng@  me@nikhgupta.com
+  iabbr mg@  mestoic@gmail.com
+  iabbr wd@  nikhil@wickeddevelopers.com
+
+  iabbr ng/  http://nikhgupta.com/
+  iabbr wd/  http://wickeddevelopers.com/
+  iabbr gh/  http://github.com/
+  iabbr ghn/ http://github.com/nikhgupta/
+
   iabbr nsig --<cr>Nikhil Gupta<cr>me@nikhgupta.com
   iabbr wsig --<cr>Nikhil Gupta<cr>nikhil@wickeddevelopers.com
 " }}}

@@ -1,4 +1,4 @@
-" Custom Functions that provide some special behaviour
+" Custom Functions:
 " get current directory path {{{
 function! CurDir()
     return substitute(getcwd(), $HOME, "~", "")
