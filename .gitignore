@@ -3,6 +3,7 @@
 .netrwhist
 !.notempty
 /vim/wiki/
+/vim/sessions/
 .DS_Store
 /vim/bundle/*
 !/vim/bundle/vundle/

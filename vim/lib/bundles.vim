@@ -148,6 +148,26 @@
 " ack:                        power of Ack in Vim {{{
   Bundle 'mileszs/ack.vim'
 " }}}
+" session:                    exended session management {{{
+  " vim-misc is required for vim-session
+  Bundle 'xolox/vim-misc'
+  Bundle 'xolox/vim-session'
+  let g:session_autoload = 'yes'
+  let g:session_autosave = 'yes'
+  let g:session_default_overwrite = 1
+  let g:session_default_to_last = 1
+  let g:session_command_aliases = 1
+
+  nnoremap <leader>qa :SaveSession<CR>:qall<CR>
+" }}}
+" showmarks:                  visual representation of the location marks {{{
+  Bundle 'xsunsmile/showmarks'
+  let g:showmarks_enable = 0
+  " <leader>mt : Toggles ShowMarks on and off. 
+  " <leader>mh : Hides an individual mark. 
+  " <leader>ma : Hides all marks in the current buffer. 
+  " <leader>mm : Places the next available mark. 
+" }}}
 
 " Editor:
 " commentary:                 easy comments for the naive {{{
@@ -195,6 +215,24 @@
 " splitjoin:                  simplifies the transition between multiline and single-line code {{{
   " use gS to split the lines, and gJ to join them.
   Bundle 'AndrewRadev/splitjoin.vim'
+" }}}
+" text objects:               create our own text objects {{{
+  Bundle 'kana/vim-textobj-user'
+  " indentations: i
+  Bundle "austintaylor/vim-indentobject"
+  " symbols: :
+  Bundle "bootleq/vim-textobj-rubysymbol"
+  " columns: c
+  Bundle "coderifous/textobj-word-column.vim"
+  " functions: f
+  Bundle "kana/vim-textobj-function"
+  Bundle "thinca/vim-textobj-function-javascript"
+  " underscored words: _
+  Bundle "lucapette/vim-textobj-underscore"
+  " ruby blocks: r
+  Bundle "nelstrom/vim-textobj-rubyblock"
+  " arguments: a
+  Bundle "vim-scripts/argtextobj.vim"
 " }}}
 
 " Git Related:

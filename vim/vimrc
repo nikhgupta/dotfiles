@@ -193,6 +193,9 @@ call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before
     :BundleInstall
   endif
 
+  " require matchit
+  runtime macros/matchit.vim
+
   " required by Vundle
   filetype plugin indent on       " enable detection, plugins and indenting in one step
   syntax on                       " enable syntax highlighting
