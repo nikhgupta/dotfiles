@@ -1,4 +1,3 @@
-
 " GUI:
 " themes:                     various templates/themes to make code in vim look pretty {{{
   " singles:
@@ -106,6 +105,33 @@
     nmap <Leader>n <plug>NERDTreeTabsToggle<CR>
   " }}}
 " }}}
+" gundo:                      awesome redo-undo {{{
+  Bundle 'sjl/gundo.vim'
+  nnoremap <F4> :GundoToggle<CR>
+" }}}
+" yankring:                   awesome yank history {{{
+  Bundle 'skwp/YankRing.vim'
+  " settings: {{{
+    let g:yankring_min_element_length = 2
+    let g:yankring_history_dir = '$HOME/.vim/.tmp'
+    " let g:yankring_manual_clipboard_check = 0
+    let g:yankring_replace_n_pkey = '<F7>'
+    let g:yankring_replace_n_nkey = '<F8>'
+    " let g:yankring_window_use_horiz = 0  " Use vertical split
+  " }}}
+  " key mappings: {{{
+    nmap <leader>r :YRShow<CR>
+  " }}}
+" }}}
+" clam:                       lightweight plugin to easily run shell commands in vim {{{
+  Bundle 'sjl/clam.vim'
+  nnoremap ! :Clam<space>
+  vnoremap ! :ClamVisual<space>
+" }}}
+" zoomwin:                    easily maximize the current buffer {{{
+  " - Press <Ctrl-W>o to toggle buffer size
+  Bundle 'blueyed/ZoomWin'
+" }}}
 " nerdtree-tabs:              extend the power of nerdtree over tabs {{{
   Bundle "jistr/vim-nerdtree-tabs"
   " let g:nerdtree_tabs_open_on_console_startup=1
@@ -113,17 +139,14 @@
 " rename2:                    quickly rename your files {{{
   Bundle 'Rename2'
 " }}}
-" zoomwin:                    easily maximize the current buffer {{{
-  " - Press <Ctrl-W>o to toggle buffer size
-  Bundle 'blueyed/ZoomWin'
-" }}}
-" clam:                       lightweight plugin to easily run shell commands in vim {{{
-  Bundle 'sjl/clam.vim'
-  nnoremap ! :Clam<space>
-  vnoremap ! :ClamVisual<space>
-" }}}
 " quicktask:                  lightweight task management for vim {{{
   Bundle 'aaronbieber/quicktask'
+" }}}
+" visual-star-search:         start a * or # search from a visual block: http://bit.ly/1dIKVv5{{{
+  Bundle 'nelstrom/vim-visual-star-search'
+" }}}
+" ack:                        power of Ack in Vim {{{
+  Bundle 'mileszs/ack.vim'
 " }}}
 
 " Editor:
@@ -143,6 +166,9 @@
 " repeat:                     enable repeating supported plugin maps with '.' {{{
   " supports plugins namely: commentary, surround, abolish, unimpaired
   Bundle 'tpope/vim-repeat'
+" }}}
+" endwise:                    adds end after if, do, def and several other keywords {{{
+  Bundle 'tpope/vim-endwise'
 " }}}
 " tabular:                    easily indent your assignments {{{
   Bundle 'godlygeek/tabular'
@@ -165,6 +191,10 @@
   " " make pasta use different mappings rather than overloading [p,P]
   " let g:pasta_paste_before_mapping = ',P'
   " let g:pasta_paste_after_mapping = ',p'
+" }}}
+" splitjoin:                  simplifies the transition between multiline and single-line code {{{
+  " use gS to split the lines, and gJ to join them.
+  Bundle 'AndrewRadev/splitjoin.vim'
 " }}}
 
 " Git Related:
@@ -255,6 +285,104 @@
   let g:multi_cursor_quit_key='<Esc>'
 " }}}
 
+" Snippets And Code Completion:
+" neocomplete/neocomplcache:  ultimate auto-completion system for Vim {{{
+  if has('lua')
+    Bundle 'Shougo/neocomplete.vim'
+    " settings: {{{
+      let g:neocomplete#enable_at_startup = 1                 " enable at startup
+      let g:neocomplete#enable_smart_case = 1                 " enable SmartCase
+      let g:neocomplete#sources#syntax#min_keyword_length = 3 " use a minimum syntax keyword length
+      " do not complete automatically on files matching this pattern
+      " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+      " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+    " }}}
+    " key mappings: {{{
+      inoremap <expr><C-g>     neocomplete#undo_completion()
+      inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+      " <CR>: close popup and save indent.
+      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+      function! s:my_cr_function()
+        return neocomplete#smart_close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+      endfunction
+
+      " <TAB>: completion.
+      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+      " <C-h>, <BS>: close popup and delete backword char.
+      inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
+      inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
+      inoremap <expr><C-y>  neocomplete#close_popup()
+      inoremap <expr><C-e>  neocomplete#cancel_popup()
+    " }}}
+  else
+    Bundle 'Shougo/neocomplcache.vim'
+    " settings: {{{
+      let g:neocomplcache_enable_at_startup = 1               " enable at startup
+      let g:neocomplcache_enable_smart_case = 1               " enable SmartCase
+      let g:neocomplcache_min_syntax_length = 3               " use a minimum syntax keyword length
+      " do not complete automatically on files matching this pattern
+      " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+      " let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+    " }}}
+    " key mappings: {{{
+      inoremap <expr><C-g>     neocomplcache#undo_completion()
+      inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+      " <CR>: close popup and save indent.
+      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+      function! s:my_cr_function()
+        return neocomplcache#smart_close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+      endfunction
+
+      " <TAB>: completion.
+      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+      " <C-h>, <BS>: close popup and delete backword char.
+      inoremap <expr><C-h>  neocomplcache#smart_close_popup()."\<C-h>"
+      inoremap <expr><BS>   neocomplcache#smart_close_popup()."\<C-h>"
+      inoremap <expr><C-y>  neocomplcache#close_popup()
+      inoremap <expr><C-e>  neocomplcache#cancel_popup()
+    " }}}
+  endif
+
+" }}}
+" neosnippet:                 ultra fast snippets {{{
+  Bundle 'Shougo/neosnippet'
+  " settings: {{{
+    " Enable snipMate compatibility feature.
+    let g:neosnippet#enable_snipmate_compatibility = 1
+
+    " tell NeoSnippet about other snippets
+    let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+    " For snippet_complete marker.
+    if has('conceal')
+      set conceallevel=2 concealcursor=i
+    endif
+  " }}}
+  " key mappings: {{{
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+    " SuperTab like snippets behavior.
+    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \ : pumvisible() ? "\<C-n>" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \ : "\<TAB>"
+  " }}}
+" }}}
+" honza-snippets:             snippets for various languages: {{{
+  Bundle 'honza/vim-snippets'
+" }}}
+
 " Language Helpers:
 " html:                       html5 {{{
   " html5 syntax and omni-complete
@@ -278,9 +406,6 @@
   Bundle 'tpope/vim-rake'
   " lightweight support for Ruby's Bundler
   Bundle 'tpope/vim-bundler'
-
-  " adds end after if, do, def and several other keywords
-  Bundle 'tpope/vim-endwise'
 
   " syntax support
   Bundle 'tpope/vim-haml'

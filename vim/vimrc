@@ -1,4 +1,4 @@
- Credits: """""""""""""""""""""""""""""""""""""""""""""""""""" {{{
+" Credits: """""""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "
 "            _ _    _                       _        _
 "           (_) |  | |                     | |      ( )
@@ -378,7 +378,7 @@ else
 endif
 " }}}
 " Behaviour: Folding {{{
-set foldenable                  " enable folding
+set nofoldenable                " do not enable folding, by default
 set foldcolumn=2                " add a fold column to the left of line-numbers
 set foldlevel=0                 " folds with a higher level will be closed
 set foldlevelstart=0            " start out with everything closed
