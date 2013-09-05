@@ -26,6 +26,7 @@
     let g:airline_right_alt_sep    = ''
     let g:airline_powerline_fonts  = 1
     let g:airline_enable_syntastic = 1
+    let g:airline#extensions#tabline#enabled = 1
   " }}}
 " }}}
 
@@ -53,7 +54,7 @@
   " }}}
   " key mappings: {{{
     " really needed? we can cycle between modes?
-    map <C-b> :CtrlPBuffer
+    map <C-b> :CtrlPBuffer<CR>
     " Search from current directory instead of project root
     map <C-o> :CtrlP %:p:h<CR>
   " }}}
@@ -154,11 +155,12 @@
   Bundle 'xolox/vim-session'
   let g:session_autoload = 'yes'
   let g:session_autosave = 'yes'
-  let g:session_default_overwrite = 1
+  " let g:session_default_overwrite = 1
   let g:session_default_to_last = 1
-  let g:session_command_aliases = 1
+  " let g:session_command_aliases = 1
 
-  nnoremap <leader>qa :SaveSession<CR>:qall<CR>
+  nnoremap <leader>qa :call SaveSessionWithPrompt()<CR>:qall<CR>
+
 " }}}
 " showmarks:                  visual representation of the location marks {{{
   Bundle 'xsunsmile/showmarks'

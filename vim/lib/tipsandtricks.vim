@@ -295,6 +295,8 @@ vmap D y'>p
 " For Haml
 au! BufRead,BufNewFile *.haml         setfiletype haml
 
+" execute current line in vim
+map <leader>s <Esc>"ayy:@a<CR>
 
 " Press ^F from insert mode to insert the current file name
 imap <C-F> <C-R>=expand("%")<CR>

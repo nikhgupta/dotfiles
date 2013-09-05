@@ -1,4 +1,3 @@
-" Custom Functions:
 " get current directory path {{{
 function! CurDir()
     return substitute(getcwd(), $HOME, "~", "")
@@ -129,4 +128,36 @@ function! HasPaste()
         return ''
     endif
 endfunction
+" }}}
+" create session with a prompt {{{
+  function! SaveSessionWithPrompt()
+    " guess name from current session, if any
+    let name = xolox#session#find_current_session()
+    let is_tab_scoped = xolox#session#is_tab_scoped()
+
+    " ask user for a session name, otherwise
+    if empty(name)
+      let default_name = ''
+      if g:session_default_name
+        let default_name = g:session_default_name
+      endif
+
+      call inputsave()
+      let name = input('save session? by what name? ', default_name)
+      call inputrestore()
+    endif
+
+    " use the default session name, otherwise
+    if empty(name) && g:session_default_name
+      let name = g:session_default_name
+    endif
+
+    " save the given session
+    if xolox#session#is_tab_scoped()
+      call xolox#session#save_tab_cmd(name, '!', 'SaveTabSession')
+    else
+      call xolox#session#save_cmd(name, '!', 'SaveSession')
+    endif
+
+  endfunction
 " }}}

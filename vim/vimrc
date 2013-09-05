@@ -127,12 +127,42 @@ let maplocalleader = "\\"
     endif
   endfunction
   " }}}
+  " load default colorscheme depending on gui is running or not {{{
+    function! RestoreVimColors()
+      " reload colorscheme and related
+      if has('gui_running')
+        execute 'set background=' . g:colorschemes[0][1][2]
+        execute 'colorscheme ' . g:colorschemes[0][1][0]
+        if (g:airline_theme)
+          execute ':AirlineTheme ' . g:colorschemes[0][1][1]
+        endif
+      else
+        execute 'set background=' . g:colorschemes[0][0][2]
+        execute 'colorscheme ' . g:colorschemes[0][0][0]
+        if (g:airline_theme)
+          execute ':AirlineTheme ' . g:colorschemes[0][1][1]
+        endif
+      endif
+    endfunction
+  " }}}
 " }}}
 " Declare some variables for easy VimRC configuration {{{
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
   let g:is_macvim  = has('gui_macvim')
   let g:is_linux   = has('linux')
   let g:is_windows = has('win16') || has('win32') || has('win64')
+
+  " default colorschemes to load
+  " first one is for gui and second list is for non-gui sessions
+  " first arg is colorscheme, second is Airline theme, and third one is background setting option
+  let g:colorschemes = [
+        \   [
+        \     [ 'base16-eighties', 'wombat', 'dark' ],
+        \     [ 'solarized', 'solarized', 'light' ],
+        \   ], [
+        \     [ 'wombat256mod', 'wombat', 'dark' ],
+        \   ]
+        \ ]
 " }}}
 
 " Cross Platform Compatibility {{{
@@ -198,7 +228,6 @@ call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before
 
   " required by Vundle
   filetype plugin indent on       " enable detection, plugins and indenting in one step
-  syntax on                       " enable syntax highlighting
 " }}}
 
 " Behaviour: Vim {{{
@@ -215,6 +244,11 @@ set nomodeline                  " disable mode lines (security measure)
 if has('mouse')
   set mouse=a                   " enable using mouse if terminal supports it
   set mousehide
+endif
+
+" session related matters
+if has('mksession')
+  set sessionoptions+=resize
 endif
 
 " wrapping related matters
@@ -244,7 +278,7 @@ set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
 " windows related matters
 set splitright                  " puts new vsplit windows to the right of the current
 set splitbelow                  " puts new split windows to the bottom of the current
-set lazyredraw                  " don't update the display while executing macros
+set nolazyredraw                " even update the display while executing macros
 set tabpagemax=15               " only show 15 tabs
 
 " statusline related matters
@@ -324,20 +358,19 @@ set directory=~/.vim/.tmp,/tmp    " store swap files in one of these directories
 " Behaviour: GUI {{{
 set background=dark             " make vim use dark background
 
-" use colorscheme if we have gui or 256 color support
+" set appropriate terminal colors
 if &t_Co > 2 && &t_Co < 16
-  set t_Co = 16
+  set t_Co =16
+elseif &t_Co > 16
+  set t_Co =256
 endif
 
-if has("gui_running")
-  colorscheme base16-eighties
-  " let g:solarized_termcolors=256
-  " let g:solarized_termtrans=1
-  " let g:solarized_contrast="high"
-  " let g:solarized_visibility="high"
-  call SourceIfReadable("~/.gvimrc")
-else
-  colorscheme Tomorrow-Night-Eighties
+" make vim restore colors depending on whether gui is running or not
+call RestoreVimColors()
+
+" source our ~/.gvimrc, if gui is running
+if has('gui_running')
+  call SourceIfReadable('~/.gvimrc')
 endif
 " }}}
 " Behaviour: Editor {{{
@@ -423,9 +456,9 @@ set exrc                                                " enable per-directory .
 set secure                                              " disable unsafe commands in them
 
 " other files that need to be sourced
+call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
 call SourceIfReadable('~/.vim/lib/mappings.vim')        " shortcut key mappings
 call SourceIfReadable('~/.vim/lib/autocommands.vim')    " auto-commands for various filetypes, settings, etc.
-call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
 call SourceIfReadable('~/.vim/lib/autocorrect.vim')     " auto-corrections for spellings
 " call SourceIfReadable('~/.vim/lib/tipsandtricks.vim')   " quick tips and tricks go in this file, before classification
 call SourceIfReadable('~/.vimrc.after')                 " useful to override vimrc configuration

@@ -25,6 +25,11 @@ if has("autocmd")
 " }}}
   augroup miscelleneous           " miscelleneous auto-commands {{{
     au!
+
+    " reload colorscheme based on whether gui is running or not
+    autocmd SessionLoadPost * nested normal :call LoadSessionAndRestoreColors()<CR>
+    " autocmd VimEnter * nested silent! normal :call LoadDefaultColorScheme()<CR>
+
     " toggle relative line numbering
     autocmd FocusLost   * :set number
     autocmd FocusGained * :set relativenumber

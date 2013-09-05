@@ -8,4 +8,6 @@
 /vim/bundle/*
 !/vim/bundle/vundle/
 !/vim/bundle/vundle/*
-vim/.cache/
+/vim/.cache/
+/vim/bookmarks
+/vim/tasks.txt
