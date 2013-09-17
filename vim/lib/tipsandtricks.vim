@@ -5,11 +5,6 @@
 " nnoremap <leader>w :write | :!./run_tests.sh<cr>
 " inoremap <leader>w <esc><leader>w
 
-" Split previously opened file ('#') in a split window
-" ----------------------------------------------------
-" nnoremap <leader>sh :execute 'leftabove vsplit' bufname('#')<cr>
-" nnoremap <leader>sl :execute 'rightbelow vsplit' bufname('#')<cr>
-
 " Define operator-pending mappings to quickly apply commands to function names
 " and/or parameter lists in the current line
 " onoremap inf :<c-u>normal! 0f(hviw<cr>
@@ -300,6 +295,9 @@ map <leader>s <Esc>"ayy:@a<CR>
 
 " Press ^F from insert mode to insert the current file name
 imap <C-F> <C-R>=expand("%")<CR>
+
+nmap <C-tab> :bn<CR>
+imap <C-tab> <ESC>:bn<CR>i
 
 
 " Edit routes

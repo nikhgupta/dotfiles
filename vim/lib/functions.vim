@@ -1,6 +1,6 @@
 " get current directory path {{{
 function! CurDir()
-    return substitute(getcwd(), $HOME, "~", "")
+  return substitute(getcwd(), $HOME, "~", "")
 endfunction
 " }}}
 " Text to display on folded lines {{{
@@ -122,42 +122,65 @@ function! s:DetectHTMLVariant()
 endfunction " }}}
 " get whether PasteMode is on or off (used for statusline purposes) {{{
 function! HasPaste()
-    if &paste
-        return '[PASTE]'
-    else
-        return ''
-    endif
+  if &paste
+    return '[PASTE]'
+  else
+    return ''
+  endif
+endfunction
+" }}}
+" load default colorscheme depending on gui is running or not {{{
+function! LoadDefaultVimColors()
+  " reload colorscheme and related
+  if has('gui_running')
+    execute 'set background=' . g:colorschemes[0][1][2]
+    execute 'colorscheme ' . g:colorschemes[0][1][0]
+    let g:airline_theme = g:colorschemes[0][1][1]
+  else
+    execute 'set background=' . g:colorschemes[1][0][2]
+    execute 'colorscheme ' . g:colorschemes[1][0][0]
+    let g:airline_theme = g:colorschemes[1][0][1]
+  endif
 endfunction
 " }}}
 " create session with a prompt {{{
-  function! SaveSessionWithPrompt()
-    " guess name from current session, if any
-    let name = xolox#session#find_current_session()
-    let is_tab_scoped = xolox#session#is_tab_scoped()
+function! SaveSessionWithPrompt()
+  " guess name from current session, if any
+  let name = xolox#session#find_current_session()
+  let is_tab_scoped = xolox#session#is_tab_scoped()
 
-    " ask user for a session name, otherwise
-    if empty(name)
-      let default_name = ''
-      if g:session_default_name
-        let default_name = g:session_default_name
-      endif
-
-      call inputsave()
-      let name = input('save session? by what name? ', default_name)
-      call inputrestore()
+  " ask user for a session name, otherwise
+  if empty(name)
+    let default_name = ''
+    if g:session_default_name
+      let default_name = g:session_default_name
     endif
 
-    " use the default session name, otherwise
-    if empty(name) && g:session_default_name
-      let name = g:session_default_name
-    endif
+    call inputsave()
+    let name = input('save session? by what name? ', default_name)
+    call inputrestore()
+  endif
 
-    " save the given session
-    if xolox#session#is_tab_scoped()
-      call xolox#session#save_tab_cmd(name, '!', 'SaveTabSession')
-    else
-      call xolox#session#save_cmd(name, '!', 'SaveSession')
-    endif
+  " use the default session name, otherwise
+  if empty(name) && g:session_default_name
+    let name = g:session_default_name
+  endif
 
-  endfunction
+  " save the given session
+  if xolox#session#is_tab_scoped()
+    call xolox#session#save_tab_cmd(name, '!', 'SaveTabSession')
+  else
+    call xolox#session#save_cmd(name, '!', 'SaveSession')
+  endif
+
+endfunction
+" }}}
+" reload last session and restore vim colors {{{
+function! ReloadSessionAndRestoreColors()
+  call xolox#session#auto_load()
+  call LoadDefaultVimColors()
+  if exists(g:airline_theme)
+    call airline#load_theme(g:airline_theme)
+  endif
+endfunction
 " }}}

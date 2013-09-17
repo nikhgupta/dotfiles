@@ -21,12 +21,14 @@
 " airline:                    lean & mean statusline for vim that's light as air: {{{
   Bundle 'bling/vim-airline'
   " settings {{{
-    let g:airline_theme            = 'solarized'
     let g:airline_left_alt_sep     = ''
     let g:airline_right_alt_sep    = ''
     let g:airline_powerline_fonts  = 1
     let g:airline_enable_syntastic = 1
     let g:airline#extensions#tabline#enabled = 1
+    if !exists('g:airline_theme')
+      let g:airline_theme          = 'solarized'
+    endif
   " }}}
 " }}}
 
@@ -124,10 +126,16 @@
     nmap <leader>r :YRShow<CR>
   " }}}
 " }}}
+" organizer:                  org mode for vim {{{
+  Bundle 'hsitz/VimOrganizer'
+" }}}
 " clam:                       lightweight plugin to easily run shell commands in vim {{{
   Bundle 'sjl/clam.vim'
   nnoremap ! :Clam<space>
   vnoremap ! :ClamVisual<space>
+" }}}
+" narrow region:              focus on a region of text and make reset inaccessible {{{
+  Bundle 'chrisbra/NrrwRgn'
 " }}}
 " zoomwin:                    easily maximize the current buffer {{{
   " - Press <Ctrl-W>o to toggle buffer size
@@ -151,15 +159,15 @@
 " }}}
 " session:                    exended session management {{{
   " vim-misc is required for vim-session
-  Bundle 'xolox/vim-misc'
-  Bundle 'xolox/vim-session'
-  let g:session_autoload = 'yes'
-  let g:session_autosave = 'yes'
-  " let g:session_default_overwrite = 1
-  let g:session_default_to_last = 1
-  " let g:session_command_aliases = 1
+  " Bundle 'xolox/vim-misc'
+  " Bundle 'xolox/vim-session'
+  " let g:session_autoload = 'yes'
+  " let g:session_autosave = 'yes'
+  " " let g:session_default_overwrite = 1
+  " let g:session_default_to_last = 1
+  " " let g:session_command_aliases = 1
 
-  nnoremap <leader>qa :call SaveSessionWithPrompt()<CR>:qall<CR>
+  " nnoremap <leader>QA :call SaveSessionWithPrompt()<CR>:qall<CR>
 
 " }}}
 " showmarks:                  visual representation of the location marks {{{

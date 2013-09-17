@@ -87,6 +87,10 @@
   nnoremap <C-e> 2<C-e>
   nnoremap <C-y> 2<C-y>
 
+  " Split previously opened file ('#') in a split window
+  nnoremap <leader>sh :execute 'leftabove vsplit' bufname('#')<cr>
+  nnoremap <leader>sl :execute 'rightbelow vsplit' bufname('#')<cr>
+
 " }}}
 
 " editing/formatting related mappings {{{

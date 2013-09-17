@@ -127,24 +127,7 @@ let maplocalleader = "\\"
     endif
   endfunction
   " }}}
-  " load default colorscheme depending on gui is running or not {{{
-    function! RestoreVimColors()
-      " reload colorscheme and related
-      if has('gui_running')
-        execute 'set background=' . g:colorschemes[0][1][2]
-        execute 'colorscheme ' . g:colorschemes[0][1][0]
-        if (g:airline_theme)
-          execute ':AirlineTheme ' . g:colorschemes[0][1][1]
-        endif
-      else
-        execute 'set background=' . g:colorschemes[0][0][2]
-        execute 'colorscheme ' . g:colorschemes[0][0][0]
-        if (g:airline_theme)
-          execute ':AirlineTheme ' . g:colorschemes[0][1][1]
-        endif
-      endif
-    endfunction
-  " }}}
+  call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
 " }}}
 " Declare some variables for easy VimRC configuration {{{
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
@@ -153,16 +136,17 @@ let maplocalleader = "\\"
   let g:is_windows = has('win16') || has('win32') || has('win64')
 
   " default colorschemes to load
-  " first one is for gui and second list is for non-gui sessions
-  " first arg is colorscheme, second is Airline theme, and third one is background setting option
+  " array1: first one is for gui and second list is for non-gui sessions
+  " array2: first arg is colorscheme, second is Airline theme, and third one is background setting option
   let g:colorschemes = [
         \   [
         \     [ 'base16-eighties', 'wombat', 'dark' ],
         \     [ 'solarized', 'solarized', 'light' ],
         \   ], [
-        \     [ 'wombat256mod', 'wombat', 'dark' ],
+        \     [ 'Tomorrow-Night-Eighties', 'badwolf', 'light' ],
         \   ]
         \ ]
+  " \     [ 'codeschool', 'wombat', 'dark' ],
 " }}}
 
 " Cross Platform Compatibility {{{
@@ -356,8 +340,6 @@ set noswapfile                    " do not write annoying intermediate swap file
 set directory=~/.vim/.tmp,/tmp    " store swap files in one of these directories (in case swapfile is ever turned on)
 " }}}
 " Behaviour: GUI {{{
-set background=dark             " make vim use dark background
-
 " set appropriate terminal colors
 if &t_Co > 2 && &t_Co < 16
   set t_Co =16
@@ -365,8 +347,8 @@ elseif &t_Co > 16
   set t_Co =256
 endif
 
-" make vim restore colors depending on whether gui is running or not
-call RestoreVimColors()
+" set vim's colorscheme, airline theme and background from default values
+call LoadDefaultVimColors()
 
 " source our ~/.gvimrc, if gui is running
 if has('gui_running')
@@ -386,7 +368,7 @@ set pastetoggle=<F2>            " when in insert mode, press <F2> to go to paste
 set showmatch                   " set show matching parenthesis
 set matchtime=2                 " show matching parenthesis for 0.2 seconds
 " set cinoptions=b1,g0,N-s,t0,(0,W4 " see :h cinoptions-values for details
-set iskeyword+=_,$,@,%,#,-      " none of these should be word dividers, so make them not be
+set iskeyword+=_,$,@,%,#        " none of these should be word dividers, so make them not be
 
 " tab related matters
 set tabstop=4                   " a tab is two spaces
@@ -456,7 +438,6 @@ set exrc                                                " enable per-directory .
 set secure                                              " disable unsafe commands in them
 
 " other files that need to be sourced
-call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
 call SourceIfReadable('~/.vim/lib/mappings.vim')        " shortcut key mappings
 call SourceIfReadable('~/.vim/lib/autocommands.vim')    " auto-commands for various filetypes, settings, etc.
 call SourceIfReadable('~/.vim/lib/autocorrect.vim')     " auto-corrections for spellings
