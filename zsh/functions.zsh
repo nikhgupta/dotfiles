@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
+#  vim: set ts=2 sw=2 tw=80 et:
 
 # add aliases via command line
 function addalias() {
 ALIASED="alias $1='$2';";
 echo "${ALIASED}" | tee -a $DOTZSH/via_terminal.zsh;
-source ~/.zshrc;
+source $DOTZSH/via_terminal.zsh;
 }
 
 # add private aliases via command line (not stored in the dotfiles repository)
@@ -13,6 +14,10 @@ ALIASED="alias $1='$2';";
 echo "${ALIASED}" | tee -a $HOME/.localrc.after;
 source ~/.zshrc;
 }
+
+# nullify the output of a command
+# use like this: nullify command
+function nullify() { $@ >/dev/null 2>&1; }
 
 # next three functions are used for padding words in custom shell functions.
 function lpad { word="$1"; while [ ${#word} -lt $2 ]; do word="$3$word"; done; echo -ne "$word"; }
@@ -155,4 +160,41 @@ function ydl() {
   echo "youtube-dl $opts"
   echo "================"
   eval youtube-dl $opts
+}
+
+# Open Vim Sessions
+function _vs() {
+  reply=()
+  for f in `find ~/.vim/sessions -type f -iname '*.vim' -exec basename {} \;`; do
+    reply+=( ${f:r} )
+  done
+}
+function vs() { [ -z $1 ] && vim || vim -c "OpenSession! $1"; }
+function mvs() { [ -z $1 ] && mvim || mvim -c "OpenSession! $1"; }
+compctl -K _vs vs
+compctl -K _vs mvs
+
+# Emacs related
+function killemacs() { ps auwwx | grep emacs | grep 24.3 |
+                       tr -s ' ' ' ' | cut -d ' ' -f 2 | xargs kill; }
+
+# Universal Extractor
+extract () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)        tar xjf $1        ;;
+            *.tar.gz)         tar xzf $1        ;;
+            *.bz2)            bunzip2 $1        ;;
+            *.rar)            unrar x $1        ;;
+            *.gz)             gunzip $1         ;;
+            *.tar)            tar xf $1         ;;
+            *.tbz2)           tar xjf $1        ;;
+            *.tgz)            tar xzf $1        ;;
+            *.zip)            unzip $1          ;;
+            *.Z)              uncompress $1     ;;
+            *)                echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }

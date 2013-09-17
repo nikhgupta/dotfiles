@@ -9,6 +9,9 @@ typeset -U path # set $path variable to only have unique values
 # export PROMPT_TYPE="nice" # uncomment, if you need to change the prompt
 export HIST_IGNORE_SPACE=true
 
+# set term to use 256 colors
+export TERM=xterm-256color
+
 # directory variables {{{
 # some useful directories
 export CODE_DIR="$HOME/Code"
@@ -39,7 +42,8 @@ export ZSH_THEME="blinks"
 # }}}
 
 # which editor? {{{
-export EDITOR="vim"
+export EDITOR="emacsclient -ta ''"
+# export EDITOR="vim"
 # export EDITOR="/usr/local/bin/mate -w"
 # }}}
 

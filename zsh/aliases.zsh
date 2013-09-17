@@ -7,7 +7,13 @@
 alias reload=" source $HOME/.zshrc"
 
 # create a handy edit command
-alias edit="vim"
+alias edit="$EDITOR"
+alias e=edit
+
+# create quick notes/journal
+# BUG: commands output 'nil' at command line
+alias task="emacsclient -cta '' -e '(org-capture nil \"t\")'"
+alias journal="emacsclient -cta '' -e '(org-capture nil \"j\")'"
 
 # zsh related aliases
 alias zshconfig="edit $HOME/.zshrc"                 # quickly edit zsh configuration
@@ -48,9 +54,9 @@ alias hi='history | tail'                           # display last commands ente
 
 # todo.txt-cli
 alias nexttask="t list +next | head -1"             # list the +next task
-alias tasktop="t list | head -1"                    # later, we will create an action for this in todo.txt-cli   
-alias tasklist='echo "-- Tasks @priority --" && t list | head -5 && 
-                echo "-- Tasks @terminal --" && t list @terminal | head -n +3 && 
+alias tasktop="t list | head -1"                    # later, we will create an action for this in todo.txt-cli
+alias tasklist='echo "-- Tasks @priority --" && t list | head -5 &&
+                echo "-- Tasks @terminal --" && t list @terminal | head -n +3 &&
                 echo "---------------------"'       # display top 5 tasks and also 3 tasks related to terminal
 
 # aliases that alter the prompt
