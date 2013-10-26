@@ -73,7 +73,7 @@ if has("autocmd")
   augroup html_files              " {{{
       au!
 
-      autocmd BufNewFile,BufRead *.html,*.htm call s:DetectHTMLVariant()
+      " autocmd BufNewFile,BufRead *.html,*.htm call s:DetectHTMLVariant()
       autocmd filetype html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
       " Auto-closing of HTML/XML tags
       autocmd filetype html,htmldjango,xhtml,haml let b:closetag_html_style=1

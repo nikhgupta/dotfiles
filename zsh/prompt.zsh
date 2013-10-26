@@ -123,9 +123,16 @@ function get_load() {
   uptime | awk '{print $11}' | tr ',' ' '
 }
 
-# adjust the rvm_prompt_info function for my own version of it
-function rvm_prompt_info_custom() {
-  echo $(rvm_prompt_info) | sed -e 's/ruby-//' -e 's/@/ /' -e 's/(/[/' -e 's/)/]/'
+# display the current ruby version
+function ruby_version()
+{
+    if which rvm-prompt &> /dev/null; then
+      rvm-prompt i v g
+    else
+      if which rbenv &> /dev/null; then
+        rbenv version | sed -e "s/ (set.*$//"
+      fi
+    fi
 }
 # }}}
 
@@ -133,7 +140,7 @@ function rvm_prompt_info_custom() {
 if [[ "$PROMPT_TYPE" == "mini" ]]; then
 
   # example (without colors):
-  # 
+  #
   # python $
 
   export PROMPT="%{$fg[green]%}%c%{$reset_color%} %{$fg[yellow]%}$%{$reset_color%} "
@@ -151,7 +158,7 @@ elif [[ "$PROMPT_TYPE" == "nice" ]]; then
   ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
   ZSH_THEME_GIT_PROMPT_CLEAN=""
 
-  export PROMPT=$'%{$fg[blue]%}%2c%{$reset_color%} %{$fg[red]%}$(rvm_prompt_info_custom)%{$reset_color%} $(git_prompt_info)%{$reset_color%}%{$fg_bold[yellow]%}$%{$reset_color%} '
+  export PROMPT=$'%{$fg[blue]%}%2c%{$reset_color%} %{$fg[red]%}$(ruby_version)%{$reset_color%} $(git_prompt_info)%{$reset_color%}%{$fg_bold[yellow]%}$%{$reset_color%} '
 
   set_right_prompt() { export RPROMPT="${BATTERY_CHARGE}"; }
 # }}}

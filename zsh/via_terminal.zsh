@@ -60,3 +60,4 @@ alias mate='mate -w'
 alias be='bundle exec';
 alias em='emacsclient -ta ""';
 alias ec='emacsclient -ca ""';
+alias composer='/usr/local/bin/composer.phar';

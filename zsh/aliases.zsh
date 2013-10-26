@@ -37,7 +37,7 @@ alias x+="sudo chmod +x"                            # quickly make a file execut
 alias x-="sudo chmod -x"                            # quickly make a file un-executable
 
 # ls
-alias ls=" ls -F"                                   # append indicators and colorize
+alias ls='\ls -F --color=always'                    # append indicators and colorize
 alias la='ls -A'                                    # almost all
 alias ll='la -lF'                                   # almost all, long listing, indicators
 alias  l="ll -h"                                    # almost all, show size in K, M, G (except . & ..), long listing
