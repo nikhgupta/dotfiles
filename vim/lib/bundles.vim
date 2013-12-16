@@ -244,6 +244,10 @@
   " arguments: a
   Bundle "vim-scripts/argtextobj.vim"
 " }}}
+" orgmode:                    emacs' org mode parsing in vim {{{
+  Bundle "jceb/vim-orgmode"
+  Bundle "tpope/vim-speeddating"
+" }}}
 
 " Git Related:
 " git:                        syntax highlighting and other Git niceties (<v7.2) {{{
@@ -334,6 +338,73 @@
 " }}}
 
 " Snippets And Code Completion:
+" neocomplete/neocomplcache:  ultimate auto-completion system for Vim {{{
+  if has('lua')
+    Bundle 'Shougo/neocomplete.vim'
+    " settings: {{{
+      let g:neocomplete#enable_at_startup = 1                 " enable at startup
+      let g:neocomplete#enable_smart_case = 1                 " enable SmartCase
+      let g:neocomplete#sources#syntax#min_keyword_length = 3 " use a minimum syntax keyword length
+      let g:neocomplete#force_overwrite_completefunc = 1
+      " do not complete automatically on files matching this pattern
+      " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+      " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+    " }}}
+    " key mappings: {{{
+      inoremap <expr><C-g>     neocomplete#undo_completion()
+      inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+      " <CR>: close popup and save indent.
+      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+      function! s:my_cr_function()
+        return neocomplete#smart_close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+      endfunction
+
+      " <TAB>: completion.
+      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+      " <C-h>, <BS>: close popup and delete backword char.
+      inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
+      inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
+      inoremap <expr><C-y>  neocomplete#close_popup()
+      inoremap <expr><C-e>  neocomplete#cancel_popup()
+    " }}}
+  else
+    Bundle 'Shougo/neocomplcache.vim'
+    " settings: {{{
+      let g:neocomplcache_enable_at_startup = 1               " enable at startup
+      let g:neocomplcache_enable_smart_case = 1               " enable SmartCase
+      let g:neocomplcache_min_syntax_length = 3               " use a minimum syntax keyword length
+      " do not complete automatically on files matching this pattern
+      " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+      " let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+    " }}}
+    " key mappings: {{{
+      inoremap <expr><C-g>     neocomplcache#undo_completion()
+      inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+      " <CR>: close popup and save indent.
+      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+      function! s:my_cr_function()
+        return neocomplcache#smart_close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+      endfunction
+
+      " <TAB>: completion.
+      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+      " <C-h>, <BS>: close popup and delete backword char.
+      inoremap <expr><C-h>  neocomplcache#smart_close_popup()."\<C-h>"
+      inoremap <expr><BS>   neocomplcache#smart_close_popup()."\<C-h>"
+      inoremap <expr><C-y>  neocomplcache#close_popup()
+      inoremap <expr><C-e>  neocomplcache#cancel_popup()
+    " }}}
+  endif
+
+" }}}
 " neosnippet:                 ultra fast snippets {{{
   Bundle 'Shougo/neosnippet'
   " settings: {{{
@@ -478,69 +549,17 @@
     " " let NERDRemoveExtraSpaces = 1
   " " }}}
 " " }}}
-" " neocomplete/neocomplcache:  ultimate auto-completion system for Vim {{{
-"   if has('lua')
-"     Bundle 'Shougo/neocomplete.vim'
-"     " settings: {{{
-"       let g:neocomplete#enable_at_startup = 1                 " enable at startup
-"       let g:neocomplete#enable_smart_case = 1                 " enable SmartCase
-"       let g:neocomplete#sources#syntax#min_keyword_length = 3 " use a minimum syntax keyword length
-"       " do not complete automatically on files matching this pattern
-"       " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-"       " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-"     " }}}
-"     " key mappings: {{{
-"       inoremap <expr><C-g>     neocomplete#undo_completion()
-"       inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-"       " <CR>: close popup and save indent.
-"       inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"       function! s:my_cr_function()
-"         return neocomplete#smart_close_popup() . "\<CR>"
-"         " For no inserting <CR> key.
-"         "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-"       endfunction
-
-"       " <TAB>: completion.
-"       inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-"       " <C-h>, <BS>: close popup and delete backword char.
-"       inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
-"       inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
-"       inoremap <expr><C-y>  neocomplete#close_popup()
-"       inoremap <expr><C-e>  neocomplete#cancel_popup()
-"     " }}}
-"   else
-"     Bundle 'Shougo/neocomplcache.vim'
-"     " settings: {{{
-"       let g:neocomplcache_enable_at_startup = 1               " enable at startup
-"       let g:neocomplcache_enable_smart_case = 1               " enable SmartCase
-"       let g:neocomplcache_min_syntax_length = 3               " use a minimum syntax keyword length
-"       " do not complete automatically on files matching this pattern
-"       " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-"       " let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-"     " }}}
-"     " key mappings: {{{
-"       inoremap <expr><C-g>     neocomplcache#undo_completion()
-"       inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-"       " <CR>: close popup and save indent.
-"       inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"       function! s:my_cr_function()
-"         return neocomplcache#smart_close_popup() . "\<CR>"
-"         " For no inserting <CR> key.
-"         "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-"       endfunction
-
-"       " <TAB>: completion.
-"       inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-"       " <C-h>, <BS>: close popup and delete backword char.
-"       inoremap <expr><C-h>  neocomplcache#smart_close_popup()."\<C-h>"
-"       inoremap <expr><BS>   neocomplcache#smart_close_popup()."\<C-h>"
-"       inoremap <expr><C-y>  neocomplcache#close_popup()
-"       inoremap <expr><C-e>  neocomplcache#cancel_popup()
-"     " }}}
-"   endif
-
-" }}}
+" " youcompleteme:              auto completion engine for vim: {{{
+"   " Bundle 'Valloric/YouCompleteMe'
+"   " let g:ycm_collect_identifiers_from_tags_files = 1
+" " }}}
+" " tern_for_vim:               intelligent javascript autocompletion: {{{
+"   Bundle 'marijnh/tern_for_vim'
+" " }}}
+" " ultisnips:                  vim snippets with ease: {{{
+"   Bundle 'SirVer/ultisnips'
+"   let g:UltiSnipsExpandTrigger       = '<c-e>'
+"   let g:UltiSnipsListSnippets        = '<c-s-l>'
+"   let g:UltiSnipsJumpForwardTrigger  = '<c-e>'
+"   let g:UltiSnipsJumpBackwardTrigger = '<c-s-e>'
+" " }}}

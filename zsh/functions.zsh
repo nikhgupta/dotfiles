@@ -154,9 +154,28 @@ alias nt=newtab
 function ydl() {
   download_dir="${HOME}/Downloads/.w/Videos/Scripted"
   list_file="${HOME}/Code/scripts/downloads/videos.list"
+  rand_file="${HOME}/Code/scripts/downloads/randomized.list"
+  arch_file="${HOME}/Code/scripts/downloads/archived.list"
+  sort -R $list_file | uniq > $rand_file
+  sort $rand_file > $list_file
   opts="-ikwco '${download_dir}/%(extractor)s/%(title)s-%(id)s.%(ext)s' --sub-lang en --no-post-overwrites"
-  opts="${opts} --restrict-filenames --write-info-json --all-subs"
-  if [ -z $1 ]; then opts="${opts} -a ${list_file}"; else opts="${opts} $1"; fi
+  opts="${opts} --restrict-filenames --write-info-json --all-subs --download-archive '${arch_file}'"
+  if [ -z $1 ]; then opts="${opts} -a ${rand_file}"; else opts="${opts} $1"; fi
+  echo "youtube-dl $opts"
+  echo "================"
+  eval youtube-dl $opts
+}
+function ydlnarrow() {
+  kind="$1"
+  download_dir="${HOME}/Downloads/.w/Videos/Scripted"
+  list_file="${HOME}/Code/scripts/downloads/${kind}.list"
+  rand_file="${HOME}/Code/scripts/downloads/randomized.list"
+  arch_file="${HOME}/Code/scripts/downloads/archived.list"
+  sort -R $list_file | uniq > $rand_file
+  sort $rand_file > $list_file
+  opts="-ikwco '${download_dir}/${kind}/%(title)s-%(id)s.%(ext)s' --sub-lang en --no-post-overwrites"
+  opts="${opts} --restrict-filenames --write-info-json --all-subs --download-archive '${arch_file}'"
+  if [ -z $2 ]; then opts="${opts} -a ${rand_file}"; else opts="${opts} $2"; fi
   echo "youtube-dl $opts"
   echo "================"
   eval youtube-dl $opts
@@ -220,4 +239,14 @@ blogpost() {
         # restore directory
         cd -
     fi
+}
+
+# love this one: fortune | cowsay -f $random
+tunecow() {
+    IFS=' '
+    figures=(`cowsay -l | tail -n +2 | tr '\n' ' '`)
+    num_figures=${#figures[*]}
+    figure=${figures[$((RANDOM%num_figures))]}
+    fortune | cowsay -f $figure
+    echo "using figure: $figure"
 }

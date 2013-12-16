@@ -19,7 +19,7 @@ if has("autocmd")
       autocmd FileType java set omnifunc=javacomplete#Complete
 
       " use syntax complete if nothing else available
-      autocmd Filetype * if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif
+      autocmd Filetype * if &omnifunc == '' | setlocal omnifunc=syntaxcomplete#Complete | endif
     endif
   augroup end
 " }}}

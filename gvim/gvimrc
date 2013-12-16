@@ -9,7 +9,7 @@ colorscheme base16-eighties
 
 " Use a nice font on the specific OS {{{
 if g:is_mac
-  set guifont=Monaco\ For\ Powerline:h12
+  set guifont=Monaco\ For\ Powerline:h13
 elseif g:is_windows
     set guifont=Bitstream\ Vera\ Sans\ Mono:h11
 elseif g:is_linux
