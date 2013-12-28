@@ -351,7 +351,7 @@ endif
 
 " shell related matters
 if !g:is_windows                  " use bash with login shell and
-  set shell=zsh\ -i              " interactive mode overwrite in vimrc.after
+  " set shell=zsh\ -i              " interactive mode overwrite in vimrc.after
 endif                             " if needed
 
 " backup related matters

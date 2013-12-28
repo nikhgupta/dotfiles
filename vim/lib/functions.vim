@@ -141,6 +141,10 @@ function! LoadDefaultVimColors()
     execute 'colorscheme ' . g:colorschemes[1][0][0]
     let g:airline_theme = g:colorschemes[1][0][1]
   endif
+  if exists(g:airline_theme)
+    call airline#load_theme(g:airline_theme)
+  endif
+  redraw
 endfunction
 " }}}
 " create session with a prompt {{{
@@ -181,9 +185,6 @@ function! ReloadSessionAndRestoreColors()
     call xolox#session#auto_load()
   endif
   call LoadDefaultVimColors()
-  if exists(g:airline_theme)
-    call airline#load_theme(g:airline_theme)
-  endif
 endfunction
 " }}}
 " search for a pattern across multiple files {{{

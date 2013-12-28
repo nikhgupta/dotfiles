@@ -1,4 +1,4 @@
-" GUI:
+" Interface:
 " themes:                     various templates/themes to make code in vim look pretty {{{
   " singles:
   Bundle 'wombat256.vim'
@@ -25,11 +25,14 @@
     let g:airline_right_alt_sep    = ''
     let g:airline_powerline_fonts  = 1
     let g:airline_enable_syntastic = 1
-    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#enabled = 0
     if !exists('g:airline_theme')
       let g:airline_theme          = 'solarized'
     endif
   " }}}
+" }}}
+" vim-startify:               a fancy start screen for Vim: {{{
+  Bundle 'vim-startify'
 " }}}
 
 " Essentials:
