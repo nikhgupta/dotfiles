@@ -22,6 +22,31 @@
 "
 "   Hello, I am Nikhil Gupta, and
 "   You can find me at http://nikhgupta.com
+"
+"   You can find an online version of this vimrc file at:
+"   https://github.com/nikhgupta/dotfiles/blob/master/vim/vimrc
+" }}}
+" Compatibility: """""""""""""""""""""""""""""""""""""""""""""" {{{
+"
+"   I am on a MacOSX, and the configuration works wonderfully on it.
+"
+"   I have not, yet, checked this configuration for Linux environment, but
+"   I am quite sure that the configuration should work nicely with it :)
+"
+"   Since, I never use Windows, this configuration might not be (and, I know for
+"   a fact, that it won't be) compatible with it :(
+"   I have, deliberately, removed any configuration that attempted to have such
+"   a compatibility from this file, at around December, 2013.
+"
+" }}}
+" Updated On: """"""""""""""""""""""""""""""""""""""""""""""""" {{{
+"
+"   Here, you will find date ranges where I devoted much of my time configuring
+"   this vim configuration. Note that, this section includes only major updates
+"   starting from December, 2013.
+"
+"   :: 27/12/13 - 30/12/13  # 4 days
+"
 " }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NORC: """"""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
@@ -32,6 +57,7 @@
 "     vim -u NONE
 " }}}
 " Vim Tips: """"""""""""""""""""""""""""""""""""""""""""""""""" {{{
+"   - Press `F1` key on any keyword to get quick help!
 "   - Use `:X` to set encryption on any file
 "   - Use `setl key=` to disable this encryption
 "   - Use `gf` to open file under cursor using default file handler
@@ -62,10 +88,11 @@
 "     => Load ~/.vimrc.after
 " }}}
 " TODOs: """""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
+"   - shortcut to quickly play macro in register `q`
+"   - shortcut to quickly play a given macro on selected lines
 "   - convert common functionality into a plugin
 "   - display whether working in terminal or gui mode inside the airline statusbar
 "   - revisit: http://learnvimscriptthehardway.stevelosh.com/
-"   - recreate MyFoldText() function based on: http://git.io/7QA1Dg
 "   - create sections, vis-a-vis http://git.io/aDaz_g
 "   - revisit exuberant tags http://bit.ly/17rL4P8
 "   - implement visual search http://bit.ly/17rLkxv
@@ -105,54 +132,38 @@
 " }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible                                        " No to the total compatibility with the ancient vi
-let mapleader = ","                                     " change mapleader key configuration
-let g:mapleader = ","                                   " some plugins may require this variable to be set
-let maplocalleader = "\\"
-
+set nocompatible             " No to the total compatibility with the ancient vi
+" Behaviour: Leader Key Configuration {{{
+  let mapleader      = ","                                      " change mapleader key from / to ,
+  let g:mapleader    = ","                                      " some plugins may require this variable to be set
+  let maplocalleader = ","                                      " used inside filetype settings
+" }}}
 " Behaviour: Custom Variables {{{
+  " os specific variables
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
   let g:is_macvim  = has('gui_macvim')
   let g:is_linux   = has('linux')
   let g:is_windows = has('win16') || has('win32') || has('win64')
+
+  " other relevant variables
+  let g:is_gui     = has('gui_running')
   let g:is_posix   = 1 " enable better bash syntax highlighting
-
-  " default colorschemes to load
-  " array1: first one is for gui and second list is for non-gui sessions
-  " array2: first arg is colorscheme, second is Airline theme, and third one is background setting option
-  let g:colorschemes = [
-        \   [
-        \     [ 'base16-eighties', 'wombat', 'dark' ],
-        \     [ 'solarized', 'solarized', 'light' ],
-        \     [ 'base16-ocean', 'wombat', 'dark' ],
-        \   ], [
-        \     [ 'Tomorrow-Night-Eighties', 'badwolf', 'light' ],
-        \   ]
-        \ ]
-  " \     [ 'codeschool', 'wombat', 'dark' ],
-
-  " store the path to the vim directory, somewhere..
-  if g:is_windows
-    let g:vim_path = $HOME . "/vimfiles"
-  else
-    let g:vim_path = $HOME . "/.vim"
-  endif
-
 " }}}
 " Behaviour: Custom Functions {{{
-  " source a file, only if we can read it :) {{{
+  " Source a file, only if we can read it :) {{{
   function! SourceIfReadable(file)
     let l:file = expand(a:file)
     if filereadable(l:file) | execute "source" l:file | endif
   endfunction " }}}
-  " ensure that a directory exists {{{
-  function! EnsureExists(path)
-    if !isdirectory(expand(a:path)) | call mkdir(expand(a:path), 'p') | endif
-  endfunction
-  " }}}
-  " get current directory path {{{
-  function! CurDir()
-    return substitute(getcwd(), $HOME, "~", "")
+  " Load a default statusline, if no relevant plugin exists {{{
+  function! LoadDefaultStatusLine()
+    if exists('g:loaded_airline') | return | endif
+    let curr_dir  = substitute(getcwd(), $HOME, "~", "")
+    let has_paste = &paste ? '[PASTE]' : ''
+    set statusline=\ %{s:has_paste}%<%-15.25(%f%)%m%r%h\ %w\ \
+    set statusline+=\ \ \ [%{&ff}/%Y]
+    set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
+    set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
   endfunction
   " }}}
   " Text to display on folded lines {{{
@@ -172,8 +183,7 @@ let maplocalleader = "\\"
     return line . ' ' . repeat("-",fillcharcount) . ' ' . foldedlinecount . ' '
   endfunction " }}}
   " View changes in the current buffer {{{
-  command! DiffSaved call s:DiffWithSaved()
-  function! s:DiffWithSaved()
+  function! DiffWithSaved()
     let filetype=&ft
     diffthis
     vnew | r # | normal! 1Gdd
@@ -224,16 +234,7 @@ let maplocalleader = "\\"
     let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
     call append(line("$"), l:modeline)
   endfunction " }}}
-  " Relative line numbering for the nerds :P {{{
-  function! NumberToggle()
-    if(&relativenumber == 1)
-      set number
-    else
-      set relativenumber
-    endif
-  endfunction " }}}
   " Quickly toggle in/out the QuickFix window {{{
-  command! -bang -nargs=? QFix call QFixToggle(<bang>0)
   function! QFixToggle(forced)
     if exists("g:qfix_win") && a:forced == 0
       cclose
@@ -243,36 +244,7 @@ let maplocalleader = "\\"
       let g:qfix_win = bufnr("$")
     endif
   endfunction " }}}
-  " Detect Python vs Django-Python based on python content {{{
-  function! s:DetectPythonVariant()
-    let n = 1
-    while n < 50 && n < line("$")
-      " check for django
-      if getline(n) =~ 'import\s\+\<django\>' || getline(n) =~ 'from\s\+\<django\>\s\+import'
-        set ft=python.django
-        "set syntax=python
-        return
-      endif
-      let n = n + 1
-    endwhile
-    " go with html
-    set ft=python
-  endfunction " }}}
-  " Detect HTML vs Django templates and set filetype accordingly {{{
-  function! s:DetectHTMLVariant()
-    let n = 1
-    while n < 50 && n < line("$")
-      " check for django
-      if getline(n) =~ '{%\s*\(extends\|load\|block\|if\|for\|include\|trans\)\>'
-        set ft=htmldjango.html
-        return
-      endif
-      let n = n + 1
-    endwhile
-    " go with html
-    set ft=html
-  endfunction " }}}
-  " search for a pattern across multiple files {{{
+  " Search for a pattern across multiple files {{{
   function! SearchAcrossMultipleFiles(word)
     if strlen(a:word)
       let l:pattern = a:word
@@ -281,12 +253,11 @@ let maplocalleader = "\\"
       let l:pattern = input("Give me a pattern: ")
     end
     let l:infiles = input("Give me patterns for files to search inside: ")
-    let l:cmdline = ":lvim /" . l:pattern . "/gj" . l:infiles
-    execute l:cmdline
+    execute ":lvim /" . l:pattern . "/gj" . l:infiles
     :lwindow
   endfunction
   " }}}
-  " create session with a prompt {{{
+  " Create session with a prompt {{{
   function! SaveSessionWithPrompt()
     " guess name from current session, if any
     let name = xolox#session#find_current_session()
@@ -318,38 +289,42 @@ let maplocalleader = "\\"
 
   endfunction
   " }}}
-  " load default colorscheme depending on gui is running or not {{{
+  " Load default colorscheme based on gui/terminal and time of day " {{{
   function! LoadDefaultVimColors()
-    " reload colorscheme and related
-    if has('gui_running')
-      execute 'colorscheme ' . g:colorschemes[0][1][0]
-      let g:airline_theme    = g:colorschemes[0][1][1]
-      execute 'set bg='      . g:colorschemes[0][1][2]
+    let curr_hour = strftime("%H")
+
+    if g:is_gui && curr_hour > 7 && curr_hour < 19
+      let data = [ "solarized", "light", "solarized" ]
+    elseif g:is_gui
+      let data = [ "solarized", "dark", "solarized" ]
     else
-      execute 'colorscheme ' . g:colorschemes[1][0][0]
-      let g:airline_theme    = g:colorschemes[1][0][1]
-      execute 'set bg='      . g:colorschemes[1][0][2]
+      let data = [ "base16-eighties", "dark", "base16" ]
     endif
 
-    if exists(g:airline_theme) | call airline#load_theme(g:airline_theme) | endif
+    execute 'colorscheme '   . data[0]
+    execute 'set background='. data[1]
+    execute ':AirlineTheme ' . data[2]
+
     redraw
   endfunction
   " }}}
-  " load a random colorscheme {{{
+  " Load a random colorscheme {{{
   function! LoadRandomColorScheme()
+    let curr_hour = strftime("%H")
+
     let l:colorschemes = split(globpath(&rtp,"**/colors/*.vim"),"\n")
     let l:colorscheme  = l:colorschemes[localtime() % len(l:colorschemes)]
     let l:colorscheme  = fnamemodify(expand(l:colorscheme), ":t:r")
-    if localtime()%2==1 | let l:bgd="dark" | else | let l:bgd="light" | endif
+    let l:background   = curr_hour > 7 && curr_hour < 19 ? "light" : "dark"
 
     execute "colorscheme " . l:colorscheme
-    execute "set background=".l:bgd
+    execute "set background=".l:background
     redraw
 
-    echo "Loaded colorscheme (".l:bgd."): " . l:colorscheme
+    echo "Loaded colorscheme (".l:background."): " . l:colorscheme
   endfunction
   " }}}
-  " reload last session and restore vim colors {{{
+  " Reload last session and restore vim colors {{{
   function! ReloadSessionAndRestoreColors()
     if function_exists("xolox#session#auto_load")
       call xolox#session#auto_load()
@@ -362,38 +337,14 @@ let maplocalleader = "\\"
   call SourceIfReadable('~/.vimrc.before')              " source ~/.vimrc.before, if exists
   call SourceIfReadable('~/.vimrc.local')               " source ~/.vimrc.before, if exists
 " }}}
-" Behaviour: Cross Platform Compatibility {{{
-  " Better Unix / Windows compatibility
-  set viewoptions=folds,options,cursor,unix,slash
-
-  " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
-  " across (heterogeneous) systems easier.
-  if g:is_windows
-    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-    if has("multi_byte")
-      " Windows cmd.exe still uses cp850. If Windows ever moved to
-      " Powershell as the primary terminal, this would be utf-8
-      set termencoding=cp850
-      " Let Vim use utf-8 internally, because many scripts require this
-      setglobal fileencoding=utf-8
-      " Windows has traditionally used cp1252, so it's probably wise to
-      " fallback into cp1252 instead of eg. iso-8859-15.
-      " Newer Windows files might contain utf-8 or utf-16 LE so we might
-      " want to try them first.
-      set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
-    endif
-  endif
-  set encoding=utf-8 nobomb " BOM often causes trouble
-" }}}
 " Behaviour: Vundle and Plugins {{{
 
   " Auto-install Vundle, if not found
   let iCanHazVundle = 1
-  let vundle_path = expand(g:vim_path . '/bundle/vundle')
-  if !filereadable(vundle_path . "/README.md")
+  if !filereadable(expand("~/.vim/bundle/vundle/README.md"))
     echo "Installing Vundle..\n"
-    execute ":silent !mkdir -p "  . shellescape(vundle_path)
-    execute ":silent !git clone https://github.com/gmarik/vundle " . shellescape(vundle_path)
+    :silent !mkdir -p ~/.vim/bundle
+    :silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
     let iCanHazVundle=0
   endif
 
@@ -402,7 +353,7 @@ let maplocalleader = "\\"
   filetype off
 
   " initialize Vundle
-  exec 'set rtp+=' . fnameescape(vundle_path)
+  set rtp+=~/.vim/bundle/vundle
   call vundle#rc()
 
   " let Vundle manage Vundle:
@@ -589,10 +540,10 @@ let maplocalleader = "\\"
     " showmarks:                  visual representation of the location marks {{{
       Bundle 'xsunsmile/showmarks'
       let g:showmarks_enable = 0
-      " <leader>mt : Toggles ShowMarks on and off. 
-      " <leader>mh : Hides an individual mark. 
-      " <leader>ma : Hides all marks in the current buffer. 
-      " <leader>mm : Places the next available mark. 
+      " <leader>mt : Toggles ShowMarks on and off.
+      " <leader>mh : Hides an individual mark.
+      " <leader>ma : Hides all marks in the current buffer.
+      " <leader>mm : Places the next available mark.
     " }}}
 
     " Editor:
@@ -983,7 +934,7 @@ let maplocalleader = "\\"
     " " organizer:                  org mode for vim {{{
     "   Bundle 'hsitz/VimOrganizer'
     " " }}}
-  
+
   " }}}
 
   " install Bundles, if we just installed Vundle
@@ -999,264 +950,254 @@ let maplocalleader = "\\"
   filetype plugin indent on       " enable detection, plugins and indenting in one step
 " }}}
 " Behaviour: General {{{
-" set encoding
-scriptencoding utf-8
-set encoding=utf-8
-set termencoding=utf-8
-set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+  " set encoding
+  scriptencoding utf-8
+  set encoding=utf-8 nobomb " BOM often causes trouble
+  set termencoding=utf-8
+  set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 
-" security related matters
-set nomodeline                  " disable mode lines (security measure)
+  " security related matters
+  set nomodeline                  " disable mode lines (security measure)
 
-" mouse related matters
-if has('mouse')
-  set mouse=a                   " enable using mouse if terminal supports it
-  set mousehide
-endif
-
-" session related matters
-if has('mksession')
-  set sessionoptions+=resize
-endif
-
-" wrapping related matters
-set nowrap                      " don't wrap lines
-set linebreak                   " break long lines at words, when wrap is on
-set textwidth=80                " wrap after this many characters in a line
-set colorcolumn=+1              " highlight end of textwidth
-set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
-set showbreak=↪                 " string to put at the starting of wrapped lines
-set scrolloff=7                 " keep lines off edges of the screen when scrolling
-" set scrolljump=5                " lines to scroll when cursor leaves screen
-set sidescroll=1                " brings characters in view when side scrolling
-set sidescrolloff=15            " start side-scrolling when n chars are left
-
-" look related matters
-set number                      " always show line numbers
-set numberwidth=4               " number of culumns for line numbers
-set showmode                    " always show what mode we're currently editing in
-set report=0                    " always report number of lines changed
-set cursorline                  " highlight the current line, for quick orientation
-set nocursorcolumn              " highlight the current column, for quick orientation
-set shortmess+=filmnrxoOtT      " abbrev. vim-messages (avoids 'hit enter', also)
-set shortmess+=I                " do not display intro message on Vim startup
-set nolist                      " do not show invisible characters
-                                " enabled later via autocmd on certain filetypes
-set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
-
-" windows related matters
-set splitbelow                  " puts new split windows to the bottom of the current
-set splitright                  " puts new vsplit windows to the right of the current
-set lazyredraw                  " even update the display while executing macros
-set tabpagemax=15               " only show 15 tabs
-set equalalways                 " split windows are always of eqal size
-
-" statusline related matters
-set cmdheight=2                 " use a status bar that is 2 rows high
-set laststatus=2                " tell VIM to always put a status line in
-if !exists('g:loaded_airline')
-  if &paste
-    let s:has_paste = '[PASTE]'
-  else
-    let s:has_paste = ''
+  " mouse related matters
+  if has('mouse')
+    set mouse=a                   " enable using mouse if terminal supports it
+    set mousehide
   endif
-  set statusline=\ %{s:has_paste}%<%-15.25(%f%)%m%r%h\ %w\ \
-  set statusline+=\ \ \ [%{&ff}/%Y]
-  set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
-  set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
-endif
-if has('cmdline_info')
-  set ruler                     " Show the ruler
-  set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-  set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
-endif
 
-" wildcard related matters for filename completion
-set wildmenu                        " make tab completion for files/buffers act like bash
-set wildmode=list:longest,full      " show a list when pressing tab, then longest common part and then full name.
-set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
-set wildignore+=*/.hg/*,*/.svn/*
-set wildignore+=*vim/backups*       " ...
-set wildignore+=*/smarty/*          " ...
-set wildignore+=*/node_modules/*    " ...
-set wildignore+=*/.sass-cache/*     " ...
-set wildignore+=*/tmp/*,tmp/**      " ...
-set wildignore+=*/out/**,log/**     " ... phew!!
-" file suffixes that can be safely ignored for file name completion
-set suffixes+=.swo,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.DS_Store,.class,.so
-set suffixes+=.brf,.cb,.dmg,.exe,.ind,.idx,.ilg,.inx,.out,.toc,.pyc,.pyd,.dll,.zip
-set suffixes+=.gem,.pdf,.avi,.mkv,.png,.jpg,.gif,.psd
+  " session related matters
+  if has('mksession')
+    set sessionoptions+=resize
+  endif
 
-" completion related matters
-set completeopt+=menuone,longest  " don't select first item, follow typing in autocomplete
-set completeopt-=preview          " disable doc preview in omnicomplete
-set complete=.,w,b,t              " do lots of scanning on tab completion,  FIXME?
-set pumheight=6                   " Keep a small completion window
+  " wrapping related matters
+  set nowrap                      " don't wrap lines
+  set linebreak                   " break long lines at words, when wrap is on
+  set textwidth=80                " wrap after this many characters in a line
+  set colorcolumn=+1              " highlight end of textwidth
+  set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
+  set showbreak=↪                 " string to put at the starting of wrapped lines
+  set scrolloff=7                 " keep lines off edges of the screen when scrolling
+  " set scrolljump=5                " lines to scroll when cursor leaves screen
+  set sidescroll=1                " brings characters in view when side scrolling
+  set sidescrolloff=15            " start side-scrolling when n chars are left
 
-" terminal related matters
-set title                         " change the terminal's title
-set ttyfast                       " always use a fast terminal
-set visualbell                    " don't beep
-set noerrorbells                  " don't beep
-set t_vb=                         " remove visual bell character
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
+  " look related matters
+  set number                      " always show line numbers
+  set numberwidth=4               " number of culumns for line numbers
+  set showmode                    " always show what mode we're currently editing in
+  set report=0                    " always report number of lines changed
+  set cursorline                  " highlight the current line, for quick orientation
+  set nocursorcolumn              " highlight the current column, for quick orientation
+  set shortmess+=filmnrxoOtT      " abbrev. vim-messages (avoids 'hit enter', also)
+  set shortmess+=I                " do not display intro message on Vim startup
+  set nolist                      " do not show invisible characters
+                                  " enabled later via autocmd on certain filetypes
+  set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
 
-" other really (ir)relevant matters
-set autoread                      " watch for file changes
-" set autowrite                     " auto write file when moving away from it.
-set autochdir                     " automatically change the working directory
-set hidden                        " hide buffers instead of closing them this means that the current buffer can be put to background without being written; and that marks and undo history are preserved.
-set switchbuf=useopen,split       " reveal already opened files from the quickfix window instead of opening new buffers, otherwise split current window to make room for new one.
-set history=1000                  " remember more commands and search history
-set viminfo='500,:100,@100,/20,f1,%,<200    " see :h viminfo to understand what this means :)
-set nofsync                       " improves performance -- let OS decide when to flush disk
+  " windows related matters
+  set splitbelow                  " puts new split windows to the bottom of the current
+  set splitright                  " puts new vsplit windows to the right of the current
+  set lazyredraw                  " even update the display while executing macros
+  set tabpagemax=15               " only show 15 tabs
+  set equalalways                 " split windows are always of eqal size
 
-" undo/redo related matters
-if has('persistent_undo')
-  set undofile                  " So is persistent undo ...
-  set undolevels=1000           " Maximum number of changes that can be undone
-  set undoreload=10000          " Maximum number lines to save for undo on a buffer reload
-  set undodir=~/.vim/.tmp,/tmp
-endif
+  " statusline related matters
+  set cmdheight=2                 " use a status bar that is 2 rows high
+  set laststatus=2                " tell VIM to always put a status line in
+  if has('cmdline_info')
+    set ruler                     " Show the ruler
+    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+    set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
+  endif
+  call LoadDefaultStatusLine()
 
-" shell related matters
-if !g:is_windows                  " use bash with login shell and
-  " set shell=zsh\ -i              " interactive mode overwrite in vimrc.after
-endif                             " if needed
+  " wildcard related matters for filename completion
+  set wildmenu                        " make tab completion for files/buffers act like bash
+  set wildmode=list:longest,full      " show a list when pressing tab, then longest common part and then full name.
+  set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
+  set wildignore+=*/.hg/*,*/.svn/*
+  set wildignore+=*vim/backups*       " ...
+  set wildignore+=*/smarty/*          " ...
+  set wildignore+=*/node_modules/*    " ...
+  set wildignore+=*/.sass-cache/*     " ...
+  set wildignore+=*/tmp/*,tmp/**      " ...
+  set wildignore+=*/out/**,log/**     " ... phew!!
+  " file suffixes that can be safely ignored for file name completion
+  set suffixes+=.swo,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.DS_Store,.class,.so
+  set suffixes+=.brf,.cb,.dmg,.exe,.ind,.idx,.ilg,.inx,.out,.toc,.pyc,.pyd,.dll,.zip
+  set suffixes+=.gem,.pdf,.avi,.mkv,.png,.jpg,.gif,.psd
 
-" backup related matters
-set nobackup                      " do not keep backup files, it's 70's style cluttering
-set nowritebackup                 " do not make a write backup
-set noswapfile                    " do not write annoying intermediate swap files
-set directory=~/.vim/.tmp,/tmp    " store swap files in one of these directories (in case swapfile is ever turned on)
+  " completion related matters
+  set completeopt+=menuone,longest  " don't select first item, follow typing in autocomplete
+  set completeopt-=preview          " disable doc preview in omnicomplete
+  set complete=.,w,b,t              " do lots of scanning on tab completion,  FIXME?
+  set pumheight=6                   " Keep a small completion window
+
+  " terminal related matters
+  set title                         " change the terminal's title
+  set ttyfast                       " always use a fast terminal
+  set visualbell                    " don't beep
+  set noerrorbells                  " don't beep
+  set t_vb=                         " remove visual bell character
+  " Prevent Vim from clobbering the scrollback buffer. See
+  " http://www.shallowsky.com/linux/noaltscreen.html
+  set t_ti= t_te=
+
+  " other really (ir)relevant matters
+  set autoread                      " watch for file changes
+  " set autowrite                     " auto write file when moving away from it.
+  set autochdir                     " automatically change the working directory
+  set hidden                        " hide buffers instead of closing them this means that the current buffer can be put to background without being written; and that marks and undo history are preserved.
+  set switchbuf=useopen,split       " reveal already opened files from the quickfix window instead of opening new buffers, otherwise split current window to make room for new one.
+  set history=1000                  " remember more commands and search history
+  set viminfo='500,:100,@100,/20,f1,%,<200    " see :h viminfo to understand what this means :)
+  set nofsync                       " improves performance -- let OS decide when to flush disk
+
+  " undo/redo related matters
+  if has('persistent_undo')
+    set undofile                  " So is persistent undo ...
+    set undolevels=1000           " Maximum number of changes that can be undone
+    set undoreload=10000          " Maximum number lines to save for undo on a buffer reload
+    set undodir=~/.vim/.tmp,/tmp
+  endif
+
+  " shell related matters
+  if !g:is_windows                  " use bash with login shell and
+    " set shell=zsh\ -i              " interactive mode overwrite in vimrc.after
+  endif                             " if needed
+
+  " backup related matters
+  set nobackup                      " do not keep backup files, it's 70's style cluttering
+  set nowritebackup                 " do not make a write backup
+  set noswapfile                    " do not write annoying intermediate swap files
+  set directory=~/.vim/.tmp,/tmp    " store swap files in one of these directories (in case swapfile is ever turned on)
 " }}}
-" Behaviour: GUI {{{
-" set appropriate terminal colors
-if &t_Co > 2 && &t_Co < 16
-  set t_Co =16
-elseif &t_Co > 16
-  set t_Co =256
-endif
+" Behaviour: GUI and Appearance {{{
 
-" set vim's colorscheme, airline theme and background from default values
-call LoadDefaultVimColors()
+  " set appropriate terminal colors
+  if &t_Co > 2 && &t_Co < 16
+    set t_Co =16
+  elseif &t_Co > 16
+    set t_Co =256
+  endif
 
-" source our ~/.gvimrc, if gui is running
-if has('gui_running')
-  call SourceIfReadable('~/.gvimrc')
-endif
+  " set vim's default colorscheme, airline theme and background
+  " depending on the time of day and whether gui is running or not
+  call LoadDefaultVimColors()
 
-" Verical bar in insert mode (for iTerm users only)
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  " source our ~/.gvimrc, if gui is running
+  if g:is_gui | call SourceIfReadable('~/.gvimrc') | endif
+
+  " Vertical bar in insert mode (for iTerm users only)
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " }}}
 " Behaviour: Editor {{{
-set ttimeout                    " timeout on key codes
-set ttimeoutlen=50              " timeout duration should be small
-set nrformats-=octal            " do not treat octal as numbers
-set nrformats+=alpha            " but, allow inc/dec on alphabetical letters
-set nojoinspaces                " prevents two spaces after punctuation on join
-set virtualedit=onemore         " allow cursor 1 char beyond end of current line
-set fileformats="unix,dos,mac"  " EOL that will be tried when reading buffers
-set formatoptions+=1ron         " see :h formatoptions-values for details
-set backspace=indent,eol,start  " allow backspacing over everything in insert mode
-set pastetoggle=<F2>            " when in insert mode, press <F2> to go to paste mode
-set showmatch                   " set show matching parenthesis
-set matchtime=2                 " show matching parenthesis for 0.2 seconds
-" set cinoptions=b1,g0,N-s,t0,(0,W4 " see :h cinoptions-values for details
-set iskeyword+=_,$,@,%,#        " none of these should be word dividers, so make them not be
+  set ttimeout                    " timeout on key codes
+  set ttimeoutlen=50              " timeout duration should be small
+  set nrformats-=octal            " do not treat octal as numbers
+  set nrformats+=alpha            " but, allow inc/dec on alphabetical letters
+  set nojoinspaces                " prevents two spaces after punctuation on join
+  set virtualedit=onemore         " allow cursor 1 char beyond end of current line
+  set fileformats="unix,dos,mac"  " EOL that will be tried when reading buffers
+  set formatoptions+=1ron         " see :h formatoptions-values for details
+  set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+  set pastetoggle=<F2>            " when in insert mode, press <F2> to go to paste mode
+  set showmatch                   " set show matching parenthesis
+  set matchtime=2                 " show matching parenthesis for 0.2 seconds
+  " set cinoptions=b1,g0,N-s,t0,(0,W4 " see :h cinoptions-values for details
+  set iskeyword+=_,$,@,%,#        " none of these should be word dividers, so make them not be
 
-" tab related matters
-set tabstop=4                   " a tab is two spaces
-set softtabstop=4               " when <BS>, pretend tab is removed, even if spaces
-set expandtab                   " expand tabs, by default
+  " tab related matters
+  set tabstop=4                   " a tab is two spaces
+  set softtabstop=4               " when <BS>, pretend tab is removed, even if spaces
+  set expandtab                   " expand tabs, by default
 
-" indentation related matters
-set autoindent                  " always set autoindenting on
-set shiftwidth=4                " number of spaces to use for autoindenting
-set copyindent                  " copy the previous indentation on autoindenting
-set shiftround                  " use multiple of 'sw' when indenting with '<' and '>'
-set smarttab                    " insert tabs on start of line acc to 'sw' not 'ts'
+  " indentation related matters
+  set autoindent                  " always set autoindenting on
+  set shiftwidth=4                " number of spaces to use for autoindenting
+  set copyindent                  " copy the previous indentation on autoindenting
+  set shiftround                  " use multiple of 'sw' when indenting with '<' and '>'
+  set smarttab                    " insert tabs on start of line acc to 'sw' not 'ts'
 
-" spelling related matters
-if has('syntax')
-  setlocal spell spelllang=en_us
-  set nospell                   " no spell check, by default
-endif
+  " spelling related matters
+  if has('syntax')
+    setlocal spell spelllang=en_us
+    set nospell                   " no spell check, by default
+  endif
 
-" clipboard related matters
-if has ('x') && has('unnamedplus')
-  set clipboard=unnamedplus,unnamed      " On Linux use + register for copy-paste
-else
-  set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
-endif
+  " clipboard related matters
+  if has ('x') && has('unnamedplus')
+    set clipboard=unnamedplus,unnamed      " On Linux use + register for copy-paste
+  else
+    set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
+  endif
 " }}}
 " Behaviour: Folding {{{
-set nofoldenable                " do not enable folding, by default
-set foldcolumn=2                " add a fold column to the left of line-numbers
-set foldlevel=0                 " folds with a higher level will be closed
-set foldlevelstart=0            " start out with everything closed
-set foldmethod=indent           " create folds based on indentation
-set foldnestmax=3               " deepest fold is 3 levels
-set foldminlines=1              " do not fold single lines, fold everything else
-set foldtext=MyFoldText()       " function for text that appears over folds
-" which commands trigger auto-unfold
-set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
+  set nofoldenable                " do not enable folding, by default
+  set foldcolumn=2                " add a fold column to the left of line-numbers
+  set foldlevel=0                 " folds with a higher level will be closed
+  set foldlevelstart=0            " start out with everything closed
+  set foldmethod=indent           " create folds based on indentation
+  set foldnestmax=3               " deepest fold is 3 levels
+  set foldminlines=1              " do not fold single lines, fold everything else
+  set foldtext=MyFoldText()       " function for text that appears over folds
+  " which commands trigger auto-unfold
+  set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 
-" Don't screw up folds when inserting text that might affect them, until
-" leaving insert mode. Foldmethod is local to the window. Protect against
-" screwing up folding when switching between windows.
-" http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod |
-                    \ setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') |
-                             \ let &l:foldmethod=w:last_fdm |
-                             \ unlet w:last_fdm | endif
+  " Don't screw up folds when inserting text that might affect them, until
+  " leaving insert mode. Foldmethod is local to the window. Protect against
+  " screwing up folding when switching between windows.
+  " http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
+  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod |
+                      \ setlocal foldmethod=manual | endif
+  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') |
+                              \ let &l:foldmethod=w:last_fdm |
+                              \ unlet w:last_fdm | endif
 " }}}
 " Behaviour: Search and Syntax Highlighting {{{
-set incsearch                   " show search matches as you type
-set ignorecase                  " by default, the search should ignore case
-set smartcase                   " ignore case lowercase, else case-sensitive
-set gdefault                    " search/replace globally (on a line) by default
-set synmaxcol=800               " don't try to highlight lines longer than 800 characters.
-set magic                       " use magic mode when searching/replacing
-set wrapscan                    " search continues after the end of file
+  set incsearch                   " show search matches as you type
+  set ignorecase                  " by default, the search should ignore case
+  set smartcase                   " ignore case lowercase, else case-sensitive
+  set gdefault                    " search/replace globally (on a line) by default
+  set synmaxcol=800               " don't try to highlight lines longer than 800 characters.
+  set magic                       " use magic mode when searching/replacing
+  set wrapscan                    " search continues after the end of file
 
-if has("gui_running") || &t_Co > 2
-  syntax on                     " syntax highlight on, when terminal has colors
-  set hlsearch                  " enable highlighting of search items
-endif
+  if g:is_gui || &t_Co > 2
+    syntax on                     " syntax highlight on, when terminal has colors
+    set hlsearch                  " enable highlighting of search items
+  endif
 
-if has("diff")
-  set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
-endif
+  if has("diff")
+    set diffopt+=iwhite           " Ignore whitespace changes (focus on code changes)
+  endif
 " }}}
 " Behaviour: CTags {{{
-set tags+=./tags,tags;/         " find and load tags file up until root
+  set tags+=./tags,tags;/         " find and load tags file up until root
 " }}}
 " Behaviour: Inbuilt Plugin Settings {{{
-if executable('ag')
-  let g:ackprg='ag --nogroup --nocolor --column'
-  set grepprg=ag\ --nogroup\ --nocolor\ --column
-elseif executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
-endif
+  if executable('ag')
+    let g:ackprg='ag --nogroup --nocolor --column'
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+  elseif executable("ack")
+    set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
+  endif
 
-" Stop fucking netrw
-let g:netrw_silent = 1
-let g:netrw_quiet  = 1
-" let g:loaded_netrw = 1 " prevents loading of netrw, but messes 'gx'
-" let g:loaded_netrwPlugin = 1
+  " Stop fucking netrw
+  let g:netrw_silent = 1
+  let g:netrw_quiet  = 1
+  " let g:loaded_netrw = 1          " prevents loading of netrw, but messes 'gx'
+  " let g:loaded_netrwPlugin = 1    " ^ ..same.. and therefore, commented
 " }}}
 " Behaviour: Security {{{
-set exrc                                         " enable per-directory .vimrc files
-set secure                                       " disable unsafe commands in them
-if exists("&cryptmethod")
-  set cryptmethod=blowfish                       " https://coderwall.com/p/hypjbg
-endif
+  set exrc                                                 " enable per-directory .vimrc files
+  set secure                                               " disable unsafe commands in them
+
+  " https://coderwall.com/p/hypjbg
+  if exists("&cryptmethod") | set cryptmethod=blowfish | endif
 " }}}
 " Behaviour: Mappings {{{
   " ease-of-use related mappings {{{
@@ -1325,7 +1266,7 @@ endif
     vnoremap <Tab> %
 
     " toggle RelativeLineNumbers manually using Ctrl+n
-    nnoremap <C-n> :call NumberToggle()<cr>
+    nnoremap <C-n> :set relativenumber!<cr>
 
   " }}}
   " windows related mappings {{{
@@ -1379,7 +1320,7 @@ endif
     nnoremap <leader>cr :set cursorcolumn!<CR>
 
     " view changes in the current buffer as compared to the last saved document
-    nnoremap <leader>ds :DiffSaved<CR>
+    nnoremap <leader>ds :call DiffWithSaved()<CR>
 
     " quickly create new buffers with files from current directory
     " http://vimcasts.org/e/14
@@ -1543,6 +1484,7 @@ endif
   " mappings that provide some special behaviours {{{
 
     " open/close QuickFix window using <l>f
+    command! -bang -nargs=? QFix call QFixToggle(<bang>0)
     nmap <silent> <leader>f :QFix<CR>
 
     " shortcut to jump to next conflict marker
