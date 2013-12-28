@@ -111,7 +111,7 @@ let mapleader = ","                                     " change mapleader key c
 let g:mapleader = ","                                   " some plugins may require this variable to be set
 let maplocalleader = "\\"
 
-" Declare some variables for easy VimRC configuration {{{
+" Behaviour: Custom Variables {{{
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
   let g:is_macvim  = has('gui_macvim')
   let g:is_linux   = has('linux')
@@ -140,9 +140,8 @@ let maplocalleader = "\\"
   endif
 
 " }}}
-
-" Custom functions for easy VimRC configuration {{{
-  " vim: source a file, only if we can read it :) {{{
+" Behaviour: Custom Functions {{{
+  " source a file, only if we can read it :) {{{
   " TODO: change this function to include a _name before
   "       and name_ file afterwards
   function! SourceIfReadable(file)
@@ -155,7 +154,7 @@ let maplocalleader = "\\"
       execute "source" l:file
     endif
   endfunction " }}}
-  " vim: ensure that a directory exists {{{
+  " ensure that a directory exists {{{
   function! EnsureExists(path)
     if !isdirectory(expand(a:path))
       call mkdir(expand(a:path), 'p')
@@ -382,10 +381,11 @@ let maplocalleader = "\\"
   endfunction
   " }}}
 " }}}
-
-call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before, if exists
-
-" Cross Platform Compatibility {{{
+" Behaviour: Pre/Local Configuration {{{
+  call SourceIfReadable('~/.vimrc.before')              " source ~/.vimrc.before, if exists
+  call SourceIfReadable('~/.vimrc.local')               " source ~/.vimrc.before, if exists
+" }}}
+" Behaviour: Cross Platform Compatibility {{{
   " Better Unix / Windows compatibility
   set viewoptions=folds,options,cursor,unix,slash
 
@@ -408,8 +408,7 @@ call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before
   endif
   set encoding=utf-8 nobomb " BOM often causes trouble
 " }}}
-
-" Vundle: Installation and its settings {{{
+" Behaviour: Vundle and Plugins {{{
 
   " Auto-install Vundle, if not found
   let iCanHazVundle = 1
@@ -1022,8 +1021,7 @@ call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before
   " required by Vundle
   filetype plugin indent on       " enable detection, plugins and indenting in one step
 " }}}
-
-" Behaviour: Vim {{{
+" Behaviour: General {{{
 " set encoding
 scriptencoding utf-8
 set encoding=utf-8
@@ -1846,7 +1844,7 @@ endif
     " }}}
   endif
 " }}}
-
-" other files that need to be sourced
-call SourceIfReadable('autocorrect.vim')         " auto-corrections for spellings
-call SourceIfReadable('~/.vimrc.after')          " useful to override vimrc configuration
+" Behaviour: Configuration Overrides {{{
+  call SourceIfReadable('autocorrect.vim')           " auto-corrections for spellings
+  call SourceIfReadable('~/.vimrc.after')            " useful to override vimrc configuration
+" }}}
