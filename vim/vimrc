@@ -34,33 +34,32 @@
 " Vim Tips: """"""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   - Use `:X` to set encryption on any file
 "   - Use `setl key=` to disable this encryption
-"   - Use `gx` to open the current Url/File/etc. using OS-specific command
+"   - Use `gf` to open file under cursor using default file handler
+"   - Use `gx` to open the current url using default url handler
 "   - Use `g:netrw_browserx_viewer` to set the binary for above command
 "   - Use `''` to jump to location of the last jump
 "   - Use `'.` to jump to location of your last edit
 " }}}
 " Sections: """"""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "
-"     => Variable declaration to be used in this file
-"     => Custom functions to be used in this file
-"     => Load ~/.vimrc.before
-"     => Make this configuration cross-platform
-"     => NeoBundle and other Vim plugins
-"     => Editing behaviour of Vim
+"     => Variable declaration for variables used in this file
+"     => Custom functions which have been used in this file
+"     => Load ~/.vimrc.before and ~/.vimrc.local, if they are readable
+"     => Apply some configuration for cross-platform compatibility
+"     => Vundle and other plugins and their settings and mappings
 "     => General behaviour of Vim
-"     => Shell behaviour for Vim
 "     => GUI behaviour of Vim
-"     => Syntax highlighting and Search behaviour
-"     => Folding behaviour of Vim
-"     => Matching and Auto-Command behaviours
+"     => Editing behaviour of Vim
+"     => Define how folding will be done in the Editor
+"     => Define Syntax highlighting and Search behaviour
+"     => CTags configuration
+"     => Settings for variour inbuilt plugins
+"     => Security related configuration
 "     => Shortcut mappings
-"     => Filetype specific handling
-"     => Common abbreviations / misspellings
-"     => Custom functions
-"     => Reload Vim configuration automatically?
-"     => Extra vi-compatibility
+"        => Common abbreviations / misspellings
+"     => Auto-Command behaviour
+"        => Filetype specific handling
 "     => Load ~/.vimrc.after
-"
 " }}}
 " TODOs: """""""""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   - convert common functionality into a plugin
@@ -1632,6 +1631,7 @@ endif
   endif
   " }}}
   " abbreviations: {{{
+    call SourceIfReadable('~/.vim/autocorrect.vim')           " auto-corrections for spellings
     iabbr NG@  Nikhil Gupta
     iabbr WD@  Wicked Developers
 
@@ -1845,6 +1845,5 @@ endif
   endif
 " }}}
 " Behaviour: Configuration Overrides {{{
-  call SourceIfReadable('autocorrect.vim')           " auto-corrections for spellings
   call SourceIfReadable('~/.vimrc.after')            " useful to override vimrc configuration
 " }}}
