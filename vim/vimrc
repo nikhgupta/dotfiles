@@ -141,23 +141,13 @@ let maplocalleader = "\\"
 " }}}
 " Behaviour: Custom Functions {{{
   " source a file, only if we can read it :) {{{
-  " TODO: change this function to include a _name before
-  "       and name_ file afterwards
   function! SourceIfReadable(file)
-    if filereadable(expand(a:file))
-      let l:file = expand(a:file)
-    else
-      let l:file = expand(g:vim_path . "/" . a:file)
-    end
-    if filereadable(l:file)
-      execute "source" l:file
-    endif
+    let l:file = expand(a:file)
+    if filereadable(l:file) | execute "source" l:file | endif
   endfunction " }}}
   " ensure that a directory exists {{{
   function! EnsureExists(path)
-    if !isdirectory(expand(a:path))
-      call mkdir(expand(a:path), 'p')
-    endif
+    if !isdirectory(expand(a:path)) | call mkdir(expand(a:path), 'p') | endif
   endfunction
   " }}}
   " get current directory path {{{
@@ -282,31 +272,18 @@ let maplocalleader = "\\"
     " go with html
     set ft=html
   endfunction " }}}
-  " get whether PasteMode is on or off (used for statusline purposes) {{{
-  function! HasPaste()
-    if &paste
-      return '[PASTE]'
+  " search for a pattern across multiple files {{{
+  function! SearchAcrossMultipleFiles(word)
+    if strlen(a:word)
+      let l:pattern = a:word
+      echo "Searching for: " . l:pattern
     else
-      return ''
-    endif
-  endfunction
-  " }}}
-  " load default colorscheme depending on gui is running or not {{{
-  function! LoadDefaultVimColors()
-    " reload colorscheme and related
-    if has('gui_running')
-      execute 'set background=' . g:colorschemes[0][1][2]
-      execute 'colorscheme ' . g:colorschemes[0][1][0]
-      let g:airline_theme = g:colorschemes[0][1][1]
-    else
-      execute 'set background=' . g:colorschemes[1][0][2]
-      execute 'colorscheme ' . g:colorschemes[1][0][0]
-      let g:airline_theme = g:colorschemes[1][0][1]
-    endif
-    if exists(g:airline_theme)
-      call airline#load_theme(g:airline_theme)
-    endif
-    redraw
+      let l:pattern = input("Give me a pattern: ")
+    end
+    let l:infiles = input("Give me patterns for files to search inside: ")
+    let l:cmdline = ":lvim /" . l:pattern . "/gj" . l:infiles
+    execute l:cmdline
+    :lwindow
   endfunction
   " }}}
   " create session with a prompt {{{
@@ -341,26 +318,21 @@ let maplocalleader = "\\"
 
   endfunction
   " }}}
-  " reload last session and restore vim colors {{{
-  function! ReloadSessionAndRestoreColors()
-    if function_exists("xolox#session#auto_load")
-      call xolox#session#auto_load()
-    endif
-    call LoadDefaultVimColors()
-  endfunction
-  " }}}
-  " search for a pattern across multiple files {{{
-  function! SearchAcrossMultipleFiles(word)
-    if strlen(a:word)
-      let l:pattern = a:word
-      echo "Searching for: " . l:pattern
+  " load default colorscheme depending on gui is running or not {{{
+  function! LoadDefaultVimColors()
+    " reload colorscheme and related
+    if has('gui_running')
+      execute 'colorscheme ' . g:colorschemes[0][1][0]
+      let g:airline_theme    = g:colorschemes[0][1][1]
+      execute 'set bg='      . g:colorschemes[0][1][2]
     else
-      let l:pattern = input("Give me a pattern: ")
-    end
-    let l:infiles = input("Give me patterns for files to search inside: ")
-    let l:cmdline = ":lvim /" . l:pattern . "/gj" . l:infiles
-    execute l:cmdline
-    :lwindow
+      execute 'colorscheme ' . g:colorschemes[1][0][0]
+      let g:airline_theme    = g:colorschemes[1][0][1]
+      execute 'set bg='      . g:colorschemes[1][0][2]
+    endif
+
+    if exists(g:airline_theme) | call airline#load_theme(g:airline_theme) | endif
+    redraw
   endfunction
   " }}}
   " load a random colorscheme {{{
@@ -368,15 +340,21 @@ let maplocalleader = "\\"
     let l:colorschemes = split(globpath(&rtp,"**/colors/*.vim"),"\n")
     let l:colorscheme  = l:colorschemes[localtime() % len(l:colorschemes)]
     let l:colorscheme  = fnamemodify(expand(l:colorscheme), ":t:r")
-    if localtime() % 2 == 1
-      let l:background = "dark"
-    else
-      let l:background = "light"
-    endif
+    if localtime()%2==1 | let l:bgd="dark" | else | let l:bgd="light" | endif
+
     execute "colorscheme " . l:colorscheme
-    execute "set background=".l:background
+    execute "set background=".l:bgd
     redraw
-    echo "Loading colorscheme (".l:background."): " . l:colorscheme
+
+    echo "Loaded colorscheme (".l:bgd."): " . l:colorscheme
+  endfunction
+  " }}}
+  " reload last session and restore vim colors {{{
+  function! ReloadSessionAndRestoreColors()
+    if function_exists("xolox#session#auto_load")
+      call xolox#session#auto_load()
+    endif
+    call LoadDefaultVimColors()
   endfunction
   " }}}
 " }}}
@@ -1077,7 +1055,12 @@ set equalalways                 " split windows are always of eqal size
 set cmdheight=2                 " use a status bar that is 2 rows high
 set laststatus=2                " tell VIM to always put a status line in
 if !exists('g:loaded_airline')
-  set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
+  if &paste
+    let s:has_paste = '[PASTE]'
+  else
+    let s:has_paste = ''
+  endif
+  set statusline=\ %{s:has_paste}%<%-15.25(%f%)%m%r%h\ %w\ \
   set statusline+=\ \ \ [%{&ff}/%Y]
   set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
   set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
