@@ -13,7 +13,6 @@
   nnoremap 0 ^
   nnoremap ^ 0
 " }}}
-
 " mappings created to avoid any accidental hits {{{
   " avoid accidental hits of <F1> while aiming for <Esc>
   map! <F1> <Esc>
@@ -32,22 +31,29 @@
     command! -bang Qa qa<bang>
   endif
 " }}}
-
 " mappings that perform everyday tasks quicker {{{
   " quickly close the current window
   noremap <leader>q :q<CR>
 
+  " quick save a file
+  nnoremap <leader>w :w!<CR>
+
+  " sudo to write
+  cmap w!! w !sudo tee % >/dev/null
+
   " quickly yanking a complete line
   nmap Y yy
-" }}}
 
+  " Switch between the last two files
+  nnoremap <leader><leader> <c-^>
+" }}}
 " movement related mappings {{{
 
   " use the damn hjkl keys
-  map <up> <nop>
-  map <down> <nop>
-  map <left> <nop>
-  map <right> <nop>
+  nnoremap <Left> :echoe "Use h"<CR>
+  nnoremap <Right> :echoe "Use l"<CR>
+  nnoremap <Up> :echoe "Use k"<CR>
+  nnoremap <Down> :echoe "Use j"<CR>
 
   " remap j and k to act as expected when used on long, wrapped, lines
   noremap j gj
@@ -61,7 +67,6 @@
   nnoremap <C-n> :call NumberToggle()<cr>
 
 " }}}
-
 " windows related mappings {{{
 
   " resize windows automatically
@@ -79,27 +84,20 @@
   map <leader><C-k> <C-w>k<C-w>_
   map <leader><C-l> <C-w>l<C-w><bar>
 
-  " create a split buffer containing the current file and switch to it
-  nnoremap <leader>ws <C-w>s<C-w>k
-  nnoremap <leader>wv <C-w>v<C-w>l
-
   " speed up scrolling of the viewport slightly
   nnoremap <C-e> 2<C-e>
   nnoremap <C-y> 2<C-y>
 
-  " Split previously opened file ('#') in a split window
-  nnoremap <leader>sh :execute 'leftabove vsplit' bufname('#')<cr>
-  nnoremap <leader>sl :execute 'rightbelow vsplit' bufname('#')<cr>
+  " create a split buffer containing the current file and switch to it
+  nnoremap <leader>wh <C-w>s<C-w>k
+  nnoremap <leader>wv <C-w>v<C-w>l
+
+  " Split previously opened file ('#') in a split window and switch to it
+  nnoremap <leader>ph :execute 'rightbelow split' bufname('#')<cr>
+  nnoremap <leader>pv :execute 'leftabove vsplit' bufname('#')<cr>
 
 " }}}
-
 " editing/formatting related mappings {{{
-
-  " quick save a file
-  nnoremap <leader>w :w!<CR>
-
-  " sudo to write
-  cmap w!! w !sudo tee % >/dev/null
 
   " strip all trailing whitespace from a file and save it
   nnoremap <silent> <leader>W  :%s/\v<C-v><C-m>//e<CR>:retab<CR>:%s/\s\+$//e<CR>:let @/=''<CR>:w<CR>
@@ -107,6 +105,9 @@
   " allow using the repeat operator with a visual selection (!)
   " http://stackoverflow.com/a/8064607/127816
   vnoremap . :normal .<CR>
+
+  " join lines and restore cursor location
+  nnoremap J mjJ`j
 
   " quickly get out of insert mode without your fingers having to leave the
   " home row (either use 'jj' or 'jk')
@@ -122,6 +123,8 @@
   " quickly create new buffers with files from current directory
   " http://vimcasts.org/e/14
   cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+  map <leader>er :e **/*
   map <leader>ew :e %%
   map <leader>es :sp %%
   map <leader>ev :vsp %%
@@ -144,31 +147,33 @@
   nmap <leader>ac :center<CR>
 
   " insert modeline after last line of the file
-  nnoremap <silent> <leader>ml :call AppendModeline()<CR>
+  nnoremap <silent> <leader>ml :call AppendModeline()<CR>:echo 'Added Modeline.'<CR>
 
   " insert current time
   nnoremap <F5> "=strftime("%d-%m-%y %H:%M:%S")<CR>P
   inoremap <F5> <C-R>=strftime("%d-%m-%y %H:%M:%S")<CR>
 
   " underline the current line with '='
-  nmap <silent> <leader>lu YpVr=<CR>
+  nmap <silent> <leader>ul YpVr=<CR>
 
 " }}}
-
 " file system related mappings {{{
 
   " change Working Directory to that of the current file
-  cmap cwd lcd %:p:h
   cmap cd. lcd %:p:h
+  cmap cwd lcd %:p:h
 
   " create the directory containing the file in the buffer
   nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
-" }}}
+  " make file executable
+  command! -nargs=* Xe !chmod +x <args>
+  command! -nargs=0 Xe !chmod +x %
 
+" }}}
 " search/replace related mappings {{{
 
-  " use really magic mode for search patterns
+  " use 'really' magic mode for search patterns
   " 01-09-13 03:03:06 - using `magic` mode, instead.
   " nnoremap / /\v
   " vnoremap / /\v
@@ -189,8 +194,19 @@
 
   " replace: pull word under cursor into LHS of a substitute (for quick search and replace)
   nmap <leader>fr :%s#\<<C-r>=expand("<cword>")<CR>\>#
-" }}}
 
+  " search: search for a pattern across multiple files
+  nmap <leader>fm :call SearchAcrossMultipleFiles("")<cr>
+  nmap <leader>fc :call SearchAcrossMultipleFiles("<C-r>=expand("<cword>")<CR>")<cr>
+
+  " center display after searching
+  nnoremap n   nzz
+  nnoremap N   Nzz
+  nnoremap *   *zz
+  nnoremap #   #zz
+  nnoremap g*  g*zz
+  nnoremap g#  g#z
+" }}}
 " clipboard related mappings {{{
 
   " toggle paste mode on and off
@@ -212,7 +228,6 @@
   nnoremap <leader>v V`]
 
 " }}}
-
 " folding related mappings {{{
 
   " fold/unfold the current-fold using a space
@@ -235,7 +250,6 @@
   nnoremap <leader>ft Vatzf
 
 " }}}
-
 " completion related mappings {{{
 
   " complete filenames in insert mode
@@ -245,7 +259,6 @@
   imap <C-l> <C-x><C-l>
 
 " }}}
-
 " command line mappings {{{
 
   " bash like keys for the command line
@@ -255,7 +268,6 @@
   cnoremap <C-P> <Up>
   cnoremap <C-N> <Down>
 " }}}
-
 " ctags related mappings {{{
   nnoremap <silent> <leader>j :tnext<cr>zt
   nnoremap <silent> <leader>J :tprev<cr>zt
@@ -263,12 +275,10 @@
   map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
   map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " }}}
-
 " mappings that provide some expected behaviours {{{
   " make p in Visual mode replace the selected text with the yank register
   vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 " }}}
-
 " mappings that provide some special behaviours {{{
 
   " open/close QuickFix window using <l>f
@@ -278,10 +288,16 @@
   nmap <silent> <leader>co /^\(<\\|=\\|>\)\{7\}\([^=].\+\)\?$<CR>
   " nmap <silent> <leader>co /\v^[<\|=>]{7}( .*\|$)<CR>
 
-  " Panic button
-  nnoremap <f9> mzggg?G'z'          " rot13s the current buffer
-" }}}
+  " Panic button - rot13s the current buffer
+  nnoremap <f9> mzggg?G'z'
 
+  " Md5 COMMAND - Show the MD5 of the current buffer or range
+  command! -range Md5 :echo system('echo '.shellescape(join(getline(<line1>, <line2>), '\n')) . '| md5')
+
+  " Load a random ColorScheme
+  nmap <silent> <leader>cs :call LoadRandomColorScheme()<CR>
+  nmap <silent> <leader>dcs :call LoadDefaultVimColors()<CR>
+" }}}
 " Vim related mappings {{{
 
   " edit the vimrc file
@@ -294,7 +310,6 @@
   nmap <leader>vs :source %<CR>
 
 " }}}
-
 " OSX specific mappings {{{
 if g:is_mac
 
@@ -337,7 +352,6 @@ if g:is_mac
   imap <D-9> <Esc>9gt
 endif
 " }}}
-
 " abbreviations: {{{
   iabbr NG@  Nikhil Gupta
   iabbr WD@  Wicked Developers

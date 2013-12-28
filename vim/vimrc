@@ -66,12 +66,10 @@
 "   - convert common functionality into a plugin
 "   - display whether working in terminal or gui mode inside the airline statusbar
 "   - revisit: http://learnvimscriptthehardway.stevelosh.com/
-"   - search for a suitable autocompletion bundle
 "   - recreate MyFoldText() function based on: http://git.io/7QA1Dg
 "   - create sections, vis-a-vis http://git.io/aDaz_g
 "   - revisit exuberant tags http://bit.ly/17rL4P8
 "   - implement visual search http://bit.ly/17rLkxv
-"   - implement sessions http://bit.ly/1e36WmX
 "   - line numbers must use 4 columns
 "   - implement Ranger file browser
 "   - display syntax highlighting in foldtext
@@ -83,13 +81,14 @@
 "   - read and implement vim configuration from:
 "     - https://github.com/skwp/dotfiles
 "     - https://github.com/gf3/dotfiles
-"   - verify and reinstall bundles
 " }}}
 " Completed: """""""""""""""""""""""""""""""""""""""""""""""""" {{{
 "   - recreate folds when reloading a file?
 "     : use foldlevel and foldlevelstart settings for this purpose
 "   - make airline work
 "   - use patched fonts for AirLine
+"   - search for a suitable autocompletion bundle
+"   - verify and reinstall bundles
 "   - read and implement vim configuration from:
 "     - https://github.com/zenom/dotfiles
 "     - https://github.com/jferris/config_files
@@ -108,8 +107,39 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible                                        " No to the total compatibility with the ancient vi
-let mapleader=","                                       " change mapleader key configuration
+let mapleader = ","                                     " change mapleader key configuration
+let g:mapleader = ","                                   " some plugins may require this variable to be set
 let maplocalleader = "\\"
+
+" Declare some variables for easy VimRC configuration {{{
+  let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
+  let g:is_macvim  = has('gui_macvim')
+  let g:is_linux   = has('linux')
+  let g:is_windows = has('win16') || has('win32') || has('win64')
+  let g:is_posix   = 1 " enable better bash syntax highlighting
+
+  " default colorschemes to load
+  " array1: first one is for gui and second list is for non-gui sessions
+  " array2: first arg is colorscheme, second is Airline theme, and third one is background setting option
+  let g:colorschemes = [
+        \   [
+        \     [ 'base16-eighties', 'wombat', 'dark' ],
+        \     [ 'solarized', 'solarized', 'light' ],
+        \     [ 'base16-ocean', 'wombat', 'dark' ],
+        \   ], [
+        \     [ 'Tomorrow-Night-Eighties', 'badwolf', 'light' ],
+        \   ]
+        \ ]
+  " \     [ 'codeschool', 'wombat', 'dark' ],
+
+  " store the path to the vim directory, somewhere..
+  if g:is_windows
+    let g:vim_path = $HOME . "/vimfiles"
+  else
+    let g:vim_path = $HOME . "/.vim"
+  endif
+
+" }}}
 
 " Custom functions for easy VimRC configuration {{{
   " vim: source a file, only if we can read it :) {{{
@@ -117,7 +147,12 @@ let maplocalleader = "\\"
   "       and name_ file afterwards
   function! SourceIfReadable(file)
     if filereadable(expand(a:file))
-      execute "source" expand(a:file)
+      let l:file = expand(a:file)
+    else
+      let l:file = expand(g:vim_path . "/" . a:file)
+    end
+    if filereadable(l:file)
+      execute "source" l:file
     endif
   endfunction " }}}
   " vim: ensure that a directory exists {{{
@@ -127,27 +162,10 @@ let maplocalleader = "\\"
     endif
   endfunction
   " }}}
-  call SourceIfReadable('~/.vim/lib/functions.vim')       " functions used throughout this vimrc configuration
+  call SourceIfReadable('lib/functions.vim')       " functions used throughout this vimrc configuration
 " }}}
-" Declare some variables for easy VimRC configuration {{{
-  let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
-  let g:is_macvim  = has('gui_macvim')
-  let g:is_linux   = has('linux')
-  let g:is_windows = has('win16') || has('win32') || has('win64')
 
-  " default colorschemes to load
-  " array1: first one is for gui and second list is for non-gui sessions
-  " array2: first arg is colorscheme, second is Airline theme, and third one is background setting option
-  let g:colorschemes = [
-        \   [
-        \     [ 'base16-eighties', 'wombat', 'dark' ],
-        \     [ 'solarized', 'solarized', 'light' ],
-        \   ], [
-        \     [ 'Tomorrow-Night-Eighties', 'badwolf', 'light' ],
-        \   ]
-        \ ]
-  " \     [ 'codeschool', 'wombat', 'dark' ],
-" }}}
+call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before, if exists
 
 " Cross Platform Compatibility {{{
   " Better Unix / Windows compatibility
@@ -162,7 +180,6 @@ let maplocalleader = "\\"
       " Powershell as the primary terminal, this would be utf-8
       set termencoding=cp850
       " Let Vim use utf-8 internally, because many scripts require this
-      set encoding=utf-8
       setglobal fileencoding=utf-8
       " Windows has traditionally used cp1252, so it's probably wise to
       " fallback into cp1252 instead of eg. iso-8859-15.
@@ -171,19 +188,19 @@ let maplocalleader = "\\"
       set fileencodings=ucs-bom,utf-8,utf-16le,cp1252,iso-8859-15
     endif
   endif
+  set encoding=utf-8 nobomb " BOM often causes trouble
 " }}}
 
-call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before, if exists
 " Vundle: Installation and its settings {{{
 
   " Auto-install Vundle, if not found
-  let iCanHazVundle=1
-  let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-  if !filereadable(vundle_readme)
-      echo "Installing Vundle.."
-      silent !mkdir -p ~/.vim/bundle
-      silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-      let iCanHazVundle=0
+  let iCanHazVundle = 1
+  let vundle_path = expand(g:vim_path . '/bundle/vundle')
+  if !filereadable(vundle_path . "/README.md")
+    echo "Installing Vundle..\n"
+    execute ":silent !mkdir -p "  . shellescape(vundle_path)
+    execute ":silent !git clone https://github.com/gmarik/vundle " . shellescape(vundle_path)
+    let iCanHazVundle=0
   endif
 
   " turn filetype detection off (MacOSX Fix: http://bit.ly/17MENzJ)
@@ -191,15 +208,15 @@ call SourceIfReadable('~/.vimrc.before')                " source ~/.vimrc.before
   filetype off
 
   " initialize Vundle
-  set rtp+=~/.vim/bundle/vundle/
+  exec 'set rtp+=' . fnameescape(vundle_path)
   call vundle#rc()
 
   " let Vundle manage Vundle:
   Bundle 'gmarik/vundle'
 
-  " Use local bundles, if available and then, load our bundles
-  call SourceIfReadable("~/.vim/lib/_bundles.vim")
-  call SourceIfReadable("~/.vim/lib/bundles.vim")
+  " Use local bundles, if available and afterwards, load our bundles
+  call SourceIfReadable("lib/_bundles.vim")
+  call SourceIfReadable("lib/bundles.vim")
 
   " install Bundles, if we just installed Vundle
   if iCanHazVundle == 0
@@ -242,7 +259,7 @@ set textwidth=80                " wrap after this many characters in a line
 set colorcolumn=+1              " highlight end of textwidth
 set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
 set showbreak=↪                 " string to put at the starting of wrapped lines
-set scrolloff=3                 " keep lines off edges of the screen when scrolling
+set scrolloff=7                 " keep lines off edges of the screen when scrolling
 " set scrolljump=5                " lines to scroll when cursor leaves screen
 set sidescroll=1                " brings characters in view when side scrolling
 set sidescrolloff=15            " start side-scrolling when n chars are left
@@ -255,19 +272,21 @@ set report=0                    " always report number of lines changed
 set cursorline                  " highlight the current line, for quick orientation
 set nocursorcolumn              " highlight the current column, for quick orientation
 set shortmess+=filmnrxoOtT      " abbrev. vim-messages (avoids 'hit enter', also)
-" set shortmess-=I                " force display of intro message on Vim startup
-set list                        " show invisible characters, by default
+set shortmess+=I                " do not display intro message on Vim startup
+set nolist                      " do not show invisible characters
+                                " enabled later via autocmd on certain filetypes
 set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
 
 " windows related matters
-set splitright                  " puts new vsplit windows to the right of the current
 set splitbelow                  " puts new split windows to the bottom of the current
-set nolazyredraw                " even update the display while executing macros
+set splitright                  " puts new vsplit windows to the right of the current
+set lazyredraw                  " even update the display while executing macros
 set tabpagemax=15               " only show 15 tabs
+set equalalways                 " split windows are always of eqal size
 
 " statusline related matters
-set laststatus=2                " tell VIM to always put a status line in
 set cmdheight=2                 " use a status bar that is 2 rows high
+set laststatus=2                " tell VIM to always put a status line in
 if !exists('g:loaded_airline')
   set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
   set statusline+=\ \ \ [%{&ff}/%Y]
@@ -283,24 +302,23 @@ endif
 " wildcard related matters for filename completion
 set wildmenu                        " make tab completion for files/buffers act like bash
 set wildmode=list:longest,full      " show a list when pressing tab, then longest common part and then full name.
-set wildignore+=*.o,*.obj,*~        " stuff to ignore when tab completing
-set wildignore+=*.swp,*.bak         " ...
-set wildignore+=*.pyc,*.class,*.so  " ...
-set wildignore+=*/tmp/*,*.so,*.zip  " ...
+set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
+set wildignore+=*/.hg/*,*/.svn/*
 set wildignore+=*vim/backups*       " ...
-set wildignore+=*sass-cache*        " ...
-set wildignore+=*DS_Store*          " ...
-set wildignore+=vendor/rails/**     " ...
-set wildignore+=vendor/cache/**     " ...
-set wildignore+=*.gem,*/out/**      " ...
-set wildignore+=log/**              " ...
-set wildignore+=tmp/**              " ...
-set wildignore+=*.png,*.jpg,*.gif   " ... phew!!
+set wildignore+=*/smarty/*          " ...
+set wildignore+=*/node_modules/*    " ...
+set wildignore+=*/.sass-cache/*     " ...
+set wildignore+=*/tmp/*,tmp/**      " ...
+set wildignore+=*/out/**,log/**     " ... phew!!
+" file suffixes that can be safely ignored for file name completion
+set suffixes+=.swo,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.DS_Store,.class,.so
+set suffixes+=.brf,.cb,.dmg,.exe,.ind,.idx,.ilg,.inx,.out,.toc,.pyc,.pyd,.dll,.zip
+set suffixes+=.gem,.pdf,.avi,.mkv,.png,.jpg,.gif,.psd
 
 " completion related matters
 set completeopt+=menuone,longest  " don't select first item, follow typing in autocomplete
 set completeopt-=preview          " disable doc preview in omnicomplete
-" set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion,  FIXME?
+set complete=.,w,b,t              " do lots of scanning on tab completion,  FIXME?
 set pumheight=6                   " Keep a small completion window
 
 " terminal related matters
@@ -309,6 +327,9 @@ set ttyfast                       " always use a fast terminal
 set visualbell                    " don't beep
 set noerrorbells                  " don't beep
 set t_vb=                         " remove visual bell character
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
 
 " other really (ir)relevant matters
 set autoread                      " watch for file changes
@@ -322,15 +343,15 @@ set nofsync                       " improves performance -- let OS decide when t
 
 " undo/redo related matters
 if has('persistent_undo')
-    set undofile                  " So is persistent undo ...
-    set undolevels=1000           " Maximum number of changes that can be undone
-    set undoreload=10000          " Maximum number lines to save for undo on a buffer reload
-    set undodir=~/.vim/.undo,~/tmp,/tmp
+  set undofile                  " So is persistent undo ...
+  set undolevels=1000           " Maximum number of changes that can be undone
+  set undoreload=10000          " Maximum number lines to save for undo on a buffer reload
+  set undodir=~/.vim/.tmp,/tmp
 endif
 
 " shell related matters
 if !g:is_windows                  " use bash with login shell and
-  set shell=bash\ -i              " interactive mode overwrite in vimrc.after
+  set shell=zsh\ -i              " interactive mode overwrite in vimrc.after
 endif                             " if needed
 
 " backup related matters
@@ -354,11 +375,17 @@ call LoadDefaultVimColors()
 if has('gui_running')
   call SourceIfReadable('~/.gvimrc')
 endif
+
+" Verical bar in insert mode (for iTerm users only)
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
 " }}}
 " Behaviour: Editor {{{
 set ttimeout                    " timeout on key codes
 set ttimeoutlen=50              " timeout duration should be small
 set nrformats-=octal            " do not treat octal as numbers
+set nrformats+=alpha            " but, allow inc/dec on alphabetical letters
 set nojoinspaces                " prevents two spaces after punctuation on join
 set virtualedit=onemore         " allow cursor 1 char beyond end of current line
 set fileformats="unix,dos,mac"  " EOL that will be tried when reading buffers
@@ -402,6 +429,7 @@ set foldlevel=0                 " folds with a higher level will be closed
 set foldlevelstart=0            " start out with everything closed
 set foldmethod=indent           " create folds based on indentation
 set foldnestmax=3               " deepest fold is 3 levels
+set foldminlines=1              " do not fold single lines, fold everything else
 set foldtext=MyFoldText()       " function for text that appears over folds
 " which commands trigger auto-unfold
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
@@ -423,23 +451,44 @@ set smartcase                   " ignore case lowercase, else case-sensitive
 set gdefault                    " search/replace globally (on a line) by default
 set synmaxcol=800               " don't try to highlight lines longer than 800 characters.
 set magic                       " use magic mode when searching/replacing
+set wrapscan                    " search continues after the end of file
 
 if has("gui_running") || &t_Co > 2
   syntax on                     " syntax highlight on, when terminal has colors
   set hlsearch                  " enable highlighting of search items
 endif
+
+if has("diff")
+  set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
+endif
 " }}}
 " Behaviour: CTags {{{
-set tags=./tags;/                  " find and load tags file up until root
-set tags+=~/.ctags/*/*/tags;       " load all tags files in the ~/.ctags directory: http://bit.ly/19d59YJ
+set tags+=./tags,tags;/         " find and load tags file up until root
+" }}}
+" Behaviour: Inbuilt Plugin Settings {{{
+if executable('ag')
+  let g:ackprg='ag --nogroup --nocolor --column'
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+elseif executable("ack")
+  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
+endif
+
+" Stop fucking netrw
+let g:netrw_silent = 1
+let g:netrw_quiet  = 1
+" let g:loaded_netrw = 1 " prevents loading of netrw, but messes 'gx'
+" let g:loaded_netrwPlugin = 1
+" }}}
+" Behaviour: Security {{{
+set exrc                                         " enable per-directory .vimrc files
+set secure                                       " disable unsafe commands in them
+if exists("&cryptmethod")
+  set cryptmethod=blowfish                       " https://coderwall.com/p/hypjbg
+endif
 " }}}
 
-set exrc                                                " enable per-directory .vimrc files
-set secure                                              " disable unsafe commands in them
-
 " other files that need to be sourced
-call SourceIfReadable('~/.vim/lib/mappings.vim')        " shortcut key mappings
-call SourceIfReadable('~/.vim/lib/autocommands.vim')    " auto-commands for various filetypes, settings, etc.
-call SourceIfReadable('~/.vim/lib/autocorrect.vim')     " auto-corrections for spellings
-" call SourceIfReadable('~/.vim/lib/tipsandtricks.vim')   " quick tips and tricks go in this file, before classification
-call SourceIfReadable('~/.vimrc.after')                 " useful to override vimrc configuration
+call SourceIfReadable('lib/mappings.vim')        " shortcut key mappings
+call SourceIfReadable('lib/autocommands.vim')    " auto-commands for various filetypes, settings, etc.
+call SourceIfReadable('lib/autocorrect.vim')     " auto-corrections for spellings
+call SourceIfReadable('~/.vimrc.after')          " useful to override vimrc configuration

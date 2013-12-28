@@ -1,11 +1,6 @@
 if has("autocmd")
   match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'  " highlight conflict markers
 
-  augroup relevant_ctag           " show tags only for the relevant language: http://bit.ly/19d5MBE {{{
-      autocmd!
-      autocmd FileType * setl tags<
-      autocmd FileType * exe 'setl tags+=~/.ctags/' . &filetype . '/*/tags'
-  augroup END " }}}
   augroup omni_complete           " declare functions used for omni-completion {{{
     au!
     if exists('+omnifunc')
@@ -36,19 +31,24 @@ if has("autocmd")
     autocmd InsertLeave * :set relativenumber
 
     " Restore cursor position upon reopening files
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
+                          \ | exe "normal! g`\"" | endif
 
     " Show invisible characters in all of these files
-    autocmd filetype vim setlocal list
-    autocmd filetype python,rst setlocal list
-    autocmd filetype ruby setlocal list
-    autocmd filetype javascript,css setlocal list
+    autocmd filetype vim,python,ruby,javascript,css,rst setlocal list
+
+    " resize splits when the windows is resized
+    au VimResized * :wincmd =
   augroup end " }}}
 
   " filetype-specific auto-commands
   augroup shell_files             " {{{
     " TODO: let g:is_bash = 1
-    au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
+    au Filetype sh,zsh,bash set ts=4 sts=4 sw=4 expandtab
+  " }}}
+  augroup git_files               " {{{
+    autocmd BufRead,BufNewFile GHI_* set ft=gitcommit
+    autocmd FileType gitcommit setlocal spell textwidth=72
   " }}}
   augroup vim_files               " {{{
       au!
@@ -63,12 +63,11 @@ if has("autocmd")
         " augroup END
       " endif
       " }}}
-      autocmd filetype vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=120
+      autocmd filetype vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=80
       autocmd filetype vim setlocal foldmethod=marker foldmarker={{{,}}} foldlevel=0
-      " Bind <F3> to show the keyword under cursor
-      " general help can still be entered manually, with :h
-      autocmd filetype vim noremap <buffer> <F3> <Esc>:help <C-r><C-w><CR>
-      autocmd filetype vim noremap! <buffer> <F3> <Esc>:help <C-r><C-w><CR>
+      " Bind <F1> to show the keyword under cursor
+      autocmd filetype vim noremap <buffer> <F1> <Esc>:help <C-r><C-w><CR>
+      autocmd filetype vim noremap! <buffer> <F1> <Esc>:help <C-r><C-w><CR>
   augroup end "}}}
   augroup html_files              " {{{
       au!
@@ -110,7 +109,11 @@ if has("autocmd")
   augroup ruby_files              " {{{
       au!
 
-      autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=120
+      autocmd BufNewFile,BufRead Rakefile,Capfile,Gemfile,Guardfile set ft=ruby syntax=ruby
+      autocmd BufRead,BufNewFile Vagrantfile,Thorfile,Do,dorc,Dofile,config.ru set ft=ruby syntax=ruby
+      autocmd BufNewFile,BufRead .autotest,.irbrc,.pryrc,*.treetop,*.tt set ft=ruby syntax=ruby
+
+      autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=80
       autocmd filetype ruby setlocal foldmethod=syntax
   augroup end " }}}
   augroup rst_files               " {{{
@@ -133,7 +136,7 @@ if has("autocmd")
   augroup javascript_group_files  " {{{
     au!
 
-    autocmd BufNewFile,BufRead *.json setfiletype json
+    autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 
     autocmd filetype javascript set syntax=javascript
 
@@ -177,6 +180,15 @@ if has("autocmd")
 
     autocmd BufRead *.php setlocal makeprg=php\ -l\ %
     autocmd BufRead *.ctp setlocal filetype=php
-    autocmd filetype php,ctp setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
+    autocmd filetype php,ctp setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=80
+  " }}}
+  augroup nu_files                " {{{
+    au BufNewFile,BufRead *.nu,*.nujson,Nukefile setf nu
+  " }}}
+  augroup compiled_files          " {{{
+    au FileType make set noexpandtab " make uses real tabs
+  " }}}
+  augroup yaml_files              " {{{
+    au FileType *.yml,*.yaml set ft=yaml tabstop=2 shiftwidth=2 softtabstop=2
   " }}}
 endif

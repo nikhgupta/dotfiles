@@ -177,10 +177,42 @@ endfunction
 " }}}
 " reload last session and restore vim colors {{{
 function! ReloadSessionAndRestoreColors()
-  call xolox#session#auto_load()
+  if function_exists("xolox#session#auto_load")
+    call xolox#session#auto_load()
+  endif
   call LoadDefaultVimColors()
   if exists(g:airline_theme)
     call airline#load_theme(g:airline_theme)
   endif
+endfunction
+" }}}
+" search for a pattern across multiple files {{{
+function! SearchAcrossMultipleFiles(word)
+  if strlen(a:word)
+    let l:pattern = a:word
+    echo "Searching for: " . l:pattern
+  else
+    let l:pattern = input("Give me a pattern: ")
+  end
+  let l:infiles = input("Give me patterns for files to search inside: ")
+  let l:cmdline = ":lvim /" . l:pattern . "/gj" . l:infiles
+  execute l:cmdline
+  :lwindow
+endfunction
+" }}}
+" load a random colorscheme {{{
+function! LoadRandomColorScheme()
+  let l:colorschemes = split(globpath(&rtp,"**/colors/*.vim"),"\n")
+  let l:colorscheme  = l:colorschemes[localtime() % len(l:colorschemes)]
+  let l:colorscheme  = fnamemodify(expand(l:colorscheme), ":t:r")
+  if localtime() % 2 == 1
+    let l:background = "dark"
+  else
+    let l:background = "light"
+  endif
+  execute "colorscheme " . l:colorscheme
+  execute "set background=".l:background
+  redraw
+  echo "Loading colorscheme (".l:background."): " . l:colorscheme
 endfunction
 " }}}

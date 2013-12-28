@@ -1,5 +1,5 @@
-set background=dark
-colorscheme base16-eighties
+" set background=dark
+" colorscheme base16-eighties
 
 " settings for Solarized:
 " let g:solarized_termcolors=256
@@ -66,5 +66,3 @@ set lines=999 columns=999
   " when starting using, say: 'mvim .',
   "   MacVim should have NerdTree in a left pane
   " delete a whole fold
-
-

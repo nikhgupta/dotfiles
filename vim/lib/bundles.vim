@@ -53,6 +53,11 @@
 
     " ignore files matching the following patterns
     let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    if executable("ag")
+      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    endif
   " }}}
   " key mappings: {{{
     " really needed? we can cycle between modes?
@@ -126,15 +131,12 @@
     nmap <leader>r :YRShow<CR>
   " }}}
 " }}}
-" organizer:                  org mode for vim {{{
-  Bundle 'hsitz/VimOrganizer'
-" }}}
 " clam:                       lightweight plugin to easily run shell commands in vim {{{
   Bundle 'sjl/clam.vim'
   nnoremap ! :Clam<space>
   vnoremap ! :ClamVisual<space>
 " }}}
-" narrow region:              focus on a region of text and make reset inaccessible {{{
+" narrow-region:              focus on a region of text and make reset inaccessible {{{
   Bundle 'chrisbra/NrrwRgn'
 " }}}
 " zoomwin:                    easily maximize the current buffer {{{
@@ -310,11 +312,12 @@
 " syntastic:                  easy syntax checking {{{
   Bundle 'scrooloose/syntastic'
   " settings {{{
-    let g:syntastic_enable_signs=1
-    let g:syntastic_auto_loc_list=1
+    let g:syntastic_enable_signs             = 1
+    let g:syntastic_auto_loc_list            = 1
+    let g:syntastic_check_on_open            = 1
+    let g:syntastic_error_symbol             = '✗'
+    let g:syntastic_warning_symbol           = '⚠'
     let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = '⚠'
   " }}}
 " }}}
 " switch:                     switch between code easily {{{
@@ -562,4 +565,7 @@
 "   let g:UltiSnipsListSnippets        = '<c-s-l>'
 "   let g:UltiSnipsJumpForwardTrigger  = '<c-e>'
 "   let g:UltiSnipsJumpBackwardTrigger = '<c-s-e>'
+" " }}}
+" " organizer:                  org mode for vim {{{
+"   Bundle 'hsitz/VimOrganizer'
 " " }}}

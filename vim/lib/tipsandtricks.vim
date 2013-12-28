@@ -1,34 +1,3 @@
-" https://github.com/nvie/vimrc/blob/master/vimrc
-" ===============================================
-" Run tests
-" ---------
-" nnoremap <leader>w :write | :!./run_tests.sh<cr>
-" inoremap <leader>w <esc><leader>w
-
-" Define operator-pending mappings to quickly apply commands to function names
-" and/or parameter lists in the current line
-" onoremap inf :<c-u>normal! 0f(hviw<cr>
-" onoremap anf :<c-u>normal! 0f(hvaw<cr>
-" onoremap in( :<c-u>normal! 0f(vi(<cr>
-" onoremap an( :<c-u>normal! 0f(va(<cr>
-
-" https://github.com/gf3/dotfiles/blob/master/.vimrc
-" ==================================================
-set diffopt=filler " Add vertical spaces to keep right and left aligned
-set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
-set encoding=utf-8 nobomb " BOM often causes trouble
-set esckeys " Allow cursor keys in insert mode.
-set foldminlines=0 " Allow folding single lines
-set foldnestmax=3 " Set max fold nesting level
-set showtabline=2 " Always show tab bar.
-set suffixes=.bak,~,.swp,.swo,.o,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.brf,.cb,.dmg,.exe,.ind,.idx,.ilg,.inx,.out,.toc,.pyc,.pyd,.dll
-set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
-set wildignore+=*/smarty/*,*/vendor/*,*/node_modules/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,*/log/*,*/tmp/*,*/build/*,*/ckeditor/*,*/doc/*
-set wildchar=<TAB> " Character for CLI expansion (TAB-completion).
-set winminheight=0 "Allow splits to be reduced to a single line.
-set wrapscan " Searches wrap around end of file
-
-
 " Join lines and restore cursor location (J)
 nnoremap J mjJ`j
 
@@ -75,7 +44,6 @@ au VimResized * :wincmd =
 
 
 " Use AG
-let g:ackprg = 'ag --nogroup --nocolor --column'
 
 au FileType make set noexpandtab " make uses real tabs"
 
@@ -101,11 +69,6 @@ let g:syntastic_enable_signs   = 1
 let g:syntastic_quiet_warnings = 1
 
 
-" Stop fucking netrw
-let g:netrw_silent = 1
-let g:netrw_quiet  = 1
-let g:loaded_netrw = 1
-
 
 
 " NERDTree configuration
@@ -122,23 +85,10 @@ let g:nerdtree_tabs_startup_cd = 0
 " Resize splits when the window is resized
 " au VimResized * :wincmd =
 
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
-
 " open the Gdiff in a separate tab
 " TODO: close the nerdTree therein.
 command! GdiffInTab tabedit %|Gdiff
 nnoremap <leader>d :GdiffInTab<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Md5 COMMAND
-" Show the MD5 of the current buffer
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-command! -range Md5 :echo system('echo '.shellescape(join(getline(<line1>, <line2>), '\n')) . '| md5')
-
-" insert time
-command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE
@@ -179,77 +129,7 @@ map <D-p> :CtrlP<CR>
 imap <D-p> <ESC>:CtrlP<CR>
 map <D-P> :CtrlPBuffer<CR>
 imap <D-P> <ESC>:CtrlPBuffer<CR>
-
-
-if exists("&cryptmethod")
-  set cryptmethod=blowfish " https://coderwall.com/p/hypjbg
-endif
-
-
 let base16colorspace=256  " Access colors present in 256 colorspace
-set background=light
-colorscheme soda
-
-" Verical bar in insert mode (for iTerm users only)
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-
-" Ctrol-E to switch between 2 last buffers
-" nmap <C-E> :b#<CR>
-
-" ,e to fast finding files. just type beginning of a name and hit TAB
-" nmap <leader>e :e **/
-
-
-" center display after searching
-" nnoremap n   nzz
-" nnoremap N   Nzz
-" nnoremap *   *zz
-" nnoremap #   #zz
-" nnoremap g*  g*zz
-" nnoremap g#  g#z
-
-
-" emacs movement keybindings in insert mode
-imap <C-a> <C-o>0
-imap <C-e> <C-o>$
-map <C-e> $
-map <C-a> 0
-
-
-" make file executable
-command -nargs=* Xe !chmod +x <args>
-command! -nargs=0 Xe !chmod +x %
-
-
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-
-" Switch between the last two files
-nnoremap <leader><leader> <c-^>
-
-
-" Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
-
-
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-
 
   " Enable soft-wrapping for text files
   autocmd FileType text,markdown,html,xhtml,eruby setlocal wrap linebreak nolist
@@ -303,15 +183,6 @@ imap <C-tab> <ESC>:bn<CR>i
 " Edit routes
 command! Rroutes :e config/routes.rb
 command! Rschema :e db/schema.rb
-
-
-
-" Use Ack instead of Grep when available
-if executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
-endif
-
-
 
 " Snippets are activated by Shift+Tab
 let g:snippetsEmu_key = "<S-Tab>"
