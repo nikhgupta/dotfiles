@@ -159,8 +159,14 @@
 " visual-star-search:         start a * or # search from a visual block: http://bit.ly/1dIKVv5{{{
   Bundle 'nelstrom/vim-visual-star-search'
 " }}}
-" ack:                        power of Ack in Vim {{{
-  Bundle 'mileszs/ack.vim'
+" ag:                         power of Ag in Vim {{{
+  if executable('ag')
+    Bundle 'rking/ag.vim'
+    let g:agprg='ag --nogroup --nocolor --column'
+    set grepprg=ag\ --nogroup\ --nocolor\ --column
+  elseif executable('ack')
+    Bundle 'mileszs/ack.vim'
+  endif
 " }}}
 " session:                    exended session management {{{
   " vim-misc is required for vim-session
@@ -303,29 +309,6 @@
 " }}}
 
 " Code Helpers:
-" tagbar:                     display tags of the current file ordered by scope {{{
-  Bundle 'Tagbar'
-  " settings {{{
-    let g:tagbar_autofocus = 1
-    let g:tagbar_autoshowtag = 1
-    let g:tagbar_width = 40
-    let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-  " }}}
-  " key mappings {{{
-    nmap <leader>l :TagbarToggle<CR>
-  " }}}
-" }}}
-" syntastic:                  easy syntax checking {{{
-  Bundle 'scrooloose/syntastic'
-  " settings {{{
-    let g:syntastic_enable_signs             = 1
-    let g:syntastic_auto_loc_list            = 1
-    let g:syntastic_check_on_open            = 1
-    let g:syntastic_error_symbol             = '✗'
-    let g:syntastic_warning_symbol           = '⚠'
-    let g:syntastic_always_populate_loc_list = 1
-  " }}}
-" }}}
 " switch:                     switch between code easily {{{
   Bundle "AndrewRadev/switch.vim"
   nnoremap - :Switch<cr>
@@ -574,4 +557,27 @@
 " " }}}
 " " organizer:                  org mode for vim {{{
 "   Bundle 'hsitz/VimOrganizer'
+" " }}}
+" " tagbar:                     display tags of the current file ordered by scope {{{
+"   Bundle 'Tagbar'
+"   " settings {{{
+"     let g:tagbar_autofocus = 1
+"     let g:tagbar_autoshowtag = 1
+"     let g:tagbar_width = 40
+"     let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+"   " }}}
+"   " key mappings {{{
+"     nmap <leader>l :TagbarToggle<CR>
+"   " }}}
+" " }}}
+" " syntastic:                  easy syntax checking {{{
+"   Bundle 'scrooloose/syntastic'
+"   " settings {{{
+"     let g:syntastic_enable_signs             = 1
+"     let g:syntastic_auto_loc_list            = 1
+"     let g:syntastic_check_on_open            = 1
+"     let g:syntastic_error_symbol             = '✗'
+"     let g:syntastic_warning_symbol           = '⚠'
+"     let g:syntastic_always_populate_loc_list = 1
+"   " }}}
 " " }}}
