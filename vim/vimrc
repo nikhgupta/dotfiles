@@ -147,7 +147,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
 " Behaviour: Leader Key Configuration {{{
   let mapleader      = ","                                      " change mapleader key from / to ,
   let g:mapleader    = ","                                      " some plugins may require this variable to be set
-  let maplocalleader = ","                                      " used inside filetype settings
+  let maplocalleader = "\\"                                     " used inside filetype settings
 " }}}
 " Behaviour: Custom Variables {{{
   " os specific variables
@@ -509,9 +509,9 @@ set nocompatible             " No to the total compatibility with the ancient vi
   endif
 
   " shell related matters
-  if !g:is_windows                  " use bash with login shell and
-    set shell=zsh\ -i               " interactive mode overwrite in vimrc.after
-  endif                             " if needed
+  if !g:is_windows && executable('zsh')
+    set shell=zsh\ -i               " use a ZSH login shell
+  endif
 
   " backup related matters
   set nobackup                      " do not keep backup files, it's 70's style cluttering
@@ -732,8 +732,8 @@ set nocompatible             " No to the total compatibility with the ancient vi
 
     " use cursor keys for switching buffers, tags and tabs
     " TODO: also, allow for movement on tabs
-    nnoremap <left>  <esc>:silent bp<cr>
-    nnoremap <right> <esc>:silent bn<cr>
+    " nnoremap <left>  <esc>:silent bp<cr>
+    " nnoremap <right> <esc>:silent bn<cr>
     nnoremap <up>    <esc>:silent tn<cr>
     nnoremap <down>  <esc>:silent tp<cr>
 

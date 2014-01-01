@@ -20,119 +20,155 @@
 " }}}
 " airline:                    lean & mean statusline for vim that's light as air: {{{
   Bundle 'bling/vim-airline'
-  " settings {{{
-    let g:airline_left_alt_sep     = ''
-    let g:airline_right_alt_sep    = ''
-    let g:airline_powerline_fonts  = 1
-    let g:airline_enable_syntastic = 1
-    let g:airline#extensions#tabline#enabled = 0
-    if !exists('g:airline_theme')
-      let g:airline_theme          = 'solarized'
-    endif
-  " }}}
+
+  " use powerline symbols
+  let g:airline_powerline_fonts  = 1
+
+  " use the given separator symbols (powerline enabled font required!)
+  let g:airline_left_alt_sep     = ''
+  let g:airline_right_alt_sep    = ''
+
+  " enable integration with syntastic
+  " TODO: enable this when syntastic works
+  let g:airline_enable_syntastic = 0
+
+  " do not display the tabline for buffers and tabs
+  let g:airline#extensions#tabline#enabled = 0
+
+  " set a default airline theme, if none has, yet, been defined!
+  if !exists('g:airline_theme') | let g:airline_theme = 'solarized' | endif
 " }}}
 " vim-startify:               a fancy start screen for Vim: {{{
   Bundle 'vim-startify'
+
+  " when opening a shortcut, switch to its directory
+  let g:startify_change_to_dir = 1
+
+  " enable 'empty buffer', and 'quit' commands
+  let g:startify_enable_special = 1
+
+  " display upto 10 recent files
+  let g:startify_files_number = 10
+
+  " also, allow 'o' to open an empty buffer
+  let g:startify_empty_buffer_key = 'o'
+
+  " use the given session directory
+  let g:startify_session_dir = '~/.vim/data/session'
+
+  " first four shortcuts should be available from home row
+  let g:startify_custom_indices = ['a','s','d','f']
+
+  " display shortcuts in the given order
+  let g:startify_lists = ['bookmarks', 'files', 'dir', 'sessions']
+
+  " skip these files from the recent files list
+  let g:startify_skiplist = [ 'COMMIT_EDITMSG', $VIMRUNTIME .'/doc', 'bundle/.*/doc' ]
+
+  " always show these bookmarks
+  let g:startify_bookmarks = [ '~/.vimrc', '~/Code/__dotfiles/', '~/Code/apps/', '~/Code/scripts/' ]
+
+  " display a fortune cookie as the header
+  let g:startify_custom_header = map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
 " }}}
 
 " Essentials:
 " ctrlP:                      quickly search for a file/buffer {{{
   Bundle 'kien/ctrlp.vim'
-  " notes: {{{
-  " - when CtrlP window is open:
-  "   - f5 will clear the CtrlP cache (useful if you add new files during the session)
-  "   - <C-f> & <C-b> will cycle between CtrlP modes
-  "   - Press <c-d> to switch to filename only search instead of full path.
-  "   - Press <c-r> to switch to regexp mode.
-  "   - Use <c-j>, <c-k> or the arrow keys to navigate the result list.
-  "   - Use <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
-  "   - Use <c-n>, <c-p> to select the next/previous string in the prompt's history.
-  "   - Use <c-y> to create a new file and its parent directories.
-  "   - Use <c-z> to mark/unmark multiple files and <c-o> to open them.
-  " }}}
-  " settings: {{{
-    " Set no max file limit
-    let g:ctrlp_max_files = 0
 
-    " ignore files matching the following patterns
-    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+  " notes:
+  "   - when CtrlP window is open:
+  "   : f5 will clear the CtrlP cache (useful if you add new files during the session)
+  "   : <C-f> & <C-b> will cycle between CtrlP modes
+  "   : Press <c-d> to switch to filename only search instead of full path.
+  "   : Press <c-r> to switch to regexp mode.
+  "   : Use <c-j>, <c-k> or the arrow keys to navigate the result list.
+  "   : Use <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
+  "   : Use <c-n>, <c-p> to select the next/previous string in the prompt's history.
+  "   : Use <c-y> to create a new file and its parent directories.
+  "   : Use <c-z> to mark/unmark multiple files and <c-o> to open them.
 
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    if executable("ag")
-      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-    endif
-  " }}}
-  " key mappings: {{{
-    " really needed? we can cycle between modes?
-    map <C-b> :CtrlPBuffer<CR>
-    " Search from current directory instead of project root
-    map <C-o> :CtrlP %:p:h<CR>
-  " }}}
+  " Set no max file limit
+  let g:ctrlp_max_files = 0
+
+  " Ignore files matching the following patterns
+  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  if executable("ag") | let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' | endif
+
+  " switch between buffers, easily.
+  " disabling movement between buffers, because of this :)
+  map <C-b> :CtrlPBuffer<CR>
+
+  " Search from current directory instead of project root
+  map <C-o> :CtrlP %:p:h<CR>
 " }}}
 " nerdtree:                   easy file browsing {{{
   Bundle 'scrooloose/nerdtree'
-  " todos: {{{
-  "    - Put focus to the NERD Tree with F2 (tricked by quickly closing it and
-  "      immediately showing it again, since there is no :NERDTreeFocus command)
-  " }}}
-  " settings {{{
-    " change NerdTree's appearance
-    let NERDTreeWinPos    = "left"
-    let NERDChristmasTree = 1
 
-    " Show hidden files, and bookmarks
-    let NERDTreeShowFiles     = 1
-    let NERDTreeShowHidden    = 1
-    let NERDTreeShowBookmarks = 1
+  " change NerdTree's appearance
+  let NERDTreeWinPos    = "left"
+  let NERDChristmasTree = 1
 
-    " change directory, whenever tree root is changed
-    let NERDTreeChDirMode = 2
+  " Show hidden files, and bookmarks
+  let NERDTreeShowFiles     = 1
+  let NERDTreeShowHidden    = 1
+  let NERDTreeShowBookmarks = 1
 
-    " Quit on opening files from the tree
-    let NERDTreeQuitOnOpen = 0
+  " change directory, whenever tree root is changed
+  let NERDTreeChDirMode = 2
 
-    " Highlight the selected entry in the tree
-    let NERDTreeHighlightCursorline = 1
+  " Quit on opening files from the tree
+  let NERDTreeQuitOnOpen = 0
 
-    " Use a single click to fold/unfold directories and a double click to open files
-    let NERDTreeMouseMode = 2
+  " Highlight the selected entry in the tree
+  let NERDTreeHighlightCursorline = 1
 
-    " use the default Status Line for NerdTree buffers
-    let NerdTreeStatusLine = -1
+  " Use a single click to fold/unfold directories and a double click to open files
+  let NERDTreeMouseMode = 2
 
-    " Store the bookmarks file
-    let NERDTreeBookmarksFile = expand("$HOME/.vim/bookmarks")
+  " use the default Status Line for NerdTree buffers
+  let NerdTreeStatusLine = -1
 
-    " Sort NerdTree to show ruby and php files earlier
-    let NerdTreeSortOrder = ['\/$', '\.rb$', '\.php$', '*', '\.swp$',  '\.bak$', '\~$']
+  " Store the bookmarks file
+  let NERDTreeBookmarksFile = expand("$HOME/.vim/data/bookmarks")
 
-    " Don't display these kinds of files
-    let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.DS_Store' ]
-  " }}}
-  " key mappings {{{
-    " nmap <leader>n :NERDTreeClose<CR>:NERDTreeToggle<CR>
-    nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
-    nmap <leader>N :NERDTreeClose<CR>
-    nmap <Leader>n <plug>NERDTreeTabsToggle<CR>
-  " }}}
+  " Sort NerdTree to show ruby php, vim and markdown files earlier
+  let NerdTreeSortOrder = ['\/$', '\.rb$', '\.php$', '\.vim', '\.md', '\.markdown',
+                          \ '*', '\.swp$',  '\.bak$', '\~$']
+
+  " Don't display these kinds of files
+  let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$',
+                       \ '\.so$', '\.egg$', '^\.git$', '^\.DS_Store' ]
+
+  " focus on nerdtree window
+  nmap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
+
+  " close nerdtree window
+  nmap <leader>N :NERDTreeClose<CR>
+
+  " toggle nerdtree window
+  nmap <Leader>tn <plug>NERDTreeTabsToggle<CR>
 " }}}
 " gundo:                      awesome redo-undo {{{
   Bundle 'sjl/gundo.vim'
-  nnoremap <F4> :GundoToggle<CR>
+
+  " toggle gundo window
+  nnoremap <leader>tu :GundoToggle<CR>
 " }}}
-" yankring:                   awesome yank history {{{
-  Bundle 'skwp/YankRing.vim'
-  " settings: {{{
-    let g:yankring_min_element_length = 2
-    let g:yankring_history_dir = '$HOME/.vim/.tmp'
-    " let g:yankring_manual_clipboard_check = 0
-    let g:yankring_replace_n_pkey = '<F7>'
-    let g:yankring_replace_n_nkey = '<F8>'
-    " let g:yankring_window_use_horiz = 0  " Use vertical split
-  " }}}
-  " key mappings: {{{
-    nmap <leader>r :YRShow<CR>
-  " }}}
+" yankstack:                  awesome yank killring {{{
+  Bundle 'maxbrunsfeld/vim-yankstack'
+
+  " do not use meta keys
+  let g:yankstack_map_keys = 0
+
+  " use <left> and <right> keys for cycling what is pasted
+  nnoremap <left>  <Plug>yankstack_substitute_older_paste
+  nnoremap <right> <Plug>yankstack_substitute_newer_paste
+
+  " toggle YankStack window
+  nnoremap <leader>ty :Yanks
 " }}}
 " clam:                       lightweight plugin to easily run shell commands in vim {{{
   Bundle 'sjl/clam.vim'
@@ -141,6 +177,10 @@
 " }}}
 " narrow-region:              focus on a region of text and make reset inaccessible {{{
   Bundle 'chrisbra/NrrwRgn'
+  " TODO: implement a function that selects lines based on regex and opens a NRW
+
+  " Open the current fold in a narrow region
+  nmap <leader>nf <esc>vaz<leader>nr<leader>f9
 " }}}
 " zoomwin:                    easily maximize the current buffer {{{
   " - Press <Ctrl-W>o to toggle buffer size
@@ -214,15 +254,6 @@
 " endwise:                    adds end after if, do, def and several other keywords {{{
   Bundle 'tpope/vim-endwise'
 " }}}
-" tabular:                    easily indent your assignments {{{
-  Bundle 'godlygeek/tabular'
-  " key mappings {{{
-    nmap <leader>a= :Tabularize /=<CR>
-    vmap <leader>a= :Tabularize /=<CR>
-    nmap <leader>a: :Tabularize /:\zs<CR>
-    vmap <leader>a: :Tabularize /:\zs<CR>
-  " }}}
-" }}}
 " smartinput:                 autoclose and smarter punctuation pairs in Vim {{{
   Bundle 'kana/vim-smartinput'
 " }}}
@@ -257,10 +288,21 @@
   Bundle "nelstrom/vim-textobj-rubyblock"
   " arguments: a
   Bundle "vim-scripts/argtextobj.vim"
+  " arguments: z
+  Bundle "kana/vim-textobj-fold"
 " }}}
 " orgmode:                    emacs' org mode parsing in vim {{{
   Bundle "jceb/vim-orgmode"
   Bundle "tpope/vim-speeddating"
+" }}}
+" align:                      easily align your code {{{
+  Bundle 'tsaleh/vim-align'
+" }}}
+" speeddating:                inc/decrease time stamps and much more {{{
+  Bundle 'tpope/vim-speeddating'
+" }}}
+" eunuch:                     shell and file helpers for Unix {{{
+  Bundle 'tpope/vim-eunuch'
 " }}}
 
 " Git Related:
@@ -443,6 +485,7 @@
 " }}}
 " ruby/rails:                 ruby, rails, rake, bundler, endwise, haml, rspec, cucumber {{{
   " essential for ruby code writing, eh?
+  Bundle 'tpope/vim-rbenv'
   Bundle 'vim-ruby/vim-ruby'
 
   " rails power tools for vim: http://git.io/rails.vim
@@ -465,9 +508,12 @@
 " }}}
 " text/markdown:              markdown, textile {{{
   Bundle 'tpope/vim-markdown'
-  Bundle 'timcharper/textile.vim'
   Bundle 'jtratner/vim-flavored-markdown'
-  Bundle 'nelstrom/vim-markdown-preview'
+  Bundle 'timcharper/textile.vim'
+  Bundle 'matthias-guenther/hammer.vim'
+  " mappings: {{{
+    nmap <leader>hp :Hammer<cr>
+  " }}}
 " }}}
 " javascript:                 coffeescript, javascript {{{
   Bundle 'pangloss/vim-javascript'
