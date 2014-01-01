@@ -510,7 +510,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
 
   " shell related matters
   if !g:is_windows && executable('zsh')
-    set shell=zsh\ -i               " use a ZSH login shell
+    set shell=zsh\ -l               " use a ZSH login shell
   endif
 
   " backup related matters

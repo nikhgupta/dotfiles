@@ -123,8 +123,8 @@ add_to_path_nicely "${HOME}/Code/android/sdk/tools"
 # add rvm to our path (useful for scripting)
 # add_to_path_nicely "${HOME}/.rvm/bin"
 
-# isntead use rbenv
-eval "$(rbenv init -)"
+# instead use rbenv - now, resides in ~/.zshenv to make this VIM compatible
+# eval "$(rbenv init -)"
 # }}}
 
 # Load some very essential scripts - I can't live without {{{
