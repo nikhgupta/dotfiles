@@ -5,6 +5,24 @@ LC_ALL=en_US.UTF-8
 skip_global_compinit=1
 typeset -U path # set $path variable to only have unique values
 
+# use vim key bindings in ZSH
+bindkey -v
+bindkey -M viins 'jj' vi-cmd-mode
+
+# other useful settings for ZSH
+setopt auto_pushd
+setopt pushd_silent
+setopt pushd_ignore_dups
+setopt ignore_eof
+setopt rm_star_silent
+unsetopt nomatch
+unsetopt correct_all
+
+# better history completion
+# http://superuser.com/questions/417627/oh-my-zsh-history-completion
+bindkey '\e[A' history-beginning-search-backward
+bindkey '\e[B' history-beginning-search-forward
+
 # export ZSH_DEBUG=1 # uncomment, if debugging
 # export PROMPT_TYPE="nice" # uncomment, if you need to change the prompt
 export HIST_IGNORE_SPACE=true
@@ -99,6 +117,9 @@ add_to_path_nicely "/usr/local/heroku/bin" at_start
 add_to_path_nicely "/usr/local/sbin" at_start
 add_to_path_nicely "/usr/local/bin" at_start
 
+# add android sdk tools
+add_to_path_nicely "${HOME}/Code/android/sdk/tools"
+
 # add rvm to our path (useful for scripting)
 # add_to_path_nicely "${HOME}/.rvm/bin"
 
@@ -146,8 +167,3 @@ for config_file ($DOT_DIR/**/*.zsh) source_file $config_file
     done < ~/.zsh_nocorrect
   fi
 # }}}
-
-# better history completion
-# http://superuser.com/questions/417627/oh-my-zsh-history-completion
-bindkey '\e[A' history-beginning-search-backward
-bindkey '\e[B' history-beginning-search-forward
