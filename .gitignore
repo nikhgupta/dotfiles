@@ -11,3 +11,6 @@
 /vim/.cache/
 /vim/bookmarks
 /vim/tasks.txt
+/emacs/kits/*
+!/emacs/kits/babel/
+!/emacs/kits/babel/*

@@ -621,7 +621,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
   set foldlevel=0                 " folds with a higher level will be closed
   set foldlevelstart=0            " start out with everything closed
   set foldmethod=indent           " create folds based on indentation
-  set foldnestmax=3               " deepest fold is 3 levels
+  set foldnestmax=7               " deepest fold is 3 levels
   set foldminlines=1              " do not fold single lines, fold everything else
   set foldtext=MyFoldText()       " function for text that appears over folds
   " which commands trigger auto-unfold
@@ -687,6 +687,9 @@ set nocompatible             " No to the total compatibility with the ancient vi
     " Swap implementations of 0 and ^
     nnoremap 0 ^
     nnoremap ^ 0
+
+    " bring the cursor back when repeat command has been used
+    nmap . .`[
   " }}}
   " mappings created to avoid any accidental hits {{{
     " avoid accidental hits of <F1> while aiming for <Esc>
@@ -820,8 +823,8 @@ set nocompatible             " No to the total compatibility with the ancient vi
     vnoremap < <gv
     vnoremap > >gv
 
-    " auto-indent the entire document
-    nmap <leader>fef ggVG=
+    " auto-indent the entire document, and jump back to current location
+    nmap <leader>fef ggVG=''
 
     " quick alignment of text across the window-width
     nmap <leader>al :left<CR>
@@ -1136,15 +1139,15 @@ set nocompatible             " No to the total compatibility with the ancient vi
     augroup end " }}}
     augroup python_files            " {{{
       au!
-      autocmd BufNewFile,BufRead *.py call s:DetectPythonVariant()
+      " autocmd BufNewFile,BufRead *.py call s:DetectPythonVariant()
       autocmd BufNewFile,BufRead *.jinja set syntax=htmljinja
       autocmd BufNewFile,BufRead *.mako set ft=mako
 
       " PEP8 compliance (set 1 tab = 4 chars explicitly, even if set
       " earlier, as it is important)
       autocmd filetype python setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
-      autocmd filetype python setlocal textwidth=80
-      autocmd filetype python match ErrorMsg '\%>80v.\+'
+      autocmd filetype python setlocal textwidth=79
+      autocmd filetype python match ErrorMsg '\%>79v.\+'
 
       " But disable autowrapping as it is super annoying
       autocmd filetype python setlocal formatoptions-=t
@@ -1167,10 +1170,10 @@ set nocompatible             " No to the total compatibility with the ancient vi
 
         autocmd BufNewFile,BufRead Rakefile,Capfile,Gemfile,Guardfile set ft=ruby syntax=ruby
         autocmd BufRead,BufNewFile Vagrantfile,Thorfile,Do,dorc,Dofile,config.ru set ft=ruby syntax=ruby
-        autocmd BufNewFile,BufRead .autotest,.irbrc,.pryrc,*.treetop,*.tt set ft=ruby syntax=ruby
+        autocmd BufNewFile,BufRead .autotest,.irbrc,.pryrc,.treetop,.tt set ft=ruby syntax=ruby
 
-        autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=80
-        autocmd filetype ruby setlocal foldmethod=syntax
+        autocmd filetype ruby,eruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=80
+        autocmd filetype ruby,eruby setlocal foldmethod=syntax
     augroup end " }}}
     augroup rst_files               " {{{
       au!
@@ -1203,7 +1206,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
       " autocmd filetype javascript setlocal foldmethod=marker foldmarker={,}
       autocmd filetype javascript setlocal foldmethod=syntax foldlevelstart=1
       autocmd filetype javascript syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-      autocmd filetype javascript setlocal foldtext=substitute(getline(v:foldstart), '{.*', '{...}', '')
+      " autocmd filetype javascript setlocal foldtext=substitute(getline(v:foldstart), '{.*', '{...}', '')
 
       autocmd Syntax javascript set syntax=jquery
 
@@ -1245,7 +1248,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
       au FileType make set noexpandtab " make uses real tabs
     " }}}
     augroup yaml_files              " {{{
-      au FileType *.yml,*.yaml set ft=yaml tabstop=2 shiftwidth=2 softtabstop=2
+      au FileType yml,yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
     " }}}
   endif
 " }}}

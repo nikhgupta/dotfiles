@@ -5,8 +5,9 @@ require 'rake'
 BACKUP_DIRECTORY = "#{ENV['HOME']}/Code/__backups/__dotfiles/#{Time.now.to_i}"
 
 # linkables - files that need to be linked/de-linked
-LINKABLES = ["git/gitconfig", "git/gitignore", "gvim/gvimrc", "localrc", "private", "ruby/gemrc", "vim/vimrc", "zsh/zshrc", "vim", "gvim"]
-
+LINKABLES = ["git/gitconfig", "git/gitignore", "localrc", "zsh/inputrc",
+             "private", "ruby/gemrc", "vim/vimrc", "zsh/zshrc", "vim",
+             "zsh/zshenv"]
 
 # function adopted from @holman
 # oh, and very inspiring: http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/
@@ -64,7 +65,8 @@ task :install do
       `ln -s "$PWD/#{linkable}" "#{target}"`
     end
   end
-  # figure out a way to do this nicely from inside the install rake task
+
+  # TODO: figure out a way to do this nicely from inside the install rake task
   puts "now! please run 'vim +BundleInstall +qall' in your terminal :)"
 end
 

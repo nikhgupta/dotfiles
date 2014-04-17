@@ -52,3 +52,10 @@ Thumbs.db
 .idea
 # Textmate project files
 /*.tmproj
+
+# Ruby On Rails
+zeus.json
+custom_plan.rb
+
+# others
+tags
