@@ -136,10 +136,10 @@ tunecow() {
     echo "using figure: $figure"
 }
 
-addidea() { echo "- $@" >> ~/Code/docs/ideas.md; }
-addtask() { echo "- $@" >> ~/Code/docs/tasks.md; }
-addnote() { echo "- $@" >> ~/Code/docs/notes.md; }
-addstuff() { echo "- $@" >> ~/Code/docs/stuff.md;}
+addidea() { echo "- `date`: $@" >> ~/Code/docs/ideas.md; }
+addtask() { echo "- `date`: $@" >> ~/Code/docs/tasks.md; }
+addnote() { echo "- `date`: $@" >> ~/Code/docs/notes.md; }
+addstuff() { echo "- `date`: $@" >> ~/Code/docs/stuff.md;}
 
 # NOTE: using scripter gem for this.
 expose() {

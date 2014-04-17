@@ -122,7 +122,9 @@ add_to_path_nicely "/usr/local/bin" at_start
 # add_to_path_nicely "/usr/local/pear/bin"
 
 # add custom php
-add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin"
+if which brew &>/dev/null; then
+  add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin"
+fi
 
 # add paths for Haskell binaries
 # add_to_path_nicely "${HOME}/.cabal/bin"

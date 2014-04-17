@@ -40,7 +40,7 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[yellow]%}"
 # - Let the user know, if he is logged in via a remote session.
 # - Display the kind of repository, we are working with.
 set_prompt_char() {
-  [[ -n $SSH_CONNECTION ]] && echo -ne "\n%{$fg[cyan]%}☎ %{$reset_color%}"
+  [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%}"
   git log &>/dev/null && echo -ne '± '
   hg root &>/dev/null && echo -ne '☿ '
   echo '%(!.!.➲)'
