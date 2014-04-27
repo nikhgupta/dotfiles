@@ -1,14 +1,19 @@
 " Interface:
+" thematic:                   appearance per task and environment {{{
+  Bundle "reedes/vim-thematic"
+" }}}
 " themes:                     various templates/themes to make code in vim look pretty {{{
   " singles:
   Bundle 'wombat256.vim'
-  Bundle 'DAddYE/soda.vim'
-  Bundle 'Pychimp/vim-luna'
-  Bundle 'cstrahan/grb256'
-  Bundle 'jnurmine/Zenburn'
   Bundle 'ciaranm/inkpot'
+  Bundle 'morhetz/gruvbox'
+  Bundle 'DAddYE/soda.vim'
+  Bundle 'cstrahan/grb256'
+  Bundle 'Pychimp/vim-luna'
+  Bundle 'jnurmine/Zenburn'
   Bundle 'fugalh/desert.vim'
   Bundle 'nanotech/jellybeans.vim'
+  " Bundle 'zenorocha/dracula-theme'
   Bundle '29decibel/codeschool-vim-theme'
   Bundle 'altercation/vim-colors-solarized'
   Bundle 'minofare/VIM-Railscasts-Color-Theme'
@@ -113,7 +118,7 @@
 
   " Show hidden files, and bookmarks
   let NERDTreeShowFiles     = 1
-  let NERDTreeShowHidden    = 1
+  let NERDTreeShowHidden    = 0
   let NERDTreeShowBookmarks = 1
 
   " change directory, whenever tree root is changed
@@ -149,7 +154,7 @@
   nmap <leader>N :NERDTreeClose<CR>
 
   " toggle nerdtree window
-  nmap <Leader>tn <plug>NERDTreeTabsToggle<CR>
+  nmap <Leader>n <plug>NERDTreeTabsToggle<CR>
 " }}}
 " gundo:                      awesome redo-undo {{{
   Bundle 'sjl/gundo.vim'
@@ -191,8 +196,9 @@
   Bundle 'blueyed/ZoomWin'
 " }}}
 " nerdtree-tabs:              extend the power of nerdtree over tabs {{{
-  Bundle "jistr/vim-nerdtree-tabs"
-  " let g:nerdtree_tabs_open_on_console_startup=1
+  Bundle 'jistr/vim-nerdtree-tabs'
+  let g:nerdtree_tabs_open_on_gui_startup=0
+  let g:nerdtree_tabs_open_on_console_startup=0
 " }}}
 " rename2:                    quickly rename your files {{{
   Bundle 'Rename2'

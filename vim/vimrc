@@ -277,80 +277,113 @@ set nocompatible             " No to the total compatibility with the ancient vi
       :silent g!@\v^\d+\.\d+:@d
     endfunction
   " }}}
-  " Create session with a prompt {{{
-  function! SaveSessionWithPrompt()
-    " guess name from current session, if any
-    let name = xolox#session#find_current_session()
-    let is_tab_scoped = xolox#session#is_tab_scoped()
+  " " Create session with a prompt {{{
+  " function! SaveSessionWithPrompt()
+  "   " guess name from current session, if any
+  "   let name = xolox#session#find_current_session()
+  "   let is_tab_scoped = xolox#session#is_tab_scoped()
 
-    " ask user for a session name, otherwise
-    if empty(name)
-      let default_name = ''
-      if g:session_default_name
-        let default_name = g:session_default_name
-      endif
+  "   " ask user for a session name, otherwise
+  "   if empty(name)
+  "     let default_name = ''
+  "     if g:session_default_name
+  "       let default_name = g:session_default_name
+  "     endif
 
-      call inputsave()
-      let name = input('save session? by what name? ', default_name)
-      call inputrestore()
-    endif
+  "     call inputsave()
+  "     let name = input('save session? by what name? ', default_name)
+  "     call inputrestore()
+  "   endif
 
-    " use the default session name, otherwise
-    if empty(name) && g:session_default_name
-      let name = g:session_default_name
-    endif
+  "   " use the default session name, otherwise
+  "   if empty(name) && g:session_default_name
+  "     let name = g:session_default_name
+  "   endif
 
-    " save the given session
-    if xolox#session#is_tab_scoped()
-      call xolox#session#save_tab_cmd(name, '!', 'SaveTabSession')
-    else
-      call xolox#session#save_cmd(name, '!', 'SaveSession')
-    endif
+  "   " save the given session
+  "   if xolox#session#is_tab_scoped()
+  "     call xolox#session#save_tab_cmd(name, '!', 'SaveTabSession')
+  "   else
+  "     call xolox#session#save_cmd(name, '!', 'SaveSession')
+  "   endif
 
-  endfunction
-  " }}}
-  " Load default colorscheme based on gui/terminal and time of day " {{{
-  function! LoadDefaultVimColors()
+  " endfunction
+  " " }}}
+  " " Set background of the GUI based on the time of the day {{{
+  " function! LoadBackgroundBasedOnTime()
+  "   let curr_hour    = strftime("%H")
+  "   let g:background = curr_hour > 7 && curr_hour < 19 ? 'light' : 'dark'
+
+  "   execute 'set background=' . g:background
+  "   echo 'Background set to dark since current time is: ' . strftime('%H:%M')
+  " endfunction
+  " " 
+  " " }}}
+  " " Load default colorscheme based on gui/terminal and time of day {{{
+  " function! LoadDefaultVimColors()
+  "   call LoadBackgroundBasedOnTime()
+  "   " only load solarized if we are on gui and working in daytime
+  "   if g:is_gui && g:background == 'light'
+  "     execute 'colorscheme solarized'
+  "     let g:airline_theme = 'solarized'
+  "   else
+  "     execute 'colorscheme base16-eighties'
+  "     let g:airline_theme = 'base16'
+  "   endif
+  "   call airline#load_theme()
+  "   redraw
+  " endfunction
+  " " }}}
+  " " Load a random colorscheme {{{
+  " function! LoadRandomColorScheme()
+  "   call LoadBackgroundBasedOnTime()
+  "   let l:colorschemes = split(globpath(&rtp,"**/colors/*.vim"),"\n")
+  "   let l:colorscheme  = l:colorschemes[localtime() % len(l:colorschemes)]
+  "   let l:colorscheme  = fnamemodify(expand(l:colorscheme), ":t:r")
+  "   execute 'colorscheme ' . l:colorscheme
+  "   redraw
+
+  "   echo "Loaded colorscheme (" . g:background . "): " . l:colorscheme
+  " endfunction
+  " " }}}
+  " " Load focus theme when asked for specifically {{{
+  " function! LoadColorSchemeForFocusMode()
+  "   call LoadBackgroundBasedOnTime()
+  "   execute 'colorscheme focus-' . g:background
+  " endfunction
+  " " }}}
+  " " Load theme designed specifically for text mode {{{
+  " function! LoadColorSchemeForTextMode()
+  "   call LoadBackgroundBasedOnTime()
+  "   execute 'colorscheme awesome-text-' . g:background
+  " endfunction
+  " " }}}
+  " " Reload last session and restore vim colors {{{
+  " function! ReloadSessionAndRestoreColors()
+  "   if function_exists("xolox#session#auto_load")
+  "     call xolox#session#auto_load()
+  "   endif
+  "   call LoadDefaultVimColors()
+  " endfunction
+  " " }}}
+  " Return the first argument if working in daylight, otherwise second {{{
+  function! DayOrNight(day, night)
     let curr_hour = strftime("%H")
-
-    if g:is_gui && curr_hour > 7 && curr_hour < 19
-      let data = [ 'solarized', 'light', 'solarized' ]
-    " elseif g:is_gui
-    "   let data = [ 'solarized', 'dark', 'solarized' ]
-    else
-      let data = [ 'base16-eighties', 'dark', 'base16' ]
-    endif
-
-    execute 'colorscheme '   . data[0]
-    execute 'set background='. data[1]
-    let g:airline_theme = data[2]
-    call airline#load_theme()
-
-    redraw
+    return curr_hour > 7 && curr_hour < 19 ? a:day : a:night
   endfunction
   " }}}
-  " Load a random colorscheme {{{
-  function! LoadRandomColorScheme()
-    let curr_hour = strftime("%H")
-
-    let l:colorschemes = split(globpath(&rtp,"**/colors/*.vim"),"\n")
-    let l:colorscheme  = l:colorschemes[localtime() % len(l:colorschemes)]
-    let l:colorscheme  = fnamemodify(expand(l:colorscheme), ":t:r")
-    let l:background   = curr_hour > 7 && curr_hour < 19 ? "light" : "dark"
-
-    execute "colorscheme " . l:colorscheme
-    execute "set background=".l:background
-    redraw
-
-    echo "Loaded colorscheme (".l:background."): " . l:colorscheme
-  endfunction
-  " }}}
-  " Reload last session and restore vim colors {{{
-  function! ReloadSessionAndRestoreColors()
-    if function_exists("xolox#session#auto_load")
-      call xolox#session#auto_load()
-    endif
-    call LoadDefaultVimColors()
+  " Quick distraction-free theme setup for Thematic {{{
+  function! DistractionFree(theme)
+    let l:theme = {
+    \     'ruler': 1,
+    \     'laststatus': 0,
+    \     'sign-column-color-fix': 1,
+    \     'fold-column-color-mute': 1,
+    \     'number-column-color-mute': 1,
+    \     'fullscreen-background-color-fix': 1,
+    \ }
+    call extend(l:theme, a:theme)
+    return l:theme
   endfunction
   " }}}
 " }}}
@@ -528,9 +561,50 @@ set nocompatible             " No to the total compatibility with the ancient vi
     set t_Co =256
   endif
 
+  let g:thematic#defaults = {
+  \ 'fullscreen'   : 1,
+  \ 'background'   : DayOrNight("light", "dark"),
+  \ 'airline-theme': DayOrNight("solarized", "base16"),
+  \ }
+
+  let g:thematic#themes = {
+  \ 'default-dark' : { 'colorscheme'  : 'base16-eighties',
+  \                    'background'   : 'dark',
+  \                    'airline-theme': 'base16' },
+  \ 'default-light': { 'colorscheme'  : 'solarized',
+  \                    'background'   : 'light',
+  \                    'airline-theme': 'solarized' },
+  \ 'default': { 'colorscheme' : DayOrNight("solarized", "base16-eighties") },
+  \
+  \ 'focus-dark' : DistractionFree({'colorscheme': 'focus-dark' }),
+  \ 'focus-light': DistractionFree({'colorscheme': 'focus-light'}),
+  \ 'focus': DistractionFree({
+  \    'colorscheme': DayOrNight('focus-light', 'focus-dark'),
+  \ }),
+  \
+  \ 'awesome-text-dark' : DistractionFree({
+  \    'colorscheme': 'awesome-text-dark',
+  \    'typeface'   : 'Source Code Pro Light',
+  \    'font-size'  : '20',
+  \    'linespace'  : '8',
+  \ }),
+  \ 'awesome-text-light': DistractionFree({
+  \    'colorscheme': 'awesome-text-light',
+  \    'typeface'   : 'Source Code Pro Light',
+  \    'font-size'  : '20',
+  \    'linespace'  : '8',
+  \ }),
+  \ 'awesome-text': DistractionFree({
+  \    'colorscheme': DayOrNight('awesome-text-light', 'awesome-text-dark'),
+  \    'typeface'   : 'Source Code Pro Light',
+  \    'font-size'  : '20',
+  \    'linespace'  : '8',
+  \ }),
+  \ }
+
   " set vim's default colorscheme, airline theme and background
   " depending on the time of day and whether gui is running or not
-  call LoadDefaultVimColors()
+  let g:thematic#theme_name = g:is_gui ? "default" : "default-dark"
 
   " Vertical bar in insert mode (for iTerm users only)
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -842,6 +916,18 @@ set nocompatible             " No to the total compatibility with the ancient vi
     nmap <silent> <leader>ul YpVr=<CR>
 
   " }}}
+  " " UI related mappings {{{
+
+  "   " Load a random ColorScheme
+  "   nmap <silent> <leader>csr :call LoadRandomColorScheme()<CR>
+  "   nmap <silent> <leader>csd :call LoadDefaultVimColors()<CR>
+
+  "   " enable theme for focus mode: https://github.com/sindresorhus/focus
+  "   nmap <silent> <leader>csf :call LoadColorSchemeForFocusMode()<CR>
+
+  "   " enable theme for text mode
+  "   nmap <silent> <leader>cst :call LoadColorSchemeForTextMode()<CR>
+  " " }}}
   " file system related mappings {{{
 
     " change Working Directory to that of the current file
@@ -980,10 +1066,6 @@ set nocompatible             " No to the total compatibility with the ancient vi
     " Md5 COMMAND - Show the MD5 of the current buffer or range
     command! -range Md5 :echo system('echo '.shellescape(join(getline(<line1>, <line2>), '\n')) . '| md5')
 
-    " Load a random ColorScheme
-    nmap <silent> <leader>cs :call LoadRandomColorScheme()<CR>
-    nmap <silent> <leader>dcs :call LoadDefaultVimColors()<CR>
-
     " clean up vim's startuptime logs
     command! CleanStartupLog :call CleanStartupLog()<CR>
   " }}}
@@ -1081,7 +1163,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
       au!
 
       " reload last session and colorscheme based on whether gui is running or not
-      autocmd VimEnter * nested silent! call ReloadSessionAndRestoreColors()
+      " autocmd VimEnter * nested silent! call ReloadSessionAndRestoreColors()
 
       " toggle relative line numbering
       autocmd FocusLost   * :set number
@@ -1233,6 +1315,10 @@ set nocompatible             " No to the total compatibility with the ancient vi
       " md, markdown, and mk are markdown and define buffer-local preview
       autocmd filetype ghmarkdown setlocal wrap wrapmargin=2 textwidth=72 nolist
       autocmd filetype ghmarkdown map <buffer> <leader>p :Mm<CR>
+
+      " use the distraction-free theme for text-mode
+      autocmd BufRead,BufNewFile *.{md,mkd,mkdn,mdown,markdown}
+            \ if g:is_gui | execute "Thematic awesome-text" | endif
     augroup end "}}}
     augroup php_files               " {{{
       au!

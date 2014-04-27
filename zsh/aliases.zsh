@@ -80,3 +80,5 @@ alias find_gem='gem list --local | grep';
 alias gffs='git flow feature start';
 alias gfff='git flow feature finish';
 alias merge='rsync -rupW --progress';
+
+alias be="bundle exec"

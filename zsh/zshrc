@@ -61,7 +61,7 @@ export EDITOR="vim"
 # }}}
 
 # which zsh plugins? {{{
-plugins=(fasd battery brew bundler coffee colored-man common-aliases
+plugins=(fasd battery brew coffee colored-man common-aliases
 composer copydir copyfile cp extract gem git-flow git-extras git github
 gitignore heroku history-substring-search osx rails systemadmin thor
 vundle web-search)
