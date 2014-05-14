@@ -104,19 +104,6 @@ add_to_path_nicely() { # $1 -> path, $2 -> add to start?
   else echo "Non-existent directory added to \$PATH: $1"; fi
 }
 
-# add paths created by homebrew
-add_to_path_nicely "/usr/local/sbin" at_start
-add_to_path_nicely "/usr/local/bin" at_start
-
-# add path to local bin files
-# add_to_path_nicely "${HOME}/Code/scripter/bin"
-
-# add android sdk tools
-# add_to_path_nicely "${HOME}/Code/android/sdk/tools"
-
-# add pear to our path
-# add_to_path_nicely "/usr/local/pear/bin"
-
 if (( $DEVELOPMENT_SERVER )); then
     # make sure we use gnu version of commands like ls, etc.
     add_to_path_nicely "/usr/local/opt/coreutils/libexec/gnubin" at_start
@@ -133,6 +120,19 @@ if (( $DEVELOPMENT_SERVER )); then
     # add paths for Haskell binaries
     add_to_path_nicely "${HOME}/.cabal/bin"
 fi
+
+# add paths created by homebrew
+add_to_path_nicely "/usr/local/sbin" at_start
+add_to_path_nicely "/usr/local/bin" at_start
+
+# add path to local bin files
+# add_to_path_nicely "${HOME}/Code/scripter/bin"
+
+# add android sdk tools
+# add_to_path_nicely "${HOME}/Code/android/sdk/tools"
+
+# add pear to our path
+# add_to_path_nicely "/usr/local/pear/bin"
 
 # instead use rbenv - now, resides in ~/.zshenv to make this VIM compatible
 # eval "$(rbenv init -)"
