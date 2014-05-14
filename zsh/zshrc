@@ -44,6 +44,11 @@ export ZSH="$HOME/.oh-my-zsh" # do not rename this variable - needed by OH MY ZS
 export DOTZSH="$HOME/Code/__dotfiles/zsh"
 export DOTVIM="$HOME/Code/__dotfiles/vim"
 # }}}
+
+if [[ `hostname` == "MacBookPro.local" ]] && [[ `uname -s` == "Darwin" ]]
+then export DEVELOPMENT_SERVER="1"
+else export DEVELOPMENT_SERVER="0"
+fi
 #
 
 # remember the location to my SSH key {{{
@@ -99,15 +104,6 @@ add_to_path_nicely() { # $1 -> path, $2 -> add to start?
   else echo "Non-existent directory added to \$PATH: $1"; fi
 }
 
-# make sure we use gnu version of commands like ls, etc.
-if [[ "`uname -s`" == "Darwin" ]]; then
-    add_to_path_nicely "/usr/local/opt/coreutils/libexec/gnubin" at_start
-    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-fi
-
-# add paths created by heroku toolbelt
-add_to_path_nicely "/usr/local/heroku/bin" at_start
-
 # add paths created by homebrew
 add_to_path_nicely "/usr/local/sbin" at_start
 add_to_path_nicely "/usr/local/bin" at_start
@@ -121,13 +117,22 @@ add_to_path_nicely "/usr/local/bin" at_start
 # add pear to our path
 # add_to_path_nicely "/usr/local/pear/bin"
 
-# add custom php
-if which brew &>/dev/null; then
-  add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin"
-fi
+if (( $DEVELOPMENT_SERVER )); then
+    # make sure we use gnu version of commands like ls, etc.
+    add_to_path_nicely "/usr/local/opt/coreutils/libexec/gnubin" at_start
+    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-# add paths for Haskell binaries
-add_to_path_nicely "${HOME}/.cabal/bin"
+    # add paths created by heroku toolbelt
+    add_to_path_nicely "/usr/local/heroku/bin" at_start
+
+    # add custom php
+    if which brew &>/dev/null; then
+      add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin"
+    fi
+
+    # add paths for Haskell binaries
+    add_to_path_nicely "${HOME}/.cabal/bin"
+fi
 
 # instead use rbenv - now, resides in ~/.zshenv to make this VIM compatible
 # eval "$(rbenv init -)"
