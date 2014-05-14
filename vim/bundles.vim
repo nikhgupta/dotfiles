@@ -8,7 +8,7 @@
   Bundle 'ciaranm/inkpot'
   Bundle 'morhetz/gruvbox'
   Bundle 'DAddYE/soda.vim'
-  Bundle 'cstrahan/grb256'
+  " Bundle 'cstrahan/grb256'
   Bundle 'Pychimp/vim-luna'
   Bundle 'jnurmine/Zenburn'
   Bundle 'fugalh/desert.vim'
@@ -303,7 +303,6 @@
 " }}}
 " orgmode:                    emacs' org mode parsing in vim {{{
   Bundle "jceb/vim-orgmode"
-  Bundle "tpope/vim-speeddating"
 " }}}
 " align:                      easily align your code {{{
   Bundle 'tsaleh/vim-align'
@@ -508,7 +507,7 @@
   " syntax support
   Bundle 'tpope/vim-haml'
   " Bundle 'DAddYE/vim-slim'
-  Bundle 'tpope/vim-rspec'
+  " Bundle 'tpope/vim-rspec'
   Bundle 'tpope/vim-cucumber'
 " }}}
 " stylesheets:                less, css3-syntax, scss-syntax {{{
