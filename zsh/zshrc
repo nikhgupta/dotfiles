@@ -119,11 +119,11 @@ if (( $DEVELOPMENT_SERVER )); then
 
     # add paths for Haskell binaries
     add_to_path_nicely "${HOME}/.cabal/bin"
-fi
 
-# add paths created by homebrew
-add_to_path_nicely "/usr/local/sbin" at_start
-add_to_path_nicely "/usr/local/bin" at_start
+    # add paths created by homebrew
+    add_to_path_nicely "/usr/local/sbin" at_start
+    add_to_path_nicely "/usr/local/bin" at_start
+fi
 
 # add path to local bin files
 # add_to_path_nicely "${HOME}/Code/scripter/bin"
