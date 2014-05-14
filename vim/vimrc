@@ -916,18 +916,18 @@ set nocompatible             " No to the total compatibility with the ancient vi
     nmap <silent> <leader>ul YpVr=<CR>
 
   " }}}
-  " " UI related mappings {{{
+  " UI related mappings {{{
 
-  "   " Load a random ColorScheme
-  "   nmap <silent> <leader>csr :call LoadRandomColorScheme()<CR>
-  "   nmap <silent> <leader>csd :call LoadDefaultVimColors()<CR>
+    " Load a random ColorScheme
+    nmap <silent> <leader>csr :ThematicRandom<CR>
+    nmap <silent> <leader>csd :Thematic default<CR>
 
-  "   " enable theme for focus mode: https://github.com/sindresorhus/focus
-  "   nmap <silent> <leader>csf :call LoadColorSchemeForFocusMode()<CR>
+    " enable theme for focus mode: https://github.com/sindresorhus/focus
+    nmap <silent> <leader>csf :Thematic focus<CR>
 
-  "   " enable theme for text mode
-  "   nmap <silent> <leader>cst :call LoadColorSchemeForTextMode()<CR>
-  " " }}}
+    " enable theme for text mode
+    nmap <silent> <leader>cst :Thematic awesome-text<CR>
+  " }}}
   " file system related mappings {{{
 
     " change Working Directory to that of the current file
@@ -1316,9 +1316,9 @@ set nocompatible             " No to the total compatibility with the ancient vi
       autocmd filetype ghmarkdown setlocal wrap wrapmargin=2 textwidth=72 nolist
       autocmd filetype ghmarkdown map <buffer> <leader>p :Mm<CR>
 
-      " use the distraction-free theme for text-mode
-      autocmd BufRead,BufNewFile *.{md,mkd,mkdn,mdown,markdown}
-            \ if g:is_gui | execute "Thematic awesome-text" | endif
+      " " use the distraction-free theme for text-mode
+      " autocmd BufRead,BufNewFile *.{md,mkd,mkdn,mdown,markdown}
+      "       \ if g:is_gui | execute 'Thematic awesome-text' | endif
     augroup end "}}}
     augroup php_files               " {{{
       au!

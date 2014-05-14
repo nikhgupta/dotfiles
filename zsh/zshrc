@@ -127,7 +127,7 @@ if which brew &>/dev/null; then
 fi
 
 # add paths for Haskell binaries
-# add_to_path_nicely "${HOME}/.cabal/bin"
+add_to_path_nicely "${HOME}/.cabal/bin"
 
 # instead use rbenv - now, resides in ~/.zshenv to make this VIM compatible
 # eval "$(rbenv init -)"
