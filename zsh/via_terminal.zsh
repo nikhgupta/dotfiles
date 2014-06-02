@@ -57,3 +57,4 @@ alias composer='/usr/local/bin/composer.phar';
 # BUG: commands output 'nil' at command line
 # alias task="emacsclient -cta '' -e '(org-capture nil \"t\")'"
 # alias journal="emacsclient -cta '' -e '(org-capture nil \"j\")'"
+alias artisan='php artisan';

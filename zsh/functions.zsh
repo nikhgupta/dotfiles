@@ -168,3 +168,37 @@ idletime() {
     echo `ioreg -c IOHIDSystem | 
     awk '/HIDIdleTime/ {print $NF/1000000000; exit}'`
 }
+
+gen_ssl() {
+    if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]; then
+        echo "Usage: gen_wildcard_ssl <domain.com> <common_name> <single/wildcard>"
+    elif [ -d /private/etc/apache2/ssl/$1/$3.cert ]; then
+        echo "Path: /private/etc/apache2/ssl/$1/$3.cert already exists."
+    else
+        mkdir /tmp/sslcert
+        pushd /tmp/sslcert
+        (umask 077 && touch $3.key $3.cert $3.info $3.pem)
+        openssl genrsa 2048 > $3.key
+        openssl req -new -x509 -nodes -sha1 -days 3650 -key $3.key \
+          -subj "/C=IN/ST=Rajasthan/L=Jaipur/O=Wicked Developers/OU=IT/CN=$2" > $3.cert
+        openssl x509 -noout -fingerprint -text < $3.cert > $3.info
+        cat $3.cert $3.key > $3.pem
+        chmod 400 $3.key $3.pem
+
+        sudo mkdir /private/etc/apache2/ssl/$1 2>/dev/null
+        sudo mv $3.key $3.pem $3.cert $3.info /private/etc/apache2/ssl/$1
+        popd
+        rm -rf /tmp/sslcert
+
+        echo "\n====="
+        echo "Certificate generation completed."
+        echo "Created at: /private/etc/apache2/ssl/$1/$3.cert"
+
+        sudo security add-trusted-cert -d -r trustRoot -k \
+          "/Library/Keychains/System.keychain" /private/etc/apache2/ssl/$1/$3.cert
+
+        echo "Certificate marked as trusted in OSX Keychain."
+    fi
+}
+gen_single_ssl() { gen_ssl $1 $1 "single"; }
+gen_wildcard_ssl() { gen_ssl $1 *.$1 "wildcard"; }
