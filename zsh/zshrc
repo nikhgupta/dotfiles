@@ -18,7 +18,7 @@ typeset -U path # set $path variable to only have unique values
 setopt auto_pushd
 setopt pushd_silent
 setopt pushd_ignore_dups
-setopt ignore_eof
+# setopt ignore_eof
 setopt rm_star_silent
 unsetopt nomatch
 unsetopt correct_all
@@ -34,8 +34,7 @@ export TERM=xterm-256color
 export CODE_DIR="$HOME/Code"
 export DOT_DIR="$HOME/Code/__dotfiles"
 export BACKUP_DIR="$HOME/Code/__backups"
-export FILE_DIR="$HOME/Code/__files"
-export REPO_DIR="$HOME/Code/__repos"
+export REPO_DIR="$HOME/Code/repos"
 export SCRIPT_DIR="$HOME/Code/scripts"
 export SNIPPET_DIR="$HOME/Code/snippets"
 
@@ -45,14 +44,14 @@ export DOTZSH="$HOME/Code/__dotfiles/zsh"
 export DOTVIM="$HOME/Code/__dotfiles/vim"
 # }}}
 
-if [[ `hostname` == "MacBookPro.local" ]] && [[ `uname -s` == "Darwin" ]]
-then export DEVELOPMENT_SERVER="1"
-else export DEVELOPMENT_SERVER="0"
-fi
-#
+# Base16 Shell {{{
+BASE16_SCHEME="eighties"
+BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
+[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+# }}}
 
 # remember the location to my SSH key {{{
-export SSH_KEY="$HOME/.ssh/macbookpro.pub"
+export SSH_KEY="$HOME/.ssh/nikhgupta.pub"
 # }}}
 
 # which zsh theme? {{{
@@ -60,16 +59,17 @@ export ZSH_THEME="blinks"
 # }}}
 
 # which editor? {{{
-# export EDITOR="emacsclient -ta ''"
 export EDITOR="vim"
+# export EDITOR="emacsclient -ta ''"
 # export EDITOR="/usr/local/bin/mate -w"
 # }}}
 
 # which zsh plugins? {{{
+# TODO: move osx specific plugins to separate file.
 plugins=(fasd battery brew coffee colored-man common-aliases
 composer copydir copyfile cp extract gem git-flow git-extras git github
 gitignore heroku history-substring-search osx rails systemadmin thor
-vundle web-search)
+vundle web-search zsh-syntax-highlighting)
 # }}}
 
 function source_file() { # sources a file, provides debugging option {{{
@@ -104,27 +104,6 @@ add_to_path_nicely() { # $1 -> path, $2 -> add to start?
   else echo "Non-existent directory added to \$PATH: $1"; fi
 }
 
-if (( $DEVELOPMENT_SERVER )); then
-    # make sure we use gnu version of commands like ls, etc.
-    add_to_path_nicely "/usr/local/opt/coreutils/libexec/gnubin" at_start
-    MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-    # add paths created by heroku toolbelt
-    add_to_path_nicely "/usr/local/heroku/bin" at_start
-
-    # add custom php
-    if which brew &>/dev/null; then
-      add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin"
-    fi
-
-    # add paths for Haskell binaries
-    add_to_path_nicely "${HOME}/.cabal/bin"
-
-    # add paths created by homebrew
-    add_to_path_nicely "/usr/local/sbin" at_start
-    add_to_path_nicely "/usr/local/bin" at_start
-fi
-
 # add path to local bin files
 # add_to_path_nicely "${HOME}/Code/scripter/bin"
 
@@ -134,48 +113,18 @@ fi
 # add pear to our path
 # add_to_path_nicely "/usr/local/pear/bin"
 
-# instead use rbenv - now, resides in ~/.zshenv to make this VIM compatible
-# eval "$(rbenv init -)"
-# }}}
-
-# add rvm to our path (useful for scripting)
-# add_to_path_nicely "${HOME}/.rvm/bin"
-
-# Load some very essential scripts - I can't live without {{{
-# Load RVM into our shell - oh! I can throw away my computer without this one little tiny line ;)
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-# __rvm_project_rvmrc
-
-# Load Z
-# 17-02-14 17:53:42 - Using FASD now.
-# source_file "$SCRIPT_DIR/shell/z/z.sh"
-
-# Load AutoEnv
-# source_file "$SCRIPT_DIR/shell/autoenv/activate.sh"
-source_file "/usr/local/opt/autoenv/activate.sh"
-
-# Python development environment configuration
-if [[ -s /usr/local/bin/virtualenvwrapper.sh ]]; then
- source /usr/local/bin/virtualenvwrapper.sh
-fi
-# pip should only run if there is a virtualenv currently activated
-export PIP_REQUIRE_VIRTUALENV=true
-# cache pip-installed packages to avoid re-downloading
-export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-# virtualenv wrapper support
-export WORKON_HOME=~/Code/python/VirtualEnvs
-# make pip use the virtualenv dir
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
-
-# Load Todo.txt
-# source_file "$SCRIPT_DIR/shell/todo.txt-cli/todo_completion"
-# export T="$SCRIPT_DIR/shell/todo.txt-cli/todo.sh -d $TODO_TXT_CLI_CONFIG_FILE" # handy when defining functions that depend on it.
-# alias t="$T"
-
-# Load Syntax Highlighting for ZSH
-# source_file $SCRIPT_DIR/shell/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source_file "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-# export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+# # Python development environment configuration
+# if [[ -s /usr/local/bin/virtualenvwrapper.sh ]]; then
+#  source /usr/local/bin/virtualenvwrapper.sh
+# fi
+# # pip should only run if there is a virtualenv currently activated
+# export PIP_REQUIRE_VIRTUALENV=true
+# # cache pip-installed packages to avoid re-downloading
+# export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+# # virtualenv wrapper support
+# export WORKON_HOME=~/Code/python/VirtualEnvs
+# # make pip use the virtualenv dir
+# export PIP_VIRTUALENV_BASE=$WORKON_HOME
 
 # source some files after ZSH configuration is loaded {{{
 # source all files that have extension 'zsh' in the ZSH's directory

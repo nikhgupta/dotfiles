@@ -7,6 +7,7 @@ gem: --no-rdoc --no-ri
 - http://gems.rubyforge.org
 - http://gems.github.com
 - http://gemcutter.org
+- http://api.rubyonrails.org
 :benchmark: false
 :backtrace: false
 :bulk_threshold: 1000

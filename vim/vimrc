@@ -100,6 +100,11 @@
 "     - https://github.com/skwp/dotfiles
 "     - https://github.com/gf3/dotfiles
 " }}}
+" Ubuntu Migration: {{{
+"   - 'gx' does not work
+"   - visual bells are irritating.
+"   - install autocomplete plugin
+" }}}
 " Inspirations: """"""""""""""""""""""""""""""""""""""""""""""" {{{
 "   In no specific order:
 "   - https://github.com/zenom/dotfiles
@@ -127,19 +132,31 @@ set nocompatible             " No to the total compatibility with the ancient vi
 " Behaviour: Custom Variables {{{
   " os specific variables
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
-  let g:is_macvim  = has('gui_macvim')
-  let g:is_linux   = has('linux')
+  let g:is_macvim  = g:is_mac && has('gui_macvim')
+  let g:is_nix     = has('unix') && !has('macunix') && !has("win32unix")
+  let g:is_ubuntu  = g:is_nix && system("uname -a") =~ "Ubuntu"
   let g:is_windows = has('win16') || has('win32') || has('win64')
 
   " other relevant variables
   let g:is_gui     = has('gui_running')
   let g:is_posix   = 1 " enable better bash syntax highlighting
 " }}}
+" Behaviour: Windows Compatibility {{{
+  " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+  " across (heterogeneous) systems easier.
+  if g:is_windows
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+  endif
+" }}}
 " Behaviour: Custom Functions {{{
-  " Source a file, only if we can read it :) {{{
-  function! SourceIfReadable(file)
+  " Source a file, only if we can read it - display a message, optionally :) {{{
+  function! SourceIfReadable(file, ...)
     let l:file = expand(a:file)
-    if filereadable(l:file) | execute "source" l:file | endif
+    if filereadable(l:file)
+      execute "source" l:file
+    elseif a:0 > 0 && a:1 == 1
+      echomsg "Could not read file for sourcing: " . l:file
+    endif
   endfunction " }}}
   " Load a default statusline, if no relevant plugin exists {{{
   function! LoadDefaultStatusLine()
@@ -370,6 +387,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
   " Stop fucking netrw
   let g:netrw_silent = 1
   let g:netrw_quiet  = 1
+"   - Use `g:netrw_browserx_viewer` to set the binary for above command
   " let g:loaded_netrw = 1          " prevents loading of netrw, but messes 'gx'
   " let g:loaded_netrwPlugin = 1    " ^ ..same.. and therefore, commented
 " }}}
@@ -782,99 +800,140 @@ set nocompatible             " No to the total compatibility with the ancient vi
     " }}}
 
   " Snippets And Code Completion:
-    " neocomplete/neocomplcache:  ultimate auto-completion system for Vim {{{
-      if has('lua')
-        Bundle 'Shougo/neocomplete.vim'
-        " settings: {{{
-          let g:neocomplete#enable_at_startup = 1                 " enable at startup
-          let g:neocomplete#enable_smart_case = 1                 " enable SmartCase
-          let g:neocomplete#sources#syntax#min_keyword_length = 3 " use a minimum syntax keyword length
-          let g:neocomplete#force_overwrite_completefunc = 1
-          " do not complete automatically on files matching this pattern
-          " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-          " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-        " }}}
-        " key mappings: {{{
-          inoremap <expr><C-g>     neocomplete#undo_completion()
-          inoremap <expr><C-l>     neocomplete#complete_common_string()
+    " " neocomplete/neocomplcache:  ultimate auto-completion system for Vim {{{
+    "   if has('lua')
+    "     Bundle 'Shougo/neocomplete.vim'
+    "     " settings: {{{
+    "       let g:neocomplete#enable_at_startup = 1                 " enable at startup
+    "       let g:neocomplete#enable_smart_case = 1                 " enable SmartCase
+    "       let g:neocomplete#sources#syntax#min_keyword_length = 3 " use a minimum syntax keyword length
+    "       let g:neocomplete#force_overwrite_completefunc = 1
+    "       " do not complete automatically on files matching this pattern
+    "       " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+    "       " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+    "     " }}}
+    "     " key mappings: {{{
+    "       inoremap <expr><C-g>     neocomplete#undo_completion()
+    "       inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-          " <CR>: close popup and save indent.
-          inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-          function! s:my_cr_function()
-            return neocomplete#smart_close_popup() . "\<CR>"
-            " For no inserting <CR> key.
-            "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-          endfunction
+    "       " <CR>: close popup and save indent.
+    "       inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    "       function! s:my_cr_function()
+    "         return neocomplete#smart_close_popup() . "\<CR>"
+    "         " For no inserting <CR> key.
+    "         "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    "       endfunction
 
-          " <TAB>: completion.
-          inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    "       " <TAB>: completion.
+    "       inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-          " <C-h>, <BS>: close popup and delete backword char.
-          inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
-          inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
-          inoremap <expr><C-y>  neocomplete#close_popup()
-          inoremap <expr><C-e>  neocomplete#cancel_popup()
-        " }}}
-      else
-        Bundle 'Shougo/neocomplcache.vim'
-        " settings: {{{
-          let g:neocomplcache_enable_at_startup = 1               " enable at startup
-          let g:neocomplcache_enable_smart_case = 1               " enable SmartCase
-          let g:neocomplcache_min_syntax_length = 3               " use a minimum syntax keyword length
-          " do not complete automatically on files matching this pattern
-          " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-          " let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-        " }}}
-        " key mappings: {{{
-          inoremap <expr><C-g>     neocomplcache#undo_completion()
-          inoremap <expr><C-l>     neocomplcache#complete_common_string()
+    "       " <C-h>, <BS>: close popup and delete backword char.
+    "       inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
+    "       inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
+    "       inoremap <expr><C-y>  neocomplete#close_popup()
+    "       inoremap <expr><C-e>  neocomplete#cancel_popup()
+    "     " }}}
+    "   else
+    "     Bundle 'Shougo/neocomplcache.vim'
+    "     " settings: {{{
+    "       let g:neocomplcache_enable_at_startup = 1               " enable at startup
+    "       let g:neocomplcache_enable_smart_case = 1               " enable SmartCase
+    "       let g:neocomplcache_min_syntax_length = 3               " use a minimum syntax keyword length
+    "       " do not complete automatically on files matching this pattern
+    "       " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+    "       " let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+    "     " }}}
+    "     " key mappings: {{{
+    "       inoremap <expr><C-g>     neocomplcache#undo_completion()
+    "       inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
-          " <CR>: close popup and save indent.
-          inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-          function! s:my_cr_function()
-            return neocomplcache#smart_close_popup() . "\<CR>"
-            " For no inserting <CR> key.
-            "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-          endfunction
+    "       " <CR>: close popup and save indent.
+    "       inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    "       function! s:my_cr_function()
+    "         return neocomplcache#smart_close_popup() . "\<CR>"
+    "         " For no inserting <CR> key.
+    "         "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+    "       endfunction
 
-          " <TAB>: completion.
-          inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    "       " <TAB>: completion.
+    "       inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-          " <C-h>, <BS>: close popup and delete backword char.
-          inoremap <expr><C-h>  neocomplcache#smart_close_popup()."\<C-h>"
-          inoremap <expr><BS>   neocomplcache#smart_close_popup()."\<C-h>"
-          inoremap <expr><C-y>  neocomplcache#close_popup()
-          inoremap <expr><C-e>  neocomplcache#cancel_popup()
-        " }}}
+    "       " <C-h>, <BS>: close popup and delete backword char.
+    "       inoremap <expr><C-h>  neocomplcache#smart_close_popup()."\<C-h>"
+    "       inoremap <expr><BS>   neocomplcache#smart_close_popup()."\<C-h>"
+    "       inoremap <expr><C-y>  neocomplcache#close_popup()
+    "       inoremap <expr><C-e>  neocomplcache#cancel_popup()
+    "     " }}}
+    "   endif
+
+    " " }}}
+    " " neosnippet:                 ultra fast snippets {{{
+    "   Bundle 'Shougo/neosnippet'
+    "   " settings: {{{
+    "     " Enable snipMate compatibility feature.
+    "     let g:neosnippet#enable_snipmate_compatibility = 1
+
+    "     " tell NeoSnippet about other snippets
+    "     let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+    "     " For snippet_complete marker.
+    "     if has('conceal')
+    "       set conceallevel=2 concealcursor=i
+    "     endif
+    "   " }}}
+    "   " key mappings: {{{
+    "     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    "     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    "     xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+    "     " SuperTab like snippets behavior.
+    "     imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    "       \ "\<Plug>(neosnippet_expand_or_jump)"
+    "       \ : pumvisible() ? "\<C-n>" : "\<TAB>"
+    "     smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    "       \ "\<Plug>(neosnippet_expand_or_jump)"
+    "       \ : "\<TAB>"
+    "   " }}}
+    " " }}}
+    " YouCompleteMe:                ultimate auto-completion system for Vim {{{
+      Bundle 'Valloric/YouCompleteMe'
+      let g:acp_enableAtStartup = 0
+
+      " enable completion from tags
+      let g:ycm_collect_identifiers_from_tags_files = 1
+
+      " Enable omni completion.
+      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+      autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+      " Haskell post write lint and check with ghcmod
+      " $ `cabal install ghcmod` if missing and ensure
+      " ~/.cabal/bin is in your $PATH.
+      if !executable("ghcmod")
+        autocmd BufWritePost *.hs GhcModCheckAndLintAsync
       endif
 
+      " For snippet_complete marker.
+      if has('conceal')
+        set conceallevel=2 concealcursor=i
+      endif
+
+      " Disable the neosnippet preview candidate window
+      " When enabled, there can be too much visual noise
+      " especially when splits are used.
+      set completeopt-=preview
     " }}}
-    " neosnippet:                 ultra fast snippets {{{
-      Bundle 'Shougo/neosnippet'
-      " settings: {{{
-        " Enable snipMate compatibility feature.
-        let g:neosnippet#enable_snipmate_compatibility = 1
+    " ultisnips:                    ultra fast snippets {{{
+      Bundle 'SirVer/ultisnips'
 
-        " tell NeoSnippet about other snippets
-        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
-        " For snippet_complete marker.
-        if has('conceal')
-          set conceallevel=2 concealcursor=i
-        endif
-      " }}}
-      " key mappings: {{{
-        imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-        smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-        xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-        " SuperTab like snippets behavior.
-        imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-          \ "\<Plug>(neosnippet_expand_or_jump)"
-          \ : pumvisible() ? "\<C-n>" : "\<TAB>"
-        smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-          \ "\<Plug>(neosnippet_expand_or_jump)"
-          \ : "\<TAB>"
-      " }}}
+      " remap Ultisnips for compatibility for YCM
+      let g:UltiSnipsExpandTrigger = '<C-j>'
+      let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+      let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
     " }}}
     " honza-snippets:             snippets for various languages: {{{
       Bundle 'honza/vim-snippets'
@@ -1149,7 +1208,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
   set noerrorbells                  " don't beep
   set t_vb=                         " remove visual bell character
   " Prevent Vim from clobbering the scrollback buffer. See
-  " http://www.shallowsky.com/linux/noaltscreen.html
+  " http://www.shallowsky.com/linux/naltscreen.html
   set t_ti= t_te=
 
   " other really (ir)relevant matters
@@ -1173,6 +1232,8 @@ set nocompatible             " No to the total compatibility with the ancient vi
   " shell related matters
   if !g:is_windows && executable('zsh')
     set shell=zsh\ -l               " use a ZSH login shell
+  else
+    set shell=/bin/sh
   endif
 
   " backup related matters
@@ -1231,9 +1292,16 @@ set nocompatible             " No to the total compatibility with the ancient vi
   \ }),
   \ }
 
+  let base16colorspace=256
   " set vim's default colorscheme, airline theme and background
   " depending on the time of day and whether gui is running or not
   let g:thematic#theme_name = g:is_gui ? "default" : "default-dark"
+  " if !g:is_gui
+  "   highlight LineNr ctermbg=233
+  "   highlight CursorLine ctermbg=234
+  "   highlight CursorLineNr ctermbg=234
+  "   highlight ColorColumn ctermbg=234
+  " endif
 
   " Vertical bar in insert mode (for iTerm users only)
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -1248,7 +1316,9 @@ set nocompatible             " No to the total compatibility with the ancient vi
       set guifont=Monaco\ For\ Powerline:h13
     elseif g:is_windows
         set guifont=Bitstream\ Vera\ Sans\ Mono:h11
-    elseif g:is_linux
+    elseif g:is_ubuntu
+        set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+    elseif g:is_nix
         set guifont=Monospace\ 11
     endif
 
@@ -1291,7 +1361,9 @@ set nocompatible             " No to the total compatibility with the ancient vi
   set showmatch                   " set show matching parenthesis
   set matchtime=2                 " show matching parenthesis for 0.2 seconds
   " set cinoptions=b1,g0,N-s,t0,(0,W4 " see :h cinoptions-values for details
-  set iskeyword+=_,$,@,%,#        " none of these should be word dividers, so make them not be
+  set iskeyword-=.
+  set iskeyword-=#
+  set iskeyword-=-
 
   " tab related matters
   set tabstop=4                   " a tab is two spaces
@@ -1312,7 +1384,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
   endif
 
   " clipboard related matters
-  if has ('x') && has('unnamedplus')
+  if g:is_nix && has('unnamedplus')
     set clipboard=unnamedplus,unnamed      " On Linux use + register for copy-paste
   else
     set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
@@ -1579,8 +1651,8 @@ set nocompatible             " No to the total compatibility with the ancient vi
 
     " keep search matches in the middle of the window and pulse the line when moving
     " to them (no need to map to: Nzz hence)
-    nnoremap <silent> n n:call PulseCursorLine()<cr>
-    nnoremap <silent> N N:call PulseCursorLine()<cr>
+    nnoremap <silent> n n:call PulseCursorLine()<cr>zz
+    nnoremap <silent> N N:call PulseCursorLine()<cr>zz
 
     " search: display all lines with keyword under cursor and ask which one to jump to
     nmap <Leader>fs [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
@@ -1593,8 +1665,6 @@ set nocompatible             " No to the total compatibility with the ancient vi
     nmap <leader>fc :call SearchAcrossMultipleFiles("<C-r>=expand("<cword>")<CR>")<cr>
 
     " center display after searching
-    nnoremap n   nzz
-    nnoremap N   Nzz
     nnoremap *   *zz
     nnoremap #   #zz
     nnoremap g*  g*zz
