@@ -1,6 +1,7 @@
 # Ubuntu dev server specific ZSH configuration.
 # =============================================
 [[ `hostname` == 'HomePC' && `uname -a` =~ 'Ubuntu' ]] || return
+alias zshmachine="edit $DOTZSH/ubuntu.zsh"     # quickly edit OS specific config
 
 function update_system() {
     sudo apt-get update

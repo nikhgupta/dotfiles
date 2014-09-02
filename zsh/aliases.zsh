@@ -60,25 +60,19 @@ alias hi='history | tail'                           # display last commands ente
 alias copy_progress="rsync --progress -ravz"
 
 # rebuild ctags index
-alias ctags_reindex="sh ${SCRIPT_DIR}/shell/ctags.sh"
+# alias ctags_reindex="sh ${SCRIPT_DIR}/shell/ctags.sh"
 
 # python
 # allow PIP to run on system Python, when explicitely told to do so.
-alias syspip="PIP_REQUIRE_VIRTUALENV='' pip"
+# alias syspip="PIP_REQUIRE_VIRTUALENV='' pip"
 
 # ### essential aliases ###
-# flush the dns cache
-# alias flushdns='dscacheutil -flushcache'
-alias flushdns='sudo killall -HUP mDNSResponder'
 # find a process in the activity monitor
 alias p=" ps auwwx | grep"
 # delete all the empty files from the current directory @ use with caution
 alias deleteempty="find . -type d -empty -not -regex '.*\/.git\/.*' -exec {} \; -delete"
-# recursively delete all the ugly `.DS_Store` files from current directory and its children
-alias deletedsstore='find . -type f -regex ".*\/\.DS_Store" -exec echo {} \; -delete'
 alias find_gem='gem list --local | grep';
 alias gffs='git flow feature start';
 alias gfff='git flow feature finish';
 alias merge='rsync -rupW --progress';
-
 alias be="bundle exec"
