@@ -1,7 +1,4 @@
 #!/usr/bin/env zsh
-#
-# Aliases that are universal to my use
-#
 
 # quickly reload this file
 alias reload=" source $HOME/.zshrc"
@@ -11,11 +8,8 @@ alias edit="$EDITOR"
 alias e=edit
 
 # zsh related aliases
-alias zshconfig="edit $HOME/.zshrc"                 # quickly edit zsh configuration
-alias zshprompt="edit $DOTZSH/prompt.zsh"           # quickly edit shell prompt
-alias zshaliases="edit $DOTZSH/aliases.zsh"         # quickly edit shell aliases
-alias zshtermalias="edit $DOTZSH/via_terminal.zsh"  # quickly edit custom aliases add from within terminal
-alias zshfunctions="edit $DOTZSH/functions.zsh"     # quickly edit shell functions
+alias zshconfig="edit $ZSH_DIR/zshrc"                 # quickly edit zsh configuration
+alias zshedit="edit $ZSH_DIR"
 
 # common and most-often used aliases
 # NOTE: use CTRL-K instead.
@@ -48,19 +42,9 @@ alias du1='du -hd 1'                                # disk usage with human size
 alias fn='find . -name'                             # find files by name, in current directory
 alias hi='history | tail'                           # display last commands entered in shell
 
-# todo.txt-cli
-# alias nexttask="t list +next | head -1"             # list the +next task
-# alias tasktop="t list | head -1"                    # later, we will create an action for this in todo.txt-cli
-# alias tasklist='echo "-- Tasks @priority --" && t list | head -5 &&
-#                 echo "-- Tasks @terminal --" && t list @terminal | head -n +3 &&
-#                 echo "---------------------"'       # display top 5 tasks and also 3 tasks related to terminal
-
 # show progress for file copy (even on local)
 # probably, wont really use unless transferring data in the range of above a GB
 alias copy_progress="rsync --progress -ravz"
-
-# rebuild ctags index
-# alias ctags_reindex="sh ${SCRIPT_DIR}/shell/ctags.sh"
 
 # python
 # allow PIP to run on system Python, when explicitely told to do so.

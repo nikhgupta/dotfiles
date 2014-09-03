@@ -1,23 +1,14 @@
-# OSX dev server specific ZSH configuration.
-# ==========================================
-[[ `hostname` == 'MacBookPro.local' && `uname -a` =~ 'Darwin' ]] || return
-alias zshmachine="edit $DOTZSH/osx.zsh"     # quickly edit OS specific config
-
-# flush the dns cache
-# alias flushdns='dscacheutil -flushcache'
-alias flushdns='sudo killall -HUP mDNSResponder'
-# recursively delete all the ugly `.DS_Store` files from current directory and its children
-alias deletedsstore='find . -type f -regex ".*\/\.DS_Store" -exec echo {} \; -delete'
+#!/usr/bin/env zsh
 
 # find the ip address of a given domain name (uses `rpad` function above.)
-function get_domain_ip() {
+get_domain_ip() {
     for domain in "$@"; do
         rpad "${domain}" 50 " "; ping -c 1 $domain | grep "PING.*:.*data" | sed -e "s/.*(//g" -e "s/).*//g"
     done
 }
 
 # open a new tab for current directory in iTerm, and tell it to run a command
-function newtab() {
+newtab() {
     text=" cd `pwd`; clear; $@"
     script="tell application \"iTerm\"
             make new terminal
@@ -116,22 +107,3 @@ idletime() {
     echo `ioreg -c IOHIDSystem | 
     awk '/HIDIdleTime/ {print $NF/1000000000; exit}'`
 }
-
-# make sure we use gnu version of commands like ls, etc.
-add_to_path_nicely "/usr/local/opt/coreutils/libexec/gnubin" at_start
-MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-# add paths created by heroku toolbelt
-add_to_path_nicely "/usr/local/heroku/bin" at_start
-
-# add custom php
-if which brew &>/dev/null; then
-    add_to_path_nicely "$(brew --prefix josegonzalez/php/php53)/bin"
-fi
-
-# add paths for Haskell binaries
-add_to_path_nicely "${HOME}/.cabal/bin"
-
-# add paths created by homebrew
-add_to_path_nicely "/usr/local/sbin" at_start
-add_to_path_nicely "/usr/local/bin" at_start

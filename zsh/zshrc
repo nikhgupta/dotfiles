@@ -1,11 +1,40 @@
 #!/usr/bin/env zsh
+#
+# ZSH Configuration for Nikhil Gupta.
+#
+#   <http://github.com/nikhgupta>
+#
+# ===================================
 
+# Dependencies {{{
+# - cowsay
+# - fortune
+# - dos2unix
+# }}}
+# Behaviour: Basic locales and ZSH options {{{
 LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 skip_global_compinit=1
-typeset -U path # set $path variable to only have unique values
 
-# # enable vim key bindings in ZSH
+# Reference: http://zsh.sourceforge.net/Doc/Release/Options.html
+setopt auto_pushd               # cd pushes the old directory onto directory stack
+setopt pushd_silent             # be quiet when using pushd
+setopt pushd_ignore_dups        # only push unique values in directorys stack
+setopt menu_complete            # complete first option when ambiguous
+setopt hist_expire_dups_first   # expire older dup commands first in history
+setopt hist_find_no_dups        # do not find dupes when searching history
+setopt hist_ignore_space        # do not add commands with a leading space in history
+setopt hist_no_store            # do not add 'history' command in history
+setopt rm_star_wait             # wait for 10 seconds before accepting the answer
+unsetopt rm_star_silent         # Query the user on such a removal
+unsetopt nomatch
+unsetopt correct_all
+
+# other terminal related basic configuration
+typeset -U path # set $path variable to only have unique values
+export TERM=xterm-256color
+# }}}
+# # Behaviour: Vim Key bindings in ZSH {{{
 # bindkey -v
 # zle_default_mode='ins'
 # zle_ins_more_like_emacs='yes'
@@ -13,89 +42,51 @@ typeset -U path # set $path variable to only have unique values
 # bindkey '\e[A' history-beginning-search-backward
 # bindkey '\e[B' history-beginning-search-forward
 # bindkey '^R' history-incremental-search-backward
+# # }}}
+# Behaviour: Custom variables {{{
+export EDITOR="vim"
+export DEV_SERVER=0
+export ZSH_THEME="blinks"
+export SSH_KEY="$HOME/.ssh/`whoami`.pub"
 
-# other useful settings for ZSH
-setopt auto_pushd
-setopt pushd_silent
-setopt pushd_ignore_dups
-# setopt ignore_eof
-setopt rm_star_silent
-unsetopt nomatch
-unsetopt correct_all
+# Which OS?
+[[ `uname -a` =~ "Darwin" ]] && export ZSH_OS='macosx'
+[[ `uname -a` =~ "Ubuntu" ]] && export ZSH_OS='ubuntu' 
 
-# export ZSH_DEBUG=1 # uncomment, if debugging
-export HIST_IGNORE_SPACE=true
+# # uncomment to enable debugging this ZSH configuration.
+# export ZSH_DEBUG=1
 
-# set term to use 256 colors
-export TERM=xterm-256color
-
-# directory variables {{{
 # some useful directories
-export CODE_DIR="$HOME/Code"
-export DOT_DIR="$HOME/Code/__dotfiles"
-export BACKUP_DIR="$HOME/Code/__backups"
-export REPO_DIR="$HOME/Code/repos"
-export SCRIPT_DIR="$HOME/Code/scripts"
-export SNIPPET_DIR="$HOME/Code/snippets"
-
-# directories dealing with Dotfiles
 export ZSH="$HOME/.oh-my-zsh" # do not rename this variable - needed by OH MY ZSH??
-export DOTZSH="$HOME/Code/__dotfiles/zsh"
-export DOTVIM="$HOME/Code/__dotfiles/vim"
+export CODE_DIR="$HOME/Code"
+export DOT_DIR="$CODE_DIR/__dotfiles"
+export ZSH_DIR="$DOT_DIR/zsh"
+export VIM_DIR="$DOT_DIR/vim"
+export SCRIPT_DIR="$CODE_DIR/scripts"
 # }}}
-
-# Base16 Shell {{{
+# Behaviour: GUI {{{
+# Base16 Shell
 BASE16_SCHEME="eighties"
 BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
 [[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
 # }}}
-
-# remember the location to my SSH key {{{
-export SSH_KEY="$HOME/.ssh/nikhgupta.pub"
-# }}}
-
-# which zsh theme? {{{
-export ZSH_THEME="blinks"
-# }}}
-
-# which editor? {{{
-export EDITOR="vim"
-# export EDITOR="emacsclient -ta ''"
-# export EDITOR="/usr/local/bin/mate -w"
-# }}}
-
-# which zsh plugins? {{{
+# Behaviour: ZSH Plug-ins {{{
 # TODO: move osx specific plugins to separate file.
-plugins=(fasd battery brew coffee colored-man common-aliases
-composer copydir copyfile cp extract gem git-flow git-extras git github
-gitignore heroku history-substring-search osx rails systemadmin thor
-vundle web-search zsh-syntax-highlighting)
+plugins=(fasd battery brew coffee colored-man common-aliases composer copydir
+copyfile cp extract gem git-flow git-extras git github gitignore heroku
+history-substring-search osx rails systemadmin thor vundle web-search
+zsh-syntax-highlighting)
 # }}}
-
-function source_file() { # sources a file, provides debugging option {{{
-  if [[ -s "$1" ]]; then # run, if file's size is not zero
-    source "$1"; [[ -n "${ZSH_DEBUG}" ]] && echo "loading file.. $1"
+# Behaviour: Custom functions {{{
+# custom function to source a file with debugging support.
+function source_file() {
+  if [[ -s "$1" ]]; then
+    source "$1"; (( $ZSH_DEBUG )) && echo "Loading configuration file.. $1"
+  elif (( $ZSH_DEBUG )); then
+    echo "Configuration file not found: $1"
   fi
-} # }}}
-
-# source some files before ZSH configuration is loaded {{{
-# load OhMyZSH, because its auwesomeeee :)
-source_file "$ZSH/oh-my-zsh.sh"
-
-# for our secret somethings | symlinked <= $DOTDIR/private.symlink
-source_file "$HOME/.private"
-
-# (create, if required) any specific configuration that needs to be changed.
-source_file "$HOME/.localrc.before"
-
-# sets some of the configuration options
-source_file "$HOME/.localrc"
-
-# (create, if required) anything that needs to run before loading zsh files
-source_file "$HOME/.zshrc.before"
-# }}}
-
-# if this is not a reloaded shell, add some paths to $PATH {{{
+}
+# if this is not a reloaded shell, add some paths to $PATH
 add_to_path_nicely() { # $1 -> path, $2 -> add to start?
   newpath=$1; at_start=$2
   if [ -z "${path}" ]; then path=( "${newpath}" );
@@ -103,17 +94,28 @@ add_to_path_nicely() { # $1 -> path, $2 -> add to start?
     [ -z "${at_start}" ] && path+=( "${newpath}" ) || path=( "${newpath}" "${path[@]}" )
   else echo "Non-existent directory added to \$PATH: $1"; fi
 }
-
-# add path to local bin files
+# }}}
+# Behaviour: Source files before ZSH configuration is really loaded {{{
+# load OhMyZSH, because its auwesomeeee :)
+source_file "$ZSH/oh-my-zsh.sh"
+# for our secret somethings | symlinked <= $DOTDIR/private.symlink
+source_file "$HOME/.private"
+# (create, if required) any specific configuration that needs to be changed.
+source_file "$HOME/.localrc.before"
+# sets some of the configuration options
+source_file "$HOME/.localrc"
+# (create, if required) anything that needs to run before loading zsh files
+source_file "$HOME/.zshrc.before"
+# }}}
+# Behaviour: $PATH overloading {{{
+# # add path to local bin files
 # add_to_path_nicely "${HOME}/Code/scripter/bin"
-
-# add android sdk tools
+# # add android sdk tools
 # add_to_path_nicely "${HOME}/Code/android/sdk/tools"
-
-# add pear to our path
+# # add pear to our path
 # add_to_path_nicely "/usr/local/pear/bin"
-
-# # Python development environment configuration
+# }}}
+# # Behaviour: Python environment {{{
 # if [[ -s /usr/local/bin/virtualenvwrapper.sh ]]; then
 #  source /usr/local/bin/virtualenvwrapper.sh
 # fi
@@ -125,24 +127,23 @@ add_to_path_nicely() { # $1 -> path, $2 -> add to start?
 # export WORKON_HOME=~/Code/python/VirtualEnvs
 # # make pip use the virtualenv dir
 # export PIP_VIRTUALENV_BASE=$WORKON_HOME
-
-# source some files after ZSH configuration is loaded {{{
-# source all files that have extension 'zsh' in the ZSH's directory
-for config_file ($DOTZSH/**/*.zsh) source_file $config_file
-
+# # }}}
+# Behaviour: Source files after ZSH configuration has been loaded {{{
+for config_file in prompt scripts functions aliases via_terminal config; do
+  source_file $ZSH_DIR/common/$config_file.zsh
+  source_file $ZSH_DIR/$ZSH_OS/$config_file.zsh
+done
 # (create, if required) specify any other commands or configuration options here...
 source_file "$HOME/.zshrc.after"   # keep over-riding or custom settings here
 source_file "$HOME/.localrc.after" # keep over-riding or custom exports here
 # }}}
-
-# completions go here {{{
+# Behaviour: ZSH auto-completion {{{
 # complete -F _todo t # for todo.txt-cli
 # }}}
-
-# tell ZSH to not correct certain commands {{{
+# Behaviour: Miscelleneous {{{
 if [ -f ~/.zsh_nocorrect ]; then
-while read -r COMMAND; do
-    alias $COMMAND="nocorrect $COMMAND"
-done < ~/.zsh_nocorrect
+    while read -r COMMAND; do
+        alias $COMMAND="nocorrect $COMMAND"
+    done < ~/.zsh_nocorrect
 fi
 # }}}

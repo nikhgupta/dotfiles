@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
 # all these variables are defined in ~/.private file
-
 git config --global user.name    "$GIT_AUTHOR_NAME"
 git config --global user.email   "$GIT_AUTHOR_EMAIL"
 git config --global github.user  "$GITHUB_USER"
@@ -9,3 +8,6 @@ git config --global github.token "$GITHUB_TOKEN"
 git config --global core.excludesfile "$GLOBAL_GIT_EXCLUDE_FILE"
 git config --global sendemail.smtpuser "$GIT_GMAIL_SMTP_USER"
 git config --global init.templatedir "$GIT_INIT_TEMPLATE_DIR"
+
+# Let, everyone know that this is a development server.
+export DEV_SERVER=1

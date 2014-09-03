@@ -1885,7 +1885,7 @@ set nocompatible             " No to the total compatibility with the ancient vi
       autocmd BufRead,BufNewFile GHI_* set ft=gitcommit
       autocmd FileType gitcommit setlocal spell textwidth=72
     " }}}
-    augroup vim_files               " {{{
+    augroup config_files            " {{{
         au!
 
         " Reload Vim Configuration automatically (FIXME??) {{{
@@ -1898,8 +1898,8 @@ set nocompatible             " No to the total compatibility with the ancient vi
           " augroup END
         " endif
         " }}}
-        autocmd filetype vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=80
-        autocmd filetype vim setlocal foldmethod=marker foldmarker={{{,}}} foldlevel=0
+        autocmd filetype vim,zsh setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 textwidth=80
+        autocmd filetype vim,zsh setlocal foldmethod=marker foldmarker={{{,}}} foldlevel=0
         " Bind <F1> to show the keyword under cursor
         autocmd filetype vim noremap <buffer> <F1> <Esc>:help <C-r><C-w><CR>
         autocmd filetype vim noremap! <buffer> <F1> <Esc>:help <C-r><C-w><CR>

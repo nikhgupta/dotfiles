@@ -1,11 +1,10 @@
 #!/usr/bin/env zsh
-#  vim: set ts=2 sw=2 tw=80 et:
 
 # add aliases via command line
 function addalias() {
     ALIASED="alias $1='$2';";
-    echo "${ALIASED}" | tee -a $DOTZSH/via_terminal.zsh;
-    source $DOTZSH/via_terminal.zsh;
+    echo "${ALIASED}" | tee -a $ZSH_DIR/common/via_terminal.zsh;
+    source $ZSH_DIR/common/via_terminal.zsh;
 }
 
 # add private aliases via command line (not stored in the dotfiles repository)
@@ -47,9 +46,6 @@ function dsize() {
         {gsub(/^[0-9]+/, human($1)); print}' | head $1
 }
 
-# functions for todo.txt-cli
-# function tn() { eval "$T append $1 @next"; } # add the given task into @next list
-
 # came across some programmers from the Windows world
 # remove those pesky characters and relax our eyes :)
 function dir2unix() {
@@ -66,24 +62,6 @@ function find_in_dir() {
     find . -iname "*$1*";
 }
 
-# NOTE: using scripter gem
-# blogging helpers
-# blogpost() {
-#     title="$@"
-#     if [ -z "$title" ]; then
-#         echo "You must supply a file title!"
-#     else
-#         # switch to website directory
-#         cd ~/Code/sites/nikhgupta.com
-#         # create and edit the post
-#         file=$(be rake "new_post[$title]" 2>/dev/null | tail -1 | cut -d ' ' -f 4)
-#         echo "Created file: $file"
-#         edit $file
-#         # restore directory
-#         cd -
-#     fi
-# }
-
 # love this one: fortune | cowsay -f $random
 tunecow() {
     if which fortune && which cowsay; then
@@ -99,7 +77,7 @@ tunecow() {
 }
 
 [[ ! -d ~/Code/docs ]] && mkdir -p ~/Code/docs
-addidea() { echo "- `date`: $@" >> ~/Code/docs/ideas.md; }
-addtask() { echo "- `date`: $@" >> ~/Code/docs/tasks.md; }
-addnote() { echo "- `date`: $@" >> ~/Code/docs/notes.md; }
-addstuff() { echo "- `date`: $@" >> ~/Code/docs/stuff.md;}
+addidea()  { echo "- `date`: $@" >> ~/Code/docs/ideas.md; }
+addtask()  { echo "- `date`: $@" >> ~/Code/docs/tasks.md; }
+addnote()  { echo "- `date`: $@" >> ~/Code/docs/notes.md; }
+addstuff() { echo "- `date`: $@" >> ~/Code/docs/stuff.md; }
