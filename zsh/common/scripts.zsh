@@ -28,7 +28,7 @@ fi
 # Install: ZSH Syntax Highlighting {{{
 if [[ ! -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]]; then
   mkdir -p $ZSH/custom/plugins
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH/custom/plugins/
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH/custom/plugins/zsh-syntax-highlighting
   restart_shell_message "ZSH Syntax highlighting"
 fi
 # }}}
