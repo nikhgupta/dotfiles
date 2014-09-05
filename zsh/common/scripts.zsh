@@ -13,7 +13,7 @@ if [[ ! -d "${SCRIPT_DIR}/opt/autoenv" ]]; then
 fi
 # }}}
 # Install: fasd - fast navigation and search {{{
-if [[ ! -f "${SCRIPT_DIR}/bin/fasd" ]]; then
+if ! installed fasd && [[ ! -f "${SCRIPT_DIR}/bin/fasd" ]]; then
     pushd /tmp
     wget https://github.com/clvv/fasd/archive/master.zip -O fasd.zip
     unzip fasd.zip

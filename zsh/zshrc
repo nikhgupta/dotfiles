@@ -78,6 +78,12 @@ history-substring-search osx rails systemadmin thor vundle web-search
 zsh-syntax-highlighting)
 # }}}
 # Behaviour: Custom functions {{{
+function installed() {
+  for exbin in $@; do
+    which $exbin >/dev/null || return 1
+  done
+  return 0
+}
 # custom function to source a file with debugging support.
 function source_file() {
   if [[ -s "$1" ]]; then
