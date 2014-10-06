@@ -1,0 +1,79 @@
+#!/usr/bin/env ruby
+# Behaviour: Custom functions {{{
+function installed() {
+  for exbin in $@; do
+    which $exbin >/dev/null || return 1
+  done
+  return 0
+}
+# function to calculate time taken in milliseconds
+function timediff() {
+  echo $(( ($2 - $1) / 1000000.0 )) | cut -d '.' -f 1
+}
+# custom function to source a file with debugging support.
+function source_file() {
+  if [[ -s "$1" ]]; then
+    source "$1"; (( $ZSH_DEBUG )) && echo "Loading configuration file.. $1"
+    # zsh_debug_time "File $1 loaded"
+  elif (( $ZSH_DEBUG )); then
+    echo "Configuration file not found: $1"
+  fi
+}
+# if this is not a reloaded shell, add some paths to $PATH
+add_to_path_nicely() { # $1 -> path, $2 -> add to start?
+  newpath=$1; at_start=$2
+  if [ -z "${path}" ]; then path=( "${newpath}" );
+  elif [ -d "${newpath}" ]; then
+    [ -z "${at_start}" ] && path+=( "${newpath}" ) || path=( "${newpath}" "${path[@]}" )
+  elif [ -n "$ZSH_DEBUG" ]; then
+    echo "Non-existent directory added to \$PATH: $1"
+  fi
+}
+
+# zsh_debug_time() {
+#   [ -z "$ZSH_DEBUG_LOAD_TIME" ] && return
+#   zsh_timer=$(gdate +%s%N)
+#   echo -ne "- $@ at: "
+#   echo -ne $(( ($zsh_timer - $zsh_start_timer) / 1000000.0 )) | cut -d '.' -f 1 | tr '\n' ' '
+#   echo -ne "ms. (diff: "
+#   echo -ne $(( ($zsh_timer - $zsh_diff_timer) / 1000000.0 )) | cut -d '.' -f 1 | tr '\n' ' '
+#   echo "ms)"
+#   zsh_diff_timer=$(gdate +%s%N)
+# }
+# }}}
+
+# # uncomment to enable debugging this ZSH configuration.
+# export ZSH_DEBUG=1
+# export ZSH_DEBUG_LOAD_TIME=1
+
+# # Are we profiling our ZSH configuration?
+# if [ -n "$ZSH_DEBUG_LOAD_TIME" ]; then
+#   echo "---"
+#   echo "Profiling Load Time for ZSH Configuration."
+#   zsh_start_timer=$(gdate +%s%N)
+#   zsh_diff_timer=$zsh_start_timer
+# fi
+
+# VIM starts suspending itself when RBENV is, instead, present in ~/.zshrc
+export RBENV_ROOT=/usr/local/var/rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# zsh_debug_time "Rbenv loaded"
+
+# add paths created by homebrew
+if installed brew; then
+  add_to_path_nicely "/usr/local/sbin" at_start
+  add_to_path_nicely "/usr/local/bin" at_start
+fi
+
+# some useful directories
+export ZSH="$HOME/.oh-my-zsh" # do not rename this variable - needed by OH MY ZSH??
+export CODE_DIR="$HOME/Code"
+export DOT_DIR="$CODE_DIR/__dotfiles"
+export ZSH_DIR="$DOT_DIR/zsh"
+export VIM_DIR="$DOT_DIR/vim"
+export SCRIPT_DIR="$CODE_DIR/scripts"
+export ZSH_COMPL_DIR="$ZSH_DIR/completions"
+
+source_file "$HOME/.private"
+# sets git configuration
+source_file "$HOME/.localrc"

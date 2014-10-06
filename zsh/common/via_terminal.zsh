@@ -1,16 +1,6 @@
 #!/usr/bin/env zsh
 # These aliases were added using `addalias` function.
 
-# $$$ mac specific
-# show/hide the hidden files in the system
-alias showHidden='defaults write com.apple.finder AppleShowAllFiles TRUE ; killall Finder';
-alias hideHidden='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder'; 
-# copy my SSH key to the clipboard for quick pasting
-alias getsshkey="cat $SSHKEY | pbcopy"
-# start and stop the ftp server on Mac
-alias startftp='sudo /usr/libexec/ftpd -D';
-alias stopftp='sudo killall ftpd';
-
 # $$$ other commands
 # generate a random md5 string
 alias randmd5='md5 -s $RANDOM | cut -d" " -f4'
@@ -39,22 +29,20 @@ alias hg='nocorrect hg';
 alias rials='rails';
 
 alias test_apache='sudo bash -x /usr/sbin/apachectl -k restart';
-alias vlc='/Applications/VLC.app/Contents/MacOS/VLC';
 alias largefiles='find . -type f -print0 | xargs -0 du -s | sort -n | tail -10 | cut -f2 | xargs -I{} du -sh {}';
 alias largedirs='find . -type d -print0 | xargs -0 du -s | sort -n | tail -10 | cut -f2 | xargs -I{} du -sh {}';
 alias mi='movier find -vk';
 alias irb='irb -E UTF-8:UTF-8';
-alias pbgist='jist -Ppo';
 # alias diary='mvim /JukeBox/Dustbin/Folders/Journal/Diary/';
 # alias journal='mvim /JukeBox/Dustbin/Folders/Journal/';
-alias mate='mate -w'
 alias be='bundle exec';
-alias em='emacsclient -ta ""';
-alias ec='emacsclient -ca ""';
-alias composer='/usr/local/bin/composer.phar';
+# alias em='emacsclient -ta ""';
+# alias ec='emacsclient -ca ""';
+# alias composer='/usr/local/bin/composer.phar';
 
 # create quick notes/journal
 # BUG: commands output 'nil' at command line
 # alias task="emacsclient -cta '' -e '(org-capture nil \"t\")'"
 # alias journal="emacsclient -cta '' -e '(org-capture nil \"j\")'"
 alias artisan='php artisan';
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';

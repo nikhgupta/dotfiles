@@ -60,3 +60,10 @@ alias gffs='git flow feature start';
 alias gfff='git flow feature finish';
 alias merge='rsync -rupW --progress';
 alias be="bundle exec"
+
+# jarvis
+alias addtask="jarvis todoist add"
+
+alias gv="a -e '$GEDITOR'"
+alias o="a -e '$GBROWSER'"
+alias v="a -e '$EDITOR'"

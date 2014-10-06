@@ -7,7 +7,7 @@ BACKUP_DIRECTORY = "#{ENV['HOME']}/Code/__backups/__dotfiles/#{Time.now.to_i}"
 # linkables - files that need to be linked/de-linked
 LINKABLES = ["git/gitconfig", "git/gitignore", "localrc", "zsh/inputrc",
              "private", "ruby/gemrc", "vim/vimrc", "zsh/zshrc", "vim",
-             "zsh/zshenv"]
+             "zsh/zprofile"]
 
 # function adopted from @holman
 # oh, and very inspiring: http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/

@@ -11,6 +11,7 @@
 # - Display current battery status.
 # - Display current time.
 # - Display external IP address.
+# - Display time taken to run last command.
 
 # Expected: 
 # - Allow the user to switch to a really concise and alternate prompt.
@@ -39,8 +40,8 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[yellow]%}"
 # Expected:
 # - Let the user know, if he is logged in via a remote session.
 # - Display the kind of repository, we are working with.
-set_prompt_char() {
-  [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%}"
+_set_prompt_char() {
+  [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%} "
   git log &>/dev/null && echo -ne '± '
   hg root &>/dev/null && echo -ne '☿ '
   echo '%(!.!.➲)'
@@ -48,13 +49,11 @@ set_prompt_char() {
 
 # Expected:
 # - If the last command failed, convey the exit status to the user nicely :)
-return_code() {
-  echo "%(?..%{$fg[red]%}↵ %? %{$reset_color%})"
-}
+_return_code() { echo "%(?..%{$fg[red]%}↵ %? %{$reset_color%})"; }
 
 # Expected:
 # - If inside a repository, display the time since last commit.
-git_time_since_commit() {
+_git_time_since_commit() {
 
   git rev-parse --git-dir &>/dev/null || return
   git log &>/dev/null || return
@@ -94,19 +93,43 @@ git_time_since_commit() {
   fi
 }
 
-get_battery_charge() {
-  # TODO: battery status should auto-update in intervals of 5 mins?
-  [ -n "${BATTERY_CHARGE_SCRIPT}" ] &&
-    echo "`python ${BATTERY_CHARGE_SCRIPT} 2>/dev/null`"
-}
-
-pending_jobs() {
+# Expected:
+# - Display count of pending jobs, if any
+_pending_jobs() {
   local job_nos=`jobs | wc -l`
   [[ $job_nos != 0 ]] && echo "%{$fg_bold[red]%}${job_nos}JP%{$reset_color%}"
 }
 
+# Expected:
+# - Display execution time for last shell command.
+_prompt_timer_preexec() {
+  unset timer_show
+  timer=${timer:-$SECONDS}
+}
+_prompt_timer_precmd() {
+  if [ $timer ]; then
+    timer_result=$(($SECONDS - $timer))
+    unset timer
+    if [[ $timer_result -ge 3600 ]]; then
+      let "timer_hours = $timer_result / 3600"
+      let "remainder = $timer_result % 3600"
+      let "timer_minutes = $remainder / 60"
+      let "timer_seconds = $remainder % 60"
+      timer_show="%B%F{red} ${timer_hours}h${timer_minutes}m${timer_seconds}s%b "
+    elif [[ $timer_result -ge 60 ]]; then
+      let "timer_minutes = $timer_result / 60"
+      let "timer_seconds = $timer_result % 60"
+      timer_show="%B%F{yellow} ${timer_minutes}m${timer_seconds}s%b "
+    elif [[ $timer_result -gt 5 ]]; then
+      timer_show="%B%F{green} ${timer_result}s%b "
+    fi
+  fi
+}
+add-zsh-hook preexec _prompt_timer_preexec
+add-zsh-hook precmd _prompt_timer_precmd
+
 # when only 2 dir deep and we are not on a git repo, only use a single line:
-display_prompt() {
+_display_prompt() {
   # display host information when inside ssh connection
   if [[ -n $SSH_CONNECTION ]]; then
     echo -ne "%{$fg[magenta]%}%n%{$reset_color%} at "
@@ -117,20 +140,19 @@ display_prompt() {
   echo -ne "%{$fg_bold[cyan]%}${PWD/#$HOME/~}%{$reset_color%} "
 
   # display git information
-  echo -ne "$(git_prompt_info)$(git_time_since_commit)%{$reset_color%}"
+  echo -ne "$(git_prompt_info)$(_git_time_since_commit)%{$reset_color%}"
 
   # intelligently, use a single line or a double line
   if (( ${#PWD/#$HOME/\~} > 16 )) || [[ -n $SSH_CONNECTION ]] || git log &>/dev/null; then echo; fi
 
-  echo "$(return_code)$(set_prompt_char) "
+  echo "$timer_show$(_return_code)$(_set_prompt_char) "
 }
 
-PROMPT='$(display_prompt)'
+PROMPT='$(_display_prompt)'
 
 RPROMPT='$(git_prompt_status)%{$reset_color%} \
-$(pending_jobs) \
-%{$fg_bold[blue]%}[%*] %{$reset_color%}\
-$(get_battery_charge)'
+$(_pending_jobs) \
+%{$fg_bold[blue]%}[%*] %{$reset_color%}'
 
 # # display the current ruby version
 # ruby_version() {

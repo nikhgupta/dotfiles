@@ -64,20 +64,19 @@ function find_in_dir() {
 
 # love this one: fortune | cowsay -f $random
 tunecow() {
-    if which fortune && which cowsay; then
+    if which fortune &>/dev/null && which cowsay &>/dev/null; then
+      if [ "$1" == "--random" -o "$1" == "-r" ]; then
         IFS=' '
         figures=(`cowsay -l | tail -n +2 | tr '\n' ' '`)
         num_figures=${#figures[*]}
         figure=${figures[$((RANDOM%num_figures))]}
-        fortune | cowsay -f $figure
-        echo "using figure: $figure"
+        fortune -s | cowsay -f $figure
+      else
+        fortune -s | cowsay
+      fi
+    elif which fortune &>/dev/null; then
+      fortune -s
     else
-        echo "You must install fortune and cowsay programs."
+      echo "You must install fortune and (optionally) cowsay program."
     fi
 }
-
-[[ ! -d ~/Code/docs ]] && mkdir -p ~/Code/docs
-addidea()  { echo "- `date`: $@" >> ~/Code/docs/ideas.md; }
-addtask()  { echo "- `date`: $@" >> ~/Code/docs/tasks.md; }
-addnote()  { echo "- `date`: $@" >> ~/Code/docs/notes.md; }
-addstuff() { echo "- `date`: $@" >> ~/Code/docs/stuff.md; }

@@ -1,18 +1,23 @@
+# ignore the private files that are not meant to be versioned
 /private
-/vim/.tmp/*
+/vim/spell/private.utf-8.add*
+
+# ignore ./tmp and sessions directory, but keep the structure
+/vim/tmp/*
+!/vim/tmp/cache
+/vim/tmp/cache/*
+/vim/sessions/*
+
+# ignore these specific files
 .netrwhist
-!.notempty
 /vim/wiki/
-/vim/sessions/
-.DS_Store
-/vim/bundle/*
+/vim/tasks.txt
+
+# ignore vim bundles cache
+/vim/bundle
 !/vim/bundle/vundle/
 !/vim/bundle/vundle/*
-/vim/.cache/
-/vim/bookmarks
-/vim/tasks.txt
-/emacs/kits/*
-!/emacs/kits/babel/
-!/emacs/kits/babel/*
-vim/bundle
-vim/data
+
+# don't ignore these files, useful to keep the directory structure
+!.gitkeep
+!.notempty
