@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Dotfiles by nikhgupta</title>
+    <title>DotCastle by nikhgupta</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -31,138 +31,115 @@
 
       <section>
         <div id="title">
-          <h1>Dotfiles</h1>
-          <p>My Dot Castle</p>
+          <h1>DotCastle</h1>
+          <p>a castle for my dotfiles</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/nikhgupta">nikhgupta</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h1>Installation</h1>
+        <h1>
+<a name="my-dot-castle" class="anchor" href="#my-dot-castle"><span class="octicon octicon-link"></span></a>My Dot Castle</h1>
 
-<pre><code>$INSTALL_LOCATION="~/.dotfiles"
-mkdir -p $INSTALL_LOCATION &amp;&amp; cd $INSTALL_LOCATION
-git clone git://github.com/nikhgupta/dotfiles.git .
-rake install
-</code></pre>
+<p><img src="http://cdn.obsidianportal.com/assets/38992/AldredsCastle.jpg" alt="DotCastle"></p>
 
-<p>The above commands loads the dotfiles into the current machine. Although, in
-my opinion, its wiser to install at a location such as: ~/Code/__dotfiles,
-because:</p>
+<p><strong>castle for my dotfiles</strong> - the cornetstone of <em>dev-kind</em> ! :)</p>
 
-<ul>
-<li>all your code-related data can be stored in a single directory: ~/Code</li>
-<li>More importantly, since the folder isn't hidden anymore, you will be
-intrigued to make changes to the contents of this folder.</li>
-</ul><h1>How my Development Environment is Setup</h1>
+<p>This repository contains the dotfiles <em>(stolen/compiled/created)</em> by me.
+Major inspirations from <a href="http://github.com/holman">@holman</a> and
+<a href="http://github.com/mathiasbynens">@mathiasybnens</a>. More inspirations
+from <a href="http://github.com/skwp/dotfiles">dotfiles repository</a> by
+<a href="http://github.com/skwp">@skwp</a>. Credit has been given where I could. :)</p>
 
-<h2>Homebrew</h2>
+<h2>
+<a name="save-dotfiles-in-code__dotfiles-" class="anchor" href="#save-dotfiles-in-code__dotfiles-"><span class="octicon octicon-link"></span></a>Save dotfiles in ~/Code/__dotfiles !!!</h2>
 
-<pre><code>ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
-brew doctor
-brew install wget ack git git-flow macvim
-</code></pre>
-
-<h2>Everything goes inside ~/Code</h2>
-
-<pre><code>mkdir -p ~/Code/__{files,repos,vagrant}
-mkdir -p ~/Code/{scripts,sites,snippets}
-mkdir -p ~/Code/scripts/shell
-# populate __repos using repo_import script
-# populate __snippets using snippet_import script
-# populate __vagrant  using wget call
-# populate scripts in other ways
-# populate sites via backup?
-</code></pre>
-
-<h2>Solarized</h2>
-
-<pre><code># all these URLs link to specific files in the Solarized repo on Github
-curl -fsSkL http://is.gd/sdMcIS &gt; "/tmp/solarized/Solarized Dark.itermcolors"
-curl -fsSkL http://is.gd/IuUlFQ &gt; "/tmp/solarized/Solarized Light.itermcolors"
-curl -fsSkL http://is.gd/TfM3m8 &gt; ~/Library/Colors/
-open /tmp/solarized/iterm2-colors-solarized/*.itermcolors
-</code></pre>
-
-<h2>iTerm2</h2>
+<p>Following some conventions, I store all my code inside <code>~/Code</code> directory.
+This has obvious <em>organizational</em> benefits.<br>
+On similar grounds, I store my dotfiles inside <code>~/Code/__dotfiles</code> directory,
+which is more sensible in my opinion than <code>~/.dotfiles</code>, because:</p>
 
 <ul>
-<li>visit here: <a href="http://code.google.com/p/iterm2/downloads/list">http://code.google.com/p/iterm2/downloads/list</a>
+<li>dotfiles are the heart of your code - obvious reason to have them stored
+right next to all your code in <code>~/Code</code>
 </li>
-<li>download one of the zip files from there and install iTerm2</li>
-<li>open iTerm2 &gt; Preferences &gt; Profiles &gt; Default &gt; Colors &gt; load presets &gt; Solarized Dark</li>
-<li>open iTerm2 &gt; Preferences
+<li>dotfiles directory is in front of your eyes at all times, and hence, you
+will be intrigued to change it more often than when it was hidden.</li>
+<li>more importantly, improving code in dotfiles implies improved productivity.</li>
+</ul>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>There will be a 80% chance you will have a reason not to use
+<code>~/Code/__dotfiles</code> for the installation, in which case, you can simply
+modify the first line of the following bash commands to suit your taste
+;) Note that, <code>DotCastle</code> requires <code>homebrew</code> (or <code>linuxbrew</code>) and
+<code>ohmyzsh</code>, and the same can be installed manually, or via the installer
+script at <code>./scripts/dep-installer.sh</code>.</p>
+
+<pre><code>export DOTCASTLE=$HOME/Code/__dotfiles
+git clone git://github.com/nikhgupta/dotfiles.git $DOTCASTLE
+# run the installer script
+$DOTCASTLE/scripts/dep-installer.sh
+$DOTCASTLE/scripts/bootstrap.sh
+</code></pre>
+
+<h1>
+<a name="how-my-development-environment-is-setup" class="anchor" href="#how-my-development-environment-is-setup"><span class="octicon octicon-link"></span></a>How my Development Environment is Setup</h1>
+
+<p>A lot of this information can be found on my <a href="http://nikhgupta.com">blog</a>.</p>
+
+<p>Primarily, I use a lot of tools to setup my development environment, and
+thanks to the *nix goodness, all fo these tools have a way to specify
+their configurations. Most of the times, I will include such
+configurations within this repository to keep them versioned.</p>
+
+<p>The minimal setup that I would like to work with includes these
+dotfiles, as well as <code>base16-eighties</code> and <code>solarized</code> themes for both
+iTerm2 and MacVim, along with Homebrew on my MacOSX.</p>
+
+<h2>
+<a name="everything-goes-inside-code" class="anchor" href="#everything-goes-inside-code"><span class="octicon octicon-link"></span></a>Everything goes inside ~/Code</h2>
+
+<p>All my code resides in the <code>~/Code</code> directory. Typically:</p>
 
 <ul>
-<li>&gt; Keys
-
-<ul>
-<li>&gt; Hotkeys &gt; Check both</li>
-<li>&gt; Hotkeys &gt; (Command, tilde)</li>
+<li>repositories are downloaded to the <code>repos</code> directory.</li>
+<li>these dotfiles are present at <code>__dotfiles</code> directory.</li>
+<li>scripts are saved to <code>__dotfiles/scripts</code> directory, and include <a href="https://github.com/basecamp/sub"><code>subs</code></a> created.</li>
+<li>websites that I develop upon locally are present at <code>sites</code> directory.</li>
+<li>work related code is located in <code>work</code> directory.</li>
+<li>other personal/miscelleneous code is present in topic-wise directories
+under <code>personal</code> directory.</li>
 </ul>
-</li>
-<li>&gt; Profiles &gt; Hotkey Window 
 
-<ul>
-<li>&gt; Color &gt; load presets &gt; Solarized Light</li>
-<li>&gt; Window &gt; Style &gt; Fullscreen</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>add iTerm2 to run on system startup</li>
-</ul><h2>Oh My Zsh</h2>
+<h2>
+<a name="iterm2" class="anchor" href="#iterm2"><span class="octicon octicon-link"></span></a>iTerm2</h2>
 
-<pre><code>curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
-</code></pre>
+<p>I prefer iTerm2 over Terminal app in MacOSX, and have installed the
+<code>base16-eighties</code> theme for it. Note that, this requires <code>base16-shell</code>
+to be loaded in my ZSH configuration.</p>
 
-<h2>RVM (Ruby Version Manager)</h2>
+<h2>
+<a name="ohmyzsh" class="anchor" href="#ohmyzsh"><span class="octicon octicon-link"></span></a>OhMyZsh!</h2>
 
-<pre><code>curl -fsSkL https://get.rvm.io | bash -s stable
-</code></pre>
+<p>I like OhMyZSH! project, which provides me with a ready-to-use ZSH
+configuration. I customize upon that heavily, but OMZ! is a major
+ingredient.</p>
 
-<h2>RubyOnRails</h2>
+<h2>
+<a name="homebrew-and-packages" class="anchor" href="#homebrew-and-packages"><span class="octicon octicon-link"></span></a>HomeBrew and packages</h2>
 
-<pre><code>source ~/.rvm/bin/rvm
-type rvm | head -1    #==&gt; "rvm is a function"
-rvm install 1.9.3
-rvm use 1.9.3@global --default
-rvm use 1.9.3@rails --create &amp;&amp; gem install rails
-</code></pre>
-
-<h2>Todo Manager</h2>
-
-<pre><code>mkdir -p ~/Code/scripts/shell &amp;&amp;
-git clone https://github.com/ginatrapani/todo.txt-cli.git ~/Code/scripts/shell
-</code></pre>
-
-<h2>Z</h2>
-
-<pre><code>mkdir -p ~/Code/scripts/shell &amp;&amp;
-git clone https://github.com/rupa/z.git ~/Code/scripts/shell
-</code></pre>
-
-<h2>Dotfiles</h2>
-
-<pre><code>cd ~/Code/__dotfiles &amp;&amp; 
-git clone https://github.com/nikhgupta/dotfiles.git . &amp;&amp;
-rake install &amp;&amp;
-cd
-</code></pre>
-
-<h2>Syntax Highlighting for Shell</h2>
-
-<pre><code>mkdir -p ~/Code/scripts/shell &amp;&amp;
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/Code/scripts/shell
-</code></pre>
-
-<h2>Ryan Bates' c</h2>
-
-<h2>TextExpander</h2>
-
-<ul>
-<li>link to Dropbox for previous expansion snippets</li>
-</ul>
+<p><a href="http://brew.sh">HomeBrew</a> is a necessity for development on OSX, and is
+a really awesome package manager. I use it to install various
+dependencies and packages, like <code>macvim,</code> <code>rbenv,</code> <code>autoenv,</code>
+<code>zsh-syntax-highlighting</code> etc. If there is a formula available for
+a particular program in Homebrew, I would prefer it over other sources.
+Also, note that brew installs <code>zsh</code> completions to
+<code>/usr/local/share/zsh/site-functions</code> file, which helps me add custom
+completions, easily. On Ubuntu, I install the Linux version of Homebrew,
+namely <code>Linuxbrew</code>.</p>
       </section>
 
     </div>
