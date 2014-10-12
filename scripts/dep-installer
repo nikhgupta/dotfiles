@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# Credits:       =================================================== {{{
+#
+#            _ _    _                       _        _
+#           (_) |  | |                     | |      ( )
+#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
+#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
+#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
+#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
+#                          __/ |     | |
+#                         |___/      |_|
+#                            _       _    __ _ _
+#                           | |     | |  / _(_) |
+#                         __| | ___ | |_| |_ _| | ___  ___
+#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
+#                       | (_| | (_) | |_| | | | |  __/\__ \
+#                        \__,_|\___/ \__|_| |_|_|\___||___/
+#
+#
+#   Hello, I am Nikhil Gupta, and
+#   You can find me at http://nikhgupta.com
+#
+#   You can find an online version of this file at:
+#   https://github.com/nikhgupta/dotfiles/blob/master/scripts/bootstrap
+#
+#   ---
+#
+#   Script to install dependencies required by DotCastle.
+#
+#   This script will install required dependencies like `brew`, and
+#   `oh-my-zsh` along with optional dependencies like `autoenv`, `fasd`,
+#   etc. on the system, using `brew`.
+#
+#   Note that, on Ubuntu, `linuxbrew` is installed for getting the
+#   `brew` functionality.
+#
+# ================================================================== }}}
+
+DOTCASTLE=${DOTCASTLE:-$HOME/Code/__dotfiles}
+
+echo "----- DotCastle - a castle for my dotfiles -----"
+
+if [[ ! "$OSTYPE" = darwin* ]] || [[ ! $(uname -a) = *Ubuntu* ]]; then
+  echo "Current operating system is not supported."
+  exit
+fi
+
+echo "This script will install the required and optional dependencies."
+echo "Please, follow the instructions when the script finishes."
+echo "DotCastle location: ~/Code/__dotfiles"
+echo
+echo
+
+if ! which brew &>/dev/null; then
+  echo "Installing homebrew..."
+  if [[ "$OSTYPE" = darwin* ]]; then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    PATH="/usr/local/bin:$PATH"
+  else
+    sudo apt-get install build-essential curl git m4 ruby texinfo zsh
+    sudo apt-get install libbz2-dev libcurl4-openssl-dev libexpat-dev
+    sudo apt-get install libncurses-dev zlib1g-dev
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+    PATH="$HOME/.linuxbrew/bin:$PATH"
+  fi
+fi
+
+echo
+echo
+echo "Installing packages via brew.."
+brew install fasd fortune cowsay autoenv
+brew install zsh zsh-syntax-highlighting
+
+[[ -d $DOTCASTLE ]] || git clone https://github.com/nikhgupta/dotfiles $DOTCASTLE
+
+echo
+echo
+echo "Installing OhMyZSH.."
+curl -L http://install.ohmyz.sh | sh
+
+echo
+echo
+echo "Installed dependencies as required."
+echo "Please, open a new shell and run the bootstrap script:"
+echo "  cd $DOTCASTLE && ./scripts/bootstrap"

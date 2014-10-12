@@ -1,0 +1,161 @@
+# Credits:       =================================================== {{{
+#
+#            _ _    _                       _        _
+#           (_) |  | |                     | |      ( )
+#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
+#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
+#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
+#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
+#                          __/ |     | |
+#                         |___/      |_|
+#                            _       _    __ _ _
+#                           | |     | |  / _(_) |
+#                         __| | ___ | |_| |_ _| | ___  ___
+#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
+#                       | (_| | (_) | |_| | | | |  __/\__ \
+#                        \__,_|\___/ \__|_| |_|_|\___||___/
+#
+#
+#   Hello, I am Nikhil Gupta, and
+#   You can find me at http://nikhgupta.com
+#
+#   You can find an online version of this vimrc file at:
+#   https://github.com/nikhgupta/dotfiles/blob/master/gitconfig
+#
+#   This is the personal git configuration file of Nikhil Gupta.
+#   While much of it is beneficial for general use, I would
+#   recommend picking out the parts you want and understand.
+#
+#   ---
+#
+#   This file defines some basic (and, some advanced) git options and
+#   aliases. This file ommits certain options, such as `user.name`,
+#   which are provided by running the bundled `./scripts/bootstrap`
+#   script. In case, you have not run the aforesaid script, please open
+#   it and extract the relevant commands from it for setting these
+#   options.
+#
+#   For convenience, here are the options that are provided by the
+#   bootstrapper script:
+#   - core.editor
+#   - user.name
+#   - user.email
+#   - github.user
+#   - github.token
+#   - sendemail.smtpuser
+#
+# ================================================================== }}}
+
+[core]
+  editor           = "nano"
+  pager            = "less -FRSX"
+  filemode         = "true"
+  logallrefupdates = "true"
+  whitespace       = "space-before-tab, trailing-space"
+  excludesfile     = ~/.gitignore
+
+[status]
+  relativePaths = false
+
+[apply]
+  whitespace = "nowarn"
+
+[branch]
+  autosetupmerge = true
+
+[diff]
+  renames        = "copies"
+  mnemonicprefix = "true"
+
+[sendemail]
+  smtpserver     = "smtp.gmail.com"
+  smtpserverport = 587
+  smtpencryption = "tls"
+
+[diff]
+  tool = vimdiff
+
+[merge]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[mergetool]
+  prompt = false
+  keepBackup = false
+
+[push]
+  default = "current"
+
+[help]
+  browser = "open"
+
+[color]
+  ui = true
+
+[color "diff"]
+  meta = "blue bold"
+  frag = "magenta bold"
+  old  = "red bold"
+  new  = "green bold"
+
+[color "branch"]
+  current = "yellow reverse"
+  local   = "yellow bold"
+  remote  = "green bold"
+  plain   = "red bold"
+
+[color "status"]
+  added     = "yellow"
+  changed   = "green bold"
+  untracked = "blue bold"
+
+[rerere]
+  enabled = 1
+
+[format]
+  pretty = "oneline"
+
+[gist]
+  private   = "no"
+  browse    = "no"
+  extension = "rb"
+
+[alias]
+  b         = "branch"
+  d         = "difftool"
+  dc        = "difftool --cached"
+  lc        = "log ORIG_HEAD.. --stat --no-merges"
+  lg        = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+  ll        = "log --pretty=oneline --abbrev-commit --max-count=15"
+  fp        = "format-patch --stdout"
+  c         = "commit"
+  ca        = "commit -a"
+  cam       = "commit -am"
+  x         = "checkout HEAD"
+  s         = "status -sb -uno --ignore-submodules=untracked"
+  st        = "status"
+  sa        = "status -sb --ignore-submodules=untracked"
+  co        = "checkout"
+  re        = "rebase -i HEAD~$1"
+  pp        = "pull --prune"
+  serve     = "!git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git"
+  whois     = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  whatis    = "show -s --pretty='tformat:%h (%s, %ad)' --date=short"
+  prune-all = "!git remote | xargs -n 1 git remote prune"
+  ctags     = "!./.git/hooks/ctags"
+  ffs       = "flow feature start"
+  fff       = "flow feature finish"
+
+[init]
+  templatedir = ~/.git-template
+
+[url "https://bitbucket.org/"]
+  insteadOf = bb:
+
+[url "https://github.com/"]
+  insteadOf = gh:
+
+[url "https://gist.github.com/"]
+  insteadOf = gist:

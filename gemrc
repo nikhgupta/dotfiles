@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 # Credits:       =================================================== {{{
 #
 #            _ _    _                       _        _
@@ -21,35 +20,29 @@
 #   You can find me at http://nikhgupta.com
 #
 #   You can find an online version of this file at:
-#   https://github.com/nikhgupta/dotfiles/blob/master/.env
+#   https://github.com/nikhgupta/dotfiles/blob/master/gemrc
 #
-#   This is the personal `.env` configuration file of Nikhil Gupta.
-#   While much of it is beneficial for general use, I would recommend
-#   picking out the parts you want and understand.
+#   This is the personal gem configuration file of Nikhil Gupta.
+#   While much of it is beneficial for general use, I would
+#   recommend picking out the parts you want and understand.
 #
 #   ---
 #
-#   Configuration inside this file is sourced by `autoenv`, whenever we
-#   switch to the DotCastle directory. Therefore, this file can be used
-#   to define workflows for managing these dotfiles, or to export
-#   certain environment variables - all done, automatically.
+#   Configuration inside `~/.gemrc` is used by `gem` command, and
+#   defines the options for installing new gems. Primarily, `rdoc`, and
+#   `ri` documentations are not installed along with the gem.
 #
 # ================================================================== }}}
-
-# Open a new issue within the Github repo of DotCastle.
-addissue() {
-  echo "Q. What does the issue pertain to?"
-  read "TITLE?A. "
-  if [ -z "$TITLE" ]; then
-    echo "You must provide a title for your issue."
-    exit
-  else
-    echo "Q. And, what tags should I add?"
-    read "TAGS?A. "
-    echo "Q. Please, describe the issue, now."
-    read "MESSAGE?A. "
-
-    MESSAGE="${MESSAGE:-    -- issue created via CLI.}"
-    ghi open -L "${TAGS}" "${TITLE}" -m "${MESSAGE}"
-  fi
-}
+---
+:verbose: true
+gem: --no-rdoc --no-ri
+:update_sources: true
+:sources:
+- https://rubygems.org
+- http://gems.rubyforge.org
+- http://gems.github.com
+- http://gemcutter.org
+:benchmark: false
+:backtrace: false
+:bulk_threshold: 1000
+:ssl_verify_mode: 0

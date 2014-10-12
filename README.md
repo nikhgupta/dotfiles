@@ -1,11 +1,15 @@
 My Dot Castle
 =============
 
-**dotfiles** - the cornetstone of *devkind* ! :)
+![DotCastle](http://cdn.obsidianportal.com/assets/38992/AldredsCastle.jpg)
 
-This repository contains the dotfiles *(stolen/compiled/created)* by me.  
-Major inspirations from [@holman](http://github.com/holman) and [@mathiasybnens](http://github.com/mathiasbynens).
-Soon to dwelve into [dotfiles repository](http://github.com/skwp/dotfiles) by [@skwp](http://github.com/skwp)
+**castle for my dotfiles** - the cornetstone of *dev-kind* ! :)
+
+This repository contains the dotfiles *(stolen/compiled/created)* by me.
+Major inspirations from [@holman](http://github.com/holman) and
+[@mathiasybnens](http://github.com/mathiasbynens). More inspirations
+from [dotfiles repository](http://github.com/skwp/dotfiles) by
+[@skwp](http://github.com/skwp). Credit has been given where I could. :)
 
 Save dotfiles in ~/Code/\_\_dotfiles !!!
 ---------------------------------------
@@ -23,150 +27,70 @@ which is more sensible in my opinion than `~/.dotfiles`, because:
 Installation
 ------------
 There will be a 80% chance you will have a reason not to use
-`~/Code/__dotfiles` for the installation, in which case, you can simply modify
-the first line of the following bash commands to suit your taste ;)
+`~/Code/__dotfiles` for the installation, in which case, you can simply
+modify the first line of the following bash commands to suit your taste
+;) Note that, `DotCastle` requires `homebrew` (or `linuxbrew`) and
+`ohmyzsh`, and the same can be installed manually, or via the installer
+script at `./scripts/dep-installer.sh`.
 
-    $INSTALL_LOCATION="~/Code/__dotfiles"
-    mkdir -p $INSTALL_LOCATION && cd $INSTALL_LOCATION
-    git clone git://github.com/nikhgupta/dotfiles.git .
-    rake install
+    ```bash
+    export DOTCASTLE=$HOME/Code/__dotfiles
+    git clone git://github.com/nikhgupta/dotfiles.git $DOTCASTLE
+    # run the installer script
+    $DOTCASTLE/scripts/dep-installer.sh
+    $DOTCASTLE/scripts/bootstrap.sh
+    ```
 
 How my Development Environment is Setup
 =======================================
-Its not enough to install these dotfiles - my environment requires some more
-tweaks, e.g. setting up Solarized themes, using Todo.txt-cli and so on.
 
-So, I have included some setup instructions for myself, and for any
-unfortunate soul who might be reading all this.
+A lot of this information can be found on my [blog](http://nikhgupta.com).
 
-Following are the vague instructions on how to setup everything for my
-development environment. These instructions might be outdate, might not work,
-or even obsolete (none of these should be true, in general), but the idea here
-is to have an understanding (and a record) of how everything is setup for
-myself :)
+Primarily, I use a lot of tools to setup my development environment, and
+thanks to the *nix goodness, all fo these tools have a way to specify
+their configurations. Most of the times, I will include such
+configurations within this repository to keep them versioned.
 
-Homebrew
---------
-- install [Homebrew](http://mxcl.github.com/homebrew)
-- run Brew Doctor to check if everything is as expected (this step might
-  require application of your IQ)
-- install some common and essential homebrew packages
-
-Code:
-
-    ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
-    brew doctor
-    brew install wget ack git git-flow macvim
-
+The minimal setup that I would like to work with includes these
+dotfiles, as well as `base16-eighties` and `solarized` themes for both
+iTerm2 and MacVim, along with Homebrew on my MacOSX.
 
 Everything goes inside ~/Code
 -----------------------------
-Everything - everything, I code - goes inside `~/Code` directory. I have setup
-structure for various things and, carefully, place my code inside these
-directories. This *oragnization* is still vague and *may* undergo heavy
-changes.
 
-- repositories are downloaded from github and bitbucket to `__repos` using a import script 
-- repositories are downloaded from gitolite server inside `__repos/gitbox` directory using the same script
-- all the snippets are stored inside `__snippets`  
-  (contains a `gist` directory where all my public and private gists are downloaded via a script)
-- vagrant boxes, chef recipes, etc. for vagrant are downloaded and stored inside `__vagrant` directory
-- `scripts` will eventually be populated from a git repository setup for this purpose.
-- `sites` directory is the real codebase for all applications/websites.
+All my code resides in the `~/Code` directory. Typically:
 
-Code:
-
-    mkdir -p ~/Code/__{files,repos,vagrant}
-    mkdir -p ~/Code/{scripts,sites,snippets}
-    mkdir -p ~/Code/scripts/shell
+- repositories are downloaded to the `repos` directory.
+- these dotfiles are present at `__dotfiles` directory.
+- scripts are saved to `__dotfiles/scripts` directory, and include [`subs`](https://github.com/basecamp/sub) created.
+- websites that I develop upon locally are present at `sites` directory.
+- work related code is located in `work` directory.
+- other personal/miscelleneous code is present in topic-wise directories
+  under `personal` directory.
 
 iTerm2
 ------
-- visit here: http://code.google.com/p/iterm2/downloads/list
-- download one of the zip files from there and install iTerm2
-- open iTerm2 > Preferences > Profiles > Default > Colors > load presets > Solarized Dark
-- open iTerm2 > Preferences
-    - Inside Keys
-        - Hotkeys > Check both
-        - Hotkeys > (Command, tilde)
-    - Inside Profiles > Hotkey Window 
-        - Color > load presets > Solarized Light
-        - Window > Style > Fullscreen
-- add iTerm2 to run on system startup
+
+I prefer iTerm2 over Terminal app in MacOSX, and have installed the
+`base16-eighties` theme for it. Note that, this requires `base16-shell`
+to be loaded in my ZSH configuration.
     
-Oh My Zsh
----------
+OhMyZsh!
+--------
     
-    curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+I like OhMyZSH! project, which provides me with a ready-to-use ZSH
+configuration. I customize upon that heavily, but OMZ! is a major
+ingredient.
 
-Solarized
----------
-All these URLs link to specific files in the Solarized repo on Github
+HomeBrew and packages
+---------------------
 
-    curl -fsSkL http://is.gd/sdMcIS > "/tmp/solarized/Solarized Dark.itermcolors"
-    curl -fsSkL http://is.gd/IuUlFQ > "/tmp/solarized/Solarized Light.itermcolors"
-    curl -fsSkL http://is.gd/TfM3m8 > ~/Library/Colors/
-    open /tmp/solarized/iterm2-colors-solarized/*.itermcolors
-
-RVM (Ruby Version Manager)
---------------------------
-Install a stable release of Ruby Version Manager
-
-    curl -fsSkL https://get.rvm.io | bash -s stable
-
-RubyOnRails
------------
-- make sure RVM is installed and working properly
-- install Ruby v1.9.3 (which is the latest, at the time of writing this)
-- Setup this new ruby as the default ruby
-- install latest available gem for `Rails`
-
-Code:
-
-    source ~/.rvm/bin/rvm
-    type rvm | head -1    #==> "rvm is a function"
-    rvm install 1.9.3
-    rvm use 1.9.3@global --default
-    rvm use 1.9.3@rails --create && gem install rails
-
-Todo Manager
-------------
-The awesome simplistic Todo Manager which works from the CLI (which is then aliased in my dotfiles)
-
-    mkdir -p ~/Code/scripts/shell &&
-    git clone https://github.com/ginatrapani/todo.txt-cli.git ~/Code/scripts/shell
-
-Z
-----
-**directory jumping** - nice little nifty shell script :)
-
-    mkdir -p ~/Code/scripts/shell &&
-    git clone https://github.com/rupa/z.git ~/Code/scripts/shell
-
-Dotfiles
---------
-
-    cd ~/Code/__dotfiles && 
-    git clone https://github.com/nikhgupta/dotfiles.git . &&
-    rake install && cd
-
-Syntax Highlighting for ZSH
----------------------------
-**on the fly** syntax highlighting for your shell - awesomeness personified :P
-
-    mkdir -p ~/Code/scripts/shell &&
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/Code/scripts/shell
-
-TextExpander
-------------
-- another little piece of software embedded in my workflow
-- link to Dropbox for previous expansion snippets
-
-SSH Keys
---------
-- add your private keys to MacOSX Keychain, using: `ssh-add -K /path/to/key`
-
-Ryan Bates' c
--------------
-- *yet to add...*
-
+[HomeBrew](http://brew.sh) is a necessity for development on OSX, and is
+a really awesome package manager. I use it to install various
+dependencies and packages, like `macvim,` `rbenv,` `autoenv,`
+`zsh-syntax-highlighting` etc. If there is a formula available for
+a particular program in Homebrew, I would prefer it over other sources.
+Also, note that brew installs `zsh` completions to
+`/usr/local/share/zsh/site-functions` file, which helps me add custom
+completions, easily. On Ubuntu, I install the Linux version of Homebrew,
+namely `Linuxbrew`.

@@ -16,15 +16,26 @@
 "                        \__,_|\___/ \__|_| |_|_|\___||___/
 "
 "
-"   This is the personal .vimrc file of Nikhil Gupta.
-"   While much of it is beneficial for general use, I would
-"   recommend picking out the parts you want and understand.
-"
 "   Hello, I am Nikhil Gupta, and
 "   You can find me at http://nikhgupta.com
 "
-"   You can find an online version of this vimrc file at:
-"   https://github.com/nikhgupta/dotfiles/blob/master/vim/vimrc
+"   You can find an online version of this file at:
+"   https://github.com/nikhgupta/dotfiles/blob/master/vimrc
+"
+"   This is the personal vim configuration file of Nikhil Gupta.
+"   While much of it is beneficial for general use, I would
+"   recommend picking out the parts you want and understand.
+"
+"   ---
+"
+"   Configuration inside this file is meant to be utilized by VIM editor.
+"   Please, note that GUI (Macvim) cannot read environment variables defined in
+"   either `~/.zshrc` or `~/.zshrc.local`, which is why you MUST define your api
+"   tokens, etc. in `~/.zshenv.local`, so that they can be picked up by MacVim.
+"
+"   This VIM configuration does not split configuration between GUI and Terminal
+"   VIM via a separate `~/.gvimrc`, and instead, incorporates it within this
+"   file via a conditional `if` statement.
 "
 " }}}
 " Compatibility: """""""""""""""""""""""""""""""""""""""""""""" {{{
@@ -314,11 +325,11 @@ set nocompatible     " No to the total compatibility with the ancient vi
   set cursorline                  " highlight the current line for quick orientation
   set nocursorcolumn              " do not highlight the current column
   " toggle highlighting of cursor column - useful for manual indentation
-  nnoremap <leader>cr :set cursorcolumn!<CR>
+  nnoremap <leader>tcc :set cursorcolumn!<CR>
 " }}}
 " Personalize: highlight column markers for several columns {{{
   if has('syntax')
-    set colorcolumn=73,81,101,121,151
+    set colorcolumn=+1,+11,+21,+41
   endif
 " }}}
 " Personalize: show relative line numbers where they make sense, otherwise absolute ones {{{
@@ -338,7 +349,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " and has not been tested a lot. If you toggle this setting, and still the
 " editor switches to a fullscreen view, please review settings in the aforesaid
 " feature.
-  set fullscreen
+" NOTE: This option is only present in Macvim.
+  if g:is_macvim | set fullscreen | endif
 " }}}
 " Expected:    maximizes editor window when using GUI {{{ todo: extract
   if g:is_gui
@@ -362,15 +374,15 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " when opening a shortcut, switch to its directory
   let g:startify_change_to_dir = 1
   " enable 'empty buffer', and 'quit' commands
-  let g:startify_enable_special = 1
+  let g:startify_enable_special = 0
   " display upto 10 recent files
-  let g:startify_files_number = 10
+  let g:startify_files_number = 9
   " also, allow 'o' to open an empty buffer
   let g:startify_empty_buffer_key = 'o'
   " use the given session directory
-  let g:startify_session_dir = '~/.vim/data/session'
+  let g:startify_session_dir = expand('~/.vim/tmp/sessions/')
   " first four shortcuts should be available from home row
-  let g:startify_custom_indices = [ 'a', 's', 'd', 'f' ]
+  let g:startify_custom_indices = [ 'a', 'd', 'f', 'l' ]
   " display shortcuts in the given order
   let g:startify_lists = ['bookmarks', 'files', 'dir', 'sessions']
   " skip these files from the recent files list
@@ -442,9 +454,15 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " NOTE: this requires `base16-shell` to be sourced by our ZSH configuration,
   " so that the terminal program can support 256 colorspace, as well.
   let base16colorspace=256
-  let g:thematic#defaults["fullscreen"] = &fullscreen
   let g:thematic#defaults["linespace"]  = 0
-  let g:thematic#defaults["fullscreen-background-color-fix"] = &fullscreen
+
+  if g:is_macvim
+    let g:thematic#defaults["fullscreen"] = &fullscreen
+    let g:thematic#defaults["fullscreen-background-color-fix"] = &fullscreen
+  else
+    let g:thematic#defaults["fullscreen"] = 1
+    let g:thematic#defaults["fullscreen-background-color-fix"] = 1
+endif
 
   let g:thematic#themes["default-dark"] = {
         \ 'colorscheme'  : 'base16-eighties',
@@ -941,8 +959,8 @@ endif
   if has('lua')
     Plugin 'Shougo/neocomplete.vim'
     let g:neocomplete#enable_at_startup = 1                 " enable at startup
-    let g:neocomplete#enable_smart_case = 1                 " enable SmartCase
-    let g:neocomplete#sources#syntax#min_keyword_length = 3 " use a minimum syntax keyword length
+    let g:neocomplete#enable_ignore_case = 1                " ignore case when completing
+    let g:neocomplete#sources#syntax#min_keyword_length = 4 " use a minimum syntax keyword length
     let g:neocomplete#force_overwrite_completefunc = 1
     " do not complete automatically on files matching this pattern
     " let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
@@ -968,9 +986,9 @@ endif
     inoremap <expr><C-e>  neocomplete#cancel_popup()
   else
     Plugin 'Shougo/neocomplcache.vim'
-    let g:neocomplcache_enable_at_startup = 1               " enable at startup
-    let g:neocomplcache_enable_smart_case = 1               " enable SmartCase
-    let g:neocomplcache_min_syntax_length = 3               " use a minimum syntax keyword length
+    let g:neocomplcache_enable_at_startup  = 1               " enable at startup
+    let g:neocomplcache_enable_ignore_case = 1               " ignore case when completing
+    let g:neocomplcache_min_syntax_length  = 4               " use a minimum syntax keyword length
     " do not complete automatically on files matching this pattern
     " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
     " if !exists('g:neocomplcache_keyword_patterns')
@@ -1054,10 +1072,14 @@ endif
   Plugin 'honza/vim-snippets'
   Plugin 'Shougo/neosnippet-snippets'
 
+  noremap <leader>nse :NeoSnippetEdit -vertical -split -direction=belowright<CR>
+
   " Enable snipMate compatibility feature.
   let g:neosnippet#enable_snipmate_compatibility = 1
   " tell NeoSnippet about other snippets
-  let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+  let g:neosnippet#snippets_directory = [
+        \ expand('~/.vim/bundle/vim-snippets/snippets'),
+        \ expand('~/.vim/data/snippets') ]
 
   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -1094,7 +1116,7 @@ endif
     " php files
     au BufNewFile,BufRead *.ctp setl ft=ctp
     " miscelleneous
-    au BufNewFile,BufRead *.yml,*.yaml setl ft=yaml
+    au BufNewFile,BufRead gemrc,*.yml,*.yaml setl ft=yaml
   augroup end
 " }}}
 " Essential:   sets up a sane editing/coding environment as per the filetype {{{
@@ -1212,10 +1234,13 @@ endif
   augroup distraction_free
     au!
     au BufRead,BufNewFile,BufEnter,TabEnter
-          \ *.{md,mdown,markdown,rst,textile} if g:is_gui && (len(tabpagebuflist()) == 1)
-          \ | execute("Thematic awesome-text") | execute("redraw!") | endif
+          \ *.{md,mdown,markdown,rst,textile}
+          \ if g:is_gui && (len(tabpagebuflist()) == 1)
+          \ | execute("Thematic awesome-text") | execute("redraw!")
+          \ | setl showtabline=0 | endif
     au BufHidden,BufLeave,TabLeave *.{md,mdown,markdown,rst,textile}
-          \ if g:is_gui | execute("Thematic default") | execute("redraw!") | endif
+          \ if g:is_gui | execute("Thematic default")
+          \ | execute("redraw!") | endif
   augroup end
 " }}}
 " Specialize:  Markdown & Textile: render YAML front matter as comments {{{
@@ -1230,12 +1255,13 @@ endif
   " for this purpose. What happens is that, editor opens the current file in the
   " chrome browser as a text file, which is then rendered by the extension for
   " previewing.
+  " FIXME: fix this on linux
   augroup markdown_preview
     au!
     if g:is_mac
       autocmd filetype ghmarkdown exec 'noremap <F6> :silent !open %:p -a Google\ Chrome<CR>'
-    elseif g:is_linux
-      autocmd filetype ghmarkdown exec 'noremap <F6> :silent !chromium-browser %:p<CR>'
+    elseif g:is_nix
+      autocmd filetype ghmarkdown exec 'noremap <F6> :silent !xdg-open %:p<CR>'
     endif
   augroup end
 " }}}
@@ -1268,6 +1294,12 @@ endif
     au!
     au filetype vim noremap <silent> <buffer> <F6>
           \ <Esc>:call VimPluginBrowser(getline('.'))<CR>
+  augroup end
+" }}}
+" Specialize:  VIM:                hide superfluous UI on Startup screen {{{
+  augroup vim_startup_screen
+    au!
+    au filetype startify setl colorcolumn=0
   augroup end
 " }}}
 " Mappings:    VIM:                quickly, edit or source the vim configuration {{{
@@ -1410,7 +1442,7 @@ endif
   " Ignore files matching the following patterns
   let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
   " Store cache in this directory
-  let g:ctrlp_cache_dir = expand("$HOME/vim/tmp/cache/ctrlp")
+  let g:ctrlp_cache_dir = expand("~/vim/tmp/cache/ctrlp")
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   if executable("ag") | let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' | endif
   " switch between buffers, easily.
@@ -1438,8 +1470,8 @@ endif
   nmap <leader>ntc :NERDTreeClose<CR>
 
   " toggle nerdtree window
-  nmap <Leader>ntt <plug>NERDTreeTabsToggle<CR>
-  nmap <Leader>tnt <plug>NERDTreeTabsToggle<CR>
+  nmap <Leader>ntt <plug>NERDTreeToggle<CR>
+  nmap <Leader>tnt <plug>NERDTreeToggle<CR>
 
   " change NerdTree's appearance
   let NERDTreeWinPos    = "left"
@@ -1466,7 +1498,7 @@ endif
   let NerdTreeStatusLine = -1
 
   " Store the bookmarks file
-  let NERDTreeBookmarksFile = expand("$HOME/.vim/data/bookmarks")
+  let NERDTreeBookmarksFile = expand("$HOME/.vim/tmp/bookmarks")
 
   " Sort NerdTree to show ruby php, vim and markdown files earlier
   let NerdTreeSortOrder = ['\/$', '\.rb$', '\.php$', '\.vim', '\.md', '\.markdown',
@@ -1823,7 +1855,7 @@ endif
 " }}}
 " Abbreviations:                                                     {{{
   " auto-corrections for spellings
-  call SourceIfReadable('~/.vim/autocorrect.vim')
+  call SourceIfReadable('~/.vim/spell/autocorrect.vim')
   iabbr NG@  Nikhil Gupta
   iabbr WD@  Wicked Developers
 
@@ -1841,7 +1873,7 @@ endif
 " }}}
 " Epilogue:                                                          {{{
   call SourceIfReadable("~/.gvimrc")
-  call SourceIfReadable("~/.vimrc.after")
+  call SourceIfReadable("~/.vimrc.local")
   " required by Vundle
   call vundle#end()               " required
   filetype plugin indent on       " enable detection, plugins and indenting in one step
