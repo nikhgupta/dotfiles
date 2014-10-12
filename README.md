@@ -33,13 +33,11 @@ modify the first line of the following bash commands to suit your taste
 `ohmyzsh`, and the same can be installed manually, or via the installer
 script at `./scripts/dep-installer.sh`.
 
-    ```bash
     export DOTCASTLE=$HOME/Code/__dotfiles
     git clone git://github.com/nikhgupta/dotfiles.git $DOTCASTLE
     # run the installer script
     $DOTCASTLE/scripts/dep-installer.sh
     $DOTCASTLE/scripts/bootstrap.sh
-    ```
 
 How my Development Environment is Setup
 =======================================
