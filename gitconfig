@@ -148,6 +148,9 @@
   ffs       = "flow feature start"
   fff       = "flow feature finish"
 
+[ghi "highlight"]
+  style = colorful
+
 [init]
   templatedir = ~/.git-template
 
