@@ -380,7 +380,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " also, allow 'o' to open an empty buffer
   let g:startify_empty_buffer_key = 'o'
   " use the given session directory
-  let g:startify_session_dir = expand('~/.vim/tmp/sessions/')
+  let g:startify_session_dir = expand("~/.vim") . "/tmp/sessions/"
   " first four shortcuts should be available from home row
   let g:startify_custom_indices = [ 'a', 'd', 'f', 'l' ]
   " display shortcuts in the given order
@@ -818,7 +818,7 @@ endif
   " allow 'gq' to format comments
   set formatoptions+=q
   " remove comment markers when joining lines
-  set formatoptions+=j
+  silent! set formatoptions+=j    " gives error on some versions of vim 7.3 & lower
 " }}}
 " Expedite:    supports adding or removing comments for many languages {{{
   Plugin 'tpope/vim-commentary'
@@ -1078,8 +1078,8 @@ endif
   let g:neosnippet#enable_snipmate_compatibility = 1
   " tell NeoSnippet about other snippets
   let g:neosnippet#snippets_directory = [
-        \ expand('~/.vim/bundle/vim-snippets/snippets'),
-        \ expand('~/.vim/data/snippets') ]
+        \ expand('~/.vim') . '/bundle/vim-snippets/snippets',
+        \ expand('~/.vim') . '/data/snippets' ]
 
   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -1442,7 +1442,7 @@ endif
   " Ignore files matching the following patterns
   let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
   " Store cache in this directory
-  let g:ctrlp_cache_dir = expand("~/vim/tmp/cache/ctrlp")
+  let g:ctrlp_cache_dir = expand("~/.vim") . "/tmp/cache/ctrlp"
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   if executable("ag") | let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' | endif
   " switch between buffers, easily.
@@ -1498,7 +1498,7 @@ endif
   let NerdTreeStatusLine = -1
 
   " Store the bookmarks file
-  let NERDTreeBookmarksFile = expand("$HOME/.vim/tmp/bookmarks")
+  let NERDTreeBookmarksFile = expand("~/.vim") . "/tmp/bookmarks"
 
   " Sort NerdTree to show ruby php, vim and markdown files earlier
   let NerdTreeSortOrder = ['\/$', '\.rb$', '\.php$', '\.vim', '\.md', '\.markdown',
