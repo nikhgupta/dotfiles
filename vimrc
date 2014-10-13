@@ -446,9 +446,12 @@ set nocompatible     " No to the total compatibility with the ancient vi
     set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
   endif
 
+  " variable used in statusline
+  let g:ui_type = g:is_gui ? "GUI" : "TTY"
+
   " Use :AirlineToggle to revert to this statusline
   if has('statusline') && !exists('g:loaded_airline')
-    set statusline=\ \ \ [%{&ff}/%Y]%=%-10.(%l,%c%V%)\ %p\%\%\ \ \ %LL\ Total
+    set stl=\ \ \ \ \ [%Y/%{&ff}]\ %F\ %m%r%=[%{g:ui_type}]\ %-17.(%l,%c%V%)\ %p\%\%\ \ \ %LL\ TOTAL
   endif
 
   " use airline themes depending upon day or night time, as default in Thematic
@@ -457,6 +460,10 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:airline_left_alt_sep     = ''
   let g:airline_right_alt_sep    = ''
   let g:thematic#defaults['airline-theme'] = DayOrNight("solarized", "base16")
+
+  " customize the Airline sections
+  let g:airline_section_x = "%{airline#util#wrap('['.g:ui_type.']', 0)}"
+  let g:airline_section_y = "%{airline#util#wrap(airline#parts#ffenc() . ' ' . &ft, 0)}"
 
   " set a default airline theme, if none has, been defined!
   if !exists('g:airline_theme') | let g:airline_theme = 'solarized' | endif
@@ -1749,7 +1756,6 @@ endif
   nnoremap <C-y> 2<C-y>
 " }}}
 " }}}
-
 " Sessions:                                                          {{{
 " Expected:    restores history, registers, etc. when a file is loaded {{{
   if has('viminfo')
