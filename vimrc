@@ -201,13 +201,14 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
   " always show these bookmarks on the startup screen
-  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/Code', '~/Code/scripts/' ]
+  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/Code', '~/Code/scripts' ]
 
-  " parse output from a command (login shell only) and show a custom header on the startup screen
-  if !executable('fortune') && executable('curl')
-    " TODO: create a command to fetch the ascii art from this website:
-    " http://patooftware/taag/#p=display&f=Doh&t=VIM.%207.4
-    " let s:startify_custom_header_command = ''
+  if executable('figlet')
+    let s:startify_custom_footer_command = 'fortune -s; echo; echo; figlet -f "ANSI Shadow" VIM $(vim --version | head -1 | egrep "\d+\.\d+" -o)'
+  elseif executable('fortune') && executable('cowsay')
+    let s:startify_custom_footer_command = 'fortune -s | cowsay'
+  elseif executable('fortune')
+    let g:startify_custom_footer_command = 'fortune -s'
   endif
 " }}}
 " }}}
@@ -370,41 +371,66 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " Upgrade:     has a beautiful startup screen (via Startify) {{{
   set shortmess+=I                " do not display intro message on Vim startup
 
-  Plugin 'vim-startify'
+  Plugin 'mhinz/vim-startify'
   " when opening a shortcut, switch to its directory
   let g:startify_change_to_dir = 1
   " enable 'empty buffer', and 'quit' commands
   let g:startify_enable_special = 0
   " display upto 10 recent files
-  let g:startify_files_number = 9
+  let g:startify_files_number = 5
   " also, allow 'o' to open an empty buffer
   let g:startify_empty_buffer_key = 'o'
+  " change to the root repository path when opening files
+  let g:startify_change_to_vcs_root = 1
   " use the given session directory
   let g:startify_session_dir = expand("~/.vim") . "/tmp/sessions/"
   " first four shortcuts should be available from home row
   let g:startify_custom_indices = [ 'a', 'd', 'f', 'l' ]
-  " display shortcuts in the given order
-  let g:startify_lists = ['bookmarks', 'files', 'dir', 'sessions']
   " skip these files from the recent files list
   let g:startify_skiplist = [ 'COMMIT_EDITMSG', $VIMRUNTIME .'/doc', 'bundle/.*/doc', '/tmp' ]
+  " display shortcuts in the given order
+  let g:startify_list_order = [
+        \ ['   Your bookmarks:'], 'bookmarks',
+        \ ['   Your sessions:'], 'sessions',
+        \ ['   Your recently opened files (from current directory):'], 'dir',
+        \ ['   Your recently opened files (all of them):'], 'files',
+        \ ]
 
-  " display a fortune cookie (or output from custom command) as the header
-  if exists("s:startify_custom_header_commad")
-    let g:startify_custom_header = map(split(system(s:startify_custom_header_command), '\n'), '"   ". v:val') + ['','']
-  elseif executable('fortune') && executable('cowsay')
-    let g:startify_custom_header = map(split(system('fortune -s | cowsay'), '\n'), '"   ". v:val') + ['','']
-  elseif executable('fortune')
-    let g:startify_custom_header = map(split(system('fortune -s'), '\n'), '"   ". v:val') + ['','']
+  " display a fortune cookie (or output from custom command) as the footer
+  if exists("s:startify_custom_footer_command")
+    let g:startify_custom_footer = map(split(system(s:startify_custom_footer_command), '\n'), '"   ". v:val')
   else
-    let g:startify_custom_header = [
-          \ '    ██╗   ██╗██╗███╗   ███╗ ',
-          \ '    ██║   ██║██║████╗ ████║ ',
-          \ '    ██║   ██║██║██╔████╔██║ ',
-          \ '    ╚██╗ ██╔╝██║██║╚██╔╝██║ ',
-          \ '     ╚████╔╝ ██║██║ ╚═╝ ██║ ',
-          \ '      ╚═══╝  ╚═╝╚═╝     ╚═╝ ',
-          \ '', '' ]
+    let g:startify_custom_footer = [  '    ██╗   ██╗██╗███╗   ███╗    ',
+                                   \  '    ██║   ██║██║████╗ ████║    ',
+                                   \  '    ██║   ██║██║██╔████╔██║    ',
+                                   \  '    ╚██╗ ██╔╝██║██║╚██╔╝██║    ',
+                                   \  '     ╚████╔╝ ██║██║ ╚═╝ ██║    ',
+                                   \  '      ╚═══╝  ╚═╝╚═╝     ╚═╝    '  ]
   endif
+
+  let g:startify_custom_footer = [ '   '.repeat('_', 60).' ', ''] + g:startify_custom_footer
+  let g:startify_custom_footer = g:startify_custom_footer + [ '', '' ]
+
+  " colors for startup screen
+  hi! default link StartifyBracket Comment
+  hi! default link StartifyFile    Type
+  hi! default link StartifyFooter  String
+  hi! default link StartifyHeader  String
+  hi! default link StartifyNumber  Tag
+  hi! default link StartifyPath    Comment
+  hi! default link StartifySection Special
+  hi! default link StartifySelect  Comment
+  hi! default link StartifySlash   Comment
+  hi! default link StartifySpecial Special
+
+  " mappings and miscelleneous behaviour
+  nmap <silent> <leader>st :Startify<CR>
+  augroup vim_startup_screen
+    au!
+    au User Startified setl colorcolumn=0 buftype=
+    au User Startified nnoremap <silent!> <buffer> <leader>st :e#<CR>
+    au User Startified call airline#update_statusline()
+  augroup end
 " }}}
 " Upgrade:     has a beautiful status line (via AirLine) {{{
   set showmode                    " always show what mode we're currently editing in
@@ -702,7 +728,7 @@ endif
   cmap w!! w !sudo tee % >/dev/null
 
   " Switch between the last two files
-  nnoremap <leader><leader> <c-^>
+  nnoremap <leader><leader> <C-^>
 " }}}
 " Recommend:   provides some easier movement related mappings {{{
   " remap j and k to act as expected when used on long, wrapped, lines
@@ -1294,12 +1320,6 @@ endif
     au!
     au filetype vim noremap <silent> <buffer> <F6>
           \ <Esc>:call VimPluginBrowser(getline('.'))<CR>
-  augroup end
-" }}}
-" Specialize:  VIM:                hide superfluous UI on Startup screen {{{
-  augroup vim_startup_screen
-    au!
-    au filetype startify setl colorcolumn=0
   augroup end
 " }}}
 " Mappings:    VIM:                quickly, edit or source the vim configuration {{{
