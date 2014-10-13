@@ -42,17 +42,12 @@ alias reload=" source $HOME/.zshrc"
 
 # create a handy edit command
 alias edit="$EDITOR"
-alias e=edit
 
 # zsh related aliases
-alias zshconfig="edit $HOME/.zshrc"                 # quickly edit zsh configuration
 alias zshedit="edit $DOTCASTLE"
 
 # common and most-often used aliases
 alias cl=" clear"                                   # NOTE: use CTRL-K instead.
-
-# common commands
-alias rm="rm -i"                                    # failsafe :P (although, ZSH already does this)
 
 # chmod
 alias w+="sudo chmod +w"                            # quickly make a file writeable
@@ -62,55 +57,55 @@ alias x-="sudo chmod -x"                            # quickly make a file un-exe
 
 # ls
 alias ls='\ls -F --color=always'                    # append indicators and colorize
-alias la='ls -A'                                    # almost all
-alias ll='la -lF'                                   # almost all, long listing, indicators
-alias  l="ll -h"                                    # almost all, show size in K, M, G (except . & ..), long listing
-alias lk='ll -Sr'                                   # sort by size
-alias lr='ll -R'                                    # recursive ls
-alias lx='ll -XB'                                   # sort by extension
-
-# cd
-alias up=" cd .."                                   # handy shortcut to quicly move up directory tree
+alias lS='ls -1FSsh | sort -r'                      # sort by size
+alias lx='ls -lAFhXB'                               # sort by extension - GNU only
+alias lR='ls -AFtrd *(R)'                           # show readable files
+alias lRnot='ls -AFtrd *(^R)'                       # show non-readable files
 
 # handy utils
 alias du1='du -hd 1'                                # disk usage with human sizes and minimal depth (prefer: dsize)
 alias fn='find . -name'                             # find files by name, in current directory
-alias hi='history | tail'                           # display last commands entered in shell
 alias p=" ps auwwx | grep"                          # find a process in the activity monitor
 alias history="fc -il 1"                            # show timestamps in history
 
+# handy globals
+alias -g COPY=" | pbcopy"
+alias -g PASTE="pbpaste | "
+
 # aliases that I use, often
-alias gem_grep='gem list --local | grep';
-alias gffs='git flow feature start';
-alias gfff='git flow feature finish';
-alias be="bundle exec"
+alias gem_local='gem list --local';
 # copy my SSH key to the clipboard for quick pasting
-alias getsshkey="cat $HOME/.ssh/`whoami`.pub | pbcopy"
+alias getsshkey="cat $HOME/.ssh/`whoami`.pub COPY"
 # delete all the empty files from the current directory @ use with caution
-alias deleteempty="find . -type d -empty -not -regex '.*\/.git\/.*' -exec {} \; -delete"
+alias deleteempty="find . -type f -empty -not -regex '.*\/.git\/.*' -exec {} \; -delete"
 # }}}
 # => Script dependent aliases {{{
 # quickly, open files in the editor, or via open (require !fasd)
 if which fasd &> /dev/null; then
-  alias v="a -e '$EDITOR'"
+  alias e="a -e '$EDITOR'"
   alias o="a -e '$BROWSER'"
- alias gv="a -e '$GUIEDITOR'"
+ alias ge="a -e '$GUIEDITOR'"
 else
-  alias v="echo Please, install 'fasd' to use this command."
+  alias e="echo Please, install 'fasd' to use this command."
   alias o="echo Please, install 'fasd' to use this command."
- alias gv="echo Please, install 'fasd' to use this command."
+ alias ge="echo Please, install 'fasd' to use this command."
 fi
 # }}}
 # => MacOSX specific aliases {{{
 if [[ "$OSTYPE" = darwin* ]]; then
   # flush the dns cache
   alias flushdns='sudo killall -HUP mDNSResponder'
+
   # recursively delete all the ugly `.DS_Store` files from current directory and its children
   alias deletedsstore='find . -type f -regex ".*\/\.DS_Store" -exec echo {} \; -delete'
-  alias vlc='/Applications/VLC.app/Contents/MacOS/VLC';
+
   # show/hide the hidden files in the system
   alias showHidden='defaults write com.apple.finder AppleShowAllFiles TRUE ; killall Finder';
   alias hideHidden='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder'; 
+
+  if [[ -e /Applications/VLC.app/Contents/MacOS/VLC ]]; then
+    alias vlc='/Applications/VLC.app/Contents/MacOS/VLC';
+  fi
 fi
 # }}}
 # => Ubuntu specific aliases {{{
@@ -177,44 +172,6 @@ if [[ "$OSTYPE" = darwin* ]]; then
         ping -c 1 $domain | grep "PING.*:.*data" | sed -e "s/.*(//g" -e "s/).*//g"
       done
   }
-  # open a new tab for current directory in iTerm, and tell it to run a command
-  newtab() {
-      text=" cd `pwd`; clear; $@"
-      script="tell application \"iTerm\"
-              make new terminal
-              tell the current terminal
-              activate current session
-              launch session \"Default Session\"
-              tell the last session
-              write text \"${text}\"
-              end tell
-              end tell
-              end tell"
-
-      osascript -e $script
-  }
-  alias nt=newtab
-
-  # Universal Extractor
-  extract () {
-      if [ -f $1 ] ; then
-          case $1 in
-              *.tar.bz2)        tar xjf $1        ;;
-              *.tar.gz)         tar xzf $1        ;;
-              *.bz2)            bunzip2 $1        ;;
-              *.rar)            unrar x $1        ;;
-              *.gz)             gunzip $1         ;;
-              *.tar)            tar xf $1         ;;
-              *.tbz2)           tar xjf $1        ;;
-              *.tgz)            tar xzf $1        ;;
-              *.zip)            unzip $1          ;;
-              *.Z)              uncompress $1     ;;
-              *)                echo "'$1' cannot be extracted via extract()" ;;
-          esac
-      else
-          echo "'$1' is not a valid file"
-      fi
-  }
 
   # generate a local SSL certificate and feed it to the keychain.
   # can generate wildcard certificates, as well.
@@ -272,19 +229,19 @@ function emoji-clock() {
   [ $minutes -ge 60 ] && (( hour = $hour + 1 ))
 
   case $hour in
-    1|13) clock="🕐"; [ $minutes -ge 30 ] && clock="🕜";;
-    2)    clock="🕑"; [ $minutes -ge 30 ] && clock="🕝";;
-    3)    clock="🕒"; [ $minutes -ge 30 ] && clock="🕞";;
-    4)    clock="🕓"; [ $minutes -ge 30 ] && clock="🕟";;
-    5)    clock="🕔"; [ $minutes -ge 30 ] && clock="🕠";;
-    6)    clock="🕕"; [ $minutes -ge 30 ] && clock="🕡";;
-    7)    clock="🕖"; [ $minutes -ge 30 ] && clock="🕢";;
-    8)    clock="🕗"; [ $minutes -ge 30 ] && clock="🕣";;
-    9)    clock="🕘"; [ $minutes -ge 30 ] && clock="🕤";;
-    10)   clock="🕙"; [ $minutes -ge 30 ] && clock="🕥";;
-    11)   clock="🕚"; [ $minutes -ge 30 ] && clock="🕦";;
-    12)   clock="🕛"; [ $minutes -ge 30 ] && clock="🕧";;
-     *)   clock="⌛";;
+    01|13) clock="🕐"; [ $minutes -ge 30 ] && clock="🕜";;
+       02) clock="🕑"; [ $minutes -ge 30 ] && clock="🕝";;
+       03) clock="🕒"; [ $minutes -ge 30 ] && clock="🕞";;
+       04) clock="🕓"; [ $minutes -ge 30 ] && clock="🕟";;
+       05) clock="🕔"; [ $minutes -ge 30 ] && clock="🕠";;
+       06) clock="🕕"; [ $minutes -ge 30 ] && clock="🕡";;
+       07) clock="🕖"; [ $minutes -ge 30 ] && clock="🕢";;
+       08) clock="🕗"; [ $minutes -ge 30 ] && clock="🕣";;
+       09) clock="🕘"; [ $minutes -ge 30 ] && clock="🕤";;
+       10) clock="🕙"; [ $minutes -ge 30 ] && clock="🕥";;
+       11) clock="🕚"; [ $minutes -ge 30 ] && clock="🕦";;
+       12) clock="🕛"; [ $minutes -ge 30 ] && clock="🕧";;
+        *) clock="⌛";;
   esac
   echo $clock
 }

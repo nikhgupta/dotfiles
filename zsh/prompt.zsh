@@ -117,8 +117,7 @@ _return_code() { echo "%(?..%{$fg[red]%}↵ %? %{$reset_color%})"; }
 # }}}
 # => function: prompt entry for pending jobs {{{
 _pending_jobs() {
-  local job_nos=`jobs | wc -l`
-  [[ $job_nos != 0 ]] && echo "%{$fg_bold[red]%}${job_nos}JP%{$reset_color%}"
+  [[ $(jobs | wc -l) -gt 0 ]] && echo "%{$fg_bold[red]%}${job_nos}JP%{$reset_color%}"
 }
 # }}}
 # => function: prompt entry for time taken to run last command {{{

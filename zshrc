@@ -104,13 +104,16 @@ export ZSH_THEME="blinks"
 export DISABLE_UPDATE_PROMPT=true
 # }}}
 # => load OhMyZSH and some relevant plugins {{{
-# TODO: remove surplus plugins
-plugins=( fasd battery brew coffee colored-man composer copydir
-emoji-clock copyfile cp extract gem git-flow git-extras git github
-gitignore heroku history-substring-search osx rails systemadmin thor
-vundle web-search)
+# plugins to be added later: emoji-clock
+plugins=( battery brew brew-cask bundler coffee colored-man
+common-aliases composer extract fasd gem git git-flow git-extras github
+gitignore heroku golang history-substring-search jsontools nanoc pow
+powder rails rake-fast quote redis-cli vim-interaction vundle wp-cli
+zsh-reload)
+[[ "$OSTYPE" = darwin* ]] && plugins+=( osx )
 
 source_if_exists $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
+
 # }}}
 # => brew specific configuration {{{
 
@@ -119,6 +122,7 @@ autoload run-help
 HELPDIR=$BREW_PREFIX/share/zsh/help
 
 # make sure we use gnu version of commands like ls, etc.
+# rehash -f     # gnu-utils OMZ plugin
 for package in coreutils gnu-sed gnu-tar; do
   if [[ -d $BREW_PREFIX/opt/$package/libexec/gnubin ]]; then
     PATH="$BREW_PREFIX/opt/$package/libexec/gnubin:$PATH"

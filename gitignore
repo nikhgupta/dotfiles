@@ -92,6 +92,7 @@ Thumbs.db
 /*.tmproj
 
 # Ruby On Rails
+.rake_tasks
 zeus.json
 custom_plan.rb
 

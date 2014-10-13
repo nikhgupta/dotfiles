@@ -48,6 +48,8 @@ if [[ "$OSTYPE" = darwin* ]]; then
   export GUIEDITOR="mvim"       # note that, symlinking mvim to vim does not work.
   export BROWSER="open"
   export BREW_PREFIX=/usr/local
+  alias vim="mvim -v"
+  alias gvim="mvim"
 else
   export EDITOR="vim"
   export GUIEDITOR="gvim"
