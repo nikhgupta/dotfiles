@@ -1269,11 +1269,11 @@ endif
     au BufRead,BufNewFile,BufEnter,TabEnter
           \ *.{md,mdown,markdown,rst,textile}
           \ if g:is_gui && (len(tabpagebuflist()) == 1)
-          \ | execute("Thematic awesome-text") | execute("redraw!")
-          \ | setl showtabline=0 | endif
+          \ | execute "Thematic awesome-text" | execute "redraw!"
+          \ | setl showtabline=0 rulerformat=%=%h%r%m\ %l/%LL | endif
     au BufHidden,BufLeave,TabLeave *.{md,mdown,markdown,rst,textile}
-          \ if g:is_gui | execute("Thematic default")
-          \ | execute("redraw!") | endif
+          \ if g:is_gui | execute "Thematic default"
+          \ | execute "redraw!" | endif
   augroup end
 " }}}
 " Specialize:  Markdown & Textile: render YAML front matter as comments {{{
