@@ -66,9 +66,8 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✰"
 # }}}
 # => function: set prompt character based on repo and SSH status {{{
 _set_prompt_char() {
-  [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
-  command git log &>/dev/null && echo -ne '± '
-  hg root &>/dev/null && echo -ne '☿ '
+  if command git log &>/dev/null; then; echo -ne '± ';
+  elif command hg root &>/dev/null; then; echo -ne '☿ '; fi
 }
 # }}}
 # => function: prompt entry for time since last git commit {{{
@@ -148,47 +147,77 @@ add-zsh-hook preexec _prompt_timer_preexec
 add-zsh-hook precmd _prompt_timer_precmd
 # }}}
 # => function: prompt entry for battery remaining (in percent) {{{
-# TODO: display charging or full charged?
 _battery_remaining() {
-  if fully_charged &>/dev/null; then
-    echo "🔌 "
-  elif battery_is_charging || plugged_in; then
-    echo "⚡ "
-  else
-    echo "🔋 $(battery_pct_prompt)"
+  if [[ "$OSTYPE" = darwin* ]]; then
+    battery_data=$(ioreg -rc "AppleSmartBattery")
+    if echo $battery_data | grep -e '"FullyCharged"\s*=\s*Yes' &>/dev/null; then
+      echo -ne "🔌 "    # fully charged
+    elif echo $battery_data | grep -e '"ExternalConnected"\s*=\s*Yes' &>/dev/null; then
+      echo -ne "⚡ "    # external connected
+    elif echo $battery_data | grep -e '"IsCharging"\s*=\s*Yes' &>/dev/null; then
+      echo -ne "⚡ "    # being charged
+    else
+      current=$(echo $battery_data|grep -e '"CurrentCapacity"\s*=\s*'|sed -e 's/^.*"CurrentCapacity"\s*=\s*//' )
+      maxcapc=$(echo $battery_data|grep -e '"MaxCapacity"\s*=\s*'|sed -e 's/^.*"MaxCapacity"\s*=\s*//' )
+      (( battery_pct = (current * 100.0 ) /maxcapc ))
+      [ $battery_pct -gt 20 ] && color='yellow'
+      [ $battery_pct -gt 50 ] && color='green'
+      echo -ne "🔋 %{$fg[${color:-red}]%}[$battery_pct%%]%{$reset_color%}"
+    fi
+  elif which acpi &>/dev/null; then
+    battery_data=$(acpi 2&>/dev/null)
+    if echo $battery_data | grep -e '^Battery.*Discharging' &>/dev/null; then
+      battery_pct=$(echo $battery_data | cut -f2 -d ',' | tr -cd '[:digit:]')
+      [ $battery_pct -gt 20 ] && color='yellow'
+      [ $battery_pct -gt 50 ] && color='green'
+      echo -ne "🔋 %{$fg[${color:-red}]%}[$battery_pct%%]%{$reset_color%}"
+    else
+      echo -ne "⚡ "    # external connected
+    fi
   fi
 }
 # }}}
 # => function: prompt entry for current time {{{
 _current_time() {
   echo "$(emoji-clock) %{$fg_bold[blue]%}[%*]%{$reset_color%}"
+  # echo "%{$fg_bold[blue]%}[%*]%{$reset_color%}"   # faster
+}
+# TODO: To be removed after upstream changes to OMZ are accepted
+_git_prompt_status() {
+  command git symbolic-ref HEAD &>/dev/null || return 1
+  git_prompt_status
 }
 # }}}
 # => function: print the original 'extravagent' prompt {{{
+#    note: we will call these functions only once when sourcing this
+#    file, and hence, all logic that is fixed when session starts should
+#    go inside these functions, and things that can/do change on each
+#    prompt rendering should be moved to separate functions, and
+#    referenced from here.
 _display_extravagent_prompt_left() {
   # display host information when inside ssh connection
-  if [[ -n $SSH_CONNECTION ]]; then
-    echo -ne "%{$fg[magenta]%}%n%{$reset_color%} at "
-    echo -ne "%{$fg[yellow]%}%m%{$reset_color%} in "
-  fi
+  echo -ne '%{$fg[magenta]%}%n%{$reset_color%} at '
+  echo -ne '%{$fg[yellow]%}%m%{$reset_color%} in '
 
   # display the path to current directory
-  echo -ne "%{$fg_bold[cyan]%}${PWD/#$HOME/~}%{$reset_color%} "
+  echo -ne '%{$fg_bold[cyan]%}${PWD/#$HOME/~}%{$reset_color%} '
 
   # display git information
-  echo -ne "$(git_prompt_info)$(_git_time_since_commit)%{$reset_color%}"
+  echo -ne '$(git_prompt_info)$(_git_time_since_commit)%{$reset_color%}'
 
   # intelligently, use a single line or a double line
-  if (( ${#PWD/#$HOME/\~} > 16 )) || [[ -n $SSH_CONNECTION ]] || command git log &>/dev/null; then echo; fi
+  # if (( ${#PWD/#$HOME/\~} > 16 )) || [[ -n $SSH_CONNECTION ]] || command git log &>/dev/null; then echo; fi
+  echo
 
-  echo -ne "$(_set_prompt_char)$timer_show$(_return_code)"
+  [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
+  echo -ne '$(_set_prompt_char)$timer_show$(_return_code)'
   echo '%(!.!.➲) '
 }
 _display_extravagent_prompt_right(){
-  echo -ne "$(git_prompt_status)%{$reset_color%} "
-  echo -ne "$(_pending_jobs) "
-  echo -ne "$(_current_time) "
-  echo -ne "$(_battery_remaining)"
+  echo -ne '$(_git_prompt_status)%{$reset_color%} '
+  echo -ne '$(_pending_jobs) '
+  echo -ne '$(_current_time) '
+  echo -ne '$(_battery_remaining)'
 }
 # }}}
 
@@ -201,6 +230,6 @@ if [[ "$PROMPT_TYPE" =~ "mini" ]]; then
   export PROMPT="%{$fg[green]%}%c%{$reset_color%} %{$fg[yellow]%}$%{$reset_color%} "
   export RPROMPT=""
 else
-  export PROMPT='$(_display_extravagent_prompt_left)'
-  export RPROMPT='$(_display_extravagent_prompt_right)'
+  export PROMPT="$(_display_extravagent_prompt_left)"
+  export RPROMPT="$(_display_extravagent_prompt_right)"
 fi
