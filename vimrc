@@ -204,7 +204,11 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/Code/__dotfiles' ]
 
   if executable('figlet')
-    let s:startify_custom_footer_command = 'fortune -s; echo; echo; figlet -f "ANSI Shadow" VIM $(vim --version | head -1 | egrep "\d+\.\d+" -o)'
+    " fetch vim logo from ~/.vimlogo and update the logo if older than a day
+    let s:startify_custom_footer_command = 'fortune -s; echo; echo;'.
+          \ 'find ~/.vimlogo -mmin 1440 && cat ~/.vimlogo || '.
+          \ '{ figlet -f "ANSI Shadow" VIM $(vim --version | '.
+          \ 'head -1 | egrep "\d+\.\d+" -o) | tee ~/.vimlogo; }'
   elseif executable('fortune') && executable('cowsay')
     let s:startify_custom_footer_command = 'fortune -s | cowsay'
   elseif executable('fortune')
