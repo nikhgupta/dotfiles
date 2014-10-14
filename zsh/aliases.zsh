@@ -267,7 +267,7 @@ function emoji-clock() {
   # Add 15 minutes to the current time and save the value as $minutes.
   (( minutes = $(date '+%M') + 15 ))
   # make sure hour doesn't exceed 12
-  (( hour = ($(date '+%-l') + minutes / 60 ) % 12 ))
+  (( hour = ($(date '+%I') + minutes / 60 ) % 12 ))
 
   case $hour in
      1) clock="🕐"; [ $minutes -ge 30 ] && clock="🕜";;

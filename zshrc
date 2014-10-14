@@ -105,11 +105,10 @@ export DISABLE_UPDATE_PROMPT=true
 # }}}
 # => load OhMyZSH and some relevant plugins {{{
 # plugins to be added later: emoji-clock
-plugins=( battery brew brew-cask bundler coffee colored-man
-common-aliases composer extract fasd gem git git-flow git-extras github
-gitignore heroku golang history-substring-search jsontools nanoc pow
-powder rails rake-fast quote redis-cli vim-interaction vundle wp-cli
-zsh-reload)
+plugins=( brew brew-cask bundler coffee colored-man common-aliases
+composer extract fasd gem git git-flow git-extras github gitignore
+heroku golang history-substring-search jsontools nanoc pow powder rails
+rake-fast quote redis-cli vim-interaction vundle wp-cli zsh-reload)
 [[ "$OSTYPE" = darwin* ]] && plugins+=( osx )
 
 source_if_exists $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
