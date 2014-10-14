@@ -42,6 +42,17 @@
 #
 # ================================================================== }}}
 
+init_cache(){
+  file_name=$HOME/.init-cache/$1
+  if [[ -f $file_name ]]; then
+    source $file_name
+  else
+    mkdir -p $HOME/.init-cache
+    eval "$(echo $2)" > $file_name
+    source $file_name
+  fi
+}
+
 # => setup editor, browser and brew location as per the OS.
 if [[ "$OSTYPE" = darwin* ]]; then
   export EDITOR="mvim -v"       # use the executable provided by MacVim
@@ -69,9 +80,7 @@ export PATH="$BREW_PREFIX/bin:$PATH"
 
 # load rbenv, if available
 export RBENV_ROOT=$BREW_PREFIX/var/rbenv
-if which rbenv &>/dev/null ; then
-  eval "$(rbenv init - --no-rehash)"
-fi
+which rbenv &>/dev/null && init_cache rbenv "rbenv init --no-rehash - zsh"
 
 # => load local configuration, if available
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local

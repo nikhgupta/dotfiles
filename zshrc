@@ -106,7 +106,7 @@ export DISABLE_UPDATE_PROMPT=true
 # => load OhMyZSH and some relevant plugins {{{
 # plugins to be added later: emoji-clock
 plugins=( brew brew-cask bundler coffee colored-man common-aliases
-composer extract fasd gem git git-flow git-extras github gitignore
+composer extract gem git git-flow git-extras github gitignore
 heroku golang history-substring-search jsontools nanoc pow powder rails
 rake-fast quote redis-cli vim-interaction vundle wp-cli zsh-reload)
 [[ "$OSTYPE" = darwin* ]] && plugins+=( osx )
@@ -134,10 +134,6 @@ path_append $BREW_PREFIX/pear/bin
 
 # Go language:
 path_append $BREW_PREFIX/opt/go/libexec/bin
-
-# scripts that should be sourced as per homebrew
-source_if_exists $BREW_PREFIX/opt/autoenv/activate.sh
-source_if_exists $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # }}}
 # => load other relevant configurations {{{
 source_if_exists $DOTCASTLE/zsh/scripts.zsh
