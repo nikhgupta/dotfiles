@@ -924,11 +924,14 @@ endif
   " leaving insert mode. Foldmethod is local to the window. Protect against
   " screwing up folding when switching between windows.
   " http://vim.wikia.com/wiki/Keep_folds_closed_while_inserting_text
-  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod |
-                      \ setlocal foldmethod=manual | endif
-  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') |
-                              \ let &l:foldmethod=w:last_fdm |
-                              \ unlet w:last_fdm | endif
+  augroup FixFoldInsert
+    au!
+    autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod |
+                        \ setlocal foldmethod=manual | endif
+    autocmd InsertLeave,WinLeave * if exists('w:last_fdm') |
+                                \ let &l:foldmethod=w:last_fdm |
+                                \ unlet w:last_fdm | endif
+  augroup end
 " }}}
 " Essential:   supports SYNTAX highlighting , FileType detection, etc. for many languages {{{
   " text markup family:
@@ -1075,11 +1078,14 @@ endif
   augroup end
 
   " ruby - required by rails.vim
-  autocmd filetype ruby,eruby let g:rubycomplete_buffer_loading = 1
-  autocmd filetype ruby,eruby let g:rubycomplete_rails = 1
-  autocmd filetype ruby,eruby let g:rubycomplete_classes_in_global = 1
-  autocmd filetype ruby,eruby let g:rubycomplete_include_object = 1
-  autocmd filetype ruby,eruby let g:rubycomplete_include_objectspace = 1
+  augroup omni_complete_ruby
+    au!
+    autocmd filetype ruby,eruby let g:rubycomplete_buffer_loading = 1
+    autocmd filetype ruby,eruby let g:rubycomplete_rails = 1
+    autocmd filetype ruby,eruby let g:rubycomplete_classes_in_global = 1
+    autocmd filetype ruby,eruby let g:rubycomplete_include_object = 1
+    autocmd filetype ruby,eruby let g:rubycomplete_include_objectspace = 1
+  augroup end
 " }}}
 " Essential:   supports CODE LINTING (error-checking) for many languages {{{
   Plugin 'scrooloose/syntastic'
@@ -1433,6 +1439,7 @@ endif
 " }}}
 " Specialize:  git commit messages have spell check enabled, and text width of 72 chars {{{
   augroup git_files
+    au!
     autocmd BufRead,BufNewFile GHI_* set ft=gitcommit
     autocmd FileType gitcommit setlocal spell textwidth=72
   augroup end
