@@ -101,7 +101,7 @@ if [[ "$OSTYPE" = darwin* ]]; then
 
   # show/hide the hidden files in the system
   alias showHidden='defaults write com.apple.finder AppleShowAllFiles TRUE ; killall Finder';
-  alias hideHidden='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder'; 
+  alias hideHidden='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder';
 
   if [[ -e /Applications/VLC.app/Contents/MacOS/VLC ]]; then
     alias vlc='/Applications/VLC.app/Contents/MacOS/VLC';
@@ -141,6 +141,45 @@ function filesbysize() {
     if [ -z $1 ]; then size="10240k"; else size="$1"; fi
     if [ -z $2 ]; then dir="."; else dir="$2"; fi
     find "$dir" -type f -size +$size  -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+}
+
+# => measure average time for a command by running it a number of times
+function avgtime() {
+  o_times=(-n 5); o_help=(); o_quiet=();o_verbose=()
+  zparseopts -D -E -K -- n:=o_times h=o_help -help=o_help q=o_quiet v=o_verbose
+
+  if [[ $# == 0 || $? != 0 || -n "$o_help" ]]; then
+    echo "USAGE: $(basename "$0") [-n TIMES ] [-q|v] COMMAND"
+    echp " note: This command is please, quote your COMMAND."
+    return 1
+  fi
+
+  if [[ -z "$o_quiet" ]]; then
+    echo "Running command (${o_times[2]} times): $@"
+    echo "Note that, there will be a slight overhead."
+    echo "If this is a concern, please run again with \`-q\` flag."
+    echo
+    echo "Rehearsal:"
+    eval "$1"
+    echo "----------"
+  fi
+
+  sequence=$(seq -w 1 $o_times[2])
+  [[ -n "$o_verbose" ]] && _command="$1" || _command="$1 &>/dev/null"
+  start_time=$(date '+%s%N')
+  for i in `echo $sequence`; do
+    if [[ -z "$o_quiet" ]]; then
+      echo -ne "Run $i: "
+      eval "time ($_command)"
+    else
+      eval "${_command}"
+    fi
+  done
+  stop_time=$(date '+%s%N')
+  (( time_taken = ($stop_time - $start_time) / ($o_times[2] * 1000000.0) ))
+
+  echo -ne "average time (${o_times[2]} runs): $1:"
+  printf " %.6gms\n" $time_taken
 }
 # }}}
 # => Script dependent functions {{{
@@ -224,24 +263,25 @@ fi
 # => OhMyZSH pull request changes {{{
 # NOTE: config will be removed from here, as pull requests get merged into core.
 function emoji-clock() {
+  # Add 15 minutes to the current time and save the value as $minutes.
   (( minutes = $(date '+%M') + 15 ))
-  hour=$(date '+%I')
-  [ $minutes -ge 60 ] && (( hour = $hour + 1 ))
+  # make sure hour doesn't exceed 12
+  (( hour = ($(date '+%-l') + minutes / 60 ) % 12 ))
 
   case $hour in
-    01|13) clock="🕐"; [ $minutes -ge 30 ] && clock="🕜";;
-       02) clock="🕑"; [ $minutes -ge 30 ] && clock="🕝";;
-       03) clock="🕒"; [ $minutes -ge 30 ] && clock="🕞";;
-       04) clock="🕓"; [ $minutes -ge 30 ] && clock="🕟";;
-       05) clock="🕔"; [ $minutes -ge 30 ] && clock="🕠";;
-       06) clock="🕕"; [ $minutes -ge 30 ] && clock="🕡";;
-       07) clock="🕖"; [ $minutes -ge 30 ] && clock="🕢";;
-       08) clock="🕗"; [ $minutes -ge 30 ] && clock="🕣";;
-       09) clock="🕘"; [ $minutes -ge 30 ] && clock="🕤";;
-       10) clock="🕙"; [ $minutes -ge 30 ] && clock="🕥";;
-       11) clock="🕚"; [ $minutes -ge 30 ] && clock="🕦";;
-       12) clock="🕛"; [ $minutes -ge 30 ] && clock="🕧";;
-        *) clock="⌛";;
+     1) clock="🕐"; [ $minutes -ge 30 ] && clock="🕜";;
+     2) clock="🕑"; [ $minutes -ge 30 ] && clock="🕝";;
+     3) clock="🕒"; [ $minutes -ge 30 ] && clock="🕞";;
+     4) clock="🕓"; [ $minutes -ge 30 ] && clock="🕟";;
+     5) clock="🕔"; [ $minutes -ge 30 ] && clock="🕠";;
+     6) clock="🕕"; [ $minutes -ge 30 ] && clock="🕡";;
+     7) clock="🕖"; [ $minutes -ge 30 ] && clock="🕢";;
+     8) clock="🕗"; [ $minutes -ge 30 ] && clock="🕣";;
+     9) clock="🕘"; [ $minutes -ge 30 ] && clock="🕤";;
+    10) clock="🕙"; [ $minutes -ge 30 ] && clock="🕥";;
+    11) clock="🕚"; [ $minutes -ge 30 ] && clock="🕦";;
+    12) clock="🕛"; [ $minutes -ge 30 ] && clock="🕧";;
+     *) clock="⌛";;
   esac
   echo $clock
 }
