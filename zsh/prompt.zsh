@@ -67,18 +67,18 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✰"
 # => function: set prompt character based on repo and SSH status {{{
 _set_prompt_char() {
   [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
-  git log &>/dev/null && echo -ne '± '
+  command git log &>/dev/null && echo -ne '± '
   hg root &>/dev/null && echo -ne '☿ '
 }
 # }}}
 # => function: prompt entry for time since last git commit {{{
 _git_time_since_commit() {
 
-  git rev-parse --git-dir &>/dev/null || return
-  git log &>/dev/null || return
+  command git rev-parse --git-dir &>/dev/null || return
+  command git log &>/dev/null || return
 
   # Get the last commit.
-  last_commit=`git log --pretty=format:'%at' -1 2>/dev/null`
+  last_commit=`command git log --pretty=format:'%at' -1 2>/dev/null`
   now=`date +%s`
   seconds_since_last_commit=$((now-last_commit))
 
@@ -91,7 +91,7 @@ _git_time_since_commit() {
   SUB_HOURS=$((HOURS % 24))
   SUB_MINUTES=$((MINUTES % 60))
 
-  if [[ -n $(git status -s 2>/dev/null) ]]; then
+  if [[ -n $(command git status -s 2>/dev/null) ]]; then
     if [ "$MINUTES" -gt 60 ]; then
       COLOR="%{$fg[red]%}"
     elif [ "$MINUTES" -gt 10 ]; then
@@ -179,7 +179,7 @@ _display_extravagent_prompt_left() {
   echo -ne "$(git_prompt_info)$(_git_time_since_commit)%{$reset_color%}"
 
   # intelligently, use a single line or a double line
-  if (( ${#PWD/#$HOME/\~} > 16 )) || [[ -n $SSH_CONNECTION ]] || git log &>/dev/null; then echo; fi
+  if (( ${#PWD/#$HOME/\~} > 16 )) || [[ -n $SSH_CONNECTION ]] || command git log &>/dev/null; then echo; fi
 
   echo -ne "$(_set_prompt_char)$timer_show$(_return_code)"
   echo '%(!.!.➲) '

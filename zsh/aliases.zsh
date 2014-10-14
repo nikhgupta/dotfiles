@@ -73,6 +73,7 @@ alias -g COPY=" | pbcopy"
 alias -g PASTE="pbpaste | "
 
 # aliases that I use, often
+which hub &>/dev/null && alias git=hub
 alias gem_local='gem list --local';
 # copy my SSH key to the clipboard for quick pasting
 alias getsshkey="cat $HOME/.ssh/`whoami`.pub COPY"
