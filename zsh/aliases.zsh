@@ -261,35 +261,3 @@ if [[ $(uname -a) = *Ubuntu* ]]; then
   }
 fi
 # }}}
-# => OhMyZSH pull request changes {{{
-# NOTE: config will be removed from here, as pull requests get merged into core.
-function emoji-clock() {
-  # Add 15 minutes to the current time and save the value as $minutes.
-  (( minutes = $(date '+%M') + 15 ))
-  # make sure hour doesn't exceed 12
-  (( hour = ($(date '+%I') + minutes / 60 ) % 12 ))
-
-  case $hour in
-     1) clock="🕐"; [ $minutes -ge 30 ] && clock="🕜";;
-     2) clock="🕑"; [ $minutes -ge 30 ] && clock="🕝";;
-     3) clock="🕒"; [ $minutes -ge 30 ] && clock="🕞";;
-     4) clock="🕓"; [ $minutes -ge 30 ] && clock="🕟";;
-     5) clock="🕔"; [ $minutes -ge 30 ] && clock="🕠";;
-     6) clock="🕕"; [ $minutes -ge 30 ] && clock="🕡";;
-     7) clock="🕖"; [ $minutes -ge 30 ] && clock="🕢";;
-     8) clock="🕗"; [ $minutes -ge 30 ] && clock="🕣";;
-     9) clock="🕘"; [ $minutes -ge 30 ] && clock="🕤";;
-    10) clock="🕙"; [ $minutes -ge 30 ] && clock="🕥";;
-    11) clock="🕚"; [ $minutes -ge 30 ] && clock="🕦";;
-    12) clock="🕛"; [ $minutes -ge 30 ] && clock="🕧";;
-     *) clock="⌛";;
-  esac
-  echo $clock
-}
-
-if [[ "$OSTYPE" = darwin* ]]; then
-  function fully_charged() {
-    [[ $(ioreg -rc "AppleSmartBattery"| grep '^.*"FullyCharged"\ =\ ' | sed -e 's/^.*"FullyCharged"\ =\ //') == "Yes" ]]
-  }
-fi
-# }}}
