@@ -1244,9 +1244,9 @@ endif
   Plugin 'skwp/vim-html-escape'
   " plugin mappings: <leader>he => escape | <leader>hu => unescape
 " }}}
-" Specialize:  CSS:                view color previews {{{
-  Plugin 'skammer/vim-css-color'
-" }}}
+" " Specialize:  CSS:                view color previews {{{
+"   Plugin 'skammer/vim-css-color'
+" " }}}
 " Specialize:  HTML & CSS:         provides a unique theme (focuses on content) {{{
   let g:thematic#themes['focus-dark']  = DistractionFree({'colorscheme': 'focus-dark' })
   let g:thematic#themes['focus-light'] = DistractionFree({'colorscheme': 'focus-light'})
