@@ -201,7 +201,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
   " always show these bookmarks on the startup screen
-  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/Code', '~/Code/scripts' ]
+  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/Code/__dotfiles' ]
 
   if executable('figlet')
     let s:startify_custom_footer_command = 'fortune -s; echo; echo; figlet -f "ANSI Shadow" VIM $(vim --version | head -1 | egrep "\d+\.\d+" -o)'
