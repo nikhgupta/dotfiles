@@ -439,7 +439,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   augroup end
 " }}}
 " Upgrade:     has a beautiful status line (via AirLine) {{{
-  set showmode                    " always show what mode we're currently editing in
+  set noshowmode                  " don't show vim modes - let statusline do that
   set report=0                    " always report number of lines changed
   set shortmess+=filmnrxoOtT      " abbrev. vim-messages (avoids 'hit enter', also)
 
@@ -452,8 +452,12 @@ set nocompatible     " No to the total compatibility with the ancient vi
     set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
   endif
 
+  " show buffers in statusline
+  Plugin 'bling/vim-bufferline'
+  let g:bufferline_echo = 0
+
   " variable used in statusline
-  let g:ui_type = g:is_gui ? "GUI" : "TTY"
+  let g:ui_type = g:is_gui ? "GUI" : "TERM"
 
   " Use :AirlineToggle to revert to this statusline
   if has('statusline') && !exists('g:loaded_airline')
@@ -468,8 +472,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:thematic#defaults['airline-theme'] = DayOrNight("solarized", "base16")
 
   " customize the Airline sections
-  let g:airline_section_x = "%{airline#util#wrap('['.g:ui_type.']', 0)}"
-  let g:airline_section_y = "%{airline#util#wrap(airline#parts#ffenc() . ' ' . &ft, 0)}"
+  let g:airline_section_y = "%{airline#util#wrap(airline#parts#ffenc() . ' ' . g:ui_type, 0)}"
 
   " set a default airline theme, if none has, been defined!
   if !exists('g:airline_theme') | let g:airline_theme = 'solarized' | endif
@@ -1406,16 +1409,21 @@ endif
 " Specialize:  adds support for running git commands from within the editor {{{
   Plugin 'tpope/vim-fugitive'
 " }}}
-" Specialize:  displays git diff in sign column (default: off) {{{
+" Specialize:  displays git diff in sign column, and easily add hunks for staging {{{
   Plugin 'airblade/vim-gitgutter'
-  " do not enable gitgutter by default
-  let g:gitgutter_enabled = 0
-  " do not be eager - only work when reading/writing a file
-  let g:gitgutter_eager = 0
+  " enable gitgutter by default
+  let g:gitgutter_enabled = 1
+  " but do not display signs by default
+  let g:gitgutter_signs = 0
   " ignore whitespace
   let g:gitgutter_diff_args = '-w'
-  nmap <leader>ggt :GitGutterToggle<CR>
-  nmap <leader>tgg :GitGutterToggle<CR>
+  " use the raw grep command
+  let g:gitgutter_escape_grep = 1
+  " let vim be snappier - don't lag.
+  " let g:gitgutter_realtime = 0
+  " let g:gitgutter_eager = 0
+  nmap <leader>ggt :GitGutterSignsToggle<CR>
+  nmap <leader>tgg :GitGutterSignsToggle<CR>
 " }}}
 " Specialize:  enables support to manage Github Gists from the editor {{{
   Plugin 'mattn/webapi-vim'
