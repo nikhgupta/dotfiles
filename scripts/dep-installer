@@ -80,6 +80,11 @@ curl -L http://install.ohmyz.sh | sh
 
 echo
 echo
+echo "Downloading Base16 Shell scripts"
+git clone https://github.com/chriskempson/base16-shell.git $DOTCASTLE/scripts/base16-shell
+
+echo
+echo
 echo "Installed dependencies as required."
 echo "Please, open a new shell and run the bootstrap script:"
 echo "  cd $DOTCASTLE && ./scripts/bootstrap"

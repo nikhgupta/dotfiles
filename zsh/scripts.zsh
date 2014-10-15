@@ -36,7 +36,7 @@
 # ================================================================== }}}
 
 # => source all custom dependencies
-source_if_exists "$DOTCASTLE/zsh/base16-eighties.dark.sh" || \
+source_if_exists "$BASE16_SHELL/base16-eighties.dark.sh" || \
   echo '[WARN] Base16 Shell support is missing.'
 
 # => homebrew managed scripts:

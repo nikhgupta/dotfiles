@@ -21,3 +21,4 @@
 # don't ignore these files, useful to keep the directory structure
 !.gitkeep
 !.notempty
+/scripts/base16-shell

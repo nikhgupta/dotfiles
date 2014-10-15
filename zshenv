@@ -74,6 +74,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # => all the dotfiles code resides here, so this will be used often
 export DOTCASTLE=$HOME/Code/__dotfiles
+export BASE16_SHELL=$DOTCASTLE/scripts/base16-shell
 
 # => ensure that homebrew is in our path.
 export PATH="$BREW_PREFIX/bin:$PATH"

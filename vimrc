@@ -490,7 +490,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " use 256 colorspace support, since we want to use a base16 colorscheme.
   " NOTE: this requires `base16-shell` to be sourced by our ZSH configuration,
   " so that the terminal program can support 256 colorspace, as well.
-  let base16colorspace=256
+  let base16colorspace = 256
+  let g:base16_shell_path = $BASE16_SHELL
   let g:thematic#defaults["linespace"]  = 0
 
   if g:is_macvim
@@ -1549,7 +1550,8 @@ endif
 " }}}
 " Search And Replace:                                                {{{
 " Essential:   has built-in smart search feature, which searches as you type {{{
-  set smartcase                   " ignore case if pattern is lowercase, else be case-sensitive
+  set ignorecase                  " makes searches ignore case
+  set smartcase                   " if pattern has uppercase, be case-sensitive
   set wrapscan                    " search continues after the end of file
   set magic                       " use magic mode when searching/replacing
   set gdefault                    " search/replace globally (on a line) by default
