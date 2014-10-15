@@ -1765,6 +1765,10 @@ endif
   map <leader><C-j> <C-w>j<C-w>_
   map <leader><C-k> <C-w>k<C-w>_
   map <leader><C-l> <C-w>l<C-w><bar>
+
+  " easily jump to a new buffer
+  nnoremap <leader>el :buffers<CR>:buffer<Space>
+  nnoremap <leader>e3 :e#
 " }}}
 " Expedite:    Mappings: open a new buffer with current file & switch to it {{{
   nnoremap <leader>wh <C-w>s<C-w>k
