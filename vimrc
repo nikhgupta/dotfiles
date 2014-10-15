@@ -1424,6 +1424,9 @@ endif
   " let g:gitgutter_eager = 0
   nmap <leader>ggt :GitGutterSignsToggle<CR>
   nmap <leader>tgg :GitGutterSignsToggle<CR>
+
+  nmap [h :GitGutterPrevHunk<CR>:GitGutterPreviewHunk<CR>
+  nmap ]h :GitGutterNextHunk<CR>:GitGutterPreviewHunk<CR>
 " }}}
 " Specialize:  enables support to manage Github Gists from the editor {{{
   Plugin 'mattn/webapi-vim'
