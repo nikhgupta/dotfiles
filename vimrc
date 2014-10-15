@@ -126,6 +126,13 @@ set nocompatible     " No to the total compatibility with the ancient vi
 
   " other relevant variables
   let g:is_posix   = 1 " enable better bash syntax highlighting
+  " what kind of VIM UI we are working with?
+  if g:is_macvim                | let g:ui_type = "MVIM"
+  elseif g:is_gui               | let g:ui_type = "GUI"
+  elseif exists("$TMUX")        | let g:ui_type = "TMUX"
+  elseif exists("$COLORTERM")   | let g:ui_type = "CTERM"
+  elseif exists("$TERM")        | let g:ui_type = "TERM"
+  else | let g:ui_type = "????" | endif
 
   " initialize plugin related dictionaries
   let g:thematic#defaults = {}
@@ -456,12 +463,10 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plugin 'bling/vim-bufferline'
   let g:bufferline_echo = 0
 
-  " variable used in statusline
-  let g:ui_type = g:is_gui ? "GUI" : "TERM"
-
   " Use :AirlineToggle to revert to this statusline
   if has('statusline') && !exists('g:loaded_airline')
-    set stl=\ \ \ \ \ [%Y/%{&ff}]\ %F\ %m%r%=[%{g:ui_type}]\ %-17.(%l,%c%V%)\ %p\%\%\ \ \ %LL\ TOTAL
+    set stl=\ \ \[_%{mode()}_]\ \ \ [%Y/%{&ff}]\ %F\ %m%r\
+          \ %=[%{g:ui_type}]\ %-17.(%l,%c%V%)\ %p\%\%\ \ \ %LL\ TOTAL
   endif
 
   " use airline themes depending upon day or night time, as default in Thematic
