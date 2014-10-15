@@ -311,6 +311,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plugin 'ciaranm/inkpot'
   Plugin 'morhetz/gruvbox'
   Plugin 'DAddYE/soda.vim'
+  Plugin 'nikhgupta/awesome-text'
+  Plugin 'nikhgupta/vim-focus-html'
   " Plugin 'cstrahan/grb256'
   Plugin 'Pychimp/vim-luna'
   Plugin 'jnurmine/Zenburn'
