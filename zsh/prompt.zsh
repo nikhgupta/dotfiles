@@ -159,7 +159,7 @@ _battery_remaining() {
     else
       current=$(echo $battery_data|grep -e '"CurrentCapacity"\s*=\s*'|sed -e 's/^.*"CurrentCapacity"\s*=\s*//' )
       maxcapc=$(echo $battery_data|grep -e '"MaxCapacity"\s*=\s*'|sed -e 's/^.*"MaxCapacity"\s*=\s*//' )
-      (( battery_pct = (current * 100.0 ) /maxcapc ))
+      (( battery_pct = (current * 100 ) /maxcapc ))
       [ $battery_pct -gt 20 ] && color='yellow'
       [ $battery_pct -gt 50 ] && color='green'
       echo -ne "🔋 %{$fg[${color:-red}]%}[$battery_pct%%]%{$reset_color%}"
