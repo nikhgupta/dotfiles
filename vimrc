@@ -1702,10 +1702,25 @@ endif
 " }}}
 " }}}
 " Clipboard And Yanking:                                             {{{
-" Personalize: allows pasting code easily with '<F2>' or '<leader>pp' keys {{{
+" Personalize: allows turning on paste mode with '<F2>' key {{{
   set pastetoggle=<F2>
-  " toggle paste mode on and off
-  map <leader>pp :setlocal paste!<cr>
+" }}}
+" Expedite:    allows pasting code easily, formats it, and reselects it for quick alignment {{{
+  " function: paste using paste mode {{{
+  function! PasteWithPasteMode(keys)
+    if &paste
+      normal a:keys
+    else
+      " Enable paste mode and paste the text, then disable paste mode.
+      set paste
+      normal a:keys
+      set nopaste
+    endif
+  endfunction
+  " }}}
+
+  nnoremap <silent> <leader>p :call PasteWithPasteMode('p')<CR>`[v`]=`[v`]
+  nnoremap <silent> <leader>P :call PasteWithPasteMode('P')<CR>`[v`]=`[v`]
 " }}}
 " Essential:   do share clipboard between editor and operating system {{{
   if g:is_nix && has('unnamedplus')
@@ -1713,16 +1728,6 @@ endif
   else
     set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
   endif
-" }}}
-" Expected:    context-aware indented pasting without enabling paste mode {{{
-  Plugin 'sickill/vim-pasta'
-  " disable pasta on some file types:
-  let g:pasta_disabled_filetypes = ['python', 'coffee', 'yaml']
-  " " enable paste on specific file types:
-  " let g:pasta_enabled_filetypes = ['ruby', 'javascript', 'css', 'sh']
-  " " make pasta use different mappings rather than overloading [p,P]
-  " let g:pasta_paste_before_mapping = ',P'
-  " let g:pasta_paste_after_mapping = ',p'
 " }}}
 " Specialize:  store and cycle through yanked text strings {{{
   Plugin 'maxbrunsfeld/vim-yankstack'
@@ -1738,18 +1743,8 @@ endif
   nnoremap <leader>yst :Yanks<CR>
   nnoremap <leader>tys :Yanks<CR>
 " }}}
-" Mappings:    reselects text that was just pasted {{{
+" Mappings:    reselects text that was just selected (or pasted) {{{
   nnoremap <leader>gv `[v`]
-  nnoremap <leader>p  p`[v`]
-  nnoremap <leader>P  P`[v`]
-" }}}
-" Mappings:    reselects text that was just pasted after formatting it {{{
-  nnoremap <leader>gp p`[v`]=`[v`]
-  nnoremap <leader>gP P`[v`]=`[v`]
-" }}}
-" Mappings:    deletes a line without adding it to the yanked stack {{{
-  nmap <silent> <leader>d "_d
-  vmap <silent> <leader>d "_d
 " }}}
 " Expected:    pasting in visual mode replaces the selected text {{{
   vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
