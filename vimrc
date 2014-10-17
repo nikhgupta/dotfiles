@@ -472,12 +472,27 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " use airline themes depending upon day or night time, as default in Thematic
   let g:airline_powerline_fonts  = 1 " use powerline symbols
   " use the given separator symbols (powerline enabled font required!)
-  let g:airline_left_alt_sep     = ''
-  let g:airline_right_alt_sep    = ''
+  let g:airline_inactive_collapse=0
   let g:thematic#defaults['airline-theme'] = DayOrNight("solarized", "base16")
 
   " customize the Airline sections
   let g:airline_section_y = "%{airline#util#wrap(airline#parts#ffenc() . ' ' . g:ui_type, 0)}"
+
+  " patch the 'base16' (eighties) theme in airline
+  let g:airline_theme_patch_func = 'AirlineThemePatcher'
+  function! AirlineThemePatcher(palette)
+    if g:airline_theme == 'base16' && g:colors_name == 'base16-eighties'
+      let better_ui_colors = ['#515151', '#a09f93', 19, 20]
+      let a:palette['normal']['airline_c'] = better_ui_colors
+      let a:palette['normal']['airline_x'] = better_ui_colors
+      let a:palette['inactive_modified']['airline_c'] = [ '#a70200', '', 88, '']
+      for section in keys(a:palette['inactive'])
+        if section != 'airline_warning'
+          let a:palette['inactive'][section] = better_ui_colors
+        endif
+      endfor
+    endif
+  endfunction
 
   " set a default airline theme, if none has, been defined!
   if !exists('g:airline_theme') | let g:airline_theme = 'solarized' | endif
