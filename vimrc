@@ -781,7 +781,9 @@ endif
 
 " }}}
 " Recommend:   provides a mapping to save file after removing all trailing whitespace {{{
-  nnoremap <silent> <leader>W  :%s/\v<C-v><C-m>//e<CR>:retab<CR>:%s/\s\+$//e<CR>:let @/=''<CR>:w<CR>
+  " replaces all hard tabs and ^M to spaces, and then removes trailing WS.
+  " restores cursor position by setting a marker
+  nnoremap <silent> <leader>W  mw:%s/\v<C-v><C-m>//e<CR>:retab<CR>:%s/\s\+$//e<CR>:nohlsearch<CR>:w<CR>`w
 " }}}
 " Recommend:   provides standard OS shortcuts on MacOSX {{{
 if g:is_mac
