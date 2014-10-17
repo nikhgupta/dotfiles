@@ -225,6 +225,9 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 
 " General:                                                           {{{
+" Personalize: allows customizations via a local configuration {{{
+  call SourceIfReadable("~/.vimrc.local.pre")
+" }}}
 " Essential:   has mouse support built-in {{{
   if has('mouse')
     set mouse=a          " enable using mouse if terminal supports it
