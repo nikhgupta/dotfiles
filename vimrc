@@ -1178,6 +1178,7 @@ endif
     au BufNewFile,BufRead Rakefile,Capfile,Gemfile,Guardfile  setl ft=ruby
     au BufNewFile,BufRead Vagrantfile,Thorfile,Do,dorc,Dofile setl ft=ruby
     au BufNewFile,BufRead config.ru,.autotest,.irbrc,.pryrc   setl ft=ruby
+    au BufNewFile,BufRead *.thor setl ft=ruby
     " vim and shell files:
     au BufNewFile,BufRead *vimrc,*.vim setl ft=vim
     au BufNewFile,BufRead *zshrc,*zprofile,*zlogout,*zlogin,*zshenv setl ft=zsh
