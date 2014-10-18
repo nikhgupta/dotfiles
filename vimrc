@@ -1721,11 +1721,11 @@ endif
   " function: paste using paste mode {{{
   function! PasteWithPasteMode(keys)
     if &paste
-      normal a:keys
+      execute("normal " . a:keys)
     else
       " Enable paste mode and paste the text, then disable paste mode.
       set paste
-      normal a:keys
+      execute("normal " . a:keys)
       set nopaste
     endif
   endfunction
