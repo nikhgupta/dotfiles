@@ -1378,6 +1378,9 @@ endif
   nmap <leader>vi :vs<CR>:e $MYVIMRC<CR>
   " source the current file
   nmap <leader>vs :source %<CR>:set foldenable<CR>:e!<CR>
+  " source a visual range
+  vmap <leader>vs y:@"<CR>:echo 'Sourced the selected range.'<CR>
+" }}}
 " }}}
 " }}}
 " Security:                                                          {{{
