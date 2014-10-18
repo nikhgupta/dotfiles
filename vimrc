@@ -1288,6 +1288,9 @@ endif
   let g:rails_ctags_arguments = ['--languages=-javascript,sql',
         \ '--fields=+l', '--exclude=.git', '--exclude=log']
 " }}}
+" Specialize:  Ruby:               has refactoring support for ruby code {{{
+  Plugin 'ecomba/vim-ruby-refactoring'
+" }}}
 " Specialize:  Text Markup:        provides distract-free editing theme with ByWord like UI {{{
   let g:thematic#themes['awesome-text-dark'] = DistractionFree({
         \    'colorscheme': 'awesome-text-dark',
