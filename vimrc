@@ -1381,6 +1381,13 @@ endif
   " source a visual range
   vmap <leader>vs y:@"<CR>:echo 'Sourced the selected range.'<CR>
 " }}}
+" Mappings:    Help:               quickly navigate the help window {{{
+  augroup help_window
+    au!
+    au filetype help nnoremap <buffer><cr> <c-]>
+    au filetype help nnoremap <buffer><bs> <c-T>
+    au filetype help nnoremap <buffer>q :q<CR>
+  augroup end
 " }}}
 " }}}
 " Security:                                                          {{{
