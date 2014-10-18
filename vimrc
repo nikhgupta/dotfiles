@@ -572,10 +572,8 @@ endif
   " <leader>ma : Hides all marks in the current buffer.
   " <leader>mm : Places the next available mark.
 " }}}
-" Tweak:       uses vertical bar for insert mode in iTerm {{{ note: untested on other terminals
-  " NOTE: only supported for iTerm users
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" Tweak:       toggles cursor in insert mode {{{
+  Plugin 'jszakmeister/vim-togglecursor'
 " }}}
 " Tweak:       uses a non-blinking block cursor within GUI {{{
   if g:is_gui
