@@ -462,9 +462,10 @@ set nocompatible     " No to the total compatibility with the ancient vi
     set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
   endif
 
-  " show buffers in statusline
-  Plugin 'bling/vim-bufferline'
-  let g:bufferline_echo = 0
+  " disabled: makes no sense to me.
+  " " show buffers in statusline
+  " Plugin 'bling/vim-bufferline'
+  " let g:bufferline_echo = 0
 
   " Use :AirlineToggle to revert to this statusline
   if has('statusline') && !exists('g:loaded_airline')
