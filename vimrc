@@ -1761,6 +1761,9 @@ endif
 " Expected:    pasting in visual mode replaces the selected text {{{
   vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 " }}}
+" Expedite:    copy the entire buffer {{{
+  nnoremap <leader>gy :%y+<CR>
+" }}}
 " }}}
 " Buffers Tabs And Windows:                                          {{{
 " Recommend:   hide buffers instead of closing them {{{
