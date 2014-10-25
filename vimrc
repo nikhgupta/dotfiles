@@ -623,7 +623,7 @@ endif
 " Recommend:   displays invisible whitespace e.g. hard tabs {{{
   set list                        " show invisible characters like spaces
                                   " enabled later via autocmd on certain filetypes
-  set listchars=tab:▸\ ,trail:·,extends:▶,precedes:◀,nbsp:·
+  set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:·
 " }}}
 " Recommend:   wraps text automatically, when editing it {{{
   set nowrap                      " don't wrap lines
