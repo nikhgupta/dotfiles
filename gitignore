@@ -42,10 +42,12 @@
 # Common files #
 ################
 *~
-*.swp
+*.un~
+*.sw[a-z]
 *.rbc
 .svn
 .tissues
+Session.vim
 
 # Compiled source #
 ###################
@@ -77,10 +79,14 @@
 
 # OS generated files #
 ######################
+._*
 .DS_Store*
+.Trashes
+.Spotlight-V100
 ehthumbs.db
 Icon?
 Thumbs.db
+Desktop.ini
 
 # scm revert files
 **.orig
@@ -96,9 +102,24 @@ Thumbs.db
 zeus.json
 custom_plan.rb
 
-# others
+# miscelleneous/cache files
+.sass-cache
+
+# Tags: Ignore tags created by ctags, etags, etc.
+TAGS
+!TAGS/
 tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
 
 # never ignore files that are named .notempty or .gitkeep
 !.notempty
 !.gitkeep
+!.keep

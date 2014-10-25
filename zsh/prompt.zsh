@@ -48,6 +48,9 @@
 #   - displays pending jobs, if any.
 #
 # ================================================================== }}}
+PROMPT_BREAKPOINTS=(60 0)
+PROMPT_FILE=$DOTCASTLE/zsh/prompt.zsh
+source $DOTCASTLE/scripts/dotcastle/utils.sh
 
 # => various environment variables used within this script {{{
 GIT_PS1_SHOWUPSTREAM=verbose
@@ -66,20 +69,21 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ✰"
 # }}}
 # => function: set prompt character based on repo and SSH status {{{
 _set_prompt_char() {
-  if command git log &>/dev/null; then; echo -ne '± ';
-  elif command hg root &>/dev/null; then; echo -ne '☿ '; fi
+  if  is_git; then echo -ne '± ';
+  elif is_hg; then echo -ne '☿ ';
+  elif is_svn; then echo -ne '⑆ ';
+  fi
 }
 # }}}
 # => function: prompt entry for time since last git commit {{{
 _git_time_since_commit() {
 
-  command git rev-parse --git-dir &>/dev/null || return
-  command git log &>/dev/null || return
-
   # Get the last commit.
-  last_commit=`command git log --pretty=format:'%at' -1 2>/dev/null`
-  now=`date +%s`
-  seconds_since_last_commit=$((now-last_commit))
+  last_commit=$(command git log --pretty=format:'%at' -1 2>/dev/null)
+  (( $? )) && return    # probably, not a git repo.
+
+  now=$(date +%s)
+  seconds_since_last_commit=$((now - last_commit))
 
   # Totals
   MINUTES=$((seconds_since_last_commit / 60))
@@ -124,7 +128,12 @@ _prompt_timer_preexec() {
   unset timer_show
   timer=${timer:-$SECONDS}
 }
+# Wed Oct 22 23:42:48 IST 2014:
+# - added bell for commands that take more than 20 seconds to run.
 _prompt_timer_precmd() {
+  unset timer_show     # only show time for a single prompt
+                       # i.e. ENTER in shell should reset the timer.
+  local bell="%{$(echo '\a')%}"
   if [ $timer ]; then
     timer_result=$(($SECONDS - $timer))
     unset timer
@@ -133,22 +142,24 @@ _prompt_timer_precmd() {
       let "remainder = $timer_result % 3600"
       let "timer_minutes = $remainder / 60"
       let "timer_seconds = $remainder % 60"
-      timer_show="%B%F{red}${timer_hours}h${timer_minutes}m${timer_seconds}s%b "
+      timer_show="%B%F{red}${timer_hours}h${timer_minutes}m${timer_seconds}s%b${bell} "
     elif [[ $timer_result -ge 60 ]]; then
       let "timer_minutes = $timer_result / 60"
       let "timer_seconds = $timer_result % 60"
-      timer_show="%B%F{yellow}${timer_minutes}m${timer_seconds}s%b "
+      timer_show="%B%F{yellow}${timer_minutes}m${timer_seconds}s%b${bell} "
+    elif [[ $timer_result -gt 20 ]]; then
+      timer_show="%B%F{green}${timer_result}s%b${bell} "
     elif [[ $timer_result -gt 5 ]]; then
       timer_show="%B%F{green}${timer_result}s%b "
     fi
   fi
 }
-add-zsh-hook preexec _prompt_timer_preexec
-add-zsh-hook precmd _prompt_timer_precmd
+is_installed add-zsh-hook && add-zsh-hook preexec _prompt_timer_preexec
+is_installed add-zsh-hook && add-zsh-hook precmd _prompt_timer_precmd
 # }}}
 # => function: prompt entry for battery remaining (in percent) {{{
 _battery_remaining() {
-  if [[ "$OSTYPE" = darwin* ]]; then
+  if is_macosx; then
     battery_data=$(ioreg -rc "AppleSmartBattery")
     if echo $battery_data | grep -e '"FullyCharged"\s*=\s*Yes' &>/dev/null; then
       echo -ne "🔌 "    # fully charged
@@ -157,14 +168,14 @@ _battery_remaining() {
     elif echo $battery_data | grep -e '"IsCharging"\s*=\s*Yes' &>/dev/null; then
       echo -ne "⚡ "    # being charged
     else
-      current=$(echo $battery_data|grep -e '"CurrentCapacity"\s*=\s*'|sed -e 's/^.*"CurrentCapacity"\s*=\s*//' )
-      maxcapc=$(echo $battery_data|grep -e '"MaxCapacity"\s*=\s*'|sed -e 's/^.*"MaxCapacity"\s*=\s*//' )
-      (( battery_pct = (current * 100 ) /maxcapc ))
-      [ $battery_pct -gt 20 ] && color='yellow'
-      [ $battery_pct -gt 50 ] && color='green'
+      current=$(echo $battery_data|grep --color=never -e '"CurrentCapacity"\s*=\s*'|sed -e 's/^.*"CurrentCapacity"\ =\ //' )
+      maxcapc=$(echo $battery_data|grep -e '"MaxCapacity"\s*=\s*'|sed -e 's/^.*"MaxCapacity"\ =\ //' )
+      (( battery_pct = (current * 100 ) / maxcapc ))
+      [[ $battery_pct -gt 20 ]] && color='yellow'
+      [[ $battery_pct -gt 50 ]] && color='green'
       echo -ne "🔋 %{$fg[${color:-red}]%}[$battery_pct%%]%{$reset_color%}"
     fi
-  elif which acpi &>/dev/null; then
+  elif is_installed acpi; then
     battery_data=$(acpi 2&>/dev/null)
     if echo $battery_data | grep -e '^Battery.*Discharging' &>/dev/null; then
       battery_pct=$(echo $battery_data | cut -f2 -d ',' | tr -cd '[:digit:]')
@@ -182,54 +193,51 @@ _current_time() {
   echo "$(emoji-clock) %{$fg_bold[blue]%}[%*]%{$reset_color%}"
   # echo "%{$fg_bold[blue]%}[%*]%{$reset_color%}"   # faster
 }
-# TODO: To be removed after upstream changes to OMZ are accepted
+# }}}
+# => function: prompt entry for host and user name in SSH connection {{{
+_ssh_user_info(){
+  [[ -z "$SSH_CONNECTION" ]] && return
+  echo -ne "%{$fg[magenta]%}%n%{$reset_color%} at "
+  echo -ne "%{$fg[yellow]%}%m%{$reset_color%} in "
+}
+# }}}
 _git_prompt_status() {
-  command git symbolic-ref HEAD &>/dev/null || return 1
+# TODO: To be removed after upstream changes to OMZ are accepted
+  is_git || return 1
   git_prompt_status
 }
-# }}}
-# => function: print the original 'extravagent' prompt {{{
-#    note: we will call these functions only once when sourcing this
-#    file, and hence, all logic that is fixed when session starts should
-#    go inside these functions, and things that can/do change on each
-#    prompt rendering should be moved to separate functions, and
-#    referenced from here.
-_display_extravagent_prompt_left() {
-  # display host information when inside ssh connection
-  echo -ne '%{$fg[magenta]%}%n%{$reset_color%} at '
-  echo -ne '%{$fg[yellow]%}%m%{$reset_color%} in '
 
-  # display the path to current directory
-  echo -ne '%{$fg_bold[cyan]%}${PWD/#$HOME/~}%{$reset_color%} '
+_after_prompt_all(){
+  # intelligently, add a new line char in prompt
+  PROMPT+='$prompt_newline'
 
-  # display git information
-  echo -ne '$(git_prompt_info)$(_git_time_since_commit)%{$reset_color%}'
+  # == every prompt should display the following information
+  # display a telephone icon when we are in a SSH session.
+  [[ -n $SSH_CONNECTION ]] && PROMPT+="%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
 
-  # intelligently, use a single line or a double line
-  # if (( ${#PWD/#$HOME/\~} > 16 )) || [[ -n $SSH_CONNECTION ]] || command git log &>/dev/null; then echo; fi
-  echo
-
-  [[ -n $SSH_CONNECTION ]] && echo -ne "%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
-  echo -ne '$(_set_prompt_char)$timer_show$(_return_code)'
-  echo '%(!.!.➲) '
+  PROMPT+='$(_set_prompt_char)'     # prompt icon for repo
+  PROMPT+='$timer_show'             # time taken to run last command
+  PROMPT+='$(_return_code)'         # return code for last command
+  PROMPT+="%(!.!.➲) "               # prompt char
 }
-_display_extravagent_prompt_right(){
-  echo -ne '$(_git_prompt_status)%{$reset_color%} '
-  echo -ne '$(_pending_jobs) '
-  echo -ne '$(_current_time) '
-  echo -ne '$(_battery_remaining)'
+
+_prompt_0(){
+  PROMPT="%{$fg[green]%}%c%{$reset_color%} "  # cwd name
+  RPROMPT=""
+  _after_prompt_all
 }
-# }}}
 
-# aliases to quickly change the prompt
-alias prompt_mini="export PROMPT_TYPE=mini; source ~/.zsh/prompt.zsh"
-alias prompt_reset="export PROMPT_TYPE=extravagent; source ~/.zsh/prompt.zsh"
+_prompt_60(){
+  PROMPT="$(_ssh_user_info)"
+  PROMPT+="%{$fg_bold[cyan]%}"'${PWD/#$HOME/~}'"%{$reset_color%} "
+  PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
 
-# => display the actual prompt:
-if [[ "$PROMPT_TYPE" =~ "mini" ]]; then
-  export PROMPT="%{$fg[green]%}%c%{$reset_color%} %{$fg[yellow]%}$%{$reset_color%} "
-  export RPROMPT=""
-else
-  export PROMPT="$(_display_extravagent_prompt_left)"
-  export RPROMPT="$(_display_extravagent_prompt_right)"
-fi
+  RPROMPT='$(_git_prompt_status)'"%{$reset_color%} "
+  RPROMPT+='$(_pending_jobs) '
+  [[ -z "$TMUX" ]] && RPROMPT+='$(_current_time) '
+  [[ -z "$TMUX" ]] && RPROMPT+='$(_battery_remaining)'
+
+  _after_prompt_all
+}
+
+_prompt_60

@@ -47,10 +47,11 @@
 # ================================================================== }}}
 
 [core]
-  editor           = "nano"
+  # nano is set as default, but when running the bootstrap it is changed to $EDITOR
+  editor           = nano
   pager            = "less -FRSX"
-  filemode         = "true"
-  logallrefupdates = "true"
+  filemode         = true
+  logallrefupdates = true
   whitespace       = "space-before-tab, trailing-space"
   excludesfile     = ~/.gitignore
 
@@ -58,38 +59,41 @@
   relativePaths = false
 
 [apply]
-  whitespace = "nowarn"
+  whitespace = nowarn
 
 [branch]
   autosetupmerge = true
 
 [diff]
-  renames        = "copies"
-  mnemonicprefix = "true"
+  renames        = copies
+  mnemonicprefix = true
+  algorithm      = patience
 
 [sendemail]
   smtpserver     = "smtp.gmail.com"
   smtpserverport = 587
-  smtpencryption = "tls"
+  smtpencryption = tls
 
 [diff]
   tool = vimdiff
 
 [merge]
   tool = vimdiff
+  summary = true
+  verbosity = 1
 
 [difftool]
   prompt = false
 
 [mergetool]
   prompt = false
-  keepBackup = false
+  keepbackup = false
 
 [push]
-  default = "current"
+  default = current
 
 [help]
-  browser = "open"
+  browser = open
 
 [color]
   ui = true
@@ -115,38 +119,90 @@
   enabled = 1
 
 [format]
-  pretty = "oneline"
+  pretty = format:%C(green)%ad%Creset %C(red)%h%C(yellow)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 
 [gist]
-  private   = "no"
-  browse    = "no"
-  extension = "rb"
+  private   = no
+  browse    = no
+  extension = rb
 
 [alias]
-  b         = "branch"
-  d         = "difftool"
-  dc        = "difftool --cached"
-  lc        = "log ORIG_HEAD.. --stat --no-merges"
-  lg        = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
-  ll        = "log --pretty=oneline --abbrev-commit --max-count=15"
-  fp        = "format-patch --stdout"
-  c         = "commit"
-  ca        = "commit -a"
-  cam       = "commit -am"
-  x         = "checkout HEAD"
-  s         = "status -sb -uno --ignore-submodules=untracked"
-  st        = "status"
-  sa        = "status -sb --ignore-submodules=untracked"
-  co        = "checkout"
-  re        = "rebase -i HEAD~$1"
-  pp        = "pull --prune"
-  serve     = "!git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git"
-  whois     = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-  whatis    = "show -s --pretty='tformat:%h (%s, %ad)' --date=short"
-  prune-all = "!git remote | xargs -n 1 git remote prune"
-  ctags     = "!./.git/hooks/ctags"
-  ffs       = "flow feature start"
-  fff       = "flow feature finish"
+
+  # add
+  a         = add
+  chunkyadd = add --patch             # stage commits chunk by chunk
+
+  # commits
+  c         = commit -m               # commit with message
+  ca        = commit -am              # commit all with message
+  ci        = commit                  # commit
+  amend     = commit --amend          # ammend your last commit
+  ammend    = commit --amend          # ammend your last commit
+  cp        = cherry-pick -x          # grab a change from a branch
+
+  # branches
+  b         = branch -v
+
+  # remotes
+  r         = remote -v               # show remotes (verbose)
+
+  # checkouts
+  co        = checkout                # checkout
+  nb        = checkout -b             # create and switch to a new branch
+
+  # diffs
+  d         = diff                    # diff unstaged changes
+  dc        = diff --cached           # diff staged changes
+  last      = diff HEAD^              # diff last committed change
+
+  # rebase
+  rc        = rebase --continue       # continue rebase
+  rs        = rebase --skip           # skip rebase
+
+  # reset
+  unstage   = reset HEAD              # remove files from index (tracking)
+  uncommit  = reset --soft HEAD^      # go back before last commit, with files in uncommitted state
+  filelog   = log -u                  # show changes to a file
+  mt        = mergetool               # fire up the merge tool
+
+  # stash
+  ss        = stash                   # stash changes
+  sl        = stash list              # list stashes
+  sa        = stash apply             # apply stash (restore changes)
+  sd        = stash drop              # drop stashes (destory changes)
+
+  # status
+  s         = status -sb -uno --ignore-submodules=untracked  # simple status
+  sa        = status -sb --ignore-submodules=untracked       # simple status, all files
+  st        = status
+
+  # tag
+  t         = tag -n                  # show tags with <n> lines of each tag message
+
+  # generate ctags, quickly
+  ctags     = ![[ -f ./.git/hooks/ctags ]] && ./.git/hooks/ctags || echo 'No ctags hook found.'
+
+  # git flow
+  ffs       = flow feature start
+  fff       = flow feature finish
+
+  # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+  snapshot  = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+  snapshots = !git stash list --grep snapshot
+
+  #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+  recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+
+  # logs
+  l            = log --graph --date=short
+  short        = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+  simple       = log --pretty=format:\" * %s\"
+  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+  recent       = log --pretty=oneline --abbrev-commit --max-count=15
+  changes      = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\" --abbrev-commit --date=relative
+
+[advice]
+  statusHints = false
 
 [ghi "highlight"]
   style = colorful

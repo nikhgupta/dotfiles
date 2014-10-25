@@ -18,7 +18,6 @@
 !/vim/bundle/vundle/
 !/vim/bundle/vundle/*
 
-# don't ignore these files, useful to keep the directory structure
-!.gitkeep
-!.notempty
-/scripts/base16-shell
+# repos downloaded by bootstrapper
+/iterm2/base16-shell
+/powerline-fonts

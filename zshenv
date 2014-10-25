@@ -42,25 +42,18 @@
 #
 # ================================================================== }}}
 
-init_cache(){
-  file_name=$HOME/.init-cache/$1
-  if [[ -f $file_name ]]; then
-    source $file_name
-  else
-    mkdir -p $HOME/.init-cache
-    eval "$(echo $2)" > $file_name
-    source $file_name
-  fi
-}
+# => all the dotfiles code resides here, so this will be used often
+export DOTCASTLE=$HOME/Code/__dotfiles
+source $DOTCASTLE/scripts/dotcastle/utils.sh
 
 # => setup editor, browser and brew location as per the OS.
-if [[ "$OSTYPE" = darwin* ]]; then
-  export EDITOR="mvim -v"       # use the executable provided by MacVim
-  export GUIEDITOR="mvim"       # note that, symlinking mvim to vim does not work.
+if is_macosx; then
+  # use the executable provided by MacVim
+  # note that, symlinking mvim to vim does not work
+  is_installed mvim && export EDITOR="mvim -v" || export EDITOR=vim
+  export GUIEDITOR="mvim"
   export BROWSER="open"
   export BREW_PREFIX=/usr/local
-  alias vim="mvim -v"
-  alias gvim="mvim"
 else
   export EDITOR="vim"
   export GUIEDITOR="gvim"
@@ -68,20 +61,18 @@ else
   export BREW_PREFIX=$HOME/.linuxbrew
 fi
 
+export ZSH="$HOME/.oh-my-zsh" # required by OhMyZSH!
 export VISUAL=$EDITOR
-# => this is required by OhMyZSH!
-export ZSH="$HOME/.oh-my-zsh"
 
-# => all the dotfiles code resides here, so this will be used often
-export DOTCASTLE=$HOME/Code/__dotfiles
-export BASE16_SHELL=$DOTCASTLE/scripts/base16-shell
+export BASE16_SHELL=$DOTCASTLE/iterm2/base16-shell
 
 # => ensure that homebrew is in our path.
 export PATH="$BREW_PREFIX/bin:$PATH"
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # load rbenv, if available
 export RBENV_ROOT=$BREW_PREFIX/var/rbenv
-which rbenv &>/dev/null && init_cache rbenv "rbenv init --no-rehash - zsh"
+is_installed rbenv && init_cache rbenv "rbenv init --no-rehash - zsh"
 
 # => load local configuration, if available
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local

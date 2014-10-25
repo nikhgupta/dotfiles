@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+# Credits:       =================================================== {{{
+#
+#            _ _    _                       _        _
+#           (_) |  | |                     | |      ( )
+#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
+#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
+#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
+#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
+#                          __/ |     | |
+#                         |___/      |_|
+#                            _       _    __ _ _
+#                           | |     | |  / _(_) |
+#                         __| | ___ | |_| |_ _| | ___  ___
+#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
+#                       | (_| | (_) | |_| | | | |  __/\__ \
+#                        \__,_|\___/ \__|_| |_|_|\___||___/
+#
+#
+#   Hello, I am Nikhil Gupta, and
+#   You can find me at http://nikhgupta.com
+#
+#   You can find an online version of this file at:
+#   https://github.com/nikhgupta/dotfiles/blob/master/scripts/bootstrap
+#
+#   ---
+#
+#   Script to install dependencies required by DotCastle.
+#
+#   This script will install required dependencies like `brew`, and
+#   `oh-my-zsh` along with optional dependencies like `autoenv`, `fasd`,
+#   etc. on the system, using `brew`.
+#
+#   Note that, on Ubuntu, `linuxbrew` is installed for getting the
+#   `brew` functionality.
+#
+# ================================================================== }}}
+
+DOTCASTLE=${DOTCASTLE:-$HOME/Code/__dotfiles}
+run_installer() {
+  source $DOTCASTLE/scripts/dotcastle/utils.sh
+
+  highlight "DotCastle - a castle for my dotfiles"
+
+  if ! is_macosx && ! is_ubuntu; then
+    error "Current operating system is not supported."
+  elif is_macosx; then
+    local font_dir=$HOME/Library/Fonts
+    local os_fname=$DOTCASTLE/scripts/dotcastle/dep-installer-osx
+    local brew_prefix=/usr/local
+  else
+    local font_dir=$HOME/.fonts
+    local os_fname=$DOTCASTLE/scripts/dotcastle/dep-installer-ubuntu
+    local brew_prefix=$HOME/.linuxbrew
+  fi
+
+  echo "This script will install the required and optional dependencies."
+  echo "Please, follow the instructions when the script finishes."
+  echo "DotCastle location: ${txtpur}~/Code/__dotfiles${txtrst}"
+
+  install_brew
+  install_brew_packages
+  install_ohmyzsh
+  download_dotcastle
+  install_base16_shell
+  install_powerline_fonts
+
+  is_macosx && bash $DOTCASTLE/scripts/dotcastle/dep-installer-osx
+  is_ubuntu && bash $DOTCASTLE/scripts/dotcastle/dep-installer-ubuntu
+
+  highlight "----------------------------"
+  echo "Installed dependencies as required."
+  action "Please, open a new shell and run the bootstrap script:"
+  echo "  cd $DOTCASTLE && ./scripts/dotcastle/bootstrap"
+}
+install_brew() {
+  highlight "Installing homebrew..."
+  which brew &>/dev/null && echo "Homebrew exists at: $(which brew)" && return
+
+  if is_macosx; then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  else
+    sudo apt-get install build-essential curl git m4 ruby texinfo zsh
+    sudo apt-get install libbz2-dev libcurl4-openssl-dev libexpat-dev
+    sudo apt-get install libncurses-dev zlib1g-dev
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+  fi
+  PATH="$brew_prefix/bin:$PATH"
+}
+install_brew_packages() {
+  highlight "Installing packages via brew.."
+
+  is_installed brew || error "Homebrew was not installed. Quitting"
+  for package in git curl wget tmux fasd fortune cowsay autoenv \
+                 zsh zsh-syntax-highlighting node npm           \
+                 rbenv ruby-build rbenv-gem-rehash rbenv-ctags
+  do
+    is_installed $package && echo "Package already installed: $package" || brew install $package
+  done
+}
+install_ohmyzsh() {
+  highlight "Installing OhMyZSH.."
+  curl -sSL http://install.ohmyz.sh | sh
+}
+install_base16_shell() {
+  highlight "Downloading Base16 Shell scripts.."
+  if [[ -d $DOTCASTLE/iterm2/base16-shell ]]; then
+    warn "Directory already exists. Not removing."
+  else
+    git clone https://github.com/chriskempson/base16-shell.git $DOTCASTLE/iterm2/base16-shell
+  fi
+}
+install_powerline_fonts() {
+  highlight "Installing Powerline fonts.."
+  mkdir -p $font_dir
+  if [[ -f "$font_dir/Inconsolata for Powerline.otf" ]]; then
+    warn "Some fonts have already been installed. Not installing, again."
+  else
+    git clone https://github.com/Lokaltog/powerline-fonts.git $DOTCASTLE/powerline-fonts
+    bash $DOTCASTLE/powerline-fonts/install.sh # && rm -rf $DOTCASTLE/powerline-fonts
+  fi
+}
+download_dotcastle() {
+  highlight "Downloading DotCastle.."
+  if [[ -d $DOTCASTLE ]]; then
+    warn "Directory already exists. Not removing."
+  else
+    git clone https://github.com/nikhgupta/dotfiles $DOTCASTLE
+  fi
+}
+
+run_installer

@@ -15,7 +15,7 @@ Save dotfiles in ~/Code/\_\_dotfiles !!!
 ---------------------------------------
 
 Following some conventions, I store all my code inside `~/Code` directory.
-This has obvious *organizational* benefits.  
+This has obvious *organizational* benefits.
 On similar grounds, I store my dotfiles inside `~/Code/__dotfiles` directory,
 which is more sensible in my opinion than `~/.dotfiles`, because:
   - dotfiles are the heart of your code - obvious reason to have them stored
@@ -36,8 +36,8 @@ script at `./scripts/dep-installer.sh`.
     export DOTCASTLE=$HOME/Code/__dotfiles
     git clone git://github.com/nikhgupta/dotfiles.git $DOTCASTLE
     # run the installer script
-    $DOTCASTLE/scripts/dep-installer.sh
-    $DOTCASTLE/scripts/bootstrap.sh
+    $DOTCASTLE/scripts/dotcastle/dep-installer.sh
+    $DOTCASTLE/scripts/dotcastle/bootstrap.sh
 
 How my Development Environment is Setup
 =======================================
@@ -72,10 +72,10 @@ iTerm2
 I prefer iTerm2 over Terminal app in MacOSX, and have installed the
 `base16-eighties` theme for it. Note that, this requires `base16-shell`
 to be loaded in my ZSH configuration.
-    
+
 OhMyZsh!
 --------
-    
+
 I like OhMyZSH! project, which provides me with a ready-to-use ZSH
 configuration. I customize upon that heavily, but OMZ! is a major
 ingredient.

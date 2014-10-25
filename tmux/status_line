@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+source $DOTCASTLE/scripts/dotcastle/utils.sh
+source $DOTCASTLE/zsh/prompt.zsh
+
+if [[ "$1" == "battery" ]]; then
+  print -P "$(_battery_remaining)"
+fi

@@ -40,7 +40,7 @@ source_if_exists "$BASE16_SHELL/base16-eighties.dark.sh" || \
   echo '[WARN] Base16 Shell support is missing.'
 
 # => homebrew managed scripts:
-if which brew &>/dev/null; then
+if is_installed brew; then
   source_if_exists $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   source_if_exists $BREW_PREFIX/opt/autoenv/activate.sh
 else
@@ -48,12 +48,12 @@ else
   source_if_exists $DOTCASTLE/scripts/autoenv/activate.sh
 fi
 
-if ! which fasd &>/dev/null && [[ -s $DOTCASTLE/scripts/fasd/bin/fasd ]]; then
+if ! is_installed fasd && [[ -s $DOTCASTLE/scripts/fasd/bin/fasd ]]; then
   PATH="$PATH:$DOTCASTLE/scripts/fasd/bin"
 fi
 # NOTE: loaded by 'fasd' OMZ plugin
 # which fasd &>/dev/null && eval $(fasd --init auto)
-which fasd &>/dev/null && init_cache fasd \
+is_installed fasd && init_cache fasd \
   'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
 
 # => load subs/scripts, along with completions

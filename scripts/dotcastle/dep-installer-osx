@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+DOTCASTLE=${DOTCASTLE:-$HOME/Code/__dotfiles}
+HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+run_installer(){
+  source $DOTCASTLE/scripts/dotcastle/utils.sh
+
+  is_macosx || return
+  is_installed brew || error "Homebrew was not installed. Quitting"
+
+  install_brew_cask
+  install_alfred
+  install_iterm2_with_preferences
+  install_other_gui_apps
+}
+install_brew_cask(){
+  highlight "Installing brew cask.."
+  brew install caskroom/cask/brew-cask
+}
+install_alfred(){
+  brew cask install alfred
+  brew cask alfred link
+}
+install_osx_only_brews(){
+  brew install reattach-to-user-namespace
+}
+install_other_gui_apps(){
+  highlight "Installing other GUI applications.."
+
+  cask_install Dash Dropbox nvALT BetterTouchTool Cyberduck
+  cask_install Evernote GeekTool Subtitles Todoist
+  cask_install uTorrent VLC "Google Chrome"
+  cask_install "Android File Transfer"
+  cask_install AppCleaner Apptivate
+
+  # macvim deserves special attention
+  if [[ -e "/Applications/MacVim.app" ]]; then
+    warn "Found: /Applications/MacVim.app; skipping installation."
+  else
+    brew install macvim
+  fi
+}
+cask_install(){
+  for app in "$@"; do
+    if [[ -e "/Applications/${app}.app" ]]; then
+      warn "Found: /Applications/${app}.app; skipping installation."
+    else
+      local dfltname=$(echo "$app" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+      echo -ne "\nInstalling GUI app: $dfltname"
+      brew cask install "$dfltname"
+    fi
+  done
+}
+install_iterm2_with_preferences(){
+  local fplist=com.googlecode.iterm2.plist
+
+  highlight "Installing iTerm2 and preferences.."
+  brew cask install iterm2
+
+  if [[ "$TERM_PROGRAM" == "iTerm.app" ]] ; then
+    warn "This script must be run from Terminal.app"
+    action "Please, quit iTerm and run the script again from Terminal.app"
+  elif ps wwwaux | egrep -q 'iTerm\.app' >/dev/null ; then
+    warn "You appear to have iTerm.app currently running."
+    action "Please, quit iTerm, and run the script again."
+  else
+    cat $DOTCASTLE/iterm2/$fplist | plutil -convert binary1 -o /tmp/$fplist.$$ -
+    if [[ $? -eq 0 ]] ; then
+      mv "/tmp/$fplist.$$" "$HOME/Library/Preferences/$fplist"
+      echo "iTerm preferences installed/updated, w00t."
+    else
+      warn "Conversion from XML to binary failed."
+      echo "Your current preferences have not been changed."
+    fi
+  fi
+}
+run_installer

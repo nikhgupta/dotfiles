@@ -198,7 +198,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
     " Use a nice font on the specific OS
     " No support for Windows, again :)
     if g:is_mac
-      set guifont=Monaco\ For\ Powerline:h15
+      set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
     elseif g:is_ubuntu
       set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
     elseif g:is_nix
@@ -335,6 +335,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 
   " collections:
   Plugin 'chriskempson/base16-vim'
+  Plugin 'flazz/vim-colorschemes'
   " Plugin 'chriskempson/vim-tomorrow-theme'
   " Plugin 'daylerees/colour-schemes', { 'rtp': 'vim-themes/' }
 " }}}
@@ -444,8 +445,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   augroup vim_startup_screen
     au!
     au User Startified setl colorcolumn=0 buftype=
+    au User Startified AirlineRefresh
     au User Startified nnoremap <silent!> <buffer> <leader>st :e#<CR>
-    au User Startified call airline#update_statusline()
   augroup end
 " }}}
 " Upgrade:     has a beautiful status line (via AirLine) {{{
@@ -461,6 +462,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
     set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
     set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
   endif
+
+  " Plugin 'edkolev/tmuxline.vim'
 
   " disabled: makes no sense to me.
   " " show buffers in statusline
@@ -486,6 +489,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:airline_theme_patch_func = 'AirlineThemePatcher'
   function! AirlineThemePatcher(palette)
     if g:airline_theme == 'base16' && g:colors_name == 'base16-eighties'
+      let a:palette.accents.red = [ '#ff0000', '', 196, '', 'bold' ]
       let better_ui_colors = ['#515151', '#a09f93', 19, 20]
       let a:palette['normal']['airline_c'] = better_ui_colors
       let a:palette['normal']['airline_x'] = better_ui_colors
@@ -572,13 +576,10 @@ endif
   " <leader>ma : Hides all marks in the current buffer.
   " <leader>mm : Places the next available mark.
 " }}}
-" Tweak:       toggles cursor in insert mode {{{
+" Tweak:       uses a non-blinking cursor, and switches to line cursor in insert mode {{{
   Plugin 'jszakmeister/vim-togglecursor'
-" }}}
-" Tweak:       uses a non-blinking block cursor within GUI {{{
   if g:is_gui
     let &guicursor = substitute(&guicursor, 'n-v-c:', '&blinkon0-', '')
-    set guicursor+=a:block-Cursor
   endif
 " }}}
 " Tweak:       does not update the display when executing macros, registers, etc. {{{
@@ -633,6 +634,9 @@ endif
 " }}}
 " Expedite:    provides helpful movement keys to affect the surroundings of text {{{
   Plugin 'tpope/vim-surround'
+" }}}
+" Expedite:    allows to easily and precisely jump to a location {{{
+  Plugin 'Lokaltog/vim-easymotion'
 " }}}
 " Expedite:    adds more text objects to quickly modify the text {{{
   Plugin 'kana/vim-textobj-user'
@@ -1182,7 +1186,7 @@ endif
     au BufNewFile,BufRead *.thor setl ft=ruby
     " vim and shell files:
     au BufNewFile,BufRead *vimrc,*.vim setl ft=vim
-    au BufNewFile,BufRead *zshrc,*zprofile,*zlogout,*zlogin,*zshenv setl ft=zsh
+    au BufNewFile,BufRead *zshrc,*zprofile,*zlogout,*zlogin,*zshenv setl ft=sh
     " text files
     au BufNewFile,BufRead *.md,*.mdown,*.markdown setl ft=ghmarkdown
     " messes help text files
@@ -1217,6 +1221,7 @@ endif
     au filetype javascript         setl fdm=syntax fdls=1
     au filetype ruby,eruby         setl fdm=syntax
     au filetype sh,zsh,bash,vim    setl fdm=marker fmr={{{,}}} fdls=0 fdl=0
+    au filetype yaml,conf          setl fdm=marker fmr={{{,}}} fdls=0 fdl=0
   augroup end
 " }}}
 " Essential:   sets up syntax as per the filetype or other variables {{{
@@ -1287,6 +1292,15 @@ endif
 " Personalize: Ruby: Rails:        has command to quickly generate ctags {{{
   let g:rails_ctags_arguments = ['--languages=-javascript,sql',
         \ '--fields=+l', '--exclude=.git', '--exclude=log']
+" }}}
+" Specialize:  Ruby:               has commands to quickly run rspec and cucumber tests {{{
+  Plugin 'jgdavey/vim-turbux'
+  let g:no_turbux_mappings = 1
+  let g:turbux_command_rspec = 'spring rspec'
+  let g:turbux_command_cucumber = 'spring cucumber'
+
+  map <leader>X <Plug>SendTestToTmux
+  map <leader>x <Plug>SendFocusedTestToTmux
 " }}}
 " Specialize:  Ruby:               has refactoring support for ruby code {{{
   Plugin 'ecomba/vim-ruby-refactoring'
@@ -1441,6 +1455,24 @@ endif
 " Essential:   adds support to run shell commands and capture output in a buffer {{{
   Plugin 'sjl/clam.vim'
 " }}}
+" Advanced:    adds support for TMux {{{
+  Plugin 'benmills/vimux'
+
+  " let g:VimuxUseNearestPane = 1
+  " nnoremap <leader>a :call VimuxRunCommand("spring rspec --fail-fast")<CR>
+  " nnoremap <leader>A :call VimuxRunCommand("spring rspec")<CR>
+  " nnoremap <leader>cu :call VimuxRunCommand("spring cucumber")<CR>
+  " nnoremap <leader>ca :call VimuxRunCommand("spring cucumber; spring rspec")<CR>
+  " nnoremap <leader>cm :VimuxPromptCommand<CR>
+  " function WriteAndVimuxRunLastCommand()
+  "   :call WriteBufferIfNecessary()
+  "   :call VimuxRunLastCommand()
+  " endfunction
+  " nnoremap <leader>w :call WriteAndVimuxRunLastCommand()<CR>
+  " command! REmigrate :call VimuxRunCommand("rake db:drop db:create db:migrate test:prepare")
+  " command! Migrate :call VimuxRunCommand("rake db:migrate test:prepare")
+  " command! Rollback :call VimuxRunCommand("rake db:rollback")
+" }}}
 " }}}
 
 " Git Workflow:                                                      {{{
@@ -1458,13 +1490,16 @@ endif
   " use the raw grep command
   let g:gitgutter_escape_grep = 1
   " let vim be snappier - don't lag.
-  " let g:gitgutter_realtime = 0
-  " let g:gitgutter_eager = 0
-  nmap <leader>ggt :GitGutterSignsToggle<CR>
-  nmap <leader>tgg :GitGutterSignsToggle<CR>
+  let g:gitgutter_realtime = 0
+  let g:gitgutter_eager = 0
 
-  nmap [h :GitGutterPrevHunk<CR>:GitGutterPreviewHunk<CR>
-  nmap ]h :GitGutterNextHunk<CR>:GitGutterPreviewHunk<CR>
+  " remap mappings
+  let g:gitgutter_map_keys = 0
+  nmap ]h <Plug>GitGutterNextHunk<Plug>GitGutterPreviewHunk
+  nmap [h <Plug>GitGutterPrevHunk<Plug>GitGutterPreviewHunk
+  nmap <leader>hs  <Plug>GitGutterStageHunk
+  nmap <leader>hr  <Plug>GitGutterRevertHunk
+  nmap <leader>tgg :GitGutterSignsToggle<CR>
 " }}}
 " Specialize:  enables support to manage Github Gists from the editor {{{
   Plugin 'mattn/webapi-vim'
@@ -1547,56 +1582,55 @@ endif
   " Stop fucking netrw
   let g:netrw_silent = 1
   let g:netrw_quiet  = 1
-  " TODO: use `g:netrw_browserx_viewer` to set the binary for above command
   " let g:loaded_netrw = 1          " prevents loading of netrw, but messes 'gx'
   " let g:loaded_netrwPlugin = 1    " ^ ..same.. and therefore, commented
 
   Plugin 'scrooloose/nerdtree'
+  Plugin 'jistr/vim-nerdtree-tabs'
 
-  " focus on nerdtree window
-  nmap <leader>ntf :NERDTreeClose<CR>:NERDTreeFind<CR>
+  let NERDTreeWinPos     = "left"    " nerdtree should appear on left
+  let NERDTreeWinSize    = 30        " nerdtree window must be 30 char wide
+  let NERDTreeDirArrows  = 1         " display fancy arrows instead of ASCII
+  let NERDTreeMinimalUI  = 0         " I don't like the minimal UI, nerdtree!
+  let NERDTreeStatusLine = -1        " do not use the default status line
+  let NERDTreeHighlightCursorline=1  " highlight the current line in tree
 
-  " close nerdtree window
-  nmap <leader>ntc :NERDTreeClose<CR>
+  let NERDTreeShowFiles         = 1  " show files as well as dirs
+  let NERDTreeShowHidden        = 1  " show hidden files, too.
+  let NERDTreeShowBookmarks     = 1  " oh, and obvously, the bookmarks, too.
+  let NERDTreeCaseSensitiveSort = 1  " sorting of files should be case sensitive
+  let NERDTreeRespectWildIgnore = 1  " ignore files ignored by `wildignore`
 
-  " toggle nerdtree window
-  nmap <Leader>ntt <plug>NERDTreeToggle<CR>
-  nmap <Leader>tnt <plug>NERDTreeToggle<CR>
+  let NERDTreeChDirMode         = 2  " change CWD when tree root is changed
+  let NERDTreeMouseMode         = 2  " use single click to fold/unfold dirs
+  let NERDTreeQuitOnOpen        = 0  " do not quit on opening a file from tree
+  let NERDTreeAutoDeleteBuffer  = 1  " delete buffer when deleting the file
+  let NERDTreeBookmarksFile     = expand("~/.vim") . "/tmp/bookmarks"
+  let g:nerdtree_tabs_open_on_console_startup=1
 
-  " change NerdTree's appearance
-  let NERDTreeWinPos    = "left"
-  let NERDChristmasTree = 1
-
-  " Show hidden files, and bookmarks
-  let NERDTreeShowFiles     = 1
-  let NERDTreeShowHidden    = 0
-  let NERDTreeShowBookmarks = 1
-
-  " change directory, whenever tree root is changed
-  let NERDTreeChDirMode = 2
-
-  " Quit on opening files from the tree
-  let NERDTreeQuitOnOpen = 0
-
-  " Highlight the selected entry in the tree
-  let NERDTreeHighlightCursorline = 1
-
-  " Use a single click to fold/unfold directories and a double click to open files
-  let NERDTreeMouseMode = 2
-
-  " use the default Status Line for NerdTree buffers
-  let NerdTreeStatusLine = -1
-
-  " Store the bookmarks file
-  let NERDTreeBookmarksFile = expand("~/.vim") . "/tmp/bookmarks"
-
-  " Sort NerdTree to show ruby php, vim and markdown files earlier
-  let NerdTreeSortOrder = ['\/$', '\.rb$', '\.php$', '\.vim', '\.md', '\.markdown',
-                          \ '*', '\.swp$',  '\.bak$', '\~$']
+  " Sort NERDTree to show files in a certain order
+  let NERDTreeSortOrder = [ '\/$', '\.rb$', '\.php$', '\.py$',
+        \ '\.js$', '\.json$', '\.css$', '\.less$', '\.sass$', '\.scss$',
+        \ '\.yml$', '\.yaml$', '\.sh$', '\..*sh$', '\.vim$',
+        \ '*', '.*file$', '\.example$', 'license', 'LICENSE', 'readme', 'README',
+        \ '\.md$', '\.markdown$', '\.rdoc$', '\.txt$', '\.text$', '\.textile$',
+        \ '\.log$', '\.info$' ]
 
   " Don't display these kinds of files
   let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$',
-                      \ '\.so$', '\.egg$', '^\.git$', '^\.DS_Store' ]
+        \ '\.so$', '\.egg$', '^\.git$', '^\.hg$', '^\.svn$', '^\.DS_Store',
+        \ '\.png$', '\.jpg$', '\.jpeg$', '\.bmp$', '\.svg$', '\.gif$',
+        \ '\.zip$', '\.gz$', '\.lock$', '\.swp$', '\.bak$', '\~$' ]
+
+  " mappings
+  nmap <leader>ntf :NERDTreeTabsFind<CR>
+  nmap <leader>ntc :NERDTreeSteppedClose<CR>
+  nmap <leader>nto :NERDTreeSteppedOpen<CR>
+  nmap <Leader>ntt :NERDTreeTabsToggle<CR>
+  nmap <Leader>tnt :NERDTreeTabsToggle<CR>
+
+  " TODO: nerdtree should focus on current file or have no highlighted lines,
+  "       when leaving the tree
 " }}}
 " }}}
 " Search And Replace:                                                {{{
@@ -1610,6 +1644,7 @@ endif
   if g:is_gui || &t_Co > 2 | set hlsearch | endif
   " clears the search register
   nmap <silent> <leader><cr> :nohlsearch<CR>
+  Plugin 'vim-scripts/IndexedSearch'
 " }}}
 " Expedite:    allows '*' or '#' keys to search for current word in normal or visual modes {{{
   Plugin 'nelstrom/vim-visual-star-search'
@@ -1681,6 +1716,10 @@ endif
 " }}}
 " Mappings:    pull word under cursor into LHS of a substitute (for quick search and replace) {{{
   nmap <leader>fr :%s#\<<C-r>=expand("<cword>")<CR>\>#
+" }}}
+" Mappings:    search for the selected text in Google {{{
+  " TODO!! papanikge/vim-voogle
+  " map <leader>ggs :call SearchWithGoogle<CR>
 " }}}
 " }}}
 " Undo Redo And Repeat:                                              {{{
@@ -1906,6 +1945,10 @@ endif
 " Mappings:    provides replaying a macro linewise on a visual selection {{{
   " note that, the macro must be recorded in the `v` register
   vnoremap <leader>qv :normal @v
+" }}}
+" Expedite:    provides a way to learn VIM easily via recipes {{{
+  Plugin 'esneider/recipes.vim'
+  nnoremap <Leader>r :CtrlPRecipes<CR>
 " }}}
 " }}}
 " Miscelleneous:                                                     {{{

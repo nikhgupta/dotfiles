@@ -68,12 +68,19 @@ alias fn='find . -name'                             # find files by name, in cur
 alias p=" ps auwwx | grep"                          # find a process in the activity monitor
 alias history="fc -il 1"                            # show timestamps in history
 
+# killers
+alias k9="kill -9"
+alias ka9="killall -9"
+
 # handy globals
 alias -g COPY=" | pbcopy"
 alias -g PASTE="pbpaste | "
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
 
 # aliases that I use, often
-which hub &>/dev/null && alias git=hub
+is_installed hub && alias git=hub
 alias gem_local='gem list --local';
 # copy my SSH key to the clipboard for quick pasting
 alias getsshkey="cat $HOME/.ssh/`whoami`.pub COPY"
@@ -82,7 +89,7 @@ alias deleteempty="find . -type f -empty -not -regex '.*\/.git\/.*' -exec {} \; 
 # }}}
 # => Script dependent aliases {{{
 # quickly, open files in the editor, or via open (require !fasd)
-if which fasd &> /dev/null; then
+if is_installed fasd; then
   alias e="a -e '$EDITOR'"
   alias o="a -e '$BROWSER'"
  alias ge="a -e '$GUIEDITOR'"
@@ -93,7 +100,7 @@ else
 fi
 # }}}
 # => MacOSX specific aliases {{{
-if [[ "$OSTYPE" = darwin* ]]; then
+if is_macosx; then
   # flush the dns cache
   alias flushdns='sudo killall -HUP mDNSResponder'
 
@@ -110,7 +117,7 @@ if [[ "$OSTYPE" = darwin* ]]; then
 fi
 # }}}
 # => Ubuntu specific aliases {{{
-if [[ $(uname -a) = *Ubuntu* ]]; then
+if is_ubuntu; then
   # behave like macosx
   alias open='xdg-open'
   alias pbcopy="xclip -selection clipboard"
@@ -186,7 +193,7 @@ function avgtime() {
 # => Script dependent functions {{{
 # a cow telling you about your fortune.
 tunecow() {
-    if which fortune &>/dev/null && which cowsay &>/dev/null; then
+    if is_installed fortune && is_installed cowsay; then
       if [ "$1" == "--random" -o "$1" == "-r" ]; then
         IFS=' '
         figures=(`cowsay -l | tail -n +2 | tr '\n' ' '`)
@@ -196,7 +203,7 @@ tunecow() {
       else
         fortune -s | cowsay
       fi
-    elif which fortune &>/dev/null; then
+    elif is_installed fortune; then
       fortune -s
     else
       echo "You must install fortune and (optionally) cowsay program."
@@ -204,7 +211,7 @@ tunecow() {
 }
 # }}}
 # => MacOSX specific functions {{{
-if [[ "$OSTYPE" = darwin* ]]; then
+if is_macosx; then
   # find the ip address of a given domain name
   get_domain_ip() {
       for domain in "$@"; do
@@ -252,7 +259,7 @@ if [[ "$OSTYPE" = darwin* ]]; then
 fi
 # }}}
 # => Ubuntu specific functions {{{
-if [[ $(uname -a) = *Ubuntu* ]]; then
+if is_ubuntu; then
   function update_system() {
       sudo apt-get update
       sudo apt-get upgrade -y

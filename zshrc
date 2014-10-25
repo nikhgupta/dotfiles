@@ -67,9 +67,10 @@
 #
 # ================================================================== }}}
 
-# => custom functions:
-source_if_exists() { [[ -s "$1" ]] && source "$1"; }
-path_append()  { [[ -d "$1" ]] && PATH="$PATH:$1"; }
+export DOTCASTLE=$HOME/Code/__dotfiles
+source $DOTCASTLE/scripts/dotcastle/utils.sh
+alias zsh_load="avgtime 'zsh -lic \"print -P \$PS1 \$RPS1\"'"
+alias prompt_load="avgtime 'print -P \$PS1 \$RPS1'"
 
 # => add ~/.zsh to functions' path in ZSH
 #    can be used for adding completions
@@ -81,6 +82,7 @@ LC_ALL=en_US.UTF-8
 skip_global_compinit=1
 
 # Reference: http://zsh.sourceforge.net/Doc/Release/Options.html
+setopt no_beep                  # do not beep
 setopt auto_pushd               # cd pushes the old directory onto directory stack
 setopt pushd_silent             # be quiet when using pushd
 setopt pushd_ignore_dups        # only push unique values in directorys stack
@@ -97,6 +99,7 @@ unsetopt correct_all
 # other terminal related basic configuration
 typeset -U path # set $path variable to only have unique values
 export TERM=xterm-256color
+export GREP_COLORS=31        # grep should use red for highlighting matches
 
 # set the theme for our prompt
 export ZSH_THEME="blinks"
@@ -108,9 +111,9 @@ export DISABLE_UPDATE_PROMPT=true
 plugins=( brew brew-cask bundler coffee colored-man common-aliases
 composer emoji-clock extract gem git git-flow git-extras github
 gitignore heroku golang history-substring-search jsontools nanoc pow
-powder rails rake-fast quote redis-cli vim-interaction vundle wp-cli
-zsh-reload)
-[[ "$OSTYPE" = darwin* ]] && plugins+=( osx )
+powder rails rake-fast quote redis-cli responsive-prompt tmux
+vim-interaction vundle wp-cli zsh-reload )
+is_macosx && plugins+=( osx )
 
 source_if_exists $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
 # }}}
@@ -135,6 +138,21 @@ path_append $BREW_PREFIX/pear/bin
 # Go language:
 path_append $BREW_PREFIX/opt/go/libexec/bin
 # }}}
+# => custom key bindings {{{
+# vim keybindings
+bindkey -v                                          # Use vi key bindings
+bindkey '^r' history-incremental-search-backward    # Search backward incrementally
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+
+# Use Ctrl-x,Ctrl-l to get the output of the last command
+zmodload -i zsh/parameter
+insert-last-command-output() {
+  LBUFFER+="$(eval $history[$((HISTCMD-1))])"
+}
+zle -N insert-last-command-output
+bindkey '^x^l' insert-last-command-output
+# }}}
 # => load other relevant configurations {{{
 source_if_exists $DOTCASTLE/zsh/scripts.zsh
 source_if_exists $DOTCASTLE/zsh/aliases.zsh
@@ -143,6 +161,10 @@ source_if_exists $DOTCASTLE/zsh/prompt.zsh
 # => load other scripts, tools or languages {{{
 # Haskell binaries:
 path_append $HOME/.cabal/bin
+
+# NPM binaries:
+path_append $HOME/node_modules/.bin
+# TODO: chown npm paths?
 
 # Android:
 path_append $HOME/Code/android/ndk

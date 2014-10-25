@@ -1,0 +1,129 @@
+#!/usr/bin/env zsh
+# Credits:       =================================================== {{{
+#
+#            _ _    _                       _        _
+#           (_) |  | |                     | |      ( )
+#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
+#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
+#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
+#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
+#                          __/ |     | |
+#                         |___/      |_|
+#                            _       _    __ _ _
+#                           | |     | |  / _(_) |
+#                         __| | ___ | |_| |_ _| | ___  ___
+#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
+#                       | (_| | (_) | |_| | | | |  __/\__ \
+#                        \__,_|\___/ \__|_| |_|_|\___||___/
+#
+#
+#   Hello, I am Nikhil Gupta, and
+#   You can find me at http://nikhgupta.com
+#
+#   You can find an online version of this file at:
+#   https://github.com/nikhgupta/dotfiles/blob/master/scripts/bootstrap
+#
+#   ---
+#
+#   Script to bootstrap DotCastle, and setup dotfiles.
+#
+#   This script will make appropriate symlinks to the dotfiles on the
+#   system, import your local configurations, and add git configuration
+#   options by reading them from environment variables.
+#
+#   Make sure that dependencies like brew and oh-my-zsh have been
+#   installed on the system before running this script. You can install
+#   all dependencies by running the bundled `./scripts/dep-installer`
+#   script.
+#
+# ================================================================== }}}
+
+DOTCASTLE="${DOTCASTLE:-$HOME/Code/__dotfiles}"
+run_bootstrapper() {
+  source $DOTCASTLE/scripts/dotcastle/utils.sh
+  highlight "DotCastle - a castle for my dotfiles"
+
+  echo "This script will install DotCastle on this machine."
+  echo "Please, follow the instructions when the script finishes."
+  echo "DotCastle location: ${txtpur}~/Code/__dotfiles${txtrst}"
+
+  ask_for_private_data
+  add_dotcastle_symlinks
+  source_zsh_configs
+  add_dotcastle_git_config
+  is_macosx && bash $DOTCASTLE/osxrc
+
+  if which vim &>/dev/null; then
+    action "Run the following command to install VIM plugins, now:"
+    echo "  vim +BundleInstall +qall"
+  fi
+
+  highlight "All set."
+  action "You, still, need to copy your SSH and GPG keys on this machine."
+}
+add_dotcastle_git_config(){
+  add_git_config core.editor        $EDITOR
+  add_git_config user.name          $GIT_AUTHOR_NAME
+  add_git_config user.email         $GIT_AUTHOR_EMAIL
+  add_git_config github.user        $GITHUB_USER
+  add_git_config github.token       $GITHUB_TOKEN
+  add_git_config sendemail.smtpuser $GIT_GMAIL_SMTP_USER
+}
+source_zsh_configs(){
+  # load user's private environment variables for setting git configuration
+  warn "Sourcing ZSH config. This may output several warnings at this stage."
+  echo "Suppressing such warnings. Set DEBUG to 1 to view them."
+
+  for config in zshenv zshenv.local zshrc zshrc.local; do
+    config="${HOME}/.${config}"
+    [[ -s $config ]] && {
+      [[ -n $DEBUG ]] && source $config || source $config &>/dev/null
+    } || {
+      warn "Could not source: ~/.$config"
+    }
+  done
+}
+add_dotcastle_symlinks(){
+  cp $DOTCASTLE/gitconfig ~/.gitconfig
+
+  for file in git-template editrc gemrc gitignore inputrc \
+              powconfig vim zsh tmux.conf vimrc zshenv zshrc
+  do
+    add_symlink "${DOTCASTLE}/${file}" "${HOME}/.${file}" "pre-dotcastle"
+    [[ -z "${PRIVATES}" ]] && continue
+    add_symlink "${PRIVATES}/${file}.local" "${HOME}/.${file}.local" "pre-dotcastle"
+  done
+}
+ask_for_private_data(){
+  [[ -n "$PRIVATES" ]] && return
+  echo "Q. Where do you keep your private files, i.e. .zshrc.local, etc.?"
+  echo "   Please, specify absolute path only."
+  echo "   Leave empty if you want to link these files, manually."
+  read "PRIVATES?A. "
+  [[ -n "$PRIVATES" ]] && return
+  warn "Skipping symlinking of your local configuration files."
+  action "Symlink them, manually, and run the bootstrapper again, if required."
+}
+add_symlink(){
+  local source_file=$1
+  local destin_file=$2
+  local suffix="${3:-backup}"
+
+  [[ -e "${source_file}" ]] || return
+
+  if [[ -e "${destin_file}" ]]; then
+    mv "$destin_file" "${destin_file}.${suffix}"
+    warn "Backed up: ${destin_file} to ${destin_file}.${suffix}"
+  fi
+
+  [[ -e "${source_file}"  ]] && ln -sf "${source_file}" "${destin_file}"
+}
+add_git_config() {
+  if [[ -n "$2" ]]; then
+    git config --global $1 "$2"
+  else
+    action "Please, setup '$1' for git, by running: git config --global $1 '<value>'"
+  fi
+}
+
+run_bootstrapper
