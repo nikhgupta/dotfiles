@@ -185,6 +185,24 @@ set nocompatible     " No to the total compatibility with the ancient vi
             \ )
     endfunction
   " }}}
+  " Function: Open a url/file with the default browser {{{
+    function! s:open_with_browser(url, ...)
+      let l:prog = g:is_mac ? "open" : ""
+      let l:prog = g:is_ubuntu ? "xdg-open" : ""
+      let l:prog = empty("$BROWSER") ? l:prog : expand("$BROWSER")
+      let l:comm = l:prog . " " . expand(a:url)
+
+      if empty(l:prog)
+        echoerr "Could not find a valid browser. Set one via $BROWSER variable."
+      elseif a:0 > 0 && a:1 == 0
+        return l:comm
+      else
+        silent! execute('!' . l:comm)
+      endif
+    endfunction
+    command! -bar -nargs=1 OpenURL :call s:open_with_browser("<args>")
+    command! -bar -nargs=1 OpenWithBrowser :call s:open_with_browser("<args>")
+  " }}}
 " }}}
 " }}}
 " Preferences:                                                       {{{
@@ -2021,11 +2039,6 @@ endif
 " }}}
 
 " TODOs:        """"""""""""""""""""""""""""""""""""""""""""""" {{{
-"   - create a command that opens urls {{{
-  if g:is_mac
-    command! -bar -nargs=1 OpenURL :!open <args>
-  endif
-" }}}
 "   - create functions to quickly add day-night themes via a simple function "   call
 "   - add mappings for conque shell
 "   - convert common functionality into a plugin
