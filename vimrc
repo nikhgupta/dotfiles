@@ -1358,15 +1358,6 @@ endif
   let g:rails_ctags_arguments = ['--languages=-javascript,sql',
         \ '--fields=+l', '--exclude=.git', '--exclude=log']
 " }}}
-" Specialize:  Ruby:               has commands to quickly run rspec and cucumber tests {{{
-  Plugin 'jgdavey/vim-turbux'
-  let g:no_turbux_mappings = 1
-  let g:turbux_command_rspec = 'spring rspec'
-  let g:turbux_command_cucumber = 'spring cucumber'
-
-  map <leader>X <Plug>SendTestToTmux
-  map <leader>x <Plug>SendFocusedTestToTmux
-" }}}
 " Specialize:  Ruby:               has refactoring support for ruby code {{{
   Plugin 'ecomba/vim-ruby-refactoring'
 " }}}
@@ -1439,11 +1430,11 @@ endif
 " }}}
 " Mappings:    VIM:                quickly, edit or source the vim configuration {{{
   " edit the vimrc file
-  nmap <leader>vi :vs<CR>:e $MYVIMRC<CR>
+  nmap <leader>e. :vs<CR>:e $MYVIMRC<CR>
   " source the current file
-  nmap <leader>vs :source %<CR>:set foldenable<CR>:e!<CR>
+  nmap <leader>bs :source %<CR>:set foldenable<CR>:e!<CR>
   " source a visual range
-  vmap <leader>vs y:@"<CR>:echo 'Sourced the selected range.'<CR>
+  vmap <leader>bs y:@"<CR>:echo 'Sourced the selected range.'<CR>
 " }}}
 " Mappings:    Help:               quickly navigate the help window {{{
   augroup help_window
@@ -1507,21 +1498,39 @@ endif
 " }}}
 " Advanced:    adds support for TMux {{{
   Plugin 'benmills/vimux'
+  let g:VimuxUseNearestPane = 1
+  let g:VimuxOrientation = "h"
+  let g:VimuxPromptString = "[ViMux] § "
+  let g:VimuxHeight = "50"
 
-  " let g:VimuxUseNearestPane = 1
-  " nnoremap <leader>a :call VimuxRunCommand("spring rspec --fail-fast")<CR>
-  " nnoremap <leader>A :call VimuxRunCommand("spring rspec")<CR>
-  " nnoremap <leader>cu :call VimuxRunCommand("spring cucumber")<CR>
-  " nnoremap <leader>ca :call VimuxRunCommand("spring cucumber; spring rspec")<CR>
-  " nnoremap <leader>cm :VimuxPromptCommand<CR>
-  " function WriteAndVimuxRunLastCommand()
-  "   :call WriteBufferIfNecessary()
-  "   :call VimuxRunLastCommand()
-  " endfunction
-  " nnoremap <leader>w :call WriteAndVimuxRunLastCommand()<CR>
-  " command! REmigrate :call VimuxRunCommand("rake db:drop db:create db:migrate test:prepare")
-  " command! Migrate :call VimuxRunCommand("rake db:migrate test:prepare")
-  " command! Rollback :call VimuxRunCommand("rake db:rollback")
+  " open/close a new tmux pane
+  map <leader>vo :call VimuxOpenRunner()<CR>
+  map <leader>vq :VimuxCloseRunner<CR>
+
+  " prompt for a command to be run async / run last command executed
+  map <leader>v! :VimuxPromptCommand<CR>
+  map <leader>vp :VimuxPromptCommand<CR>
+  map <leader>vl :VimuxRunLastCommand<CR>
+
+  " inspect, interrupt or zoom a vimux runner pane (<prefix>z to zoom out)
+  map <leader>vi :VimuxInspectRunner<CR>
+  map <leader>vc :VimuxInterruptRunner<CR>
+  map <Leader>vz :VimuxZoomRunner<CR>
+
+  " run special commands within a tmux pane
+  map <silent> <leader>vx :VimuxRunCommand("clear")<CR>
+  map <silent> <leader>vm :VimuxRunCommand(expand(&makeprg))<CR>
+  map <silent> <leader>vr :VimuxRunCommand("chmod +x " . expand("%:p:.") . " && " . expand("%:p"))<CR>
+
+  " tSlime replacement:
+  function! VimuxSlime()
+    call VimuxSendText(@v)
+    call VimuxSendKeys("Enter")
+  endfunction
+  " If text is selected, save it in the v buffer and send that buffer it to tmux
+  vmap <leader>vs "vy:call VimuxSlime()<CR>
+  " Select current paragraph and send it to tmux
+  nmap <leader>vs vip<leader>vs<CR>
 " }}}
 " }}}
 
