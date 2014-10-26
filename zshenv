@@ -56,6 +56,9 @@ if is_macosx; then
   export BROWSER="open -a 'Google Chrome'"
   export BREW_PREFIX=/usr/local
   is_installed mvim && alias vim="mvim -v" && alias gvim="mvim"
+
+  # cask should install GUI apps in /Applications on OSX
+  export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 else
   export BROWSER="xdg-open"
   export BREW_PREFIX=$HOME/.linuxbrew
@@ -66,7 +69,6 @@ export BASE16_SHELL=$DOTCASTLE/iterm2/base16-shell
 
 # => ensure that homebrew is in our path.
 export PATH="$BREW_PREFIX/bin:$PATH"
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # load rbenv, if available
 export RBENV_ROOT=$BREW_PREFIX/var/rbenv
