@@ -113,6 +113,17 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " - tweak:       configuration that fixes edge-cases, or smooth out user experience.
 " - advanced:    configuration represents advanced usage of the editor.
 " - feature:     configuration adds a new feature to the editor (not prev found or very weak support)
+"
+" General Mappings:
+" - F1           <noop>
+" - F2           toggle paste mode
+" - F3           multiple cursor mode
+" - F5           run make program defined for the current file
+" - F6           special function attached with the current file, if any.
+" - F8           insert current date
+" - F9           obfuscate the entire buffer
+" - K            view documentation for work under cursor
+"
 " }}}
 " Internal:                                                          {{{
 " Internal:    developer-defined custom variables for this config {{{
@@ -1275,18 +1286,56 @@ endif
   augroup end
 " }}}
 " Essential:   has make programs defined for certain languages that does the heavy work {{{
+  " Note: Dispatch does not support filename modifiers like: `%<`.
+  "       Instead, use: `%:r`
+  Plugin 'tpope/vim-dispatch'
+
+  " Press <F6> to run the make command.
+  " To check output, open QuickFix with `<leader>qf` or `:copen`
+  nnoremap <F5> :Dispatch<CR>
+
   augroup make_programs
-    " FIXME:   hardcoded shell commands
     au!
     au filetype php setl makeprg=php\ -l\ %    " linting
-    au filetype ghmarkdown setl makeprg=rdiscount\ %\ >\ /tmp/%<.html\ &&\ open\ /tmp/%<.html
-    au filetype rst setl makeprg=rst2html.py\ %\ /tmp/%<.html\ &&\ open\ /tmp/%<.html
+    au filetype rst setl makeprg=rst2html.py\ %\ /tmp/%:r.html\ &&\ open\ /tmp/%:r.html
+
+    " Note: for markdown, simply, open the file in Chrome, which uses an
+    " extension to render this markdown file. Sweet and simple.
+    " au filetype ghmarkdown setl makeprg=rdiscount\ %\ >\ /tmp/%:r.html\ &&\ open\ /tmp/%:r.html
+    au filetype ghmarkdown let &l:makeprg = s:open_with_browser("%:p", 0)
+
+    " allow the following files to run themselves when <F6> is pressed.
+    au filetype sh,bash,zsh setl makeprg=chmod\ +x\ %:p\ &&\ %:p
+    au BufRead,BufEnter *.{rb,py,php,js} if executable(expand("%:p")) &&
+          \ ( &makeprg == "make" ) | setl makeprg=%:p | endif
+
+    " TODO: use a minifier as a make program for CSS & JS files
   augroup end
 " }}}
 " Essential:   provides documentation for certain languages via 'K' key {{{
+  Plugin 'Keithbsmiley/investigate.vim'
+  map K :call investigate#Investigate()<CR><CR>
+
+  let g:investigate_use_dash=1
+  " NOTE: This does not work at the moment, as 'open' encodes the URL wrongly.
+  " map docs for the following languages to http://devdocs.io
+  " for fs in [ 'c', 'cpp', 'css', 'django', 'go', 'haskell', 'html',
+  "           \ 'javascript', 'php', 'python', 'ruby', 'rails' ]
+  "   execute( 'let g:investigate_url_for_'.fs.'="http://devdocs.io/#q='.fs.' ^s"')
+  " endfor
+  " let g:investigate_url_for_coffee = 'http://devdocs.io/#q=coffeescript ^s'
+
   augroup documentor
     au!
-    au filetype vim setl keywordprg=:help
+
+    " appropriately use rails docs when inside a rails buffer
+    au User Rails silent! let g:investigate_syntax_for_ruby="rails"
+    au BufLeave *.rb silent! let g:investigate_syntax_for_ruby="ruby"
+
+    " vim has additional help available via 'gK' mapping
+    au filetype vim silent! nmap gK :let g:investigate_use_url_for_vim = 1<CR>
+          \ :call investigate#Investigate()<CR><CR>
+          \ :let g:investigate_use_url_for_vim = 0<CR>
   augroup end
 " }}}
 " }}}
@@ -1357,21 +1406,6 @@ endif
     au!
     au filetype ghmarkdown,textile syntax region frontmatter start=/\%^---$/ end=/^---$/
     au filetype ghmarkdown,textile highlight link frontmatter Comment
-  augroup end
-" }}}
-" Specialize:  Markdown:           allows quick preview via chrome browser {{{
-  " NOTE: This requires that you have installed an appropriate chrome extension
-  " for this purpose. What happens is that, editor opens the current file in the
-  " chrome browser as a text file, which is then rendered by the extension for
-  " previewing.
-  " FIXME: fix this on linux
-  augroup markdown_preview
-    au!
-    if g:is_mac
-      autocmd filetype ghmarkdown exec 'noremap <F6> :silent !open %:p -a Google\ Chrome<CR>'
-    elseif g:is_nix
-      autocmd filetype ghmarkdown exec 'noremap <F6> :silent !xdg-open %:p<CR>'
-    endif
   augroup end
 " }}}
 " Specialize:  VIM:                binds <F6> to open plugin's Github URL in browser {{{

@@ -46,24 +46,22 @@
 export DOTCASTLE=$HOME/Code/__dotfiles
 source $DOTCASTLE/scripts/dotcastle/utils.sh
 
-# => setup editor, browser and brew location as per the OS.
+# => setup editor for ourself
+export EDITOR="vim"               # aliased to `mvim -v` on OSX
+export GUIEDITOR="gvim"           # aliased to `mvim` on OSX
+export VISUAL="${EDITOR}"
+
+# => other OSX dependent environment variables and mods
 if is_macosx; then
-  # use the executable provided by MacVim
-  # note that, symlinking mvim to vim does not work
-  is_installed mvim && export EDITOR="mvim -v" || export EDITOR=vim
-  export GUIEDITOR="mvim"
-  export BROWSER="open"
+  export BROWSER="open -a 'Google Chrome'"
   export BREW_PREFIX=/usr/local
+  is_installed mvim && alias vim="mvim -v" && alias gvim="mvim"
 else
-  export EDITOR="vim"
-  export GUIEDITOR="gvim"
   export BROWSER="xdg-open"
   export BREW_PREFIX=$HOME/.linuxbrew
 fi
 
 export ZSH="$HOME/.oh-my-zsh" # required by OhMyZSH!
-export VISUAL=$EDITOR
-
 export BASE16_SHELL=$DOTCASTLE/iterm2/base16-shell
 
 # => ensure that homebrew is in our path.
