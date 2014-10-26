@@ -264,10 +264,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   endif
 " }}}
 " Essential:   watch for file & directory changes, but don't auto-write files {{{
-" TODO: if the working directory, contains a .git repo, stay on the repo root.
   set autoread                      " watch for file changes
-  " FIXME: using autochdir may cause some plugins to work incorrectly
-  set autochdir                     " automatically change the working directory
+  set noautochdir                   " do not auto change the working directory
   set noautowrite                   " do not auto write file when moving away from it.
 " }}}
 " Expected:    text scrolls automatically, when cursor reaches near the edges {{{
