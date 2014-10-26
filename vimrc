@@ -2027,7 +2027,7 @@ endif
   nmap <silent> <leader>qf :QFix<CR>
 " }}}
 " Mappings:    quickly, obfuscates the current buffer {{{
-  nnoremap <f9> mzggg?G'z
+  nnoremap <F9> mzggg?G'z
 " }}}
 " Specialize:  has a command that shows the MD5 of the current buffer or range {{{
   command! -range Md5 :echo system('echo '.shellescape(join(getline(<line1>, <line2>), '\n')) . '| md5')
@@ -2081,13 +2081,9 @@ endif
 "   - implement Ranger file browser
 "   - display syntax highlighting in foldtext
 "   - auto-open fold when a search match is found or when it is jumped upon
+"   - easymotion prefix mapping collides with mappings for <leader><leader> (switch buffer)
 "   - read and implement vim configuration from:
 "     - https://github.com/skwp/dotfiles
 "     - https://github.com/gf3/dotfiles
 "     - https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 " }}}
-
-" Learn More:
-" 1. tpope/vim-eunuch
-" 2. yankstack
-" 3. nerdtree-tabs
