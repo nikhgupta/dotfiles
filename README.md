@@ -92,3 +92,8 @@ Also, note that brew installs `zsh` completions to
 `/usr/local/share/zsh/site-functions` file, which helps me add custom
 completions, easily. On Ubuntu, I install the Linux version of Homebrew,
 namely `Linuxbrew`.
+
+Post Install Tasks
+------------------
+
+- Install dotjs

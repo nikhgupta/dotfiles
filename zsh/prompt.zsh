@@ -107,11 +107,11 @@ _git_time_since_commit() {
   fi
 
   if [ "$HOURS" -gt 24 ]; then
-    echo "$COLOR${DAYS}d"
+    echo "$COLOR${DAYS}d "
   elif [ "$MINUTES" -gt 60 ]; then
-    echo "$COLOR${HOURS}h${SUB_MINUTES}m"
+    echo "$COLOR${HOURS}h${SUB_MINUTES}m "
   else
-    echo "$COLOR${MINUTES}m"
+    echo "$COLOR${MINUTES}m "
   fi
 }
 # }}}
@@ -206,6 +206,11 @@ _git_prompt_status() {
   is_git || return 1
   git_prompt_status
 }
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+function virtualenv_prompt_info(){
+  [[ -n ${VIRTUAL_ENV} ]] || return
+  echo "\e[33mpy${ZSH_THEME_VIRTUALENV_PREFIX:=[}${VIRTUAL_ENV:t}${ZSH_THEME_VIRTUALENV_SUFFIX:=]}\e[0m"
+}
 
 _after_prompt_all(){
   # intelligently, add a new line char in prompt
@@ -231,6 +236,7 @@ _prompt_60(){
   PROMPT="$(_ssh_user_info)"
   PROMPT+="%{$fg_bold[cyan]%}"'${PWD/#$HOME/~}'"%{$reset_color%} "
   PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
+  PROMPT+='$(virtualenv_prompt_info)'
 
   RPROMPT='$(_git_prompt_status)'"%{$reset_color%} "
   RPROMPT+='$(_pending_jobs) '

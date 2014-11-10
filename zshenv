@@ -68,11 +68,25 @@ export ZSH="$HOME/.oh-my-zsh" # required by OhMyZSH!
 export BASE16_SHELL=$DOTCASTLE/iterm2/base16-shell
 
 # => ensure that homebrew is in our path.
-export PATH="$BREW_PREFIX/bin:$PATH"
+path_prepend "${BREW_PREFIX}/bin"
+path_prepend "${BREW_PREFIX}/sbin"
 
-# load rbenv, if available
+# load rbenv and pyenv, if available
 export RBENV_ROOT=$BREW_PREFIX/var/rbenv
 is_installed rbenv && init_cache rbenv "rbenv init --no-rehash - zsh"
+
+# Python environment
+# pip should only run if there is a virtualenv currently activated
+export PIP_REQUIRE_VIRTUALENV=true
+# cache pip-installed packages to avoid re-downloading
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+# allow access to install python packages globally via gpip
+gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@"; }
+
+# GO Language
+export GOPATH=$HOME/Code/go
+path_append $GOPATH/bin
+path_append $BREW_PREFIX/opt/go/libexec/bin
 
 # => load local configuration, if available
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local

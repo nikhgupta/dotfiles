@@ -68,3 +68,7 @@ for sub in `find $DOTCASTLE/scripts -maxdepth 1 -mindepth 1 -type d`; do
     [[ -d $sub/completions ]] && source $sub/completions/*.zsh
   fi
 done
+
+# => custom scripts
+# transfer.sh
+source_if_exists $DOTCASTLE/scripts/transfer.sh

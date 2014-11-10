@@ -227,7 +227,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
     " Use a nice font on the specific OS
     " No support for Windows, again :)
     if g:is_mac
-      set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
+      set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
     elseif g:is_ubuntu
       set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
     elseif g:is_nix
@@ -374,7 +374,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Personalize: highlight column markers for several columns {{{
   if has('syntax')
-    set colorcolumn=+1,+11,+21,+41
+    set colorcolumn=72,80,100,120
   endif
 " }}}
 " Personalize: show relative line numbers where they make sense, otherwise absolute ones {{{
@@ -395,7 +395,10 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " editor switches to a fullscreen view, please review settings in the aforesaid
 " feature.
 " NOTE: This option is only present in Macvim.
-  if g:is_macvim | set fullscreen | endif
+  if g:is_macvim
+    set fullscreen
+    set fuoptions="maxvert,maxhorz,background:Normal"
+  endif
 " }}}
 " Expected:    maximizes editor window when using GUI {{{ todo: extract
   if g:is_gui
@@ -560,7 +563,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   else
     let g:thematic#defaults["fullscreen"] = 1
     let g:thematic#defaults["fullscreen-background-color-fix"] = 1
-endif
+  endif
 
   let g:thematic#themes["default-dark"] = {
         \ 'colorscheme'  : 'base16-eighties',
@@ -573,7 +576,8 @@ endif
   call AddDayNightThemeForThematic('default')
 
   " switch theme on GUI as per day/night, but use dark version for terminal vim
-  let g:thematic#theme_name = g:is_gui ? "default" : "default-dark"
+  let g:thematic#theme_name = g:is_gui ? 'default-light' : 'default-dark'
+
   nmap <silent> <leader>csd :Thematic default<CR>
 " }}}
 " Advanced:    can account for time of day, and switch background accordingly {{{
@@ -961,7 +965,7 @@ endif
   map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " }}}
 " Component:   provides a tag browser (via: Tagbar) {{{
-  Plugin 'Tagbar'
+  Plugin 'majutsushi/tagbar'
   let g:tagbar_autofocus = 1
   let g:tagbar_autoshowtag = 1
   let g:tagbar_width = 40
@@ -1006,6 +1010,7 @@ endif
   Plugin 'groenewege/vim-less'            " Less
   Plugin 'cakebaker/scss-syntax.vim'      " SCSS
   Plugin 'tpope/vim-haml'                 " haml, sass and scss
+  Plugin 'mustache/vim-mustache-handlebars'
 
   " javascript family:
   Plugin 'pangloss/vim-javascript'        " Javascript
@@ -1027,6 +1032,13 @@ endif
   Plugin 'tpope/vim-rbenv'
   Plugin 'tpope/vim-rails'
   Plugin 'tpope/vim-rake'
+
+  " go
+  Plugin 'fatih/vim-go'
+  let g:go_highlight_operators = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
 
   " miscelleneous:
   Plugin 'csv.vim'                        " CSV files
@@ -1209,6 +1221,7 @@ endif
     au BufNewFile,BufRead *.sass setl ft=sass
     " javascript family:
     au BufNewFile,BufRead *.json setl ft=json
+    au BufNewFile,BufRead *.coffee{,script} setl ft=coffee
     " ruby:
     au BufNewFile,BufRead Rakefile,Capfile,Gemfile,Guardfile  setl ft=ruby
     au BufNewFile,BufRead Vagrantfile,Thorfile,Do,dorc,Dofile setl ft=ruby
@@ -1223,6 +1236,8 @@ endif
     " au BufNewFile,BufRead *.txt,*.text setl ft=text
     " php files
     au BufNewFile,BufRead *.ctp setl ft=ctp
+    " go
+    au BufNewFile,BufRead *.go setl ft=go
     " miscelleneous
     au BufNewFile,BufRead gemrc,*.yml,*.yaml setl ft=yaml
   augroup end
@@ -1483,11 +1498,11 @@ endif
   set title                         " change the terminal's title
   set ttyfast                       " always use a fast terminal
 " }}}
-" Tweak:       prevents vim from clobbering the scrollback buffer {{{ todo: revisit
-  " Prevent Vim from clobbering the scrollback buffer. See
-  " http://www.shallowsky.com/linux/naltscreen.html
-  set t_ti= t_te=
-" }}}
+" " Tweak:       prevents vim from clobbering the scrollback buffer {{{ todo: revisit
+"   " Prevent Vim from clobbering the scrollback buffer. See
+"   " http://www.shallowsky.com/linux/naltscreen.html
+"   set t_ti= t_te=
+" " }}}
 " Tweak:       sets appropriate terminal colors for the terminal {{{
   " set appropriate terminal colors
   if &t_Co > 2 && &t_Co < 16
@@ -1504,7 +1519,7 @@ endif
   let g:VimuxUseNearestPane = 1
   let g:VimuxOrientation = "h"
   let g:VimuxPromptString = "[ViMux] § "
-  let g:VimuxHeight = "50"
+  let g:VimuxHeight = "40"
 
   " open/close a new tmux pane
   map <leader>vo :call VimuxOpenRunner()<CR>
@@ -1651,7 +1666,7 @@ endif
   Plugin 'jistr/vim-nerdtree-tabs'
 
   let NERDTreeWinPos     = "left"    " nerdtree should appear on left
-  let NERDTreeWinSize    = 30        " nerdtree window must be 30 char wide
+  let NERDTreeWinSize    = 25        " nerdtree window must be 30 char wide
   let NERDTreeDirArrows  = 1         " display fancy arrows instead of ASCII
   let NERDTreeMinimalUI  = 0         " I don't like the minimal UI, nerdtree!
   let NERDTreeStatusLine = -1        " do not use the default status line
@@ -1668,7 +1683,9 @@ endif
   let NERDTreeQuitOnOpen        = 0  " do not quit on opening a file from tree
   let NERDTreeAutoDeleteBuffer  = 1  " delete buffer when deleting the file
   let NERDTreeBookmarksFile     = expand("~/.vim") . "/tmp/bookmarks"
-  let g:nerdtree_tabs_open_on_console_startup=1
+
+  let g:nerdtree_tabs_open_on_gui_startup=0
+  let g:nerdtree_tabs_open_on_console_startup=0
 
   " Sort NERDTree to show files in a certain order
   let NERDTreeSortOrder = [ '\/$', '\.rb$', '\.php$', '\.py$',
@@ -1685,14 +1702,11 @@ endif
         \ '\.zip$', '\.gz$', '\.lock$', '\.swp$', '\.bak$', '\~$' ]
 
   " mappings
-  nmap <leader>ntf :NERDTreeTabsFind<CR>
-  nmap <leader>ntc :NERDTreeSteppedClose<CR>
-  nmap <leader>nto :NERDTreeSteppedOpen<CR>
-  nmap <Leader>ntt :NERDTreeTabsToggle<CR>
-  nmap <Leader>tnt :NERDTreeTabsToggle<CR>
-
-  " TODO: nerdtree should focus on current file or have no highlighted lines,
-  "       when leaving the tree
+  nmap <leader>ntf <leader>nto<C-w>p:NERDTreeFind<CR>
+  nmap <leader>ntc :NERDTreeClose<CR>
+  nmap <leader>nto :NERDTreeFocus<CR>:vertical resize 25<CR>
+  " nmap <Leader>ntt :NERDTreeTabsToggle<CR>
+  " nmap <Leader>tnt :NERDTreeTabsToggle<CR>
 " }}}
 " }}}
 " Search And Replace:                                                {{{
@@ -1874,6 +1888,11 @@ endif
   set splitbelow                  " puts new split windows to the bottom of the current
   set splitright                  " puts new vsplit windows to the right of the current
   set equalalways                 " split windows are always of eqal size
+  set switchbuf=useopen,split     " use existing buffer or else split current window
+  set winheight=7               " squash splits or windows to a separator when minimized
+  set winwidth=30               " squash splits or windows to a separator when minimized
+  set winminheight=3              " squash splits or windows to a status bar only when minimized
+  set winminwidth=12               " squash splits or windows to a separator when minimized
 " }}}
 " Expected:    resizes splits when the window is resized {{{
   augroup resize_splits
@@ -1881,30 +1900,29 @@ endif
     au VimResized * :wincmd =
   augroup end
 " }}}
-" Expected:    uses existing buffer, else splits the current window when opening a new file {{{
-  set switchbuf=useopen,split
-" }}}
-" Expedite:    easily maximize the current buffer/split by pressing <C-w>o {{{
-  " TODO: use a toggle key for this
-    Plugin 'blueyed/ZoomWin'
-  " }}}
 " Advanced:    only opens 15 tabs when using '-p' CLI switch for the editor {{{
   set tabpagemax=15
 " }}}
-" Expedite:    Mappings: to resize windows easily {{{
-  map <leader>= <C-w>=
-" }}}
-" Expedite:    Mappings: for easy navigation within windows {{{
+" Expedite:    Mappings: for easy control and navigation of windows {{{
+  " resize splits/windows quickly
+  map <C-W><C-=> <C-W>=
+  map <C-W><C-M> <C-W>999+<C-W>999>
+
   " easy window navigation
-  map <C-h> <C-w>h
-  map <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
-  " easy window navigation with maximize
-  map <leader><C-h> <C-w>h<C-w><bar>
-  map <leader><C-j> <C-w>j<C-w>_
-  map <leader><C-k> <C-w>k<C-w>_
-  map <leader><C-l> <C-w>l<C-w><bar>
+  map <C-H> <C-W>h
+  map <C-J> <C-W>j
+  map <C-K> <C-W>k
+  map <C-L> <C-W>l
+
+  " easy window navigation with enlarged viewport (10 lines for other windows)
+  map <C-W><C-H> <C-W>h<C-W><bar>
+  map <C-W><C-J> <C-W>j<C-W>_
+  map <C-W><C-K> <C-W>k<C-W>_
+  map <C-W><C-L> <C-W>l<C-W><bar>
+  map <C-W><C-T> <C-W>T
+  " easily switch/rotate windows
+  " for window layout: __|---
+  map <C-W><space> <C-W>t<C-W>J<C-W>t<C-W>H
 
   " easily jump to a new buffer
   nnoremap <leader>el :buffers<CR>:buffer<Space>

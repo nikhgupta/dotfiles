@@ -21,3 +21,8 @@
 # repos downloaded by bootstrapper
 /iterm2/base16-shell
 /powerline-fonts
+
+# ubersicht
+/ubersicht/widgets/tmp/*
+/ubersicht/widgets/albumart.jpg
+/data/ip-addresses.txt

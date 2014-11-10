@@ -112,7 +112,7 @@ plugins=( brew brew-cask bundler coffee colored-man common-aliases
 composer emoji-clock extract gem git git-flow git-extras github
 gitignore heroku golang history-substring-search jsontools nanoc pow
 powder rails rake-fast quote redis-cli responsive-prompt tmux
-vim-interaction vundle wp-cli zsh-reload )
+vim-interaction virtualenvwrapper vundle wp-cli zsh-reload )
 is_macosx && plugins+=( osx )
 
 source_if_exists $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
@@ -135,8 +135,6 @@ done
 # Pear:
 path_append $BREW_PREFIX/pear/bin
 
-# Go language:
-path_append $BREW_PREFIX/opt/go/libexec/bin
 # }}}
 # => custom key bindings {{{
 bindkey '^[OB' history-beginning-search-forward
@@ -168,6 +166,10 @@ path_append $HOME/node_modules/.bin
 path_append $HOME/Code/android/ndk
 path_append $HOME/Code/android/sdk/tools
 path_append $HOME/Code/android/sdk/platform-tools
+
+# Python
+workon_cwd # activate python virtualenv if any, based on git repo
+
 # }}}
 # => load local configuration, if any {{{
 source_if_exists ~/.zshrc.local
