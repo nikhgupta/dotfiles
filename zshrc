@@ -139,11 +139,9 @@ path_append $BREW_PREFIX/pear/bin
 path_append $BREW_PREFIX/opt/go/libexec/bin
 # }}}
 # => custom key bindings {{{
-# vim keybindings
-bindkey -v                                          # Use vi key bindings
-bindkey '^r' history-incremental-search-backward    # Search backward incrementally
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
+bindkey '^[OB' history-beginning-search-forward
+bindkey '^[OA' history-beginning-search-backward
+bindkey '^x^a' beginning-of-line
 
 # Use Ctrl-x,Ctrl-l to get the output of the last command
 zmodload -i zsh/parameter

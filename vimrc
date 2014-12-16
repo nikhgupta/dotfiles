@@ -1158,6 +1158,9 @@ endif
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_enable_balloons          = 1
   let g:syntastic_enable_highlighting      = 1
+  let g:syntastic_mode_map = { "mode": "active",
+                              \ "active_filetypes": ["ruby", "php", "python"],
+                              \ "passive_filetypes": ["html"] }
 
   " enable integration with airline
   let g:airline#extensions#syntastic#enabled = 1
