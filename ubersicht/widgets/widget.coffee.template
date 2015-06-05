@@ -1,0 +1,71 @@
+# Author: Nikhil Gupta
+# Package: Ubersicht
+#
+# Ubersicht widget template to readily create new widgets.
+#
+# Widget refreshes itself every 10 minutes.
+
+name: "widget_name"
+command: "echo"
+refreshFrequency: 10 * 60 * 1000
+render: (output) -> """
+  <div class='info' data-state=0>#{output}</div>
+"""
+afterRender: (domEl) ->
+  window.helpers or= {}
+  window.components or= {}
+  window.components[@name] = $(domEl)
+  # helpers, if any:
+  # window.helpers.function = @function
+
+update: (output, domEl) ->
+  url = "http://some-url.com"
+  @requestData url, "", (response) =>
+    if response and not response.error?
+      $(domEl).fadeIn ->
+        $(window).trigger("github:loaded")
+        $(domEl).find(".info").attr("data-state", 1)
+    else
+      $(domEl).fadeOut ->
+        $(window).trigger("github:unloaded")
+        $(domEl).find(".info").attr("data-state", 0)
+
+getEnvVariable: (name, callback) ->
+  @run "zsh -cl 'echo $#{name.toUpperCase()}'", (err, env_var) =>
+    if stderr?
+      @logError "could not get environment variable: $#{name.toUpperCase()}"
+    else
+      env_var
+
+# Request json data from a URL via Curl
+requestData: (url, queryString = '', callback) ->
+  command = "curl -sS '#{url}'"
+  @run "curl -sS '#{url}' #{queryString}", (stderr, stdout) =>
+    if stderr?.indexOf("curl: (6)") == -1
+      data = null
+      @logError "when executing request: #{stderr}"
+    else if !stderr?
+      try
+        data = JSON.parse(stdout)
+      catch err
+        data = null
+        @logError "when parsing response: #{err.message}"
+    callback data
+
+# Verify that a given component is loaded and visible on screen.
+isVisible: (component) ->
+  window.components.hasOwnProperty(component) and
+    window.components[component].css("display") != "none"
+
+# When an error occurs (typically, when querying the API/service), log that
+# error on the console, as well as in the noties widget.
+logError: (message) ->
+  console.log "#Error in [#{@name}]: #{message}"
+  window.helpers.notify "<strong>#{@name} error</strong><br>#{message}", type: "error"
+
+style: """
+  top 0
+  left 0
+  background rgba(0,0,0,0.8)
+  width 70%
+"""
