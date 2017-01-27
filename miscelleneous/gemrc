@@ -1,0 +1,48 @@
+# Credits:       =================================================== {{{
+#
+#            _ _    _                       _        _
+#           (_) |  | |                     | |      ( )
+#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
+#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
+#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
+#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
+#                          __/ |     | |
+#                         |___/      |_|
+#                            _       _    __ _ _
+#                           | |     | |  / _(_) |
+#                         __| | ___ | |_| |_ _| | ___  ___
+#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
+#                       | (_| | (_) | |_| | | | |  __/\__ \
+#                        \__,_|\___/ \__|_| |_|_|\___||___/
+#
+#
+#   Hello, I am Nikhil Gupta, and
+#   You can find me at http://nikhgupta.com
+#
+#   You can find an online version of this file at:
+#   https://github.com/nikhgupta/dotfiles/blob/master/gemrc
+#
+#   This is the personal gem configuration file of Nikhil Gupta.
+#   While much of it is beneficial for general use, I would
+#   recommend picking out the parts you want and understand.
+#
+#   ---
+#
+#   Configuration inside `~/.gemrc` is used by `gem` command, and
+#   defines the options for installing new gems. Primarily, `rdoc`, and
+#   `ri` documentations are not installed along with the gem.
+#
+# ================================================================== }}}
+---
+:verbose: true
+gem: --no-rdoc --no-ri
+:update_sources: true
+:benchmark: false
+:backtrace: false
+:bulk_threshold: 1000
+:ssl_verify_mode: 0
+:sources:
+- https://rubygems.org
+- http://gems.rubyforge.org
+- http://gems.github.com
+- http://gemcutter.org

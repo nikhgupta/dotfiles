@@ -1,0 +1,2 @@
+alias download_songs='cat ~/Music/Gaana.com/downloads.txt | xargs -I {} swan {}';
+alias rspecerrors='rspec --only-failures --fail-fast';

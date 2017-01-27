@@ -1,0 +1,1 @@
+/Users/nikhgupta/Code/__dotfiles/editor/spacemacs/spacemacs
