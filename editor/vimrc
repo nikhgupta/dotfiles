@@ -215,7 +215,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
     " Use a nice font on the specific OS
     " No support for Windows, again :)
     if g:is_mac
-      set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+      set guifont=Fire\ Coda:h16
+      " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
     elseif g:is_ubuntu
       set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
     elseif g:is_nix
@@ -919,6 +920,8 @@ endif
 " }}}
 " Advanced:    loads tag file when found, and adds some convenient mappings {{{
   set tags+=./tags,tags;/         " find and load tags file up until root
+  " Plugin 'ludovicchabant/vim-gutentags'
+  " let g:gutentags_cache_dir = '~/.tags_cache'
 
   " mappings:
   " TODO: what does this correspond to?
@@ -1155,6 +1158,7 @@ endif
     \ : "\<TAB>"
 " }}}
 " Essential:   properly detects filetype for weird files or corrects them and adds syntax {{{
+  " Plugin 'sheerun/vim-polyglot'
   augroup detect_filetypes
     au!
     " html & css family:
@@ -1179,6 +1183,9 @@ endif
     au BufNewFile,BufRead *.ctp setl ft=ctp
     " go
     au BufNewFile,BufRead *.go setl ft=go
+    " elixir
+    au BufNewFile,BufRead *.ex,*.exs setl ft=elixir
+    au BufNewFile,BufRead *.html.eex setl ft=html
     " miscelleneous
     au BufNewFile,BufRead gemrc,*.yml,*.yaml setl ft=yaml
   augroup end
@@ -1308,6 +1315,8 @@ endif
   augroup end
 " }}}
 " " Essential:   supports CODE LINTING (error-checking) for many languages {{{
+  Plugin 'neomake/neomake'
+  autocmd! BufWritePost * Neomake
 "   Plugin 'scrooloose/syntastic'
 "   let g:syntastic_check_on_open            = 1
 "   let g:syntastic_aggregate_errors         = 0
@@ -1456,6 +1465,13 @@ endif
     au filetype help nnoremap <buffer>q :q<CR>
   augroup end
 " }}}
+" Specialize: Elixir {{{
+  Plugin 'elixir-lang/vim-elixir'
+  Plugin 'slashmili/alchemist.vim'
+  Plugin 'c-brenn/phoenix.vim'
+  Plugin 'tpope/vim-projectionist'
+  let g:alchemist_tag_disable = 1
+" }}}
 " }}}
 " Security:                                                          {{{
 " Recommend:   rejects modelines {{{
@@ -1494,11 +1510,11 @@ endif
 " }}}
 " Tweak:       sets appropriate terminal colors for the terminal {{{
   " set appropriate terminal colors
-  if &t_Co > 2 && &t_Co < 16
-    set t_Co =16
-  elseif &t_Co > 16
-    set t_Co =256
-  endif
+  " if &t_Co > 2 && &t_Co < 16
+  "   set t_Co =16
+  " elseif &t_Co > 16
+  "   set t_Co =256
+  " endif
 " }}}
 " Essential:   adds support to run shell commands and capture output in a buffer {{{
   Plugin 'sjl/clam.vim'
@@ -2095,15 +2111,18 @@ endif
   endif
 
   " this must come after `filetype plugin indent on` after latest vundle update
-  if g:is_gui
-    colorscheme solarized
-    set bg=light
-  else
-    colorscheme solarized
-    set bg=light
-    " set bg=dark
-    " colorscheme Tomorrow-Night-Eighties
+  Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+  let g:airline_theme='onehalflight'
+  colorscheme onehalfdark
+  set bg=dark
+  " if g:is_gui
+  "   " colorscheme solarized
+  " else
+  "   colorscheme solarized
+  "   set bg=light
+  "   " set bg=dark
+  "   " colorscheme Tomorrow-Night-Eighties
     hi Folded term=standout ctermfg=248 ctermbg=237 guifg=#999999 guibg=#d2d2d2
     hi! default link NERDTreeDirSlash NonText
-  endif
+  " endif
 " }}}

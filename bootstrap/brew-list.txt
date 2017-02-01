@@ -1,0 +1,63 @@
+tap caskroom/cask
+tap caskroom/fonts
+tap d12frosted/emacs-plus
+tap neovim/neovim
+cask install alfred
+cask install dropbox
+cask install font-fira-code
+cask install google-chrome
+cask install iterm2
+cask install nvalt
+cask install skype
+cask install transmission
+cask install ubersicht
+cask install vimr
+cask install vlc
+linkapps emacs-plus
+install git
+install curl
+install aria2
+install autoenv
+install certbot
+install cloc
+install coreutils
+install cowsay
+install elixir
+install emacs-plus
+install fasd
+install ffmpeg
+install fontconfig
+install fortune
+install freetype
+install gnupg
+install mysql
+install neovim
+install ngrep
+install node
+install npm
+install perl
+install phantomjs
+install postgresql
+install rbenv
+install rbenv-ctags
+install rbenv-vars
+install reattach-to-user-namespace
+install redis
+install ruby-build
+install spark
+install sqlite
+install the_platinum_searcher
+install tmux
+install vim --with-custom-ruby --with-lua
+install wget
+install youtube-dl
+install zsh
+install zsh-syntax-highlighting
+install cmatrix
+reinstall skype
+install pv
+install strace
+install figlet
+install sl
+uninstall sl
+uninstall asdjaskdj

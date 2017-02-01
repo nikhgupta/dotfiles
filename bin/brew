@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# ---------------------------------------------------------------------
+#
+#   Summary: Log important brew commands
+#   Author:  Nikhil Gupta
+#   Usage:   brew -h
+#
+# ---------------------------------------------------------------------
+#
+
+command   = ARGV.first.downcase
+args      = ARGV.join " "
+loggable  = /(?:|re|un)(install|tap|link)(?:|apps)/
+# => matches: install tap link linkapps reinstall uninstall untap unlink unlinkapps
+
+if command =~ loggable
+  list_file = File.join ENV['DOTCASTLE'], "bootstrap", "brew-list.txt"
+  File.open(list_file, "a"){|f| f.puts args}
+end
+
+exec "/usr/local/bin/brew #{args}"

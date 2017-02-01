@@ -1,45 +1,7 @@
 #!/usr/bin/env bash
-# TODO: add comments
-#
+# Utility script to be sourced into config files
+
 ESCAPE=$'\e'
-
-function is_macosx() { [[ "$OSTYPE" = darwin* ]]; }
-function is_ubuntu() { [[ "$(uname -a)" = *Ubuntu* ]]; }
-function path_append()  { [[ -d "$1" ]] && setenv PATH "$PATH:$1"; }
-function path_prepend() { [[ -d "$1" ]] && setenv PATH "$1:$PATH"; }
-function is_installed() { which "$1" &>/dev/null; }
-function setenv(){ export $1=$2 && [[ -z $ZSH_NAME ]] && is_macosx && [[ -z "${TMUX}" ]] && launchctl setenv $1 "$2"; }
-init_cache(){
-  file_name=$HOME/.init-cache/$1
-  if [[ -f $file_name ]]; then
-    source $file_name
-  else
-    mkdir -p $HOME/.init-cache
-    eval "$(echo $2)" > $file_name
-    source $file_name
-  fi
-}
-
-is_svn(){ [[ -d '.svn' ]]; }
-is_hg() { [[ -d '.hg'  ]] || command hg root &>/dev/null; }
-is_git(){ [[ -d '.git' ]] || \ command git rev-parse --git-dir &>/dev/null || \ command git symbolic-ref HEAD &>/dev/null; }
-
-is_emacs(){ echo $TERMINFO | grep -o emacs >/dev/null; }
-
-# source a given file only if it exists and is sourceable
-source_if_exists() { [[ -s "$1" ]] && source "$1"; }
-
-# Initialize a given ZSH script by caching the `eval` script.
-init_cache(){
-  file_name=$HOME/.init-cache/$1
-  if [[ -f $file_name ]]; then
-    source $file_name
-  else
-    mkdir -p $HOME/.init-cache
-    eval "$(echo $2)" > $file_name
-    source $file_name
-  fi
-}
 
 txtblk="${ESCAPE}[0;30m" # Black - Regular
 txtred="${ESCAPE}[0;31m" # Red
@@ -75,7 +37,38 @@ bakcyn="${ESCAPE}[46m"   # Cyan
 bakwht="${ESCAPE}[47m"   # White
 txtrst="${ESCAPE}[0m"    # Text Reset
 
-warn()   { echo "${undylw}Warning${txtrst}: $@"; }
-error()  { echo "${undred}Error${txtrst}: $@"; exit 1; }
-action() { echo "${txtpur}ACTION${txtrst}: $@"; }
+is_macosx()    { [[ "$OSTYPE" = darwin* ]]; }
+is_ubuntu()    { [[ "$(uname -a)" = *Ubuntu* ]]; }
+is_debian()    { [[ -f "/etc/debian" ]]; }
+is_svn()       { [[ -d '.svn' ]]; }
+is_hg()        { [[ -d '.hg'  ]] || command hg root &>/dev/null; }
+is_git()       { [[ -d '.git' ]] || \ command git rev-parse --git-dir &>/dev/null || \ command git symbolic-ref HEAD &>/dev/null; }
+is_emacs()     { echo $TERMINFO | grep -o emacs >/dev/null; }
+is_installed() { which "$1" &>/dev/null; }
+
+path_append()      { [[ -d "$1" ]] && setenv PATH "$PATH:$1"; }
+path_prepend()     { [[ -d "$1" ]] && setenv PATH "$1:$PATH"; }
+source_if_exists() { [[ -s "$1" ]] && source "$1"; }
+
+browse()   { eval "${BROWSER} ${@}"}
+
+warn()     { echo "${undylw}Warning${txtrst}: $@"; }
+error()    { echo "${undred}Error${txtrst}: $@"; exit 1; }
+action()   { echo "${txtpur}ACTION${txtrst}: $@"; }
 highlight(){ echo -ne "\n👉  ${txtblu}$@${txtrst}\n"; }
+
+setenv(){
+  export $1=$2 && [[ -z $ZSH_NAME ]] && is_macosx &&
+    [[ -z "${TMUX}" ]] && launchctl setenv $1 "$2"
+}
+
+init_cache(){
+  file_name=$HOME/.init-cache/$1
+  if [[ -f $file_name ]]; then
+    source $file_name
+  else
+    mkdir -p $HOME/.init-cache
+    eval "$(echo $2)" > $file_name
+    source $file_name
+  fi
+}

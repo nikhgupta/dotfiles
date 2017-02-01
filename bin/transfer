@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# ---------------------------------------------------------------------
+#
+#   Summary: Transfer a given file to transfer.sh, and generate URL.
+#   Author:  Nikhil Gupta
+#   Usage:   transfer /tmp/test.md               # => uploaded as test.md
+#            cat /tmp/test.md | transfer test.rb # => uploaded as test.rb
+#            cat /tmp/test.md | transfer         # => uploaded as <rand>.txt
+#
+# ---------------------------------------------------------------------
+#
+
+[[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] && list-commands $0 && exit 1
+which curl &>/dev/null || brew install curl
+
+transfer() {
+  if [[ "$@" == "-h" || "$@" == "--help" ]]; then
+    echo "No arguments specified."
+    echo "Usage:"
+    echo "transfer /tmp/test.md               # => uploaded as test.md"
+    echo "cat /tmp/test.md | transfer test.rb # => uploaded as test.rb"
+    echo "cat /tmp/test.md | transfer         # => uploaded as <rand>.txt"
+    return 1
+  fi
+  tmpfile=$( mktemp -t transferXXX )
+  if tty -s; then
+    basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+    curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
+  elif [[ $# -eq 0 ]]; then
+    name=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 | md5)
+    curl --progress-bar --upload-file "-" "https://transfer.sh/$name.txt" >> $tmpfile
+  else
+    curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile
+  fi
+  cat $tmpfile; cat $tmpfile | pbcopy
+  rm -f $tmpfile
+}
+
+transfer $@

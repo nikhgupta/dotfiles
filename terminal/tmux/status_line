@@ -3,6 +3,4 @@
 source $DOTCASTLE/terminal/utils.sh
 source $DOTCASTLE/terminal/zsh/prompt.zsh
 
-if [[ "$1" == "battery" ]]; then
-  print -P "$(_battery_remaining)"
-fi
+[[ "$1" == "battery" ]] && print -P "$(_battery_remaining)"

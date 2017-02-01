@@ -1,33 +1,4 @@
 #!/usr/bin/env zsh
-# Credits:       =================================================== {{{
-#
-#            _ _    _                       _        _
-#           (_) |  | |                     | |      ( )
-#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
-#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
-#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
-#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
-#                          __/ |     | |
-#                         |___/      |_|
-#                            _       _    __ _ _
-#                           | |     | |  / _(_) |
-#                         __| | ___ | |_| |_ _| | ___  ___
-#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
-#                       | (_| | (_) | |_| | | | |  __/\__ \
-#                        \__,_|\___/ \__|_| |_|_|\___||___/
-#
-#
-#   Hello, I am Nikhil Gupta, and
-#   You can find me at http://nikhgupta.com
-#
-#   You can find an online version of this file at:
-#   https://github.com/nikhgupta/dotfiles/blob/master/zshrc
-#
-#   This is the personal zsh configuration of Nikhil Gupta.
-#   While much of it is beneficial for general use, I would recommend
-#   picking out the parts you want and understand.
-#
-#   ---
 #
 #   This file provides the prompt used by current ZSH configuration. Any
 #   prompt specific configuration should be added to this file.
@@ -46,8 +17,9 @@
 #   - displays telephone icon on SSH connection from remote machines.
 #   - displays icons depending upon nature of repo, e.g. git or mercurial.
 #   - displays pending jobs, if any.
-#
-# ================================================================== }}}
+
+source $DOTCASTLE/bin/helpers/utils.sh
+
 PROMPT_BREAKPOINTS=(60 0)
 PROMPT_FILE=$DOTCASTLE/zsh/prompt.zsh
 
@@ -200,12 +172,14 @@ _ssh_user_info(){
   echo -ne "%{$fg[yellow]%}%m%{$reset_color%} in "
 }
 # }}}
+# => function: prompt entry for virtual environemnt {{{
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 function virtualenv_prompt_info(){
   [[ -n ${VIRTUAL_ENV} ]] || return
   python -V 2>&1 | grep -E 'Python\s3\.' 2>&1 &>/dev/null && version=py3 || version=py2
   echo "\e[32m${version}${ZSH_THEME_VIRTUALENV_PREFIX:=[}${VIRTUAL_ENV:t}${ZSH_THEME_VIRTUALENV_SUFFIX:=]}\e[0m "
 }
+# }}}
 
 _after_prompt_all(){
   # intelligently, add a new line char in prompt
@@ -227,34 +201,31 @@ _prompt_0(){
   PROMPT="%{$fg[green]%}%c%{$reset_color%} " # cwd name
   _after_prompt_all
 }
-alias miniprompt=_prompt_0
 
 _prompt_60(){
   PROMPT="$(_ssh_user_info)"
   PROMPT+="%{$fg_bold[cyan]%}"'${PWD/#$HOME/~}'"%{$reset_color%} "
   PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
   PROMPT+='$(virtualenv_prompt_info)'"%{$reset_color%}"
-  # PROMPT+='$(git_prompt_info)'"%{$reset_color%}"
 
   # emacs gui messes up command ouputs unless columns size is specified manually
   is_emacs && let COLUMNS=COLUMNS-2
 
-  # NOTE: I never look at this info, anyways and this takes a 60-70ms
-  # each time.
-  # RPROMPT+='$(git_prompt_status)'"%{$reset_color%} "
-
   RPROMPT='$(_pending_jobs) '
+  # NOTE: I never look at this info, anyways and this takes a 60-70ms each time.
+  RPROMPT+='$(git_prompt_status)'"%{$reset_color%} "
   [[ -z "$TMUX" ]] && RPROMPT+='$(_current_time) '
   [[ -z "$TMUX" ]] && RPROMPT+='$(_battery_remaining)'
 
   _after_prompt_all
 }
 
-_prompt_60
-
 precmd() {
-  print -P "%{%(?.$FG[253].$FG[124])%}$before_prompt%{$reset_color%}"
+  # print -P "%{%(?.$FG[253].$FG[124])%}$before_prompt%{$reset_color%}"
+  print -P "\x1b[38;2;%(?.70;70;70.200;100;100)m${before_prompt}\x1b[0m"
 }
 
+alias miniprompt=_prompt_0; _prompt_60
+
 # when in emacs, let the user know.
-is_emacs && clear && echo "${txtgrn}Welcome $(whoami)!\n${txtylw}You're inside Emacs Multi-Term Z-shell.${txtrst}"
+is_emacs && clear && miniprompt && echo "${txtgrn}Welcome $(whoami)!\n${txtylw}You're inside Emacs Multi-Term Z-shell.${txtrst}"

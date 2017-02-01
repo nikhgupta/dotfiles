@@ -1,26 +1,4 @@
 #!/usr/bin/env zsh
-# Credits:       =================================================== {{{
-#
-#            _ _    _                       _        _
-#           (_) |  | |                     | |      ( )
-#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
-#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
-#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
-#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
-#                          __/ |     | |
-#                         |___/      |_|
-#                            _       _    __ _ _
-#                           | |     | |  / _(_) |
-#                         __| | ___ | |_| |_ _| | ___  ___
-#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
-#                       | (_| | (_) | |_| | | | |  __/\__ \
-#                        \__,_|\___/ \__|_| |_|_|\___||___/
-#
-#
-#   Hello, I am Nikhil Gupta, and
-#   You can find me at http://nikhgupta.com
-#
-#   ---
 #
 #   This is a template for the private `zshenv` file of Nikhil Gupta.
 #   This file is intended as an example template to store all secret
@@ -32,8 +10,6 @@
 #   Note that, you should never version any files containing your
 #   private date for public projects on Github, which is why this file
 #   is being managed via Dropbox, and is symlinked at `~/.zshenv.local`
-#
-# ================================================================== }}}
 
 # my name and my email - all that defines me ;)
 export MY_NAME="Your Name"

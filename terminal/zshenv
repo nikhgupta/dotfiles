@@ -1,33 +1,4 @@
 #!/usr/bin/env sh
-# Credits:       =================================================== {{{
-#
-#            _ _    _                       _        _
-#           (_) |  | |                     | |      ( )
-#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
-#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
-#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
-#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
-#                          __/ |     | |
-#                         |___/      |_|
-#                            _       _    __ _ _
-#                           | |     | |  / _(_) |
-#                         __| | ___ | |_| |_ _| | ___  ___
-#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
-#                       | (_| | (_) | |_| | | | |  __/\__ \
-#                        \__,_|\___/ \__|_| |_|_|\___||___/
-#
-#
-#   Hello, I am Nikhil Gupta, and
-#   You can find me at http://nikhgupta.com
-#
-#   You can find an online version of this file at:
-#   https://github.com/nikhgupta/dotfiles/blob/master/zshenv
-#
-#   This is the personal zsh configuration file of Nikhil Gupta.
-#   While much of it is beneficial for general use, I would
-#   recommend picking out the parts you want and understand.
-#
-#   ---
 #
 #   Configuration inside `~/.zshenv` is source by both interactive and
 #   not interactive shells (typically, GUI programs), and hence, MacVim
@@ -40,38 +11,30 @@
 #   interactive shells, e.g. prompts, aliases, etc., unless o'course,
 #   you want that to be so.
 #
-# ================================================================== }}}
-#
+
 # zmodload zsh/zprof
 
 # => all the dotfiles code resides here, so this will be used often
-source $HOME/Code/dotcastle/terminal/utils.sh
-setenv DOTCASTLE $HOME/Code/dotcastle
+export DOTCASTLE=$HOME/Code/dotcastle
+source $DOTCASTLE/terminal/utils.sh
+setenv DOTCASTLE $DOTCASTLE
 
 # => setup editor for ourself
-setenv EDITOR    vim            # aliased to `mvim -v` on OSX
-setenv GUIEDITOR gvim           # aliased to `mvim` on OSX
+setenv EDITOR    vim
 setenv VISUAL    vim
+setenv GUIEDITOR vimr
+setenv BROWSER   "open -a 'Google Chrome'"
+browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
 
 # => other OSX dependent environment variables and mods
 if is_macosx; then
   setenv BREW_PREFIX /usr/local
-  is_installed mvim && alias vim="mvim -v" && alias gvim="mvim"
-
-  # cask should install GUI apps in /Applications on OSX
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 else
   export BREW_PREFIX=$HOME/.linuxbrew
 fi
 
-if which browser &>/dev/null; then
-  export BROWSER=`which browser`
-else
-  export BROWSER="open -a 'Google Chrome'"
-fi
-
 setenv ZSH "$HOME/.oh-my-zsh" # required by OhMyZSH!
-# export BASE16_SHELL=$DOTCASTLE/iterm2/base16-shell
 
 # => ensure that homebrew is in our path.
 path_prepend "${BREW_PREFIX}/bin"
@@ -88,9 +51,10 @@ is_installed pyenv-virtualenv-init && init_cache pyenv-virtualenv-init "pyenv vi
 # pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=true
 # cache pip-installed packages to avoid re-downloading
-# export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 # allow access to install python packages globally via gpip
 gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@"; }
+gpip3(){ PIP_REQUIRE_VIRTUALENV="" pip3 "$@"; }
 
 # GO Language
 setenv GOPATH $HOME/Code/workspace/go
@@ -98,4 +62,6 @@ path_append "${GOPATH}/bin"
 path_append "${BREW_PREFIX}/opt/go/libexec/bin"
 
 # => load local configuration, if available
+path_prepend $DOTCASTLE/bin
+ssh-add -K $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local

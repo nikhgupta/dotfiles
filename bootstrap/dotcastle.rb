@@ -1,43 +1,15 @@
 #!/usr/bin/env ruby
 # coding: utf-8
-# Credits:       =================================================== {{{
 #
-#            _ _    _                       _        _
-#           (_) |  | |                     | |      ( )
-#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
-#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
-#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
-#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
-#                          __/ |     | |
-#                         |___/      |_|
-#                            _       _    __ _ _
-#                           | |     | |  / _(_) |
-#                         __| | ___ | |_| |_ _| | ___  ___
-#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
-#                       | (_| | (_) | |_| | | | |  __/\__ \
-#                        \__,_|\___/ \__|_| |_|_|\___||___/
+# Script to bootstrap DotCastle, and setup dotfiles.
 #
+# This script will make appropriate symlinks to the dotfiles on the system,
+# import your local configurations, and add git configuration options by reading
+# them from environment variables.
 #
-#   Hello, I am Nikhil Gupta, and
-#   You can find me at http://nikhgupta.com
-#
-#   You can find an online version of this file at:
-#   https://github.com/nikhgupta/dotfiles/blob/master/scripts/init.sh
-#
-#   ---
-#
-#   Script to bootstrap DotCastle, and setup dotfiles.
-#
-#   This script will make appropriate symlinks to the dotfiles on the
-#   system, import your local configurations, and add git configuration
-#   options by reading them from environment variables.
-#
-#   Make sure that dependencies like brew and oh-my-zsh have been
-#   installed on the system before running this script. You can install
-#   all dependencies by running the bundled `./scripts/dep-installer`
-#   script.
-#
-# ================================================================== }}}
+# Make sure that dependencies like brew and oh-my-zsh have been installed on the
+# system before running this script. You can install all dependencies by running
+# the bundled `./scripts/dep-installer` script.
 
 require 'pathname'
 require 'fileutils'
@@ -90,23 +62,23 @@ module DotCastle
     end
 
     def highlight(message)
-      puts "👉  \e[32m#{message}\e[0m"
+      puts "👉  \e[1;32m#{message}\e[0m"
     end
 
     def warn(message)
-      puts "\e[33mWarning\e[0m: #{message}"
+      puts "\e[4;33mWarning\e[0m: #{message}"
     end
 
     def error(message)
-      puts "\e[31m[ERROR]: #{message}\e[0m"
+      puts "\e[4;31m[ERROR]: #{message}\e[0m"
     end
 
     def action(message)
-      puts "\e[34m#{message}\e[0m"
+      puts "\e[4;34m#{message}\e[0m"
     end
 
     def execute(command)
-      puts "Running: \e[35m#{command}\e[0m"
+      puts "Running: \e[37m;40m#{command}\e[0m"
       pipe = IO.popen command
       while (line = pipe.gets)
         print line
@@ -143,7 +115,7 @@ module DotCastle
       destin = "#{ENV['HOME']}/.#{options.fetch(:destination, name)}"
       backup destin
 
-      FileUtils.mkdir_p(File.dirname(destin))
+      # FileUtils.mkdir_p(File.dirname(destin))
       suffix  = options.fetch(:suffix,  nil)
       command = options.fetch(:command, "cp -r")
       execute "#{command} '#{DotCastle::PATH}/#{@module}/#{name}#{suffix}' '#{destin}'"
@@ -194,8 +166,7 @@ module DotCastle
 
     # FIX THIS!
     def running?(name)
-      return false
-      # system "ps auwwx | egrep -q '#{name}' &>/dev/null"
+      system "ps auwwx | egrep '#{name}' | grep -v egrep &>/dev/null"
     end
 
     def install_preferences(path)

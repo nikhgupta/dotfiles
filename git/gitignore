@@ -1,40 +1,7 @@
-# Credits:       =================================================== {{{
-#
-#            _ _    _                       _        _
-#           (_) |  | |                     | |      ( )
-#      _ __  _| | _| |__   __ _ _   _ _ __ | |_ __ _|/ ___
-#     | '_ \| | |/ / '_ \ / _` | | | | '_ \| __/ _` | / __|
-#     | | | | |   <| | | | (_| | |_| | |_) | || (_| | \__ \
-#     |_| |_|_|_|\_\_| |_|\__, |\__,_| .__/ \__\__,_| |___/
-#                          __/ |     | |
-#                         |___/      |_|
-#                            _       _    __ _ _
-#                           | |     | |  / _(_) |
-#                         __| | ___ | |_| |_ _| | ___  ___
-#                        / _` |/ _ \| __|  _| | |/ _ \/ __|
-#                       | (_| | (_) | |_| | | | |  __/\__ \
-#                        \__,_|\___/ \__|_| |_|_|\___||___/
-#
-#
-#   Hello, I am Nikhil Gupta, and
-#   You can find me at http://nikhgupta.com
-#
-#   You can find an online version of this file at:
-#   https://github.com/nikhgupta/dotfiles/blob/master/gitignore
-#
-#   This is the personal gitignore file of Nikhil Gupta. While much of
-#   it is beneficial for general use, I would recommend picking out the
-#   parts you want and understand.
-#
-#   ---
-#
-#   `~/.gitignore` is set as the global exclude file for `git`, via the
-#   git # configuration variables, which means that files in this
-#   configuration will always be ignored by `git` command, as if the
-#   following lines were specified within the project's `.gitignore`
-#   file.
-#
-# ================================================================== }}}
+# `~/.gitignore` is set as the global exclude file for `git`, via the git
+# # configuration variables, which means that files in this configuration will
+# always be ignored by `git` command, as if the following lines were specified
+# within the project's `.gitignore` file.
 
 # Special File #
 ################

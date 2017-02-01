@@ -4,8 +4,9 @@ DotCastle.define do
   highlight "DotCastle - a castle for my dotfiles"
   puts "This script will install DotCastle on this machine."
   puts "Please, follow the instructions when the script finishes."
-  puts "DotCastle location: \e[35m#{ENV['DOTCASTLE']}\e[0m"
+  puts "DotCastle location: \e[3;34m#{ENV['DOTCASTLE']}\e[0m"
   puts
+  exit
 
   within :git do
     symlink   :gitignore
@@ -35,6 +36,7 @@ DotCastle.define do
     symlink :zsh
     symlink "tmux.conf"
     example "zshenv.local", "You should add your passwords and API tokens to \e[33m~/.zshenv.local\e[0m"
+    git_clone "$HOME/.oh-my-zsh/custom/plugins/k", "https://github.com/supercrabtree/k"
   end
 
   within :editor do
@@ -50,6 +52,7 @@ DotCastle.define do
 
   within :miscelleneous do
     symlink  :gemrc
+    symlink  :ctags
     symlink  :powconfig
     symlink  "youtube-dl-config", destination: "config/youtube-dl/config"
   end
@@ -67,20 +70,14 @@ DotCastle.define do
   end
 
   on_debian_and_macosx "Install Brew packages", unless: "kali" do
+    command = "cat $DOTCASTLE/bootstrap/brew-list.txt | xargs -I {} brew {}"
     if is_installed? :brew
       execute "brew upgrade"
-      execute "brew install git curl wget tmux zsh zsh-syntax-highlighting"
-      execute "brew install fasd fortune cowsay autoenv fontconfig freetype"
-      execute "brew install reattach-to-user-namespace"
-      execute "brew install node npm rbenv ruby-build rbenv-ctags rbenv-vars"
-      execute "brew install certbot coreutils cloc ffmpeg gnupg"
-      execute "brew install mysql perl phantomjs postgresql elixir redis sqlite"
-      execute "brew install the_platinum_searcher youtube-dl"
-      execute "brew install vim --with-custom-ruby --with-lua"
-      execute "brew tap d12frosted/emacs-plus && brew install emacs-plus && brew linkapps emacs-plus"
+      execute command
     else
       error "Homebrew could not be installed for some reasons."
-      error "Not installing these packages: #{brew_packages}"
+      error "Please, install and run the following command when done:"
+      warn  command
     end
   end
 
@@ -88,24 +85,12 @@ DotCastle.define do
   highlight "Install OhMyZSH"
   download_and_run "http://install.ohmyz.sh"
 
-  puts
-  highlight "Install Powerline Fonts"
-  git_clone "#{ENV['DOTCASTLE']}/miscelleneous/powerline-fonts", "https://github.com/Lokaltog/powerline-fonts.git"
-  run_file "powerline-fonts/install.sh", module: :miscelleneous
-
-  puts
-  on_macosx "Install Brew Cask Packages" do
-    execute "brew tap caskroom/cask"
-    execute "brew cask install --force alfred dropbox nvalt todoist"
-    execute "brew cask install --force vlc transmission"
-    execute "brew cask install --force google-chrome"
-    execute "brew cask install --force vimr"
-  end
+  # puts
+  # highlight "Install Powerline Fonts"
+  # git_clone "#{ENV['DOTCASTLE']}/miscelleneous/powerline-fonts", "https://github.com/Lokaltog/powerline-fonts.git"
+  # run_file "powerline-fonts/install.sh", module: :miscelleneous
 
   on_macosx "Installing iTerm2 along with Preferences" do
-    execute "brew cask install iterm2 --force"
-    git_clone "#{ENV['DOTCASTLE']}/terminal/iterm2/base16-shell", "https://github.com/chriskempson/base16-shell.git"
-
     if ENV['TERM_PROGRAM'] == "iTerm.app"
       warn "iTerm2 preferences can only be loaded from Terminal.app"
       puts "Please, quit iTerm and run this script again from Terminal.app"
@@ -124,9 +109,8 @@ DotCastle.define do
   end
 
   on_macosx "Install Ubersicht and its widgets" do
-    execute "brew cask install ubersicht --force"
     git_clone "#{ENV['DOTCASTLE']}/ubersicht", "https://github.com/nikhgupta/ubersicht"
-    puts "Please, setup Widget path in Ubersicht to: \e[33m#{ENV['DOTCASTLE']}/ubersicht\e[0m"
+    puts "Please, setup Widget path in Ubersicht to: \e[4;33m#{ENV['DOTCASTLE']}/ubersicht\e[0m"
   end
 
   finish_setup!
