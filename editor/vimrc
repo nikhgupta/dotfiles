@@ -215,8 +215,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
     " Use a nice font on the specific OS
     " No support for Windows, again :)
     if g:is_mac
-      set guifont=Fire\ Coda:h16
-      " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+      " set guifont=Fire\ Coda:h16
+      set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
     elseif g:is_ubuntu
       set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
     elseif g:is_nix
@@ -346,6 +346,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plugin '29decibel/codeschool-vim-theme'
   Plugin 'altercation/vim-colors-solarized'
   Plugin 'minofare/VIM-Railscasts-Color-Theme'
+  Plugin 'dracula/vim'
 
   " collections:
   Plugin 'flazz/vim-colorschemes'
@@ -1171,7 +1172,7 @@ endif
     " ruby:
     au BufNewFile,BufRead Rakefile,Capfile,Gemfile,Guardfile,Vagrantfile
           \,Thorfile,Do,dorc,Dofile,config.ru,.autotest,.irbrc,.pryrc
-          \,.simplecov,*.thor setl ft=ruby
+          \,.simplecov,*.thor,*.rabl setl ft=ruby
     " vim and shell files:
     au BufNewFile,BufRead *vimrc,*.vim setl ft=vim
     au BufNewFile,BufRead *zshrc,*zprofile,*zlogout,*zlogin,*zshenv,*.zsh-theme setl ft=sh
@@ -1503,6 +1504,7 @@ endif
       set shell=/bin/sh
     endif
   endif
+  Plugin 'Shougo/vimshell.vim'
 " }}}
 " Expected:    uses a faster tty (terminal) & sets it title as per the file {{{
   set title                         " change the terminal's title
@@ -2040,6 +2042,19 @@ endif
 "   Plugin 'esneider/recipes.vim'
 "   nnoremap <Leader>r :CtrlPRecipes<CR>
 " " }}}
+  Plugin 'irrationalistic/vim-tasks'
+
+  let g:TasksMarkerBase = '☐'
+  let g:TasksMarkerDone = '✔'
+  let g:TasksMarkerCancelled = '✘'
+  let g:TasksDateFormat = '%Y-%m-%d %H:%M'
+  let g:TasksAttributeMarker = '@'
+  let g:TasksArchiveSeparator = '＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿'
+
+  augroup task_plugin
+    au!
+    autocmd BufNewFile,BufReadPost *.TODO,TODO,*.todo,*.todolist,*.taskpaper,*.tasks set filetype=tasks
+  augroup end
 " }}}
 " Miscelleneous:                                                     {{{
 " Recommend:   allows incr/decr with <C-x> & <C-a> for alphabets, numbers & hex {{{
@@ -2112,17 +2127,27 @@ endif
 
   " this must come after `filetype plugin indent on` after latest vundle update
   Bundle 'sonph/onehalf', {'rtp': 'vim/'}
-  let g:airline_theme='onehalflight'
-  colorscheme onehalfdark
-  set bg=dark
+  Plugin 'trevordmiller/nova-vim'
+
+  " TrueColor support
+  if &term =~# '^screen'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
+  colorscheme nova
+  " let g:gruvbox_contrast_dark = "soft"
+  " colorscheme gruvbox
+  " set bg=dark
+  " colors dracula
+  " let g:airline_theme='onehalfdark'
+  " colorscheme onehalflight
+  " set bg=light
   " if g:is_gui
-  "   " colorscheme solarized
+  "   colorscheme solarized
   " else
   "   colorscheme solarized
   "   set bg=light
-  "   " set bg=dark
-  "   " colorscheme Tomorrow-Night-Eighties
-    hi Folded term=standout ctermfg=248 ctermbg=237 guifg=#999999 guibg=#d2d2d2
-    hi! default link NERDTreeDirSlash NonText
+     " hi Folded term=standout ctermfg=248 ctermbg=237 guifg=#999999 guibg=#d2d2d2
+     " hi! default link NERDTreeDirSlash NonText
   " endif
 " }}}

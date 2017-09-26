@@ -14,6 +14,12 @@
 # ---------------------------------------------------------------------
 #
 
+# Run other scripts
+perl $(dirname $0)/color-spaces
+bash $(dirname $0)/color-lines
+
+# Run this script
+
 [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] && list-commands $0 && exit 1
 
 T='gYw'   # The test text

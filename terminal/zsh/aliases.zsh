@@ -73,9 +73,6 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 # dump path - each directory on separate line
 alias dumppath='echo -e ${PATH//:/\\n}'
 
-# shows apps using network currently
-alias usingnet='lsof -P -i -n | cut -f 1 -d " "| uniq | tail -n +2'
-
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
 alias badge="tput bel"
@@ -91,6 +88,7 @@ if is_macosx; then
   alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
   alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
   alias activeinterface="ifactive | grep -E 'en.*:' | cut -d ' ' -f1 | tr -d ':'"
+
   # View HTTP traffic
   alias sniff="sudo ngrep -d '$(activeinterface)' -t '^(GET|POST) ' 'tcp and port 80'"
   alias httpdump="sudo tcpdump -i $(activeinterface) -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
@@ -138,7 +136,9 @@ fi
 # Tmux related commands are sourced from the following file
 # commands: ts, tl, workon, workoff, etc.
 source $DOTCASTLE/bin/helpers/tmux.sh
-source_if_exists ~/.zsh/funalias.zsh
+# source_if_exists ~/.zsh/funalias.zsh
+# source_if_exists ~/.zsh/usefulscripts.zsh
+source_if_exists ~/.zsh/commandlinefu.zsh
 
-# ZSH loading measurement
-zsh_load(){ avgtime "zsh -lic 'print -P \$PROMPT \$RPROMPT'"; }
+# # ZSH loading measurement
+# zsh_load(){ avgtime "zsh -lic 'print -P \$PROMPT \$RPROMPT'"; }

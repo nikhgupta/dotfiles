@@ -132,7 +132,7 @@ module DotCastle
 
     def git_clone(path, url)
       path = Pathname.new(path).absolute? ? path : "#{ENV['HOME']}/.#{path}"
-      if `cd #{path}; git remote show origin`.include?(url)
+      if system("cd '#{path}' &>/dev/null") && `git remote show origin`.include?(url)
         warn "Skipping git clone for: #{url}"
         warn "Seems like that repository already exists in #{path}"
       else

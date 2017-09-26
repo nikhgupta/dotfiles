@@ -28,6 +28,7 @@ DotCastle.define do
     git_config "github.password", :github_token
     git_config "github.oauth-token", :github_token
     git_config "sendmail.smtpuser", :git_gmail_smtp_user
+    git_config "user.signingkey", "3842C9DDBB0194C7"
   end
 
   within :terminal do

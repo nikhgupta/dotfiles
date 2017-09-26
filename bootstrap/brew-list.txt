@@ -61,3 +61,66 @@ install figlet
 install sl
 uninstall sl
 uninstall asdjaskdj
+install gimp
+install heroku
+install rethinkdb
+install go
+install kafka
+install rabbitmq
+install mongo
+uninstall emacs-lus
+uninstall emacs-plus
+uninstall emacs-lus
+install couchdb
+uninstall couchdb
+install pgadmin
+install swagger-codegen
+install openssl
+install terminal-notifier
+install caskroom/cask/pgweb
+install phantomjs
+link
+link emacs
+install npth libgpg-error libgcrypt libksba libassuan pinentry adns
+tap crisidev/homebrew-chunkwm
+install chunkwm
+install koekeishiya/formulae/khd
+install --help
+install koekeishiya/formulae/khd
+install kitty
+install node
+install librsvg --help
+install librsvg --list
+install librsvg --help
+install librsvg@2.40.10
+install bower
+install bash
+install memleax
+install htop
+install spark
+install watch
+install openssh --with-brewed-openssl --with-keychain-support
+install jpeg
+uninstall jpeg
+uninstall jpeg
+uninstall --ignore-dependencies jpeg
+uninstall uninstall --force --ignore-dependencies jpeg
+install jpeg
+install rmagick
+install imagemagick
+unlink imagemagick
+install imagemagick@7
+link imagemagick@7 --force
+install imagemagick@6 brew link imagemagick@6 --force
+unlink imagemagick
+install imagemagick@6
+link imagemagick@6 --force
+install macvim
+link macvim
+install rot13
+install travis
+install gpg
+install nasty
+install nasty
+install gpgme
+install libsodium

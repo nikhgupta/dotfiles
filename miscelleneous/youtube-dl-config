@@ -11,7 +11,7 @@
 --restrict-filenames
 --continue
 --console-title
---print-traffic
+# --print-traffic
 --no-check-certificate
 --prefer-ffmpeg
 --output "%(title)s.%(ext)s"

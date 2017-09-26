@@ -50,7 +50,7 @@ path_append()      { [[ -d "$1" ]] && setenv PATH "$PATH:$1"; }
 path_prepend()     { [[ -d "$1" ]] && setenv PATH "$1:$PATH"; }
 source_if_exists() { [[ -s "$1" ]] && source "$1"; }
 
-browse()   { eval "${BROWSER} ${@}"}
+# browse()   { eval "${BROWSER} ${@}"}
 
 warn()     { echo "${undylw}Warning${txtrst}: $@"; }
 error()    { echo "${undred}Error${txtrst}: $@"; exit 1; }

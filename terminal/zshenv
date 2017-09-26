@@ -23,8 +23,8 @@ setenv DOTCASTLE $DOTCASTLE
 setenv EDITOR    vim
 setenv VISUAL    vim
 setenv GUIEDITOR vimr
-setenv BROWSER   "open -a 'Google Chrome'"
-browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
+# setenv BROWSER   "open -a 'Google Chrome'"
+# browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
 
 # => other OSX dependent environment variables and mods
 if is_macosx; then
@@ -63,5 +63,6 @@ path_append "${BREW_PREFIX}/opt/go/libexec/bin"
 
 # => load local configuration, if available
 path_prepend $DOTCASTLE/bin
-ssh-add -K $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
+ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
+export GPG_TTY=$(tty)

@@ -96,9 +96,9 @@ for package in coreutils gnu-sed gnu-tar; do
   fi
 done
 
-path_append $BREW_PREFIX/pear/bin
-path_append $HOME/.cabal/bin
-path_append $HOME/node_modules/.bin
+# path_append $BREW_PREFIX/pear/bin
+# path_append $HOME/.cabal/bin
+# path_append $HOME/node_modules/.bin
 
 source ~/.zsh/aliases.zsh
 source ~/.zsh/prompt.zsh
@@ -109,3 +109,6 @@ path_prepend $DOTCASTLE/bin
 if [ -f ~/.zsh_nocorrect ]; then
   while read -r COMMAND; do alias $COMMAND="nocorrect $COMMAND"; done < ~/.zsh_nocorrect
 fi
+
+# added by travis gem
+[ -f /Users/nikhgupta/.travis/travis.sh ] && source /Users/nikhgupta/.travis/travis.sh
