@@ -1,96 +1,113 @@
-TXkgRG90IENhc3RsZQo9PT09PT09PT09PT09Cgo8aW1nIHNyYz0iaHR0cDovL2Nk
-bi5vYnNpZGlhbnBvcnRhbC5jb20vYXNzZXRzLzM4OTkyL0FsZHJlZHNDYXN0bGUu
-anBnIgphbHQ9J0RvdENhc3RsZScgc3R5bGU9ImZsb2F0OiByaWdodDsgbWFyZ2lu
-LWxlZnQ6IDQwcHgiLz4KCioqY2FzdGxlIGZvciBteSBkb3RmaWxlcyoqIC0gdGhl
-IGNvcm5ldHN0b25lIG9mICpkZXYta2luZCogISA6KQoKVGhpcyByZXBvc2l0b3J5
-IGNvbnRhaW5zIHRoZSBkb3RmaWxlcyAqKHN0b2xlbi9jb21waWxlZC9jcmVhdGVk
-KSogYnkgbWUuCk1ham9yIGluc3BpcmF0aW9ucyBmcm9tIFtAaG9sbWFuXShodHRw
-Oi8vZ2l0aHViLmNvbS9ob2xtYW4pIGFuZApbQG1hdGhpYXN5Ym5lbnNdKGh0dHA6
-Ly9naXRodWIuY29tL21hdGhpYXNieW5lbnMpLiBNb3JlIGluc3BpcmF0aW9ucwpm
-cm9tIFtkb3RmaWxlcyByZXBvc2l0b3J5XShodHRwOi8vZ2l0aHViLmNvbS9za3dw
-L2RvdGZpbGVzKSBieQpbQHNrd3BdKGh0dHA6Ly9naXRodWIuY29tL3Nrd3ApLiBD
-cmVkaXQgaGFzIGJlZW4gZ2l2ZW4gd2hlcmUgSSBjb3VsZC4gOikKCkxvYWQgVGlt
-ZSBDb21wYXJpc29uCi0tLS0tLS0tLS0tLS0tLS0tLS0tCgpgYGBiYXNoCiQgLi9z
-Y3JpcHRzL2JlbmNobWFyay5yYiA5NmQ4NzczLi4zZDdlZmFiCiAgICAgICAgenNo
-IG9uIDk2ZDg3NzM6IDAuNzg0cyAocmFuIDEwIHRpbWVzIHdpdGggcmVoZWFyc2Fs
-KQogICAgICAgIHpzaCBvbiAzZDdlZmFiOiAwLjI3MnMgKHJhbiAxMCB0aW1lcyB3
-aXRoIHJlaGVhcnNhbCkKICAgICAgICB2aW0gb24gOTZkODc3MzogMC43MjRzIChy
-YW4gMTAgdGltZXMgd2l0aCByZWhlYXJzYWwpCiAgICAgICAgdmltIG9uIDNkN2Vm
-YWI6IDAuMzU3cyAocmFuIDEwIHRpbWVzIHdpdGggcmVoZWFyc2FsKQp2aW1fcnVi
-eSBvbiA5NmQ4NzczOiAxLjMyM3MgKHJhbiAxMCB0aW1lcyB3aXRoIHJlaGVhcnNh
-bCkKdmltX3J1Ynkgb24gM2Q3ZWZhYjogMC4zODJzIChyYW4gMTAgdGltZXMgd2l0
-aCByZWhlYXJzYWwpCmBgYAoKU2F2ZSBkb3RmaWxlcyBpbiB+L0NvZGUvXF9cX2Rv
-dGZpbGVzICEhIQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0KCkZvbGxvd2luZyBzb21lIGNvbnZlbnRpb25zLCBJIHN0b3JlIGFsbCBteSBj
-b2RlIGluc2lkZSBgfi9Db2RlYCBkaXJlY3RvcnkuClRoaXMgaGFzIG9idmlvdXMg
-Km9yZ2FuaXphdGlvbmFsKiBiZW5lZml0cy4KT24gc2ltaWxhciBncm91bmRzLCBJ
-IHN0b3JlIG15IGRvdGZpbGVzIGluc2lkZSBgfi9Db2RlL19fZG90ZmlsZXNgIGRp
-cmVjdG9yeSwKd2hpY2ggaXMgbW9yZSBzZW5zaWJsZSBpbiBteSBvcGluaW9uIHRo
-YW4gYH4vLmRvdGZpbGVzYCwgYmVjYXVzZToKICAtIGRvdGZpbGVzIGFyZSB0aGUg
-aGVhcnQgb2YgeW91ciBjb2RlIC0gb2J2aW91cyByZWFzb24gdG8gaGF2ZSB0aGVt
-IHN0b3JlZAogICAgcmlnaHQgbmV4dCB0byBhbGwgeW91ciBjb2RlIGluIGB+L0Nv
-ZGVgCiAgLSBkb3RmaWxlcyBkaXJlY3RvcnkgaXMgaW4gZnJvbnQgb2YgeW91ciBl
-eWVzIGF0IGFsbCB0aW1lcywgYW5kIGhlbmNlLCB5b3UKICAgIHdpbGwgYmUgaW50
-cmlndWVkIHRvIGNoYW5nZSBpdCBtb3JlIG9mdGVuIHRoYW4gd2hlbiBpdCB3YXMg
-aGlkZGVuLgogIC0gbW9yZSBpbXBvcnRhbnRseSwgaW1wcm92aW5nIGNvZGUgaW4g
-ZG90ZmlsZXMgaW1wbGllcyBpbXByb3ZlZCBwcm9kdWN0aXZpdHkuCgpJbnN0YWxs
-YXRpb24KLS0tLS0tLS0tLS0tClRoZXJlIHdpbGwgYmUgYSA4MCUgY2hhbmNlIHlv
-dSB3aWxsIGhhdmUgYSByZWFzb24gbm90IHRvIHVzZQpgfi9Db2RlL19fZG90Zmls
-ZXNgIGZvciB0aGUgaW5zdGFsbGF0aW9uLCBpbiB3aGljaCBjYXNlLCB5b3UgY2Fu
-IHNpbXBseQptb2RpZnkgdGhlIGZpcnN0IGxpbmUgb2YgdGhlIGZvbGxvd2luZyBi
-YXNoIGNvbW1hbmRzIHRvIHN1aXQgeW91ciB0YXN0ZQo7KSBOb3RlIHRoYXQsIGBE
-b3RDYXN0bGVgIHJlcXVpcmVzIGBob21lYnJld2AgKG9yIGBsaW51eGJyZXdgKSBh
-bmQKYG9obXl6c2hgLCBhbmQgdGhlIHNhbWUgY2FuIGJlIGluc3RhbGxlZCBtYW51
-YWxseSwgb3IgdmlhIHRoZSBpbnN0YWxsZXIKc2NyaXB0IGF0IGAuL3NjcmlwdHMv
-ZGVwLWluc3RhbGxlci5zaGAuCgogICAgZXhwb3J0IERPVENBU1RMRT0kSE9NRS9D
-b2RlL19fZG90ZmlsZXMKICAgIGdpdCBjbG9uZSBnaXQ6Ly9naXRodWIuY29tL25p
-a2hndXB0YS9kb3RmaWxlcy5naXQgJERPVENBU1RMRQogICAgIyBydW4gdGhlIGlu
-c3RhbGxlciBzY3JpcHQKICAgICRET1RDQVNUTEUvc2NyaXB0cy9kb3RjYXN0bGUv
-ZGVwLWluc3RhbGxlci5zaAogICAgJERPVENBU1RMRS9zY3JpcHRzL2RvdGNhc3Rs
-ZS9ib290c3RyYXAuc2gKCkhvdyBteSBEZXZlbG9wbWVudCBFbnZpcm9ubWVudCBp
-cyBTZXR1cAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0K
-CkEgbG90IG9mIHRoaXMgaW5mb3JtYXRpb24gY2FuIGJlIGZvdW5kIG9uIG15IFti
-bG9nXShodHRwOi8vbmlraGd1cHRhLmNvbSkuCgpQcmltYXJpbHksIEkgdXNlIGEg
-bG90IG9mIHRvb2xzIHRvIHNldHVwIG15IGRldmVsb3BtZW50IGVudmlyb25tZW50
-LCBhbmQKdGhhbmtzIHRvIHRoZSAqbml4IGdvb2RuZXNzLCBhbGwgZm8gdGhlc2Ug
-dG9vbHMgaGF2ZSBhIHdheSB0byBzcGVjaWZ5CnRoZWlyIGNvbmZpZ3VyYXRpb25z
-LiBNb3N0IG9mIHRoZSB0aW1lcywgSSB3aWxsIGluY2x1ZGUgc3VjaApjb25maWd1
-cmF0aW9ucyB3aXRoaW4gdGhpcyByZXBvc2l0b3J5IHRvIGtlZXAgdGhlbSB2ZXJz
-aW9uZWQuCgpUaGUgbWluaW1hbCBzZXR1cCB0aGF0IEkgd291bGQgbGlrZSB0byB3
-b3JrIHdpdGggaW5jbHVkZXMgdGhlc2UKZG90ZmlsZXMsIGFzIHdlbGwgYXMgYGJh
-c2UxNi1laWdodGllc2AgYW5kIGBzb2xhcml6ZWRgIHRoZW1lcyBmb3IgYm90aApp
-VGVybTIgYW5kIE1hY1ZpbSwgYWxvbmcgd2l0aCBIb21lYnJldyBvbiBteSBNYWNP
-U1guCgpFdmVyeXRoaW5nIGdvZXMgaW5zaWRlIH4vQ29kZQotLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLQoKQWxsIG15IGNvZGUgcmVzaWRlcyBpbiB0aGUgYH4v
-Q29kZWAgZGlyZWN0b3J5LiBUeXBpY2FsbHk6CgotIHJlcG9zaXRvcmllcyBhcmUg
-ZG93bmxvYWRlZCB0byB0aGUgYHJlcG9zYCBkaXJlY3RvcnkuCi0gdGhlc2UgZG90
-ZmlsZXMgYXJlIHByZXNlbnQgYXQgYF9fZG90ZmlsZXNgIGRpcmVjdG9yeS4KLSBz
-Y3JpcHRzIGFyZSBzYXZlZCB0byBgX19kb3RmaWxlcy9zY3JpcHRzYCBkaXJlY3Rv
-cnksIGFuZCBpbmNsdWRlIFtgc3Vic2BdKGh0dHBzOi8vZ2l0aHViLmNvbS9iYXNl
-Y2FtcC9zdWIpIGNyZWF0ZWQuCi0gd2Vic2l0ZXMgdGhhdCBJIGRldmVsb3AgdXBv
-biBsb2NhbGx5IGFyZSBwcmVzZW50IGF0IGBzaXRlc2AgZGlyZWN0b3J5LgotIHdv
-cmsgcmVsYXRlZCBjb2RlIGlzIGxvY2F0ZWQgaW4gYHdvcmtgIGRpcmVjdG9yeS4K
-LSBvdGhlciBwZXJzb25hbC9taXNjZWxsZW5lb3VzIGNvZGUgaXMgcHJlc2VudCBp
-biB0b3BpYy13aXNlIGRpcmVjdG9yaWVzCiAgdW5kZXIgYHBlcnNvbmFsYCBkaXJl
-Y3RvcnkuCgppVGVybTIKLS0tLS0tCgpJIHByZWZlciBpVGVybTIgb3ZlciBUZXJt
-aW5hbCBhcHAgaW4gTWFjT1NYLCBhbmQgaGF2ZSBpbnN0YWxsZWQgdGhlCmBiYXNl
-MTYtZWlnaHRpZXNgIHRoZW1lIGZvciBpdC4gTm90ZSB0aGF0LCB0aGlzIHJlcXVp
-cmVzIGBiYXNlMTYtc2hlbGxgCnRvIGJlIGxvYWRlZCBpbiBteSBaU0ggY29uZmln
-dXJhdGlvbi4KCk9oTXlac2ghCi0tLS0tLS0tCgpJIGxpa2UgT2hNeVpTSCEgcHJv
-amVjdCwgd2hpY2ggcHJvdmlkZXMgbWUgd2l0aCBhIHJlYWR5LXRvLXVzZSBaU0gK
-Y29uZmlndXJhdGlvbi4gSSBjdXN0b21pemUgdXBvbiB0aGF0IGhlYXZpbHksIGJ1
-dCBPTVohIGlzIGEgbWFqb3IKaW5ncmVkaWVudC4KCkhvbWVCcmV3IGFuZCBwYWNr
-YWdlcwotLS0tLS0tLS0tLS0tLS0tLS0tLS0KCltIb21lQnJld10oaHR0cDovL2Jy
-ZXcuc2gpIGlzIGEgbmVjZXNzaXR5IGZvciBkZXZlbG9wbWVudCBvbiBPU1gsIGFu
-ZCBpcwphIHJlYWxseSBhd2Vzb21lIHBhY2thZ2UgbWFuYWdlci4gSSB1c2UgaXQg
-dG8gaW5zdGFsbCB2YXJpb3VzCmRlcGVuZGVuY2llcyBhbmQgcGFja2FnZXMsIGxp
-a2UgYG1hY3ZpbSxgIGByYmVudixgIGBhdXRvZW52LGAKYHpzaC1zeW50YXgtaGln
-aGxpZ2h0aW5nYCBldGMuIElmIHRoZXJlIGlzIGEgZm9ybXVsYSBhdmFpbGFibGUg
-Zm9yCmEgcGFydGljdWxhciBwcm9ncmFtIGluIEhvbWVicmV3LCBJIHdvdWxkIHBy
-ZWZlciBpdCBvdmVyIG90aGVyIHNvdXJjZXMuCkFsc28sIG5vdGUgdGhhdCBicmV3
-IGluc3RhbGxzIGB6c2hgIGNvbXBsZXRpb25zIHRvCmAvdXNyL2xvY2FsL3NoYXJl
-L3pzaC9zaXRlLWZ1bmN0aW9uc2AgZmlsZSwgd2hpY2ggaGVscHMgbWUgYWRkIGN1
-c3RvbQpjb21wbGV0aW9ucywgZWFzaWx5LiBPbiBVYnVudHUsIEkgaW5zdGFsbCB0
-aGUgTGludXggdmVyc2lvbiBvZiBIb21lYnJldywKbmFtZWx5IGBMaW51eGJyZXdg
-LgoKUG9zdCBJbnN0YWxsIFRhc2tzCi0tLS0tLS0tLS0tLS0tLS0tLQoKLSBJbnN0
-YWxsIGRvdGpzCg==
+My Dot Castle
+=============
+
+<img src="http://cdn.obsidianportal.com/assets/38992/AldredsCastle.jpg"
+alt='DotCastle' style="float: right; margin-left: 40px"/>
+
+**castle for my dotfiles** - the cornetstone of *dev-kind* ! :)
+
+This repository contains the dotfiles *(stolen/compiled/created)* by me.
+Major inspirations from [@holman](http://github.com/holman) and
+[@mathiasybnens](http://github.com/mathiasbynens). More inspirations
+from [dotfiles repository](http://github.com/skwp/dotfiles) by
+[@skwp](http://github.com/skwp). Credit has been given where I could. :)
+
+Load Time Comparison
+--------------------
+
+```bash
+$ ./scripts/benchmark.rb 96d8773..3d7efab
+        zsh on 96d8773: 0.784s (ran 10 times with rehearsal)
+        zsh on 3d7efab: 0.272s (ran 10 times with rehearsal)
+        vim on 96d8773: 0.724s (ran 10 times with rehearsal)
+        vim on 3d7efab: 0.357s (ran 10 times with rehearsal)
+vim_ruby on 96d8773: 1.323s (ran 10 times with rehearsal)
+vim_ruby on 3d7efab: 0.382s (ran 10 times with rehearsal)
+```
+
+Save dotfiles in ~/Code/\_\_dotfiles !!!
+---------------------------------------
+
+Following some conventions, I store all my code inside `~/Code` directory.
+This has obvious *organizational* benefits.
+On similar grounds, I store my dotfiles inside `~/Code/__dotfiles` directory,
+which is more sensible in my opinion than `~/.dotfiles`, because:
+  - dotfiles are the heart of your code - obvious reason to have them stored
+    right next to all your code in `~/Code`
+  - dotfiles directory is in front of your eyes at all times, and hence, you
+    will be intrigued to change it more often than when it was hidden.
+  - more importantly, improving code in dotfiles implies improved productivity.
+
+Installation
+------------
+There will be a 80% chance you will have a reason not to use
+`~/Code/__dotfiles` for the installation, in which case, you can simply
+modify the first line of the following bash commands to suit your taste
+;) Note that, `DotCastle` requires `homebrew` (or `linuxbrew`) and
+`ohmyzsh`, and the same can be installed manually, or via the installer
+script at `./scripts/dep-installer.sh`.
+
+    export DOTCASTLE=$HOME/Code/__dotfiles
+    git clone git://github.com/nikhgupta/dotfiles.git $DOTCASTLE
+    # run the installer script
+    $DOTCASTLE/scripts/dotcastle/dep-installer.sh
+    $DOTCASTLE/scripts/dotcastle/bootstrap.sh
+
+How my Development Environment is Setup
+=======================================
+
+A lot of this information can be found on my [blog](http://nikhgupta.com).
+
+Primarily, I use a lot of tools to setup my development environment, and
+thanks to the *nix goodness, all fo these tools have a way to specify
+their configurations. Most of the times, I will include such
+configurations within this repository to keep them versioned.
+
+The minimal setup that I would like to work with includes these
+dotfiles, as well as `base16-eighties` and `solarized` themes for both
+iTerm2 and MacVim, along with Homebrew on my MacOSX.
+
+Everything goes inside ~/Code
+-----------------------------
+
+All my code resides in the `~/Code` directory. Typically:
+
+- repositories are downloaded to the `repos` directory.
+- these dotfiles are present at `__dotfiles` directory.
+- scripts are saved to `__dotfiles/scripts` directory, and include [`subs`](https://github.com/basecamp/sub) created.
+- websites that I develop upon locally are present at `sites` directory.
+- work related code is located in `work` directory.
+- other personal/miscelleneous code is present in topic-wise directories
+  under `personal` directory.
+
+iTerm2
+------
+
+I prefer iTerm2 over Terminal app in MacOSX, and have installed the
+`base16-eighties` theme for it. Note that, this requires `base16-shell`
+to be loaded in my ZSH configuration.
+
+OhMyZsh!
+--------
+
+I like OhMyZSH! project, which provides me with a ready-to-use ZSH
+configuration. I customize upon that heavily, but OMZ! is a major
+ingredient.
+
+HomeBrew and packages
+---------------------
+
+[HomeBrew](http://brew.sh) is a necessity for development on OSX, and is
+a really awesome package manager. I use it to install various
+dependencies and packages, like `macvim,` `rbenv,` `autoenv,`
+`zsh-syntax-highlighting` etc. If there is a formula available for
+a particular program in Homebrew, I would prefer it over other sources.
+Also, note that brew installs `zsh` completions to
+`/usr/local/share/zsh/site-functions` file, which helps me add custom
+completions, easily. On Ubuntu, I install the Linux version of Homebrew,
+namely `Linuxbrew`.
+
+Post Install Tasks
+------------------
+
+- Install dotjs
