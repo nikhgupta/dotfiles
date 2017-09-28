@@ -40,3 +40,40 @@ alias notifier='terminal-notifier -sound default'
 
 # Find MB eating directories
 alias dush="du -sm {*,.*} 2>/dev/null | sort -n|tail"
+
+# Display a quick weather report in terminal
+function weather(){
+  local location=""
+  is_installed locateme && location="$(locateme -f "{LAT},{LON}")"
+  curl -s wttr.in/${location}?Q1 | head -n -2
+}
+
+# Search commands on CLF and open in Vim
+function cmdfu() {
+  local url="http://www.commandlinefu.com/commands/matching/"
+  local url="${url}$(echo "$@" | sed 's/ /-/g')/"
+  local url="${url}$(echo -n $@ | base64)/plaintext"
+  curl "${url}" --silent | vim -R -
+}
+
+# Eavesdrop on a process ID.
+# Usage: eavesdrop PID [DURATION]
+function eavesdrop(){
+  if [[ -n "${1}" ]]; then
+    local pid=$1
+  else
+    echo "Must supply process PID."
+    exit 1
+  fi
+  local duration="${2:-10}"
+  echo "  COMMAND   PID      USER   FD      TYPE             DEVICE  SIZE/OFF    NODE NAME"
+  diff <(lsof -p "${pid}") <(sleep "${duration}"; lsof -p ${pid})
+}
+
+# Monitor processes usin top with command matching given str only:
+function ptop() {
+  pgrep "$1" && top $(pgrep "$1" | sed 's|^|-pid |g') || {
+    echo "Found no process with name matching: $1"
+    exit 1
+  }
+}
