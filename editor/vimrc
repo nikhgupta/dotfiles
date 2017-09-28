@@ -20,7 +20,7 @@
 "   You can find me at http://nikhgupta.com
 "
 "   You can find an online version of this file at:
-"   https://github.com/nikhgupta/dotfiles/blob/master/vimrc
+"   https://github.com/nikhgupta/dotfiles/blob/master/editor/vimrc
 "
 "   This is the personal vim configuration file of Nikhil Gupta.
 "   While much of it is beneficial for general use, I would
@@ -60,7 +60,7 @@
 "     vim -u NONE
 " }}}
 " Vim Tips:     """"""""""""""""""""""""""""""""""""""""""""""" {{{
-"   - Press `F1` key on any keyword to get quick help!
+"   - Press `Shift`+`K` key on any keyword to get quick help!
 "   - Use `:X` to set encryption on any file
 "   - Use `setl key=` to disable this encryption
 "   - Use `gf` to open file under cursor using default file handler
@@ -85,8 +85,13 @@
 "   - https://github.com/mathiasbynens/dotfiles
 "   - https://github.com/nvie/vimrc
 " }}}
+" TodosAndIdeas: """"""""""""""""""""""""""""""""""""""""""""""" {{{
+"   - use PGP keys for encryption
+" }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 set nocompatible     " No to the total compatibility with the ancient vi
+
 " Prologue:                                                          {{{
 " keys used:
 " - personalize: user should personalize the config for their own purpose.
@@ -107,10 +112,11 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " - F2           toggle paste mode
 " - F3           multiple cursor mode
 " - F5           run make program defined for the current file
-" - F6           special function attached with the current file, if any.
 " - F8           insert current date
 " - F9           obfuscate the entire buffer
-" - K            view documentation for work under cursor
+" -  K           view documentation for word under cursor
+" - F6           special function attached with the current file, if any.
+"                 vim: view Github repo for plugin defined on current line
 "
 " }}}
 " Internal:                                                          {{{
@@ -125,6 +131,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 
   " other relevant variables
   let g:is_posix   = 1 " enable better bash syntax highlighting
+
   " what kind of VIM UI we are working with?
   if g:is_macvim                | let g:ui_type = "MVIM"
   elseif g:is_gui               | let g:ui_type = "GUI"
@@ -132,10 +139,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
   elseif exists("$COLORTERM")   | let g:ui_type = "CTERM"
   elseif exists("$TERM")        | let g:ui_type = "TERM"
   else | let g:ui_type = "????" | endif
-
-  " " initialize plugin related dictionaries
-  " let g:thematic#defaults = {}
-  " let g:thematic#themes   = {}
 " }}}
 " Internal:    developer-defined custom functions for this config {{{
   " Function: Source a file, only if we can read it - display a message, optionally :) {{{
@@ -204,19 +207,21 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " }}}
 " }}}
 " }}}
+
 " Preferences:                                                       {{{
 " General:     has configurable leader keys {{{
   let mapleader      = ","     " change mapleader key from / to ,
   let g:mapleader    = ","     " some plugins may require this variable to be set
   let maplocalleader = "\\"    " used inside filetype settings
 " }}}
-" Appearance:  has configurable GUI fonts {{{
+" Appearance:  uses distinct GUI fonts {{{
   if g:is_gui
     " Use a nice font on the specific OS
     " No support for Windows, again :)
     if g:is_mac
-      " set guifont=Fire\ Coda:h16
-      set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+      set macligatures
+      set guifont=Fira\ Code:h16
+      " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
     elseif g:is_ubuntu
       set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
     elseif g:is_nix
@@ -225,6 +230,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
+  " Issue :Startify command to display startup screen
   " always show these bookmarks on the startup screen
   let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/Code/dotcastle' ]
   " let s:startify_custom_footer_command = 'echo "\n\n"; fortune -s;'

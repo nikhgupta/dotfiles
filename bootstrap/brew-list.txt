@@ -124,3 +124,7 @@ install nasty
 install nasty
 install gpgme
 install libsodium
+install thoughtbot/formulae/paperback
+uninstall thoughtbot/formulae/paperback
+install locateme
+install mplayer
