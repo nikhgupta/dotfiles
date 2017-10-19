@@ -5,6 +5,12 @@
 # Decolorize command output - useful in scripts
 alias -g NOCOLOR="| perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b"
 
+# Open the output of command in VIM [colorless]
+alias -g VIM="NOCOLOR | vim -R -"
+
+# show STDERR in red color :)
+alias -g ERR='2> >(while read line; do echo -e "\e[01;31m$line\e[0m"; done)'
+
 # Share command output over HTTP
 alias -g SHARE="| tee >(cat) NOCOLOR| curl -sF 'sprunge=<-' http://sprunge.us | pbcopy"
 alias -g QRCODE=" | curl -sF-=\<- qrenco.de"
@@ -76,4 +82,23 @@ function ptop() {
     echo "Found no process with name matching: $1"
     exit 1
   }
+}
+
+# view all date format references
+function dateh(){
+  date --help | sed -n "/^ *%%/,/^ *%Z/p" | \
+    while read l; do F=${l/% */}
+      date +%$F:"|'"'"'${F//%n/ }'"'"'|${l#* }"
+    done | sed "s/\ *|\ */|/g" | column -s "|" -t
+}
+
+# display latest/random XKCD comics
+function xkcd(){ curl -s $(lynx --dump http://xkcd.com/ |grep png) | imgcat; }
+function xkcdr(){ curl -s $(lynx --dump http://dynamic.xkcd.com/comic/random |grep png) | imgcat; }
+
+# Get a quick proxy for use
+function getproxy() {
+  local url="https://gimmeproxy.com/api/getProxy?"
+  local url="${url}protocol=http&minSpeed=100&maxCheckPeriod=3600&anonymityLevel=1"
+  curl -s "${url}" | json_pp
 }

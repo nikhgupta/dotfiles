@@ -128,3 +128,22 @@ install thoughtbot/formulae/paperback
 uninstall thoughtbot/formulae/paperback
 install locateme
 install mplayer
+install ncdu
+install rename
+install lynx
+install feh
+install imgcat
+install certbot
+install keybase
+tap caskroom/cask
+install keybase
+install speedtest-cli
+uninstall speedtest-cli
+install aria2
+install yarn --without-node
+install hugo
+install pngout svgo
+install ngrok
+install chromedriver
+install gimp
+link gimp

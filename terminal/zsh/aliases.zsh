@@ -133,6 +133,13 @@ if which brew &>/dev/null; then
   init_cache fasd 'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
 fi
 
+function addscript() {
+  local file="$DOTCASTLE/bin/$1"
+  touch $file
+  chmod +x $file
+  vim $file
+}
+
 # Tmux related commands are sourced from the following file
 # commands: ts, tl, workon, workoff, etc.
 source $DOTCASTLE/bin/helpers/tmux.sh

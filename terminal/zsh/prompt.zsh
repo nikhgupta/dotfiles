@@ -181,9 +181,10 @@ function virtualenv_prompt_info(){
 }
 # }}}
 
-_after_prompt_all(){
-  # intelligently, add a new line char in prompt
-  PROMPT+='$prompt_newline'
+_prompt_0(){
+  RPROMPT=""
+  before_prompt=""
+  PROMPT="%{$fg[green]%}%c%{$reset_color%} " # cwd name
 
   # == every prompt should display the following information
   # display a telephone icon when we are in a SSH session.
@@ -193,13 +194,6 @@ _after_prompt_all(){
   PROMPT+='$timer_show'             # time taken to run last command
   PROMPT+='$(_return_code)'         # return code for last command
   if is_macosx; then PROMPT+="%(!.!.➲) "; else PROMPT+="➲ "; fi
-  before_prompt="$(printf "-"%.0s {1..${COLUMNS}})"
-}
-
-_prompt_0(){
-  RPROMPT=""
-  PROMPT="%{$fg[green]%}%c%{$reset_color%} " # cwd name
-  _after_prompt_all
 }
 
 _prompt_60(){
@@ -217,12 +211,23 @@ _prompt_60(){
   [[ -z "$TMUX" ]] && RPROMPT+='$(_current_time) '
   [[ -z "$TMUX" ]] && RPROMPT+='$(_battery_remaining)'
 
-  _after_prompt_all
+  # intelligently, add a new line char in prompt
+  PROMPT+='$prompt_newline'
+
+  # == every prompt should display the following information
+  # display a telephone icon when we are in a SSH session.
+  [[ -n $SSH_CONNECTION ]] && PROMPT+="%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
+
+  PROMPT+='$(_set_prompt_char)'     # prompt icon for repo
+  PROMPT+='$timer_show'             # time taken to run last command
+  PROMPT+='$(_return_code)'         # return code for last command
+  if is_macosx; then PROMPT+="%(!.!.➲) "; else PROMPT+="➲ "; fi
+  before_prompt="$(printf "-"%.0s {1..${COLUMNS}})\n"
 }
 
 precmd() {
   # print -P "%{%(?.$FG[253].$FG[124])%}$before_prompt%{$reset_color%}"
-  print -P "\x1b[38;2;%(?.70;70;70.200;100;100)m${before_prompt}\x1b[0m"
+  print -Pn "\x1b[38;2;%(?.70;70;70.200;100;100)m${before_prompt}\x1b[0m"
 }
 
 alias miniprompt=_prompt_0; _prompt_60
