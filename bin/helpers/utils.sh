@@ -7,6 +7,7 @@ function is_svn(){ [[ -d '.svn' ]]; }
 function is_hg() { [[ -d '.hg'  ]] || command hg root &>/dev/null; }
 function is_git(){ [[ -d '.git' ]] || \ command git rev-parse --git-dir &>/dev/null || \ command git symbolic-ref HEAD &>/dev/null; }
 function is_emacs(){ echo $TERMINFO | grep -o emacs >/dev/null; }
+function is_atom(){ echo $TERMINFO | grep -o atom >/dev/null; }
 
 function is_installed() { which "$1" &>/dev/null; }
 

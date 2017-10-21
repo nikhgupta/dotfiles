@@ -654,12 +654,12 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plug 'kana/vim-textobj-fold'
 " }}}
 " Specialize:  supports multiple cursors for editing text in one go {{{
-  Plug 'terryma/vim-multiple-cursors'
-  let g:multi_cursor_use_default_mapping = 0
-  let g:multi_cursor_next_key='<F3>'
-  let g:multi_cursor_prev_key=''
-  let g:multi_cursor_skip_key=''
-  let g:multi_cursor_quit_key='<Esc>'
+  " Plug 'terryma/vim-multiple-cursors'
+  " let g:multi_cursor_use_default_mapping = 0
+  " let g:multi_cursor_next_key='<F3>'
+  " let g:multi_cursor_prev_key=''
+  " let g:multi_cursor_skip_key=''
+  " let g:multi_cursor_quit_key='<Esc>'
 " }}}
 " Specialize:  allows focussing on a narrow region of the text {{{
   Plug 'chrisbra/NrrwRgn'
@@ -974,6 +974,8 @@ endif
   Plug 'chrisbra/Colorizer'
   nmap <leader>tcol :ColorToggle<CR>
   let g:colorizer_auto_filetype='css,html,scss,vue'
+  let g:colorizer_colornames_disable = 1
+  let g:colorizer_colornames = 0
 
   " javascript family:
   Plug 'pangloss/vim-javascript'        " Javascript
@@ -1063,12 +1065,12 @@ endif
   " especially when splits are used.
   " set completeopt-=preview
 
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-  " enable completion from tags
-  let g:ycm_collect_identifiers_from_tags_files = 1
-  " enable completion for keywords in current language
-  let g:ycm_seed_identifiers_with_syntax = 0
-  let g:ycm_max_num_candidates = 10
+  " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  " " enable completion from tags
+  " let g:ycm_collect_identifiers_from_tags_files = 1
+  " " enable completion for keywords in current language
+  " let g:ycm_seed_identifiers_with_syntax = 0
+  " let g:ycm_max_num_candidates = 10
 
   " augroup load_us_ycm
   "   autocmd!
@@ -1169,18 +1171,18 @@ endif
 " Essential:   sets up a sane editing/coding environment as per the filetype {{{
   augroup setup_environment
     au!
-    au filetype css,less,sass,scss      set ts=2 sw=2 sts=2 tw=80  et
-    au filetype json,javascript,coffee  set ts=2 sw=2 sts=2 tw=80  et
+    au filetype css,less,sass,scss      set ts=2 sw=2 sts=2 tw=100 et
+    au filetype json,javascript,coffee  set ts=2 sw=2 sts=2 tw=100 et
     au filetype python                  set ts=4 sw=4 sts=4 tw=80  et
-    au filetype ruby,eruby              set ts=2 sw=2 sts=2 tw=80  et
+    au filetype ruby,eruby              set ts=2 sw=2 sts=2 tw=100 et
     au filetype php,ctp                 set ts=4 sw=4 sts=4 tw=80  et
     au filetype sh,vim                  set ts=2 sw=2 sts=2 tw=72  et
-    au filetype ghmarkdown,textile      set ts=4 sw=4 sts=4 tw=72  et
+    au filetype ghmarkdown,textile      set ts=4 sw=4 sts=4 tw=100 et
     au filetype rst                     set ts=4 sw=4 sts=4 tw=74  et
     au filetype yaml                    set ts=2 sw=2 sts=2 tw=72  et
     au filetype html,xhtml,haml         set ts=2 sw=2 sts=2 tw=120 et
     au filetype make                    set noet " make uses real tabs
-    au filetype vue                     set ts=2 sw=2 sts=2 tw=80  et
+    au filetype vue                     set ts=2 sw=2 sts=2 tw=100 et
   augroup end
 " }}}
 " Essential:   sets up folding for the current file as per its filetype {{{
@@ -1340,8 +1342,8 @@ endif
 " Personalize: Ruby: Rails:        persist ctags when we move inside gem directories {{{
   augroup gem_ctags
     au!
-    au BufEnter *.rb set tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
-    au BufLeave *.rb set tags-=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
+    au filetype ruby,eruby set tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
+    " au filetype ruby,eruby set tags-=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
   augroup END
 " }}}
 " Personlize: Ruby: Rails:         has command to quickly run specs {{{
@@ -1677,7 +1679,7 @@ endif
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 1 && isdirectory(expand(argv(0)))
       \ && !exists("s:std_in") | call plug#load('nerdtree')
-      \ | silent NERDTreeFocus | only | endif
+      \ | execute("NERDTree ". expand(argv(0))) | only | endif
   augroup END
 
   " Sort NERDTree to show files in a certain order
@@ -1737,51 +1739,6 @@ endif
     Plug 'mileszs/ack.vim'
     nnoremap <leader>a :Ack --smart-case<Space>
   endif
-" }}}
-" Upgrade:     pulsate the line when jumping to search term, and center the window over it {{{
-  " Function: Pulsate the line containing the cursor {{{
-  function! PulseCursorLine()
-    let current_window = winnr()
-
-    windo set nocursorline
-    execute current_window . 'wincmd w'
-
-    setlocal cursorline
-
-    redir => old_hi
-    silent execute 'hi CursorLine'
-    redir END
-    let old_hi = split(old_hi, '\n')[0]
-    let old_hi = substitute(old_hi, 'xxx', '', '')
-
-    hi CursorLine guibg=#3a3a3a
-    redraw
-    sleep 20m
-
-    hi CursorLine guibg=#4a4a4a
-    redraw
-    sleep 30m
-
-    hi CursorLine guibg=#3a3a3a
-    redraw
-    sleep 30m
-
-    hi CursorLine guibg=#2a2a2a
-    redraw
-    sleep 20m
-
-    execute 'hi ' . old_hi
-
-    windo set cursorline
-    execute current_window . 'wincmd w'
-  endfunction
-  " }}}
-  nnoremap <silent> n   n:call PulseCursorLine()<cr>zz
-  nnoremap <silent> N   N:call PulseCursorLine()<cr>zz
-  nnoremap <silent> *   *:call PulseCursorLine()<cr>zz
-  nnoremap <silent> #   #:call PulseCursorLine()<cr>zz
-  nnoremap <silent> g* g*:call PulseCursorLine()<cr>zz
-  nnoremap <silent> g# g#:call PulseCursorLine()<cr>zz
 " }}}
 " Mappings:    display lines with keyword under cursor and ask to jump on one {{{
   " FIXME: when quitting from this command via <Esc>, it takes us to the first
@@ -2100,6 +2057,9 @@ endif
   " this must come after `filetype plugin indent on` after latest vundle update
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
   Plug 'trevordmiller/nova-vim'
+  Plug 'ryanoasis/vim-devicons'
+  let g:airline_powerline_fonts = 1
+  set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
 
   " required by vimPlug
   call plug#end()               " required
@@ -2130,3 +2090,4 @@ endif
      " hi! default link NERDTreeDirSlash NonText
   " endif
 " }}}
+

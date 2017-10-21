@@ -203,7 +203,7 @@ _prompt_60(){
   PROMPT+='$(virtualenv_prompt_info)'"%{$reset_color%}"
 
   # emacs gui messes up command ouputs unless columns size is specified manually
-  is_emacs && let COLUMNS=COLUMNS-2
+  (is_emacs || is_atom) && let COLUMNS=COLUMNS-2
 
   RPROMPT='$(_pending_jobs) '
   # NOTE: I never look at this info, anyways and this takes a 60-70ms each time.
@@ -230,7 +230,9 @@ precmd() {
   print -Pn "\x1b[38;2;%(?.70;70;70.200;100;100)m${before_prompt}\x1b[0m"
 }
 
-alias miniprompt=_prompt_0; _prompt_60
+alias miniprompt=_prompt_0;
+[[ $COLUMNS -gt 80 ]] && _prompt_60 || _prompt_0
 
 # when in emacs, let the user know.
 is_emacs && clear && miniprompt && echo "${txtgrn}Welcome $(whoami)!\n${txtylw}You're inside Emacs Multi-Term Z-shell.${txtrst}"
+is_atom  && clear && miniprompt && echo "${txtgrn}Welcome $(whoami)!\n${txtylw}You're inside ATOM Z-shell.${txtrst}"
