@@ -142,52 +142,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
   else | let g:ui_type = "????" | endif
 " }}}
 " Internal:    developer-defined custom functions for this config {{{
-  " Function: Source a file, only if we can read it - display a message, optionally :) {{{
-  function! SourceIfReadable(file, ...)
-    let l:file = expand(a:file)
-    if filereadable(l:file)
-      execute "source" l:file
-    elseif a:0 > 0 && a:1 == 1
-      echomsg "Could not read file for sourcing: " . l:file
-    endif
-  endfunction " }}}
-  " Function: Check if a given plugin is specified in this configuration {{{
-    function! s:plugin_active(name)
-      for plugin in g:bundles
-        if plugin['name'] =~ a:name
-          return plugin['name']
-        endif
-      endfor
-      return ""
-    endfunction
-  " }}}
-  " Function: Return first argument if day time, otherwise second argument {{{
-  function! DayOrNight(day, night)
-    let curr_hour = strftime("%H")
-    return curr_hour > 7 && curr_hour < 19 ? a:day : a:night
-  endfunction
-  " }}}
-  " Function: Quick distraction-free theme setup for Thematic {{{
-  function! DistractionFree(theme)
-    let l:theme = {
-    \     'ruler': 1,
-    \     'laststatus': 0,
-    \     'sign-column-color-fix': 1,
-    \     'fold-column-color-mute': 1,
-    \     'number-column-color-mute': 1,
-    \ }
-    call extend(l:theme, a:theme)
-    return l:theme
-  endfunction
-  " }}}
-  " Function: Add a day night theme to thematic {{{
-    function! AddDayNightThemeForThematic(name)
-      let g:thematic#themes[a:name] = DayOrNight(
-            \ g:thematic#themes[a:name . "-light"],
-            \ g:thematic#themes[a:name . "-dark" ]
-            \ )
-    endfunction
-  " }}}
   " Function: Open a url/file with the default browser {{{
     function! s:open_with_browser(url, ...)
       let l:prog = g:is_mac ? "open" : ""
@@ -208,7 +162,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " }}}
 " }}}
 " }}}
-
 " Preferences:                                                       {{{
 " General:     has configurable leader keys {{{
   let mapleader      = ","     " change mapleader key from / to ,
@@ -222,6 +175,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
     if g:is_mac
       set macligatures
       set guifont=Fira\ Code:h16
+      " set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
       " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
     elseif g:is_ubuntu
       set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
@@ -231,27 +185,13 @@ set nocompatible     " No to the total compatibility with the ancient vi
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
-  " Issue :Startify command to display startup screen
-  " always show these bookmarks on the startup screen
   let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/Code/dotcastle' ]
-  " let s:startify_custom_footer_command = 'echo "\n\n"; fortune -s;'
-  " if executable('figlet')
-  "   " fetch vim logo from ~/.vimlogo and update the logo if older than a day
-  "   let s:startify_custom_footer_command = 'fortune -s; echo; echo;'.
-  "         \ 'if find ~/.vimlogo -mmin 1440; then; cat ~/.vimlogo;'.
-  "         \ 'else; figlet -f "ANSI Shadow" VIM $(vim --version | '.
-  "         \ 'head -1 | egrep "\d+\.\d+" -o) | tee ~/.vimlogo; fi'
-  " elseif executable('fortune') && executable('cowsay')
-  "   let s:startify_custom_footer_command = 'fortune -s | cowsay'
-  " elseif executable('fortune')
-  "   let g:startify_custom_footer_command = 'fortune -s'
-  " endif
 " }}}
 " }}}
 
 " General:                                                           {{{
 " Personalize: allows customizations via a local configuration {{{
-  call SourceIfReadable("~/.vimrc.local.pre")
+  if filereadable("~/.vimrc.local.pre") | source ~/.vimrc.local.pre | endif
 " }}}
 " Essential:   has mouse support built-in {{{
   if has('mouse')
@@ -324,31 +264,20 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Expected:    comes with default plugins that enhance the editor {{{
   Plug 'bling/vim-airline'
-  " Plug 'reedes/vim-thematic'
+  Plug 'vim-airline/vim-airline-themes'
 " }}}
 " }}}
 " Appearance:                                                        {{{
 " Personalize: provides a variety of themes to choose from {{{
-  Plug 'vim-scripts/wombat256.vim'
-  Plug 'ciaranm/inkpot'
   Plug 'morhetz/gruvbox'
-  Plug 'DAddYE/soda.vim'
-  " Plug 'cstrahan/grb256'
-  Plug 'Pychimp/vim-luna'
-  Plug 'jnurmine/Zenburn'
-  Plug 'fugalh/desert.vim'
-  Plug 'nanotech/jellybeans.vim'
-  " Plug 'zenorocha/dracula-theme'
   Plug '29decibel/codeschool-vim-theme'
   Plug 'altercation/vim-colors-solarized'
   Plug 'minofare/VIM-Railscasts-Color-Theme'
   Plug 'dracula/vim'
 
   " collections:
-  Plug 'flazz/vim-colorschemes'
   " Plug 'chriskempson/base16-vim'
   " Plug 'chriskempson/vim-tomorrow-theme'
-  " Plug 'daylerees/colour-schemes', { 'rtp': 'vim-themes/' }
 " }}}
 " Personalize: highlight current line, but not the current column {{{
   set cursorline                  " highlight the current line for quick orientation
@@ -479,13 +408,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
     set showcmd                   " show (partial) command in the last line of the screen this also shows visual selection info
   endif
 
-  " Plug 'edkolev/tmuxline.vim'
-
-  " disabled: makes no sense to me.
-  " " show buffers in statusline
-  " Plug 'bling/vim-bufferline'
-  " let g:bufferline_echo = 0
-
   " Use :AirlineToggle to revert to this statusline
   if has('statusline') && !exists('g:loaded_airline')
     set stl=\ \ \[_%{mode()}_]\ \ \ [%Y/%{&ff}]\ %F\ %m%r\
@@ -502,8 +424,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:airline_section_y = "%{airline#util#wrap(airline#parts#ffenc() . ' ' . g:ui_type, 0)}"
 
   " set a default airline theme, if none has, been defined!
-  if !exists('g:airline_theme') | let g:airline_theme = 'gruvbox' | endif
-  if !is_gui | let g:airline_theme = 'dark' | endif
+  if !exists('g:airline_theme') | let g:airline_theme = 'nova' | endif
+  if !is_gui | let g:airline_theme = 'nova' | endif
 " }}}
 " Upgrade:     displays tab titles in a beautiful way (via: Airline) {{{
   let g:airline#extensions#tabline#enabled = 1
@@ -519,37 +441,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:airline#extensions#tabline#right_sep = ''
   let g:airline#extensions#tabline#right_alt_sep = ''
 " }}}
-" Advanced:    can account for time of day, and switch themes accordingly {{{
-  " use 256 colorspace support, since we want to use a base16 colorscheme.
-  " NOTE: this requires `base16-shell` to be sourced by our ZSH configuration,
-  " so that the terminal program can support 256 colorspace, as well.
-  " let base16colorspace = 256
-  " let g:base16_shell_path = $BASE16_SHELL
-
-  " let g:thematic#defaults["linespace"]  = 0
-  " if g:is_macvim
-  "   let g:thematic#defaults["fullscreen"] = &fullscreen
-  "   let g:thematic#defaults["fullscreen-background-color-fix"] = &fullscreen
-  " else
-  "   let g:thematic#defaults["fullscreen"] = 1
-  "   let g:thematic#defaults["fullscreen-background-color-fix"] = 1
-  " endif
-
-  " let g:thematic#themes["default-dark"] = {
-  "       \ 'colorscheme'  : 'base16-eighties',
-  "       \ 'background'   : 'dark',
-  "       \ 'airline-theme': 'base16' }
-  " let g:thematic#themes["default-light"] = {
-  "       \ 'colorscheme'  : 'solarized',
-  "       \ 'background'   : 'light',
-  "       \ 'airline-theme': 'solarized' }
-  " call AddDayNightThemeForThematic('default')
-
-  " " switch theme on GUI as per day/night, but use dark version for terminal vim
-  " let g:thematic#theme_name = g:is_gui ? 'default-light' : 'default-dark'
-
-  " nmap <silent> <leader>atd :Thematic default<CR>
-" }}}
 " Advanced:    disables unnecessary interfaces in GUI {{{
   if g:is_gui
     " adjust the GUI accordingly
@@ -563,15 +454,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
     set guioptions-=l
     set guioptions-=L
   endif
-" }}}
-" Advanced:    displays location marks visually (default: off) {{{
-  Plug 'xsunsmile/showmarks'
-  let g:showmarks_enable = 0
-  map <silent> <leader>tsm :ShowMarksToggle<CR>
-  " <leader>mt : Toggles ShowMarks on and off.
-  " <leader>mh : Hides an individual mark.
-  " <leader>ma : Hides all marks in the current buffer.
-  " <leader>mm : Places the next available mark.
 " }}}
 " Tweak:       uses a non-blinking cursor, and switches to line cursor in insert mode {{{
   Plug 'jszakmeister/vim-togglecursor'
@@ -660,15 +542,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " let g:multi_cursor_prev_key=''
   " let g:multi_cursor_skip_key=''
   " let g:multi_cursor_quit_key='<Esc>'
-" }}}
-" Specialize:  allows focussing on a narrow region of the text {{{
-  Plug 'chrisbra/NrrwRgn'
-  " remove highlighting for narrow region
-  let g:nrrw_rgn_nohl = 1
-
-  " TODO: implement a function that selects lines based on regex and opens a NRW
-  " TODO: Open the current fold in a narrow region
-  " nmap <leader>nf <esc><space>zRvaz<leader>nr<C-W>T<leader>f9
 " }}}
 " Expected:    restore cursor after joining lines {{{
   nnoremap J mjJ`j
@@ -851,7 +724,7 @@ endif
   set foldtext=MyFoldText()       " function for text that appears over folds
 " }}}
 " Essential:   enables sane syntax highlighting of code, whenever possible {{{
-  set synmaxcol=800    " don't try to highlight lines longer than 800 characters
+  set synmaxcol=200    " don't try to highlight lines longer than 800 characters
   " syntax highlight on, when terminal has colors
   if g:is_gui || &t_Co > 2 | syntax on | endif
 " }}}
@@ -896,7 +769,7 @@ endif
   Plug 'tpope/vim-endwise'
 " }}}
 " Expedite:    adds or removes punctuation pairs when typing, smartly {{{
-  " Plug 'kana/vim-smartinput'
+  Plug 'kana/vim-smartinput'
 " }}}
 " Expedite:    Mapping: toggle fold on the current fold using a space {{{
   nnoremap <Space> za
@@ -1022,31 +895,6 @@ endif
 " Essential:   supports snippets for many languages {{{
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-
-  " Plug 'Shougo/neosnippet'
-  " Plug 'honza/vim-snippets'
-  " Plug 'Shougo/neosnippet-snippets'
-
-  " noremap <leader>nse :NeoSnippetEdit -vertical -split -direction=belowright<CR>
-
-  " " Enable snipMate compatibility feature.
-  " let g:neosnippet#enable_snipmate_compatibility = 1
-  " " tell NeoSnippet about other snippets
-  " let g:neosnippet#snippets_directory = [
-  "       \ expand('~/.vim') . '/bundle/vim-snippets/snippets',
-  "       \ expand('~/.vim') . '/data/snippets' ]
-
-  " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  " xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-  " " SuperTab like snippets behavior.
-  " imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  "   \ "\<Plug>(neosnippet_expand_or_jump)"
-  "   \ : pumvisible() ? "\<C-n>" : "\<TAB>"
-  " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  "   \ "\<Plug>(neosnippet_expand_or_jump)"
-  "   \ : "\<TAB>"
 " }}}
 " Essential:   supports language-specific CODE COMPLETION for many languages {{{
 
@@ -1147,18 +995,6 @@ endif
 
   augroup markdown_codedetect
     au!
-    au filetype html :call SyntaxRange#Include("<style>", "</style>", "css")
-    au filetype html :call SyntaxRange#Include("<style.*sass.*>", "</style>", "scss")
-    au filetype html :call SyntaxRange#Include("<style.*scss.*>", "</style>", "scss")
-    au filetype html :call SyntaxRange#Include("<style.*less.*>", "</style>", "less")
-    au filetype html :call SyntaxRange#Include("<script>", "</script>", "javascript")
-    au filetype html :call SyntaxRange#Include("<script.*coffee.>", "</script>", "coffee")
-    au filetype html :call SyntaxRange#Include("<script.*coffeescript.>", "</script>", "coffee")
-  augroup END
-
-  augroup riot_js
-    au!
-    au BufNewFile,BufRead *.js.tag setl ft=html
     au filetype html :call SyntaxRange#Include("<style>", "</style>", "css")
     au filetype html :call SyntaxRange#Include("<style.*sass.*>", "</style>", "scss")
     au filetype html :call SyntaxRange#Include("<style.*scss.*>", "</style>", "scss")
@@ -1342,8 +1178,7 @@ endif
 " Personalize: Ruby: Rails:        persist ctags when we move inside gem directories {{{
   augroup gem_ctags
     au!
-    au filetype ruby,eruby set tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
-    " au filetype ruby,eruby set tags-=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
+    au filetype ruby,eruby setl tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
   augroup END
 " }}}
 " Personlize: Ruby: Rails:         has command to quickly run specs {{{
@@ -1487,47 +1322,6 @@ endif
   "   set t_Co =256
   " endif
 " }}}
-" Essential:   adds support to run shell commands and capture output in a buffer {{{
-  Plug 'sjl/clam.vim'
-" }}}
-" Advanced:    adds support for TMux {{{
-  Plug 'benmills/vimux'
-  Plug 'christoomey/vim-tmux-navigator'
-  let g:VimuxUseNearestPane = 1
-  let g:VimuxOrientation = "h"
-  let g:VimuxPromptString = "[ViMux] § "
-  let g:VimuxHeight = "40"
-
-  " open/close a new tmux pane
-  map <leader>vo :call VimuxOpenRunner()<CR>
-  map <leader>vq :VimuxCloseRunner<CR>
-
-  " prompt for a command to be run async / run last command executed
-  map <leader>v! :VimuxPromptCommand<CR>
-  map <leader>vp :VimuxPromptCommand<CR>
-  map <leader>vl :VimuxRunLastCommand<CR>
-
-  " inspect, interrupt or zoom a vimux runner pane (<prefix>z to zoom out)
-  " FIXME: this produces errors since no active Vimux window is present
-  map <leader>vi :VimuxInspectRunner<CR>
-  map <leader>vc :VimuxInterruptRunner<CR>
-  map <Leader>vz :VimuxZoomRunner<CR>
-
-  " run special commands within a tmux pane
-  map <silent> <leader>vx :VimuxRunCommand("clear")<CR>
-  map <silent> <leader>vm :VimuxRunCommand(expand(&makeprg))<CR>
-  map <silent> <leader>vr :VimuxRunCommand("chmod +x " . expand("%:p:.") . " && " . expand("%:p"))<CR>
-
-  " tSlime replacement:
-  function! VimuxSlime()
-    call VimuxSendText(@v)
-    call VimuxSendKeys("Enter")
-  endfunction
-  " If text is selected, save it in the v buffer and send that buffer it to tmux
-  vmap <leader>vs "vy:call VimuxSlime()<CR>
-  " Select current paragraph and send it to tmux
-  nmap <leader>vP vip<leader>vs<CR>
-" }}}
 " }}}
 
 " Git Workflow:                                                      {{{
@@ -1597,22 +1391,23 @@ endif
 " Expected:    make <tab> completion for files/buffers act like bash {{{
   set wildmenu
   set wildmode=list:longest,full      " show a list when pressing tab, then longest common part and then full name.
-  " set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
+  set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
   set wildignore+=*/.hg/*,*/.svn/*
   set wildignore+=*vim/backups*       " ...
   set wildignore+=*/smarty/*          " ...
-  " set wildignore+=*/node_modules/*    " ...
+  set wildignore+=*/node_modules/*    " ...
   set wildignore+=*/.sass-cache/*     " ...
   set wildignore+=*/tmp/*,tmp/**      " ...
   set wildignore+=*/out/**,log/**     " ... phew!!
   " file suffixes that can be safely ignored for file name completion
   set suffixes+=.swo,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.DS_Store,.class,.so
   set suffixes+=.brf,.cb,.dmg,.exe,.ind,.idx,.ilg,.inx,.out,.toc,.pyc,.pyd,.dll,.zip
-  set suffixes+=.gem,.pdf,.avi,.mkv,.psd
-  " set suffixes+=.png,.jpg,.gif
+  set suffixes+=.avi,.mkv,.psd
+  set suffixes+=.gem,.pdf
+  set suffixes+=.png,.jpg,.gif
 " }}}
 " Component:   provides a fuzzy finder for files, buffers, tags, etc. {{{
-  Plug 'kien/ctrlp.vim'
+  Plug 'ctrlpvim/ctrlp.vim'
   " notes:
   "   - when CtrlP window is open:
   "   : f5 will clear the CtrlP cache (useful if you add new files during the session)
@@ -1625,12 +1420,12 @@ endif
   "   : Use <c-y> to create a new file and its parent directories.
   "   : Use <c-z> to mark/unmark multiple files and <c-o> to open them.
   " Set no max file limit
-  let g:ctrlp_max_files = 0
+  let g:ctrlp_max_files = 100
   " Ignore files matching the following patterns
   let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
   " Store cache in this directory
   let g:ctrlp_cache_dir = expand("~/.vim") . "/tmp/cache/ctrlp"
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  " Use ag/pt in CtrlP for listing files. Lightning fast and respects .gitignore
   if executable("ag") | let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' | endif
   if executable("pt") | let g:ctrlp_user_command = 'pt %s -l --nocolor -g ""' | endif
   " switch between buffers, easily.
@@ -1693,8 +1488,8 @@ endif
   " Don't display these kinds of files
   let NERDTreeIgnore = [ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$', '\.o$',
         \ '\.so$', '\.egg$', '^\.git$', '^\.hg$', '^\.svn$', '^\.DS_Store',
-        \ '\.png$', '\.jpg$', '\.jpeg$', '\.bmp$', '\.svg$', '\.gif$',
         \ '\.zip$', '\.gz$', '\.lock$', '\.swp$', '\.bak$', '\~$' ]
+        " \ '\.png$', '\.jpg$', '\.jpeg$', '\.bmp$', '\.svg$', '\.gif$',
 
   " mappings
   nmap <leader>ntf <leader>nto<C-w>p:NERDTreeFind<CR>
@@ -2051,15 +1846,48 @@ endif
   iabbr wsig --<cr>Nikhil Gupta<cr>nikhil@wickeddevelopers.com
 " }}}
 " Epilogue:                                                          {{{
-  call SourceIfReadable("~/.gvimrc")
-  call SourceIfReadable("~/.vimrc.local")
+  if filereadable("~/.gvimrc") | source ~/.gvimrc | endif
+  if filereadable("~/.vimrc.local") | source ~/.vimrc.local | endif
 
   " this must come after `filetype plugin indent on` after latest vundle update
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
   Plug 'trevordmiller/nova-vim'
-  Plug 'ryanoasis/vim-devicons'
-  let g:airline_powerline_fonts = 1
-  set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
+
+  if !g:is_macvim
+    Plug 'ryanoasis/vim-devicons'
+    let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+    let g:DevIconsEnableFoldersOpenClose = 1
+    if g:is_mac | let g:WebDevIconsOS = 'Darwin' | endif
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    let g:NERDTreeLimitedSyntax = 1
+
+    let g:NERDTreeExtensionHighlightColor = { 'vue': '55b884',
+          \ 'py': 'fddd55', 'sass': 'CB6F6F', 'php': '777bb3',
+          \ 'yaml': 'ffffff', 'erb': 'CB6F6F', 'java': 'f49731',
+          \ 'rabl': 'CB6F6F', 'thor': 'CB6F6F', 'tasks': '55b884',
+          \ 'rb': 'CB6F6F', 'ru': 'CB6F6F' }
+
+    let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {
+          \ 'vue': '', 'yml': '', 'yaml': '', 'vim': '',
+          \ 'c': '∁', 'cc': '∁', 'c++': '∁', 'cp': '∁', 'cpp': '∁',
+          \ 'coffee': '♨', 'erb': '', 'rabl': '', 'tasks': '',
+          \ 'thor': '', 'ru': '' }
+
+    let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {
+          \ '.*README.*$': '', 'Gemfile': '', 'Rakefile': '',
+          \ '\..*zshenv.*$': '', '\..*zshrc.*$': '', '\..*vimrc.*$': '', }
+    let g:NERDTreePatternMatchHighlightColor = {
+          \ 'Gemfile': 'CB6F6F', 'Rakefile': 'CB6F6F' }
+
+    augroup devicons_nerdtree
+      au!
+      autocmd FileType nerdtree setlocal nolist
+    augroup END
+
+    let g:airline_left_sep = "\uE0C4"
+    let g:airline_right_sep = "\uE0C5"
+  end
 
   " required by vimPlug
   call plug#end()               " required
@@ -2090,4 +1918,3 @@ endif
      " hi! default link NERDTreeDirSlash NonText
   " endif
 " }}}
-

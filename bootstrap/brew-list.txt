@@ -147,3 +147,44 @@ install ngrok
 install chromedriver
 install gimp
 link gimp
+install composer
+install php
+tap homebrew/homebrew-php
+install php72 php72-mcrypt php72-redis php72-yaml php72-imagick php72-http php72-libsodium php72-memcached php72-oauth
+install --help
+install php71 --help
+install php72
+install php71
+install php71 --with-httpd
+uninstall php71 --with-httpd
+install php71 --with-httpd
+install php71 --with-httpd --with-postgresql --with-homebrew-curl
+tap homebrew/apache
+tap homebrew/dupes
+tap homebrew/versions
+install php71 --with-httpd --with-postgresql --with-homebrew-curl
+install httpd24
+tap homebrew/core
+install httpd24 --with-privileged-ports --with-http2
+install httpd24 --with-privileged-ports --with-http2
+install httpd24 --with-privileged-ports --with-http2
+install httpd24 --with-port=80 --with-sslport=44
+install httpd24 --with-port=80 --with-sslport=443
+uninstall httpd
+install httpd24 --with-port=80 --with-sslport=443
+uninstall httpd
+install httpd --with-port=80 --with-sslport=443
+uninstall httpd
+install httpd --with-port 80 --with-sslport 443
+install httpd
+install php71 --with-homebrew-curl --with-httpd --with-postgresql
+uninstall php71
+install php71 --with-homebrew-curl --with-httpd --with-postgresql --with-thread-safe
+install php71 --with-homebrew-curl --with-httpd --with-postgresql --with-thread-safety
+install php71 --with-homebrew-curl --with-httpd --with-postgresql
+install dnsmasq
+uninstall dnsmasq
+install dnsmasq
+uninstall dnsmasq
+install dnsmasq
+install php71-opcache php71-apcu php71-mcrypt php71-imagick php71-libsodium@1.0 php71-ioncubeloader php71-oauth php71-mustache php71-pdo-pgsql php71-redis php71-yaml php71-xdebug php71-tidy
