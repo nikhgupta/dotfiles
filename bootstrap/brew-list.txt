@@ -188,3 +188,9 @@ install dnsmasq
 uninstall dnsmasq
 install dnsmasq
 install php71-opcache php71-apcu php71-mcrypt php71-imagick php71-libsodium@1.0 php71-ioncubeloader php71-oauth php71-mustache php71-pdo-pgsql php71-redis php71-yaml php71-xdebug php71-tidy
+install passenger
+install wrk
+install gimp
+install pyenv-virtualenvwrapper
+install pyenv-virtualenv
+install pyenv-virtualenvwrapper

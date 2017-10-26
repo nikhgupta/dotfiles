@@ -44,8 +44,10 @@ path_prepend "${BREW_PREFIX}/sbin"
 setenv RBENV_ROOT $BREW_PREFIX/var/rbenv
 is_installed rbenv && init_cache rbenv "rbenv init --no-rehash - zsh"
 setenv PYENV_ROOT $BREW_PREFIX/var/pyenv
+export WORKON_HOME=~/.venv
+export PROJECT_HOME=~/Code/python/workspace
 is_installed pyenv && init_cache pyenv "pyenv init --no-rehash - zsh"
-is_installed pyenv-virtualenv-init && init_cache pyenv-virtualenv-init "pyenv virtualenv-init -"
+# is_installed pyenv-virtualenv-init && init_cache pyenv-virtualenv-init "pyenv virtualenv-init -"
 
 # Python environment
 # pip should only run if there is a virtualenv currently activated
@@ -60,9 +62,10 @@ gpip3(){ PIP_REQUIRE_VIRTUALENV="" pip3 "$@"; }
 setenv GOPATH $HOME/Code/workspace/go
 path_append "${GOPATH}/bin"
 path_append "${BREW_PREFIX}/opt/go/libexec/bin"
+path_append ~/.composer/vendor/bin
 
 # => load local configuration, if available
 path_prepend $DOTCASTLE/bin
-ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
+# ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
 export GPG_TTY=$(tty)

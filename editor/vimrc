@@ -1007,10 +1007,10 @@ endif
 " Essential:   sets up a sane editing/coding environment as per the filetype {{{
   augroup setup_environment
     au!
-    au filetype css,less,sass,scss      set ts=2 sw=2 sts=2 tw=100 et
-    au filetype json,javascript,coffee  set ts=2 sw=2 sts=2 tw=100 et
+    au filetype css,less,sass,scss      set ts=2 sw=2 sts=2 tw=80 et
+    au filetype json,javascript,coffee  set ts=2 sw=2 sts=2 tw=80 et
     au filetype python                  set ts=4 sw=4 sts=4 tw=80  et
-    au filetype ruby,eruby              set ts=2 sw=2 sts=2 tw=100 et
+    au filetype ruby,eruby              set ts=2 sw=2 sts=2 tw=80 et
     au filetype php,ctp                 set ts=4 sw=4 sts=4 tw=80  et
     au filetype sh,vim                  set ts=2 sw=2 sts=2 tw=72  et
     au filetype ghmarkdown,textile      set ts=4 sw=4 sts=4 tw=100 et
@@ -1018,7 +1018,7 @@ endif
     au filetype yaml                    set ts=2 sw=2 sts=2 tw=72  et
     au filetype html,xhtml,haml         set ts=2 sw=2 sts=2 tw=120 et
     au filetype make                    set noet " make uses real tabs
-    au filetype vue                     set ts=2 sw=2 sts=2 tw=100 et
+    au filetype vue                     set ts=2 sw=2 sts=2 tw=80 et
   augroup end
 " }}}
 " Essential:   sets up folding for the current file as per its filetype {{{
@@ -1391,13 +1391,13 @@ endif
 " Expected:    make <tab> completion for files/buffers act like bash {{{
   set wildmenu
   set wildmode=list:longest,full      " show a list when pressing tab, then longest common part and then full name.
-  set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
+  " set wildignore+=*/vendor/*          " stuff to ignore when tab completing ...
   set wildignore+=*/.hg/*,*/.svn/*
   set wildignore+=*vim/backups*       " ...
   set wildignore+=*/smarty/*          " ...
-  set wildignore+=*/node_modules/*    " ...
+  " set wildignore+=*/node_modules/*    " ...
   set wildignore+=*/.sass-cache/*     " ...
-  set wildignore+=*/tmp/*,tmp/**      " ...
+  " set wildignore+=*/tmp/*,tmp/**      " ...
   set wildignore+=*/out/**,log/**     " ... phew!!
   " file suffixes that can be safely ignored for file name completion
   set suffixes+=.swo,.d,.info,.aux,.log,.dvi,.pdf,.bin,.bbl,.blg,.DS_Store,.class,.so
