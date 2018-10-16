@@ -73,13 +73,14 @@ export MAILCHECK=0
 
 # Please, don't ask to update, O! OhMyZSH. Just do it.
 export DISABLE_UPDATE_PROMPT=true
+export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside editors
 
 # => add ~/.zsh to functions' path in ZSH can be used for adding completions
 [[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
 
 # => load OhMyZSH and some relevant plugins
-plugins=( bundler coffee colored-man common-aliases emoji-clock extract
-gem golang history-substring-search rails responsive-prompt k)
+plugins=(bundler coffee colored-man common-aliases emoji-clock extract
+gem golang history-substring-search rails)
 is_macosx && plugins+=( osx )
 
 source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
@@ -112,3 +113,6 @@ fi
 
 # added by travis gem
 [ -f /Users/nikhgupta/.travis/travis.sh ] && source /Users/nikhgupta/.travis/travis.sh
+
+export NVM_DIR="/Users/nikhgupta/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

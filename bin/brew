@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------
 #
 
-command   = ARGV.first.downcase
+command   = ARGV.first.downcase if ARGV.first
 args      = ARGV.join " "
 loggable  = /(?:|re|un)(install|tap|link)(?:|apps)/
 # => matches: install tap link linkapps reinstall uninstall untap unlink unlinkapps

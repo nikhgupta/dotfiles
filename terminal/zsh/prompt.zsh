@@ -180,11 +180,18 @@ function virtualenv_prompt_info(){
   echo "\e[32m${version}${ZSH_THEME_VIRTUALENV_PREFIX:=[}${VIRTUAL_ENV:t}${ZSH_THEME_VIRTUALENV_SUFFIX:=]}\e[0m "
 }
 # }}}
+# => function: check for active proxy {{{
+function proxy_info(){
+  [[ -n "${http_proxy}" ]] || return
+  echo "\e[32m෴ \e[0m "
+}
+# }}}
 
 _prompt_0(){
   RPROMPT=""
   before_prompt=""
-  PROMPT="%{$fg[green]%}%c%{$reset_color%} " # cwd name
+  PROMPT='$(proxy_info)'           # prompt icon for proxy
+  PROMPT+="%{$fg[green]%}%c%{$reset_color%} " # cwd name
 
   # == every prompt should display the following information
   # display a telephone icon when we are in a SSH session.
@@ -193,11 +200,13 @@ _prompt_0(){
   PROMPT+='$(_set_prompt_char)'     # prompt icon for repo
   PROMPT+='$timer_show'             # time taken to run last command
   PROMPT+='$(_return_code)'         # return code for last command
+
   if is_macosx; then PROMPT+="%(!.!.➲) "; else PROMPT+="➲ "; fi
 }
 
 _prompt_60(){
-  PROMPT="$(_ssh_user_info)"
+  PROMPT='$(proxy_info)'           # prompt icon for proxy
+  PROMPT+="$(_ssh_user_info)"
   PROMPT+="%{$fg_bold[cyan]%}"'${PWD/#$HOME/~}'"%{$reset_color%} "
   PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
   PROMPT+='$(virtualenv_prompt_info)'"%{$reset_color%}"
@@ -231,7 +240,8 @@ precmd() {
 }
 
 alias miniprompt=_prompt_0;
-[[ $COLUMNS -gt 80 ]] && _prompt_60 || _prompt_0
+# [[ $COLUMNS -gt 80 ]] && _prompt_60 || _prompt_0
+_prompt_0
 
 # when in emacs, let the user know.
 is_emacs && clear && miniprompt && echo "${txtgrn}Welcome $(whoami)!\n${txtylw}You're inside Emacs Multi-Term Z-shell.${txtrst}"

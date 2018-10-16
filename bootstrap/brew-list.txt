@@ -1,8 +1,11 @@
 tap caskroom/cask
+tap caskroom/cask
 tap caskroom/fonts
-tap d12frosted/emacs-plus
+tap homebrew/apache
+tap homebrew/homebrew-php
 tap neovim/neovim
 cask install alfred
+cask install amethyst
 cask install dropbox
 cask install font-fira-code
 cask install google-chrome
@@ -13,184 +16,128 @@ cask install transmission
 cask install ubersicht
 cask install vimr
 cask install vlc
-linkapps emacs-plus
-install git
-install curl
 install aria2
 install autoenv
-install certbot
-install cloc
+install bower
+install caskroom/cask/pgweb
+install chromedriver
+install composer
 install coreutils
 install cowsay
-install elixir
-install emacs-plus
+install curl
+install dnsmasq
+install docker
+install exercism
 install fasd
 install ffmpeg
 install fontconfig
-install fortune
 install freetype
+install gimp
+install git
 install gnupg
+install heroku
+install homebrew/cask/wkhtmltopdf
+install htop
+install httpd --with-port 80 --with-sslport 443
+install imagemagick@6 --with-perl --with-webp --with-pango --with-opencl --with-fontconfig --with-ghostscript --with-liblqr --with-librsvg --with-openjpeg
+install keybase
+install macvim
 install mysql
 install neovim
 install ngrep
+install ngrok
 install node
 install npm
+install openssh --with-brewed-openssl --with-keychain-support
+install openssl
+install pandoc
 install perl
+install pgweb
 install phantomjs
+install php71 --with-homebrew-curl --with-httpd --with-postgresql
+install php71-opcache php71-apcu php71-mcrypt php71-imagick php71-libsodium@1.0 php71-ioncubeloader php71-oauth php71-mustache php71-pdo-pgsql php71-redis php71-yaml php71-xdebug php71-tidy
 install postgresql
+install pyenv-virtualenv
+install pyenv-virtualenvwrapper
 install rbenv
 install rbenv-ctags
 install rbenv-vars
 install reattach-to-user-namespace
 install redis
 install ruby-build
+install sonicpi
 install spark
 install sqlite
+install ta-lib
+install terminal-notifier
 install the_platinum_searcher
 install tmux
-install vim --with-custom-ruby --with-lua
+install todo-txt
+install tor
+install vim --with-perl --with-lua --with-luajit --with-gettext --with-custom-python --with-custom-ruby --with-python3
+install weechat
 install wget
 install youtube-dl
 install zsh
 install zsh-syntax-highlighting
-install cmatrix
-reinstall skype
-install pv
-install strace
-install figlet
-install sl
-uninstall sl
-uninstall asdjaskdj
-install gimp
-install heroku
-install rethinkdb
-install go
-install kafka
-install rabbitmq
-install mongo
-uninstall emacs-lus
-uninstall emacs-plus
-uninstall emacs-lus
-install couchdb
-uninstall couchdb
-install pgadmin
-install swagger-codegen
-install openssl
-install terminal-notifier
-install caskroom/cask/pgweb
-install phantomjs
-link
-link emacs
-install npth libgpg-error libgcrypt libksba libassuan pinentry adns
-tap crisidev/homebrew-chunkwm
-install chunkwm
-install koekeishiya/formulae/khd
-install --help
-install koekeishiya/formulae/khd
-install kitty
-install node
-install librsvg --help
-install librsvg --list
-install librsvg --help
-install librsvg@2.40.10
-install bower
-install bash
-install memleax
-install htop
-install spark
-install watch
-install openssh --with-brewed-openssl --with-keychain-support
-install jpeg
-uninstall jpeg
-uninstall jpeg
-uninstall --ignore-dependencies jpeg
-uninstall uninstall --force --ignore-dependencies jpeg
-install jpeg
-install rmagick
-install imagemagick
-unlink imagemagick
-install imagemagick@7
-link imagemagick@7 --force
-install imagemagick@6 brew link imagemagick@6 --force
-unlink imagemagick
-install imagemagick@6
 link imagemagick@6 --force
-install macvim
-link macvim
-install rot13
-install travis
-install gpg
-install nasty
-install nasty
-install gpgme
-install libsodium
-install thoughtbot/formulae/paperback
-uninstall thoughtbot/formulae/paperback
-install locateme
-install mplayer
-install ncdu
-install rename
-install lynx
-install feh
-install imgcat
-install certbot
-install keybase
-tap caskroom/cask
-install keybase
-install speedtest-cli
-uninstall speedtest-cli
-install aria2
-install yarn --without-node
-install hugo
-install pngout svgo
-install ngrok
-install chromedriver
-install gimp
+cask install oni
+install wkhtmltopdf
+install pdf2htmlex
+install pdf2htmlEx
+install node
+uninstall --ignore-dependencies node icu4c
+install node
+install unixodbc unixodbc-dev
+install unixodbc
+install iodbc
+install libiodbc
+unlink unixodbc
+reinstall libiodbc
+link libiodbc
+link unixodbc
+link --overwrite unixodbc
+install antiword
+install abiword
+install wv-1.0
+install wv
+install enchant
+install tika
+linkapps gimp
+linkapp gimp
 link gimp
-install composer
-install php
-tap homebrew/homebrew-php
-install php72 php72-mcrypt php72-redis php72-yaml php72-imagick php72-http php72-libsodium php72-memcached php72-oauth
-install --help
-install php71 --help
-install php72
-install php71
-install php71 --with-httpd
-uninstall php71 --with-httpd
-install php71 --with-httpd
-install php71 --with-httpd --with-postgresql --with-homebrew-curl
-tap homebrew/apache
-tap homebrew/dupes
-tap homebrew/versions
-install php71 --with-httpd --with-postgresql --with-homebrew-curl
-install httpd24
-tap homebrew/core
-install httpd24 --with-privileged-ports --with-http2
-install httpd24 --with-privileged-ports --with-http2
-install httpd24 --with-privileged-ports --with-http2
-install httpd24 --with-port=80 --with-sslport=44
-install httpd24 --with-port=80 --with-sslport=443
-uninstall httpd
-install httpd24 --with-port=80 --with-sslport=443
-uninstall httpd
-install httpd --with-port=80 --with-sslport=443
-uninstall httpd
-install httpd --with-port 80 --with-sslport 443
-install httpd
-install php71 --with-homebrew-curl --with-httpd --with-postgresql
-uninstall php71
-install php71 --with-homebrew-curl --with-httpd --with-postgresql --with-thread-safe
-install php71 --with-homebrew-curl --with-httpd --with-postgresql --with-thread-safety
-install php71 --with-homebrew-curl --with-httpd --with-postgresql
-install dnsmasq
-uninstall dnsmasq
-install dnsmasq
-uninstall dnsmasq
-install dnsmasq
-install php71-opcache php71-apcu php71-mcrypt php71-imagick php71-libsodium@1.0 php71-ioncubeloader php71-oauth php71-mustache php71-pdo-pgsql php71-redis php71-yaml php71-xdebug php71-tidy
-install passenger
-install wrk
-install gimp
-install pyenv-virtualenvwrapper
-install pyenv-virtualenv
-install pyenv-virtualenvwrapper
+install parallel
+install openssl readline
+link openssl --force
+link openssl --force
+install qt
+install dtkcore
+install rbenv automake gmp libtool wget
+install czmq --HEAD
+install zeromq
+install czmq --HEAD
+unlink czmq
+install czmq --HEAD
+install czmq --HEAD
+install mongo
+install ufraw
+install chromedriver
+install xxhash
+install elasticsearch
+install rvm
+install ntfs-3g
+install osxfuse
+install ntfs-3g
+uninstall ntfs-3g
+install ntfs-3g
+install nginx
+install sshfs
+uninstall nginx
+install cyberduck
+install rclone
+uninstall cyberduck
+install unison
+install unison
+install unison
+uninstall zookeeper xmlto wxmac wv wrk tor toilet todo-txt tikatbb sshfs spidermonkey spark qt privoxy polipo openexr czmq
+uninstall zookeeper xmlto wxmac wv wrk tor toilet todo-txt tika tbb sshfs spidermonkey spark qt privoxy polipo openexr czmq

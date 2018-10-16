@@ -102,3 +102,8 @@ function getproxy() {
   local url="${url}protocol=http&minSpeed=100&maxCheckPeriod=3600&anonymityLevel=1"
   curl -s "${url}" | json_pp
 }
+
+# Get missing vim features (works with v8.0)
+function vim_missing_features() {
+  for feature in $(vim --version | tail -43|head -31); do echo $feature; done | grep --color=never '-'
+}

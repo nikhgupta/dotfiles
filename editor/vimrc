@@ -864,7 +864,8 @@ endif
   "python
   " Python integrated environment
   " adds support for linting, doc search, execution, debugging, code completion, etc.
-  Plug 'klen/python-mode'
+  " Plug 'klen/python-mode'
+  " let g:pymode_rope_lookup_project = 0
 
   " ruby
   Plug 'vim-ruby/vim-ruby'
@@ -1118,8 +1119,10 @@ endif
   augroup end
 " }}}
 " " Essential:   supports CODE LINTING (error-checking) for many languages {{{
-  Plug 'neomake/neomake'
-  autocmd! BufWritePost * Neomake
+  " Plug 'neomake/neomake'
+  " autocmd! BufWritePost * Neomake
+  " let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
+  " let g:neomake_python_enabled_makers = ['pep8', 'pylint']
 
   Plug 'Chiel92/vim-autoformat'
   noremap <F4> :Autoformat<CR>:w<CR>
@@ -1329,32 +1332,32 @@ endif
   Plug 'tpope/vim-fugitive'
 " }}}
 " " Specialize:  displays git diff in sign column, and easily add hunks for staging {{{
-  Plug 'airblade/vim-gitgutter'
-  " enable gitgutter by default
-  let g:gitgutter_enabled = 1
-  " but do not display signs by default
-  let g:gitgutter_signs = 0
-  " ignore whitespace
-  let g:gitgutter_diff_args = '-w'
-  " use the raw grep command
-  " let g:gitgutter_grep_command = &grepprg
-  " highlight hunks by default
-  " let g:gitgutter_highlight_lines = 1
-  " let vim be snappier - don't lag.
-  let g:gitgutter_realtime = 0
-  let g:gitgutter_eager = 0
-  let g:gitgutter_async = 1
+  " Plug 'airblade/vim-gitgutter'
+  " " enable gitgutter by default
+  " let g:gitgutter_enabled = 1
+  " " but do not display signs by default
+  " let g:gitgutter_signs = 0
+  " " ignore whitespace
+  " let g:gitgutter_diff_args = '-w'
+  " " use the raw grep command
+  " " let g:gitgutter_grep_command = &grepprg
+  " " highlight hunks by default
+  " " let g:gitgutter_highlight_lines = 1
+  " " let vim be snappier - don't lag.
+  " let g:gitgutter_realtime = 0
+  " let g:gitgutter_eager = 0
+  " let g:gitgutter_async = 1
 
-  " remap mappings
-  let g:gitgutter_map_keys = 0
-  nmap ]h <Plug>GitGutterNextHunk
-  nmap [h <Plug>GitGutterPrevHunk
-  nmap <leader>hp <Plug>GitGutterPreviewHunk
-  nmap <leader>hs <Plug>GitGutterStageHunk
-  nmap <leader>hr <Plug>GitGutterRevertHunk
-  nmap <leader>tgg :GitGutterToggle<CR>
-  nmap <leader>tggs :GitGutterSignsToggle<CR>
-  nmap <leader>tggh :GitGutterLineHighlightsToggle<CR>
+  " " remap mappings
+  " let g:gitgutter_map_keys = 0
+  " nmap ]h <Plug>GitGutterNextHunk
+  " nmap [h <Plug>GitGutterPrevHunk
+  " nmap <leader>hp <Plug>GitGutterPreviewHunk
+  " nmap <leader>hs <Plug>GitGutterStageHunk
+  " nmap <leader>hr <Plug>GitGutterRevertHunk
+  " nmap <leader>tgg :GitGutterToggle<CR>
+  " nmap <leader>tggs :GitGutterSignsToggle<CR>
+  " nmap <leader>tggh :GitGutterLineHighlightsToggle<CR>
 " " }}}
 " Specialize:  enables support to manage Github Gists from the editor {{{
   Plug 'mattn/webapi-vim'
@@ -1430,6 +1433,7 @@ endif
   if executable("pt") | let g:ctrlp_user_command = 'pt %s -l --nocolor -g ""' | endif
   " switch between buffers, easily.
   " disabling movement between buffers, because of this :)
+  map <C-p> :CtrlPMRUFiles<CR>
   map <C-b> :CtrlPBuffer<CR>
   " Search from current directory instead of project root
   map <C-o> :CtrlP %:p:h<CR>

@@ -58,9 +58,9 @@ alias deleteempty="find . -type f -empty -not -regex '.*\/.git\/.*' -exec {} \; 
 # editor specific
 alias em='emacsclient -ta ""';
 alias ec='emacsclient -nca ""';
-is_installed nvim && alias  vim="nvim"
-is_installed vimr && alias gvim="vimr"
-is_installed mvim && alias  vim="mvim -v" && alias gvim="mvim"
+#is_installed nvim && alias  vim="nvim"
+#is_installed vimr && alias gvim="vimr"
+#is_installed mvim && alias  vim="mvim -v" && alias gvim="mvim"
 
 # ruby, rails, rspec and so on..
 alias rspecff='rspec --fail-fast'
@@ -113,6 +113,9 @@ fi
 # alias SilverSearch to PlatinumSearcher
 which pt &>/dev/null && alias ag=pt
 
+# todo.txt
+alias t='todo.sh -d ~/Documents/todo/todo.cfg'
+
 # add aliases via command line
 function addalias() {
   ALIASED="alias $1='$2';"
@@ -125,6 +128,19 @@ rtfm() {
   help $@ 2&>/dev/null ||
    man $@ 2&>/dev/null ||
    browse "http://www.google.com/search?q=$@"
+}
+
+# activate/deactive proxy
+proxy() {
+  if [[ "$1" == "deactivate" ]]; then
+    unset http_proxy
+    unset http_proxy
+    echo "Deactivated Terminal Proxy."
+  else
+    export http_proxy="http://$PROXY"
+    export https_proxy="http://$PROXY"
+    echo "Activated Terminal Proxy: $PROXY"
+  fi
 }
 
 if which brew &>/dev/null; then
@@ -149,3 +165,6 @@ source_if_exists ~/.zsh/commandlinefu.zsh
 
 # # ZSH loading measurement
 # zsh_load(){ avgtime "zsh -lic 'print -P \$PROMPT \$RPROMPT'"; }
+if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+  source ~/.config/exercism/exercism_completion.zsh
+fi
