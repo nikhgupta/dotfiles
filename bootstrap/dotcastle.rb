@@ -78,7 +78,7 @@ module DotCastle
     end
 
     def execute(command)
-      puts "Running: \e[37m;40m#{command}\e[0m"
+      puts "Running: \e[33m#{command}\e[0m"
       pipe = IO.popen command
       while (line = pipe.gets)
         print line

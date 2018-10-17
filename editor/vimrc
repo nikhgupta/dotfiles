@@ -505,7 +505,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   set nowrap                      " don't wrap lines
   set linebreak                   " break long lines at words, when wrap is on
   set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
-  set showbreak=↪                 " string to put at the starting of wrapped lines
+  " set showbreak=↪ 
+  let &showbreak="\u21aa "        " string to put at the starting of wrapped lines
   set textwidth=120               " wrap after this many characters in a line
 " }}}
 " Expedite:    provides helpful movement keys to affect the surroundings of text {{{

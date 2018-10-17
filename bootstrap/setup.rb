@@ -6,7 +6,6 @@ DotCastle.define do
   puts "Please, follow the instructions when the script finishes."
   puts "DotCastle location: \e[3;34m#{ENV['DOTCASTLE']}\e[0m"
   puts
-  exit
 
   within :git do
     symlink   :gitignore
@@ -28,7 +27,7 @@ DotCastle.define do
     git_config "github.password", :github_token
     git_config "github.oauth-token", :github_token
     git_config "sendmail.smtpuser", :git_gmail_smtp_user
-    git_config "user.signingkey", "3842C9DDBB0194C7"
+    # git_config "user.signingkey", "3842C9DDBB0194C7"
   end
 
   within :terminal do
@@ -44,22 +43,22 @@ DotCastle.define do
     symlink :vim
     symlink :vimrc
 
-    symlink "spacemacs/spacemacs", destination: :spacemacs
-    git_clone "emacs.d", "https://github.com/syl20bnr/spacemacs"
+    # symlink "spacemacs/spacemacs", destination: :spacemacs
+    # git_clone "emacs.d", "https://github.com/syl20bnr/spacemacs"
 
-    after_setup "emacs -nw --kill"
-    after_setup "vim +BundleInstall +qall"
+    # after_setup "emacs -nw --kill"
+    after_setup "vim +PlugInstall +qall"
   end
 
   within :miscelleneous do
     symlink  :gemrc
     symlink  :ctags
-    symlink  :powconfig
+    # symlink  :powconfig
     symlink  "youtube-dl-config", destination: "config/youtube-dl/config"
   end
 
   on_macosx "Install Homebrew and relevant packages" do
-    run_file :osxrc, module: :miscelleneous
+    # run_file :osxrc, module: :miscelleneous
     download_and_run "https://raw.githubusercontent.com/Homebrew/install/master/install", command: "ruby -e" unless is_installed? :brew
     set_environment :homebrew_prefix, "/usr/local"
   end
@@ -73,8 +72,7 @@ DotCastle.define do
   on_debian_and_macosx "Install Brew packages", unless: "kali" do
     command = "cat $DOTCASTLE/bootstrap/brew-list.txt | xargs -I {} brew {}"
     if is_installed? :brew
-      execute "brew upgrade"
-      execute command
+      puts "Homebrew already installed.."
     else
       error "Homebrew could not be installed for some reasons."
       error "Please, install and run the following command when done:"
@@ -115,4 +113,6 @@ DotCastle.define do
   end
 
   finish_setup!
+
+  exec("$DOTCASTLE/bootstrap/brew-list.bash")
 end
