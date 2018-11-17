@@ -168,3 +168,7 @@ source_if_exists ~/.zsh/commandlinefu.zsh
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   source ~/.config/exercism/exercism_completion.zsh
 fi
+
+function whois() {
+  dig +nocmd $1 any +multiline +noall +answer
+}

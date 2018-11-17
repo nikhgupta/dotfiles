@@ -75,9 +75,6 @@ export MAILCHECK=0
 export DISABLE_UPDATE_PROMPT=true
 export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside editors
 
-# => add ~/.zsh to functions' path in ZSH can be used for adding completions
-[[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
-
 # => load OhMyZSH and some relevant plugins
 plugins=(bundler coffee colored-man common-aliases emoji-clock extract
 gem golang history-substring-search rails)
@@ -116,3 +113,7 @@ fi
 
 export NVM_DIR="/Users/nikhgupta/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# => add ~/.zsh to functions' path in ZSH can be used for adding completions
+[[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
+source ~/.zsh/completions/_tmuxinator

@@ -30,6 +30,8 @@
 ;; (define-key evil-motion-state-map "g0" 'evil-first-non-blank-of-visual-line)
 ;; (define-key evil-motion-state-map "g^" 'evil-beginning-of-visual-line)
 
+(define-key evil-normal-state-map (kbd "C-p") 'helm-projectile-find-file)
+
 ;; use <leader>; to open helm M-x menu, thereby saving a Shift keypress, again.
 (evil-leader/set-key ";" 'helm-M-x)
 ;; use <leader>` to open shell (<leader>' does the same)
@@ -42,7 +44,7 @@
 ;;; OwnerGroup
 (spacemacs/declare-prefix "o"  "own/org/open/others")
 (spacemacs/declare-prefix "ob" "open-special-buffer")
-(spacemacs/declare-prefix "oo" "org-mode")
+(spacemacs/declare-prefix "ox" "org-mode")
 ;; (spacemacs/declare-prefix "oh" "help")
 
 ;; prefix for opening special buffers wherever we are in Emacs.

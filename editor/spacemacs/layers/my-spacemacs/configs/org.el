@@ -4,9 +4,9 @@
     'org (progn
 
            ;; set directories used by `org-mode'
-           (setq org-directory (expand-file-name "~/Dropbox/Documents"))
-           (setq org-archive-location (concat org-directory "/archives" ))
-           (setq org-special-directory (concat org-directory "/special"))
+           (setq org-directory (expand-file-name "~/OneDrive/Documents"))
+           (setq org-archive-location (concat org-directory "/Org/archives" ))
+           (setq org-special-directory (concat org-directory "/Org/special"))
 
            (setq org-global-properties
                  '(("Effort_ALL". "0 0:10 0:30 1:00 2:00 3:00 4:00")))
@@ -37,12 +37,12 @@
                  org-agenda-skip-scheduled-if-done 't
                  org-habit-show-habits-only-for-today 't
                  org-agenda-dim-blocked-tasks 't
-                 org-agenda-files (quote ("~/Dropbox/Documents"
-                                          "~/Dropbox/Documents/articles"
-                                          "~/Dropbox/Documents/ideas"
-                                          "~/Dropbox/Documents/special"
-                                          "~/Dropbox/Documents/tidbits"
-                                          "~/Dropbox/Documents/work")))
+                 org-agenda-files (quote ("~/OneDrive/Documents/Org"
+                                          "~/OneDrive/Documents/Org/articles"
+                                          "~/OneDrive/Documents/Org/ideas"
+                                          "~/OneDrive/Documents/Org/special"
+                                          "~/OneDrive/Documents/Org/tidbits"
+                                          "~/OneDrive/Documents/Org/work")))
 
            (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 
