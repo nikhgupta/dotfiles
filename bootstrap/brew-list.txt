@@ -1,0 +1,59 @@
+install zsh-syntax-highlighting
+install zsh-syntax-highlighting
+install guake
+tap caskroom/cask
+tap caskroom/fonts
+install aria2
+install bower
+install cmake imagemagick ispell ntfs-3g openssh pandoc parallel pv rename yarn
+install tmux
+tap caskroom/cask
+tap caskroom/fonts
+install aria2
+install bower
+install cmake imagemagick ispell ntfs-3g openssh pandoc parallel pv rename yarn
+install composer
+install coreutils
+install curl
+install fasd
+install ffmpeg
+install fontconfig
+install freetype
+install git
+install gnupg
+install heroku
+install htop
+install mysql
+install node
+install npm
+install ntfs-3g
+install openssh --with-brewed-openssl --with-keychain-support
+install openssl
+install php72 --with-homebrew-curl --with-httpd --with-postgresql
+install php72-opcache php72-apcu php72-mcrypt php72-imagick php72-libsodium@1.0 php72-ioncubeloader php72-oauth php72-mustache php72-pdo-pgsql php72-redis php72-yaml php72-xdebug php72-tidy
+install postgresql
+install pyenv-virtualenv
+install pyenv-virtualenvwrapper
+install rbenv
+install rbenv automake gmp libtool wget
+install rbenv-ctags
+install rbenv-vars
+install rclone
+install readline
+install reattach-to-user-namespace
+install redis
+install ruby-build
+install rvm
+install sqlite
+install ta-lib
+install terminal-notifier
+install the_platinum_searcher
+install tmux
+install unison
+install vim --with-perl --with-lua --with-luajit --with-gettext --with-custom-python --with-custom-ruby --with-python3
+install weechat
+install wget
+install wv
+install youtube-dl
+install zsh
+install zsh-syntax-highlighting

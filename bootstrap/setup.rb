@@ -12,22 +12,22 @@ DotCastle.define do
     copy_path :gitconfig
     symlink   :template, destination: "git-template"
 
-    require_var :editor,              "Terminal Editor you would like to use?"
-    require_var :git_author_name,     "Username for your Git commits?"
-    require_var :git_author_email,    "Email address for your Git commits?"
-    require_var :github_user,         "Username for your Github account?"
-    require_var :github_token,        "Github API token for your account?"
-    require_var :git_gmail_smtp_user, "GMail SMTP user for your account?"
+    # require_var :editor,              "Terminal Editor you would like to use?"
+    # require_var :git_author_name,     "Username for your Git commits?"
+    # require_var :git_author_email,    "Email address for your Git commits?"
+    # require_var :github_user,         "Username for your Github account?"
+    # require_var :github_token,        "Github API token for your account?"
+    # require_var :git_gmail_smtp_user, "GMail SMTP user for your account?"
 
-    git_config "core.editor", :editor
-    git_config "user.name", :git_author_name
-    git_config "user.email", :git_author_email
-    git_config "github.user", :github_user
-    git_config "github.token", :github_token
-    git_config "github.password", :github_token
-    git_config "github.oauth-token", :github_token
-    git_config "sendmail.smtpuser", :git_gmail_smtp_user
-    # git_config "user.signingkey", "3842C9DDBB0194C7"
+    # git_config "core.editor", :editor
+    # git_config "user.name", :git_author_name
+    # git_config "user.email", :git_author_email
+    # git_config "github.user", :github_user
+    # git_config "github.token", :github_token
+    # git_config "github.password", :github_token
+    # git_config "github.oauth-token", :github_token
+    # git_config "sendmail.smtpuser", :git_gmail_smtp_user
+    # # git_config "user.signingkey", "3842C9DDBB0194C7"
   end
 
   within :terminal do
@@ -64,9 +64,9 @@ DotCastle.define do
   end
 
   on_debian "Install Homebrew and relevant packages", unless: "kali" do
-    execute "sudo apt-get install build-essential curl git python-setuptools ruby"
-    download_and_run "https://raw.githubusercontent.com/Linuxbrew/install/master/install", command: "ruby -e" unless is_installed? :brew
+    execute "sudo apt-get install build-essential curl git python3-setuptools ruby"
     set_environment :homebrew_prefix, "~/.linuxbrew"
+    download_and_run "https://raw.githubusercontent.com/Linuxbrew/install/master/install", command: "ruby -e" unless is_installed? :brew
   end
 
   on_debian_and_macosx "Install Brew packages", unless: "kali" do

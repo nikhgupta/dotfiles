@@ -20,4 +20,13 @@ if command =~ loggable
   File.open(list_file, "a"){|f| f.puts args}
 end
 
-exec "/usr/local/bin/brew #{args}"
+brew = %w[
+  /usr/local/bin/brew
+  /home/linuxbrew/.linuxbrew/bin/brew
+].detect{|f| File.exists?(f)}
+
+if brew
+  exec "#{brew} #{args}"
+else
+  puts "Could not find brew binary: $$0"
+end

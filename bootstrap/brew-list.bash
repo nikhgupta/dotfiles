@@ -56,21 +56,21 @@ brew install wv
 brew install youtube-dl
 brew install zsh
 brew install zsh-syntax-highlighting
-brew cask install alfred
-brew cask install atom
-# brew cask install chromedriver
-brew cask install dropbox
-brew cask install font-fira-code
-brew cask install google-chrome
-brew cask install iterm2
-brew cask install nvalt
-brew cask install phantomjs
-brew cask install skype
-brew cask install ubersicht
-brew cask install vlc
-brew cask install ngrok
-brew cask install upwork
-brew cask install slack
-brew cask install simplenote
-brew cask install osxfuse java qlcolorcode qlimagesize qlmarkdown qlstephen qlvideo quicklook-csv quicklook-json rawtherapee
-brew cask install whatsapp
+# brew cask install alfred
+# brew cask install atom
+# # brew cask install chromedriver
+# brew cask install dropbox
+# brew cask install font-fira-code
+# brew cask install google-chrome
+# brew cask install iterm2
+# brew cask install nvalt
+# brew cask install phantomjs
+# brew cask install skype
+# brew cask install ubersicht
+# brew cask install vlc
+# brew cask install ngrok
+# brew cask install upwork
+# brew cask install slack
+# brew cask install simplenote
+# brew cask install osxfuse java qlcolorcode qlimagesize qlmarkdown qlstephen qlvideo quicklook-csv quicklook-json rawtherapee
+# brew cask install whatsapp

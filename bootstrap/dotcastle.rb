@@ -43,7 +43,7 @@ module DotCastle
       end
 
       @module = nil
-      return unless File.exists?("/etc/debian")
+      return unless File.exists?("/etc/debian_version")
       highlight "[Debian] #{message}"
       self.instance_eval(&block)
       puts

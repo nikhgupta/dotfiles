@@ -3,6 +3,7 @@ th(){ tmux split -h "$@"; }
 tv(){ tmux split -v "$@"; }
 tw(){ tmux new-window "$@"; }
 alias tl="tmux list-sessions"
+alias tko="tmux detach -a"
 
 # start a tmux session in current directory
 function ts() {

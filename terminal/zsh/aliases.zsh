@@ -144,8 +144,10 @@ proxy() {
 }
 
 if which brew &>/dev/null; then
-  source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  source $BREW_PREFIX/opt/autoenv/activate.sh
+  # source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$BREW_PREFIX/share/zsh-syntax-highlighting/highlighters
+
+  # source $BREW_PREFIX/opt/autoenv/activate.sh
   init_cache fasd 'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
 fi
 
