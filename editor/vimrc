@@ -895,7 +895,7 @@ endif
   Plug 'vim-scripts/csv.vim'                        " CSV files
 " }}}
 " Essential:   supports snippets for many languages {{{
-  Plug 'SirVer/ultisnips'
+  " Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 " }}}
 " Essential:   supports language-specific CODE COMPLETION for many languages {{{
