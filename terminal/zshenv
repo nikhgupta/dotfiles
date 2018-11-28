@@ -20,13 +20,15 @@ source $DOTCASTLE/terminal/utils.sh
 setenv DOTCASTLE $DOTCASTLE
 
 # => setup editor for ourself
-setenv EDITOR    vim
-setenv VISUAL    vim
-setenv GUIEDITOR vimr
+setenv CURRENT_EDITOR "emacsclient -a ''"
+setenv EDITOR    $CURRENT_EDITOR
+setenv VISUAL    $CURRENT_EDITOR
+setenv GUIEDITOR $CURRENT_EDITOR
 # setenv BROWSER   "open -a 'Google Chrome'"
 # browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
 
 # => other OSX dependent environment variables and mods
+export HOMEBREW_NO_AUTO_UPDATE=1
 if is_macosx; then
   setenv BREW_PREFIX /usr/local
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
@@ -69,3 +71,5 @@ path_prepend $DOTCASTLE/bin
 # ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
 export GPG_TTY=$(tty)
+# is_macosx || path_prepend "/usr/bin"
+which snap > /dev/null && path_prepend "/snap/bin"

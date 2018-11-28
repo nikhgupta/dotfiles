@@ -170,3 +170,8 @@ source_if_exists ~/.zsh/commandlinefu.zsh
 if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
   source ~/.config/exercism/exercism_completion.zsh
 fi
+
+function serve_rails() {
+  local port="2$(pwd | md5sum -t | cut -d ' ' -f 1 | tr -d 'a-z' | cut -c1-4)"
+  bundle exec rails server -b 0.0.0.0 -p $port
+}
