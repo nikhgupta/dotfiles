@@ -12,22 +12,22 @@ DotCastle.define do
     copy_path :gitconfig
     symlink   :template, destination: "git-template"
 
-    # require_var :editor,              "Terminal Editor you would like to use?"
-    # require_var :git_author_name,     "Username for your Git commits?"
-    # require_var :git_author_email,    "Email address for your Git commits?"
-    # require_var :github_user,         "Username for your Github account?"
-    # require_var :github_token,        "Github API token for your account?"
-    # require_var :git_gmail_smtp_user, "GMail SMTP user for your account?"
+    require_var :editor,              "Terminal Editor you would like to use?"
+    require_var :git_author_name,     "Username for your Git commits?"
+    require_var :git_author_email,    "Email address for your Git commits?"
+    require_var :github_user,         "Username for your Github account?"
+    require_var :github_token,        "Github API token for your account?"
+    require_var :git_gmail_smtp_user, "GMail SMTP user for your account?"
 
-    # git_config "core.editor", :editor
-    # git_config "user.name", :git_author_name
-    # git_config "user.email", :git_author_email
-    # git_config "github.user", :github_user
-    # git_config "github.token", :github_token
-    # git_config "github.password", :github_token
-    # git_config "github.oauth-token", :github_token
-    # git_config "sendmail.smtpuser", :git_gmail_smtp_user
-    # # git_config "user.signingkey", "3842C9DDBB0194C7"
+    git_config "core.editor", :editor
+    git_config "user.name", :git_author_name
+    git_config "user.email", :git_author_email
+    git_config "github.user", :github_user
+    git_config "github.token", :github_token
+    git_config "github.password", :github_token
+    git_config "github.oauth-token", :github_token
+    git_config "sendmail.smtpuser", :git_gmail_smtp_user
+    # git_config "user.signingkey", "3842C9DDBB0194C7"
   end
 
   within :terminal do
@@ -36,17 +36,16 @@ DotCastle.define do
     symlink :zsh
     symlink "tmux.conf"
     example "zshenv.local", "You should add your passwords and API tokens to \e[33m~/.zshenv.local\e[0m"
-    git_clone "$HOME/.oh-my-zsh/custom/plugins/k", "https://github.com/supercrabtree/k"
   end
 
   within :editor do
     symlink :vim
     symlink :vimrc
 
-    # symlink "spacemacs/spacemacs", destination: :spacemacs
-    # git_clone "emacs.d", "https://github.com/syl20bnr/spacemacs"
+    symlink "spacemacs/spacemacs", destination: :spacemacs
+    git_clone "emacs.d", "https://github.com/syl20bnr/spacemacs"
 
-    # after_setup "emacs -nw --kill"
+    after_setup "emacs -nw --kill"
     after_setup "vim +PlugInstall +qall"
   end
 
@@ -54,6 +53,7 @@ DotCastle.define do
     symlink  :gemrc
     symlink  :ctags
     # symlink  :powconfig
+    FileUtils.mkdir_p File.join(ENV['HOME'], ".config/youtube-dl")
     symlink  "youtube-dl-config", destination: "config/youtube-dl/config"
   end
 
@@ -64,7 +64,7 @@ DotCastle.define do
   end
 
   on_debian "Install Homebrew and relevant packages", unless: "kali" do
-    execute "sudo apt-get install build-essential curl git python3-setuptools ruby"
+    execute "sudo apt-get install -y zsh build-essential curl git python3-setuptools ruby"
     set_environment :homebrew_prefix, "~/.linuxbrew"
     download_and_run "https://raw.githubusercontent.com/Linuxbrew/install/master/install", command: "ruby -e" unless is_installed? :brew
   end
@@ -73,6 +73,7 @@ DotCastle.define do
     command = "cat $DOTCASTLE/bootstrap/brew-list.txt | xargs -I {} brew {}"
     if is_installed? :brew
       puts "Homebrew already installed.."
+      execute "brew install zsh emacs"
     else
       error "Homebrew could not be installed for some reasons."
       error "Please, install and run the following command when done:"
@@ -82,12 +83,15 @@ DotCastle.define do
 
   puts
   highlight "Install OhMyZSH"
-  download_and_run "http://install.ohmyz.sh"
+  download_and_run "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+  within :terminal do
+    git_clone "#{ENV['HOME']}/.oh-my-zsh/custom/plugins/k", "https://github.com/supercrabtree/k"
+  end
 
-  # puts
-  # highlight "Install Powerline Fonts"
-  # git_clone "#{ENV['DOTCASTLE']}/miscelleneous/powerline-fonts", "https://github.com/Lokaltog/powerline-fonts.git"
-  # run_file "powerline-fonts/install.sh", module: :miscelleneous
+  puts
+  on_debian "Install Powerline Fonts" do
+    execute "sudo apt-get install -y powerline"
+  end
 
   on_macosx "Installing iTerm2 along with Preferences" do
     if ENV['TERM_PROGRAM'] == "iTerm.app"
@@ -114,5 +118,5 @@ DotCastle.define do
 
   finish_setup!
 
-  exec("$DOTCASTLE/bootstrap/brew-list.bash")
+  exec("$DOTCASTLE/bootstrap/brew-list.bash") unless ENV['INSTALL_BREW_PACKAGES'].to_s.strip.empty?
 end
