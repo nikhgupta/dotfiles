@@ -1,79 +1,120 @@
-install lynx
-install readline xz
-install libexif
-install vips
-install postgresql
-install pgweb
-install rethinkdb
-install zeppelin
-install apache-zeppelin
-uninstall rethinkdb
-install redis
-install homebrew/versions/mysql56
-install mysql@5.6
-unlink mysql
-link mysql
-link mysql@5.6
-link mysql@5.6 --force
-link mysql@5.6 --overwrite --force
-link mysql@5.6 --force --overwrite
-unlink mysql@5.6
-link mysql@5.6 --force --overwrite
-uninstall mysql
-uninstall mysql@5.6
-install mysql@5.6
-uninstall mysql@5.6
-install mysql
-install mysql@5.6
-unlink mysql
-install mysql
-link --force mysql@5.6
-uninstall mysql mysql@5.6
-unlink mysql
-unlink mysql@5.6
-install mysql@5.6
-link mysql@5.6 --force
-install aria2c
+install zsh-syntax-highlighting
+install zsh-syntax-highlighting
+install guake
+tap caskroom/cask
+tap caskroom/fonts
 install aria2
-install pgloader
-install pgloader
-install pgloader --head
-install pgloader --HEAD
-install tmuxinator
-install kakoune
-install emacs
-install emacs
-uninstall emacs
-tap d12frosted/emacs-plus
-install emacs-plus --HEAD --with-natural-title-bars
-install emacs-plus
-linkapps
-link
-link emacs-plus
-install go
-install homebank
-uninstall homebank adwaita-icon-theme atk hicolor-icon-theme libepoxy gsettings-desktop-schemas gtk+3 open-sp libofx glib-networking libpsl graphviz vala libsoup
-install https://tunnelblick.net/
-install tunnelblick
-install speedtest-cli
-install tshark
-install terraform
-install ansible
-install graph
-install graphviz
-install contribsys/faktory
-tap contribsys/faktory
-install faktory
-install curl autoconf automake libtool pkg-config
-install libpostal
-install rethinkdb
-install geckodriver
-install geckodriver phantomjs
-install geckodriver
-install mongo
-install lunchy
-install utorrent
+install bower
+install cmake imagemagick ispell ntfs-3g openssh pandoc parallel pv rename yarn
+install tmux
+tap caskroom/cask
+tap caskroom/fonts
+install aria2
+install bower
+install cmake imagemagick ispell ntfs-3g openssh pandoc parallel pv rename yarn
+install composer
+install coreutils
+install curl
+install fasd
+install ffmpeg
+install fontconfig
+install freetype
+install git
+install gnupg
+install heroku
+install htop
+install mysql
+install node
+install npm
+install ntfs-3g
+install openssh --with-brewed-openssl --with-keychain-support
+install openssl
+install php72 --with-homebrew-curl --with-httpd --with-postgresql
+install php72-opcache php72-apcu php72-mcrypt php72-imagick php72-libsodium@1.0 php72-ioncubeloader php72-oauth php72-mustache php72-pdo-pgsql php72-redis php72-yaml php72-xdebug php72-tidy
+install postgresql
+install pyenv-virtualenv
+install pyenv-virtualenvwrapper
+install rbenv
+install rbenv automake gmp libtool wget
+install rbenv-ctags
 install rbenv-vars
-install pyenv
-reinstall pyen
-reinstall pyenv
+install rclone
+install readline
+install reattach-to-user-namespace
+install redis
+install ruby-build
+install rvm
+install sqlite
+install ta-lib
+install terminal-notifier
+install the_platinum_searcher
+install tmux
+install unison
+install vim --with-perl --with-lua --with-luajit --with-gettext --with-custom-python --with-custom-ruby --with-python3
+install weechat
+install wget
+install wv
+install youtube-dl
+install zsh
+install zsh-syntax-highlighting
+tap caskroom/cask
+tap caskroom/fonts
+install aria2
+install bower
+install cmake imagemagick ispell ntfs-3g openssh pandoc parallel pv rename yarn
+install composer
+install coreutils
+install curl
+install fasd
+install ffmpeg
+install fontconfig
+install freetype
+install git
+install gnupg
+install heroku
+install htop
+install mysql
+install node
+install npm
+install ntfs-3g
+install openssh --with-brewed-openssl --with-keychain-support
+install openssl
+install php72 --with-homebrew-curl --with-httpd --with-postgresql
+install php72-opcache php72-apcu php72-mcrypt php72-imagick php72-libsodium@1.0 php72-ioncubeloader php72-oauth php72-mustache php72-pdo-pgsql php72-redis php72-yaml php72-xdebug php72-tidy
+install postgresql
+install pyenv-virtualenv
+install pyenv-virtualenvwrapper
+install rbenv
+install rbenv automake gmp libtool wget
+install rbenv-ctags
+install rbenv-vars
+install rclone
+install readline
+install reattach-to-user-namespace
+install redis
+install ruby-build
+install rvm
+install sqlite
+install ta-lib
+install terminal-notifier
+install the_platinum_searcher
+install tmux
+install unison
+install vim --with-perl --with-lua --with-luajit --with-gettext --with-custom-python --with-custom-ruby --with-python3
+install weechat
+install wget
+install wv
+install vim --with-lua --with-override-system-vi --with-python
+install ruby-build
+reinstall openssl curl~HOMEBREW_CURLRC=1 brew reinstall openssl curl
+reinstall openssl curl
+reinstall openssl wget
+install tern
+uninstall bundler
+uninstall ruby-bundler
+uninstall ruby
+install postgresql
+uninstall postgresql
+install heroku
+install fasd
+install libxml2

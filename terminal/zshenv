@@ -20,8 +20,8 @@ source $DOTCASTLE/terminal/utils.sh
 setenv DOTCASTLE $DOTCASTLE
 
 # => setup editor for ourself
-setenv CURRENT_EDITOR 'vim'
-# setenv CURRENT_EDITOR 'emacsclient -a ""'
+setenv CURRENT_EDITOR "emacsclient -a ''"
+# setenv CURRENT_EDITOR 'vim'
 setenv EDITOR    $CURRENT_EDITOR
 setenv VISUAL    $CURRENT_EDITOR
 setenv GUIEDITOR $CURRENT_EDITOR
@@ -30,11 +30,12 @@ echo $CURRENT_EDITOR | grep vim &>/dev/null || alias vim=$CURRENT_EDITOR
 # browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
 
 # => other OSX dependent environment variables and mods
+export HOMEBREW_NO_AUTO_UPDATE=1
 if is_macosx; then
   setenv BREW_PREFIX /usr/local
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 else
-  export BREW_PREFIX=$HOME/.linuxbrew
+  export BREW_PREFIX=/home/linuxbrew/.linuxbrew
 fi
 
 setenv ZSH "$HOME/.oh-my-zsh" # required by OhMyZSH!
@@ -67,3 +68,6 @@ setenv GOPATH $HOME/.golang
 path_append "${GOPATH}/bin"
 path_append "${BREW_PREFIX}/opt/go/libexec/bin"
 path_append ~/.composer/vendor/bin
+
+# snaptic - ubuntu
+which snap > /dev/null && path_prepend "/snap/bin"

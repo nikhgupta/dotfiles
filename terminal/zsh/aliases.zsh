@@ -144,8 +144,10 @@ proxy() {
 }
 
 if which brew &>/dev/null; then
-  source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  source $BREW_PREFIX/opt/autoenv/activate.sh
+  # source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$BREW_PREFIX/share/zsh-syntax-highlighting/highlighters
+
+  # source $BREW_PREFIX/opt/autoenv/activate.sh
   init_cache fasd 'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
 fi
 
@@ -177,4 +179,9 @@ function webscreen() {
   curl -s http://image.thum.io/get/fit/600x600/$1 > ~/Desktop/$(echo $1 | md5).png
   sleep 1
   curl -s http://image.thum.io/get/fit/600x600/$1 > ~/Desktop/$(echo $1 | md5).png
+}
+
+function serve_rails() {
+  local port="2$(pwd | md5sum -t | cut -d ' ' -f 1 | tr -d 'a-z' | cut -c1-4)"
+  bundle exec rails server -b 0.0.0.0 -p $port
 }

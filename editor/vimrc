@@ -276,8 +276,8 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plug 'dracula/vim'
 
   " collections:
-  " Plug 'chriskempson/base16-vim'
-  " Plug 'chriskempson/vim-tomorrow-theme'
+  Plug 'chriskempson/base16-vim'
+  Plug 'chriskempson/vim-tomorrow-theme'
 " }}}
 " Personalize: highlight current line, but not the current column {{{
   set cursorline                  " highlight the current line for quick orientation
@@ -895,7 +895,7 @@ endif
   Plug 'vim-scripts/csv.vim'                        " CSV files
 " }}}
 " Essential:   supports snippets for many languages {{{
-  Plug 'SirVer/ultisnips'
+  " Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 " }}}
 " Essential:   supports language-specific CODE COMPLETION for many languages {{{
@@ -1902,7 +1902,8 @@ endif
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   endif
-  colorscheme nova
+  colorscheme Tomorrow-Night-Eighties
+  " let base16colorspace=256
   let g:airline_theme='nova'
   hi! ColorColumn guibg=#556873 guifg=#F2C38F
   hi! ErrorMsg guifg=#D18EC2 guibg=#3C4C55
