@@ -20,8 +20,8 @@ source $DOTCASTLE/terminal/utils.sh
 setenv DOTCASTLE $DOTCASTLE
 
 # => setup editor for ourself
-setenv CURRENT_EDITOR "emacsclient -a ''"
-# setenv CURRENT_EDITOR 'vim'
+setenv CURRENT_EDITOR 'vim'
+# setenv CURRENT_EDITOR "emacsclient -a ''"
 setenv EDITOR    $CURRENT_EDITOR
 setenv VISUAL    $CURRENT_EDITOR
 setenv GUIEDITOR $CURRENT_EDITOR
@@ -42,7 +42,7 @@ setenv ZSH "$HOME/.oh-my-zsh" # required by OhMyZSH!
 
 # => load local configuration, if available
 path_prepend $DOTCASTLE/bin
-# ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
+ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
 export GPG_TTY=$(tty)
 
@@ -58,8 +58,8 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 setenv RBENV_ROOT $BREW_PREFIX/var/rbenv
 setenv PYENV_ROOT $BREW_PREFIX/var/pyenv
 is_installed rbenv && init_cache rbenv "rbenv init --no-rehash - zsh"
-is_installed pyenv && init_cache pyenv "pyenv init -"
-is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"
+is_installed pyenv && init_cache pyenv "pyenv init - zsh"
+[[ -z $USING_BASH ]] && is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"
 gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@"; }
 gpip3(){ PIP_REQUIRE_VIRTUALENV="" pip3 "$@"; }
 
