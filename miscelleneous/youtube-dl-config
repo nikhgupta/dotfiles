@@ -15,3 +15,4 @@
 --no-check-certificate
 --prefer-ffmpeg
 --output "%(title)s.%(ext)s"
+-f bestvideo[width>=1920]+bestaudio[ext!=webm]/bestvideo[ext!=webm]+bestaudio[ext!=webm]/best[ext!=webm]

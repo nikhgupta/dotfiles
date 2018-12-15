@@ -172,3 +172,9 @@ fi
 function whois() {
   dig +nocmd $1 any +multiline +noall +answer
 }
+
+function webscreen() {
+  curl -s http://image.thum.io/get/fit/600x600/$1 > ~/Desktop/$(echo $1 | md5).png
+  sleep 1
+  curl -s http://image.thum.io/get/fit/600x600/$1 > ~/Desktop/$(echo $1 | md5).png
+}

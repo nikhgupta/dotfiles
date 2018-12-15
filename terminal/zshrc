@@ -30,8 +30,6 @@
 #   to `$fpath`, and hence, on both MacOSX and Ubuntu, you can add your
 #   completions to this directory.
 
-source ~/.zshenv
-
 # => basic locales and ZSH options
 LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
@@ -102,8 +100,6 @@ source ~/.zsh/aliases.zsh
 source ~/.zsh/prompt.zsh
 source_if_exists ~/.zshrc.local
 
-path_prepend $DOTCASTLE/bin
-
 if [ -f ~/.zsh_nocorrect ]; then
   while read -r COMMAND; do alias $COMMAND="nocorrect $COMMAND"; done < ~/.zsh_nocorrect
 fi
@@ -117,3 +113,9 @@ export NVM_DIR="/Users/nikhgupta/.nvm"
 # => add ~/.zsh to functions' path in ZSH can be used for adding completions
 [[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
 source ~/.zsh/completions/_tmuxinator
+
+# ### Bashhub.com Installation
+# if [ -f ~/.bashhub/bashhub.zsh ]; then
+#     source ~/.bashhub/bashhub.zsh
+# fi
+

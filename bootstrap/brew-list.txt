@@ -1,0 +1,79 @@
+install lynx
+install readline xz
+install libexif
+install vips
+install postgresql
+install pgweb
+install rethinkdb
+install zeppelin
+install apache-zeppelin
+uninstall rethinkdb
+install redis
+install homebrew/versions/mysql56
+install mysql@5.6
+unlink mysql
+link mysql
+link mysql@5.6
+link mysql@5.6 --force
+link mysql@5.6 --overwrite --force
+link mysql@5.6 --force --overwrite
+unlink mysql@5.6
+link mysql@5.6 --force --overwrite
+uninstall mysql
+uninstall mysql@5.6
+install mysql@5.6
+uninstall mysql@5.6
+install mysql
+install mysql@5.6
+unlink mysql
+install mysql
+link --force mysql@5.6
+uninstall mysql mysql@5.6
+unlink mysql
+unlink mysql@5.6
+install mysql@5.6
+link mysql@5.6 --force
+install aria2c
+install aria2
+install pgloader
+install pgloader
+install pgloader --head
+install pgloader --HEAD
+install tmuxinator
+install kakoune
+install emacs
+install emacs
+uninstall emacs
+tap d12frosted/emacs-plus
+install emacs-plus --HEAD --with-natural-title-bars
+install emacs-plus
+linkapps
+link
+link emacs-plus
+install go
+install homebank
+uninstall homebank adwaita-icon-theme atk hicolor-icon-theme libepoxy gsettings-desktop-schemas gtk+3 open-sp libofx glib-networking libpsl graphviz vala libsoup
+install https://tunnelblick.net/
+install tunnelblick
+install speedtest-cli
+install tshark
+install terraform
+install ansible
+install graph
+install graphviz
+install contribsys/faktory
+tap contribsys/faktory
+install faktory
+install curl autoconf automake libtool pkg-config
+install libpostal
+install rethinkdb
+install geckodriver
+install geckodriver phantomjs
+install geckodriver
+install mongo
+install lunchy
+install utorrent
+install rbenv-vars
+install pyenv
+reinstall pyen
+reinstall pyenv

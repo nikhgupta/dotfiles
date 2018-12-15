@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+
+# Script to test the probability of our internet connection
+# using encrypted packets.
+require 'json'
+require 'open-uri'
+require 'packetfu'
+require 'shellwords'
+
+vpn_name = "nixalite-#{ARGV.first.downcase}" if !ARGV.first.to_s.strip.empty?
+vpn_name = "nixalite" if vpn_name == "nixalite-sg"
+if vpn_name
+  puts "CONNECTING TO: #{vpn_name}"
+else
+  puts "DISCONNECTING ALL!!!"
+end
+
+def get_external_ip(print: true)
+  url = "https://extreme-ip-lookup.com/json/"
+  res = JSON.parse(open(url).string)
+  puts "Current IP: #{"%15s" % res['query']} | Location: #{res['city']}, #{res['region']}, #{res['country']}" if print
+  res
+end
+
+def connection_encrypted?
+  iface = PacketFu::Utils.default_int
+  config = PacketFu::Utils.ifconfig(iface)
+  cap = PacketFu::Capture.new(:iface => iface, :start => true)
+
+  counter = 0
+  encrypted = true
+
+  gt = Thread.new do
+    while true
+      sleep 0.25; `curl -s google.com &>/dev/null`
+    end
+  end
+
+  ct = Thread.new do
+    cap.stream.each do | packet |
+      packet = PacketFu::Packet.parse(packet)
+      body = packet.tcp_header.body rescue ""
+      encrypted = false if body.include?("google.com")
+      counter += 1
+      if !encrypted || counter >= 200
+        Thread.kill(gt)
+        break
+      end
+    end
+  end
+
+  ct.join
+  gt.join
+  return encrypted
+end
+
+def get_external_ip_and_state
+  res = get_external_ip(print: false)
+  enc = connection_encrypted? ? "YES" : " NO"
+  loc = [res['city'], res['region'], res['country']].reject{|a| a.to_s.strip.empty?}.join(", ")
+  puts "Current IP: #{"%15s" % res['query']} | Encrypted: #{enc} | Location: #{loc}"
+  res
+end
+
+dev = PacketFu::Utils.default_int
+get_external_ip_and_state
+# `ifconfig #{dev} down`
+
+script = <<-OSASCRIPT
+tell application "Tunnelblick"
+    disconnect all
+end tell
+OSASCRIPT
+
+if vpn_name
+  script = <<-OSASCRIPT
+  tell application "Tunnelblick"
+      disconnect all
+      connect "#{vpn_name}"
+      get state of first configuration where name = "#{vpn_name}"
+      repeat until result = "CONNECTED"
+          delay 1
+          get state of first configuration where name = "#{vpn_name}"
+      end repeat
+  end tell
+  OSASCRIPT
+end
+
+`osascript -e #{Shellwords.escape(script)} &>/dev/null`
+
+# `ifconfig #{dev} up`
+get_external_ip_and_state
