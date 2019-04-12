@@ -74,9 +74,12 @@ export DISABLE_UPDATE_PROMPT=true
 export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside editors
 
 # => load OhMyZSH and some relevant plugins
-plugins=(bundler coffee colored-man common-aliases emoji-clock extract
-gem golang history-substring-search rails)
+plugins=(bundler coffee common-aliases emoji-clock extract bgnotify branch
+gem golang history-substring-search rails ssh-agent transfer)
 is_macosx && plugins+=( osx )
+
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities nikhgupta
 
 source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
 
@@ -95,6 +98,7 @@ done
 # path_append $BREW_PREFIX/pear/bin
 # path_append $HOME/.cabal/bin
 # path_append $HOME/node_modules/.bin
+# path_append "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 source ~/.zsh/aliases.zsh
 source ~/.zsh/prompt.zsh

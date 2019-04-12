@@ -191,7 +191,8 @@ _prompt_0(){
   RPROMPT=""
   before_prompt=""
   PROMPT='$(proxy_info)'           # prompt icon for proxy
-  PROMPT+="%{$fg[green]%}%c%{$reset_color%} " # cwd name
+  PROMPT+="%{$fg[magenta]%}%c%{$reset_color%} " # cwd name
+  PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
 
   # == every prompt should display the following information
   # display a telephone icon when we are in a SSH session.
@@ -201,7 +202,7 @@ _prompt_0(){
   PROMPT+='$timer_show'             # time taken to run last command
   PROMPT+='$(_return_code)'         # return code for last command
 
-  if is_macosx; then PROMPT+="%(!.!.➲) "; else PROMPT+="➲ "; fi
+  if is_macosx; then PROMPT+="%(!.!.➲) %{$reset_color%}"; else PROMPT+="➲ %{$reset_color%}"; fi
 }
 
 _prompt_60(){

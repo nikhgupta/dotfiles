@@ -185,3 +185,16 @@ function serve_rails() {
   local port="2$(pwd | md5sum -t | cut -d ' ' -f 1 | tr -d 'a-z' | cut -c1-4)"
   bundle exec rails server -b 0.0.0.0 -p $port
 }
+
+function ngrok() {
+  _ngrokport="${1:-80}"
+  _ngroksubdomain="${2}"
+  echo "Usage: NGROK_SEED=<seed> ngrok <port> [subdomain]"
+  if [ -z "${_ngroksubdomain}" ]; then
+    _ngroksubdomain=$(echo $_ngrokport `date +%Y-%m-%d` $NGROK_SEED | sha256sum | fold -w12 | head -1)
+  fi
+
+  ssh -R $_ngroksubdomain.serveo.net:80:localhost:$_ngrokport serveo.net
+}
+
+alias rand_alphanum="cat /dev/random | head -c 200 | sha256sum - | cut -d ' ' -f 1"

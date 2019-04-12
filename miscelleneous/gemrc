@@ -12,6 +12,3 @@ gem: --no-rdoc --no-ri
 :ssl_verify_mode: 0
 :sources:
 - https://rubygems.org
-- http://gems.rubyforge.org
-- http://gems.github.com
-- http://gemcutter.org
