@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#
+# Script de alarme usando o paplay, dunst e rofi.
+#
+# Desenvolvido por Lucas Saliés Brum <lucas@archlinux.com.br>
+#
+# Criado em: 28/12/17 00:52:08
+# Última Atualização: 28/12/17 00:52:16
+# Evaluate: ! date +"%d/%m/%y %H:%M:%S"
+
+dependencias=("curl" "rofi" "notify-send" "mpg123")
+
+for dep in ${dependencias[@]}
+do
+	which $dep 1> /dev/null 2> /dev/null
+	if [ $? != 0 ]; then
+		echo
+		echo "O aplicativo $dep não foi encontrado."
+		echo "Abortando..."
+		echo
+		exit 1
+	fi
+done
+
+audio="${HOME}/.alarme.mp3"
+audio_web="https://github.com/sistematico/majestic/raw/master/home/lucas/audio/alarme.mp3"
+icone="/usr/share/icons/Arc/mimetypes/24@2x/stock_calendar.png"
+
+if [ ! -f $audio ]; then
+	curl -L -s $audio_web > $audio
+fi
+
+if [ ! -f $tema ]; then
+	curl -L -s $tema_web > $tema
+fi
+
+if [ -f /tmp/rofi-alarme.pid ]; then
+	hora=$(echo -e "Existe um alarme em progresso para:\n$(cat /tmp/rofi-alarme.log)\nDeseja cancelar?\nSim\nNão" | rofi -p "Rofi Alarme: " -dmenu -bw 0 -lines 5 -separator-style none -location 0 -width 400 -hide-scrollbar -padding 5)
+else
+	hora=$(echo -e "Digite a hora no formato: HH:MM" | rofi -p "Rofi Alarme: " -dmenu -bw 0 -lines 1 -separator-style none -location 0 -width 400 -hide-scrollbar -padding 5)
+fi
+
+if [ $hora ]; then
+	if [ "$hora" = "c" ] || [ "$hora" == "Cancelar" ] || [ "$hora" == "Sim" ]; then
+		kill -9 $(cat /tmp/rofi-alarme.pid)
+		msg="Alarme Cancelado! PID: $(cat /tmp/rofi-alarme.pid)"
+		rm -f /tmp/rofi-alarme.pid
+	else
+		date "+%H:%M" -d "$hora" > /dev/null 2>&1
+		if [ $? != 0 ]; then
+			msg="Hora inválida!\n\nVocê digitou: $hora \n\nFormato: (HH:MM)"
+		else
+			h=$(( $(date --date=${hora} +%s) - $(date +%s) ))
+			if [ $h -gt 1 ]; then
+				echo $$ > /tmp/rofi-alarme.pid
+				echo "$(date --date=${hora})" > /tmp/rofi-alarme.log
+				notify-send -i $icone "Rofi Alarme" "O alarme irá tocar as:\n$(date --date=${hora})"
+				sleep $(( $(date --date="$hora" +%s) - $(date +%s) ));
+				notify-send -i $icone "Rofi Alarme" "ACORDA!!!"
+				
+				for run in {1..10}
+				do
+	  				dbus-launch /usr/bin/mpg123 "$audio"
+	  				sleep 3
+				done
+
+				msg="Alarme ajustado para:\n${hora}"
+			else
+				msg="A hora tem que ser positiva!\nVocê digitou: $hora\nFormato: (HH:MM)"
+			fi
+		fi
+	fi
+
+	notify-send -i $icone "Rofi Alarme" "$msg"
+fi

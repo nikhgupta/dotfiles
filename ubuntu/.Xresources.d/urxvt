@@ -1,0 +1,30 @@
+! general
+URxvt*depth:                        32
+URxvt*internalBorder:               3
+URxvt*dynamicColors:                on
+URxvt*urgentOnBell:                 true
+URxvt*borderLess:                   false
+URxvt*scrollBar:                    false
+URxvt*cursorBlink:                  true
+URxvt*cursorUnderline:              true
+URxvt*cursorColor:                  #737077
+URxvt*scrollColor:                  #151515
+URxvt*underlineURLs:                true
+
+! fonts
+!URxvt*font: -*-dina-medium-r-*-*-*-90-*-*-*-*-*-*
+URxvt.font: xft:Hack:size=10:antialias=true:hinting=true
+URxvt*italic: -*-dina-medium-*-*-*-*-90-*-*-*-*-*-*
+URxvt*boldFont: -*-dina-bold-r-*-*-*-90-*-*-*-*-*-*
+
+! colors
+URxvt.colorIT:                       #b291af
+URxvt.colorBD:                       #6f6776
+URxvt.colorUL:                       #e9cfd3
+
+! hide scroll bar
+URxvt.scrollBar: false
+
+! padding
+URxvt.internalBorder: 20
+

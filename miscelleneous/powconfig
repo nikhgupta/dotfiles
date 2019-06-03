@@ -1,4 +1,0 @@
-export HOME=/Users/nikhgupta
-export POW_DST_PORT=88
-export POW_DOMAINS=dev,pow,lab,test,mac,osx,air,site
-export PATH="/usr/local/opt/rbenv/shims:/usr/local/opt/rbenv/bin:$PATH"

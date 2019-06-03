@@ -1,0 +1,15 @@
+#!/bin/bash
+
+res=$(echo "firefox;firefox-beta;firefox-dev;firefox;termite;pcmanfm;telegram;whatsie;pluma;atom;sublime;lxtask;deluge;popcorntime;stremio" | rofi -sep ";" -dmenu -p "Rofi Apps" -bw 0 -lines 15 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 1)
+
+if [ ! -z $res ]; then
+	case $res in
+		firefox-dev) i3-msg -q exec firefox-developer ;;
+		telegram) i3-msg -q exec ~/.local/share/TelegramDesktop/Telegram ;;
+		pluma) i3-msg -q exec pluma ;;
+		sublime) i3-msg -q exec subl ;;
+		popcorntime) i3-msg -q exec ~/.local/share/popcorntime/Popcorn-Time	;;
+        stremio) i3-msg -q exec ~/.local/share/stremio/Stremio-runtime ;;
+		*) i3-msg -q "exec $res" ;;
+	esac
+fi

@@ -1,0 +1,14 @@
+# Configuration inside `~/.gemrc` is used by `gem` command, and
+# defines the options for installing new gems. Primarily, `rdoc`, and
+# `ri` documentations are not installed along with the gem.
+
+---
+:verbose: true
+gem: --no-rdoc --no-ri
+:update_sources: true
+:benchmark: false
+:backtrace: false
+:bulk_threshold: 1000
+:ssl_verify_mode: 0
+:sources:
+- https://rubygems.org

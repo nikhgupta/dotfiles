@@ -1,9 +1,0 @@
-#!/bin/sh
-# This file is copied to the git repo upon initialization.
-set -e
-PATH="/usr/local/bin:$PATH"
-dir="`git rev-parse --git-dir`"
-trap "rm -f \"$dir/$$.tags\"" EXIT
-# git ls-files | ctags --tag-relative -L - -f"$dir/$$.tags" --languages=-javascript,sql --exclude=.git --exclude=log --exclude=tmp
-ripper-tags --tag-relative=yes --extra=q -f "$dir/$$.tags" $(git ls-files | grep --color=never '.*\.rb$')
-mv "$dir/$$.tags" "$dir/tags"

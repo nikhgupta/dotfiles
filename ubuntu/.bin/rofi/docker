@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+titulo="Rofi Docker"
+containers=$(docker ps -a | awk '{if(NR>1) print $NF}')
+numero=$(echo "$containers" | wc -l)
+((numero+1))
+container=$(echo "${containers}" | rofi -dmenu -p "$titulo" -bw 0 -lines $numero -separator-style none -location 0 -width 200 -hide-scrollbar -padding 5)
+
+if [ "$container" ]; then
+
+	if [ $(docker ps -a -q -f name=$container) != "" ]; then
+		res=$(echo "Parar" | rofi -dmenu -p "$titulo" -sep '|' -bw 0 -lines 1 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+	else
+		res=$(echo "Iniciar|Reiniciar" | rofi -dmenu -p "$titulo" -sep '|' -bw 0 -lines 1 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+	fi
+
+	case $res in
+		'Iniciar') docker start "$container";;
+		'Parar') docker stop "$container";;
+		'Reiniciar') docker restart "$container";;
+	esac
+fi

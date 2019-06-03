@@ -1,0 +1,146 @@
+/*********************************************************
+ *  Rofi color theme
+ *
+ *  Based on the Gruvbox color scheme for Vim by morhetz
+ *  https://github.com/morhetz/gruvbox
+ *
+ *  File: gruvbox*dark*hard.theme
+ *  Desc: Gruvbox dark (hard contrast) color theme for Rofi
+ *  Author: bardisty <b@bah.im>
+ *  Source: https://github.com/bardisty/gruvbox*rofi
+ *  Modified: Sat Oct 22 2016 03:12:10 PDT *0700
+ **********************************************************/
+
+/* rofi.color-normal:                   argb:#0383c4, #c4cbd4, argb:#964045, #4084d6, #f9f9f9
+rofi.color-urgent:                   argb:#02d303, #cc6666, argb:#e52d30, #a54242, #f9f9f9
+rofi.color-active:                   argb:#02d303, #b5bd68, argb:#e42d30, #8c9440, #f9f9f9
+rofi.color-window:                   argb:#f22d30, #7c8389, #1d1f21
+rofi.separator-style:                solid */
+
+* {
+    selected-normal-foreground:  #ffffff;
+    foreground:                  #5f6b85;
+    normal-foreground:           @foreground;
+    alternate-normal-background: #3b4252;
+    red:                         rgba ( 220, 50, 47, 100 % );
+    selected-urgent-foreground:  rgba ( 29, 32, 33, 100 % );
+    blue:                        rgba ( 38, 139, 210, 100 % );
+    urgent-foreground:           rgba ( 29, 32, 33, 100 % );
+    alternate-urgent-background: rgba ( 204, 36, 29, 100 % );
+    active-foreground:           rgba ( 29, 32, 33, 100 % );
+    lightbg:                     rgba ( 238, 232, 213, 100 % );
+    selected-active-foreground:  rgba ( 29, 32, 33, 100 % );
+    alternate-active-background: #3b4252;
+    background:                  #3b4252;
+    bordercolor:                 #2e3440;
+    alternate-normal-foreground: @foreground;
+    normal-background:           #3b4252;
+    lightfg:                     rgba ( 88, 104, 117, 100 % );
+    selected-normal-background:  #3b4252;
+    border-color:                #2e3440;
+    spacing:                     2;
+    separatorcolor:              #2e3440;
+    urgent-background:           #3b4252;
+    selected-urgent-background:  #3b4252;
+    alternate-urgent-foreground: @urgent-foreground;
+    background-color:            rgba ( 0, 0, 0, 0 % );
+    alternate-active-foreground: @active-foreground;
+    active-background:           rgba ( 215, 153, 33, 100 % );
+    selected-active-background:  rgba ( 250, 189, 47, 100 % );
+}
+#window {
+    background-color: @background;
+    border:           3;
+    padding:          2;
+}
+#mainbox {
+    border:  0;
+    padding: 0;
+}
+#message {
+    border:       1px dash 0px 0px ;
+    border-color: @separatorcolor;
+    padding:      1px ;
+}
+#textbox {
+    text-color: @foreground;
+}
+#listview {
+    fixed-height: 0;
+    border:       2px dash 0px 0px ;
+    border-color: @separatorcolor;
+    spacing:      2px;
+    scrollbar:    true;
+    padding:      2px 0px 0px ;
+}
+#element {
+    border:  0;
+    padding: 1px ;
+}
+#element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+#element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+#element.normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+#element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+#element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+#element.selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+#element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+#element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+#element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+#scrollbar {
+    width:        4px ;
+    border:       0;
+    handle-width: 8px ;
+    padding:      0;
+}
+#sidebar {
+    border:       2px dash 0px 0px ;
+    border-color: @separatorcolor;
+}
+#button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+#inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    1px ;
+}
+#case-indicator {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+#entry {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+#prompt {
+    spacing:    0;
+    text-color: @normal-foreground;
+}

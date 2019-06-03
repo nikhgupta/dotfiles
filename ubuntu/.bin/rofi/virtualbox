@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+vms=$(vboxmanage list vms | awk -F'"' '{print $2}')
+numero=$(echo $vms | wc -l)
+numero=$((numero+1))
+maquina=$(echo "${vms}" | rofi -dmenu -p "Rofi VirtualBox" -bw 0 -lines $numero -separator-style none -location 0 -width 200 -hide-scrollbar -padding 5)
+
+if [ "$maquina" ]; then
+	if [ "$maquina" == "Principal" ]; then
+		virtualbox
+	else
+		rodando=$(vboxmanage showvminfo "$maquina" | grep -c "running (since")
+
+		if [ $rodando = 1 ]; then
+			res=$(echo "Parar|Reiniciar" | rofi -dmenu -p "Rofi VirtualBox" -sep '|' -bw 0 -lines 2 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+		else
+			res=$(echo "Iniciar|Headless" | rofi -dmenu -p "Rofi VirtualBox" -sep '|' -bw 0 -lines 2 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+		fi
+
+		case $res in
+			'Iniciar') vboxmanage startvm "$maquina" --type gui ;;
+			'Headless') vboxmanage startvm "$maquina" --type headless ;;
+			'Parar') vboxmanage controlvm "$maquina" poweroff ;;
+			'Reiniciar') vboxmanage controlvm "$maquina" reset ;;
+		esac
+	fi
+fi

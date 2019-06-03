@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+MODOS=("store" "games" "servers" "screenshots" "news" "settings" "bigpicture" "friends")
+#STEAM="/usr/bin/steam-runtime"
+STEAM="LD_PRELOAD=/usr/lib32/libudev.so.1 STEAM_RUNTIME=1 steam"
+
+if [[ " ${MODOS[*]} " =~ " $1 " ]]; then
+	#exec --no-startup-id $STEAM "steam://open/$1" 2>&1
+	$STEAM "steam://open/$1" 2>&1
+
+else
+	#exec --no-startup-id $STEAM "steam://open/games" 2>&1
+	$STEAM "steam://open/games" 2>&1
+fi

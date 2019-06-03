@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+BG="${HOME}/.local/share/i3lock/bg.png"
+TMPBG="/tmp/screen.png"
+HUE=(-level 0%,100%,0.6)
+EFFECT=(-filter Gaussian -resize 20% -define filter:sigma=1.5 -resize 500.5%)
+
+DISPLAY_RE="([0-9]+)x([0-9]+)\\+([0-9]+)\\+([0-9]+)"
+DISPLAYS=$(xrandr --query | grep ' connected' | grep -o '[0-9][0-9]*x[0-9][0-9]*[^ ]*')
+
+LOCK_ICON=${HOME}/.local/share/i3lock/lock.png
+
+if [ ! -d $(dirname $LOCK_ICON) ]; then
+  mkdir -p $(dirname $LOCK_ICON)
+fi
+
+if [ ! -f $LOCK_ICON ]; then
+  curl -s -L -o $LOCK_ICON 'https://i.imgur.com/a/DRKow.png'
+fi
+
+if ! fc-list | egrep Nexa 1> /dev/null 2>&1; then 
+  [ ! -d ${HOME}/.local/share/fonts ] && mkdir -p ${HOME}/.local/share/fonts
+  curl -s -L -o ${HOME}/.local/share/fonts/NexaLight.ttf 'https://www.dropbox.com/s/b16nt18oc2s8b16/NexaLight.ttf?dl=1'
+  curl -s -L -o ${HOME}/.local/share/fonts/NexaBold.ttf 'https://www.dropbox.com/s/rsai2k5gblmu6ml/NexaBold.ttf?dl=1'
+  fc-cache -f
+fi
+
+if [ ! -f $TMPBG ]; then
+  if [ -f $BG ]; then
+    cp $BG $TMPBG
+  else
+    curl -s -L -o $BG 'https://i.imgur.com/OeOGQ4k.png'
+    cp $BG $TMPBG
+  fi
+fi
+
+
+SQUARE_W=300
+SQUARE_H=375
+SQUARE_R=10
+SQUARE_O=0.7
+
+# GET SCREENS PROPS
+DRAW=""
+for MON in $DISPLAYS
+do
+  if [[ $MON =~ $DISPLAY_RE ]]; then
+    SCREEN_WIDTH=${BASH_REMATCH[1]}
+    SCREEN_HEIGHT=${BASH_REMATCH[2]}
+    SCREEN_X=${BASH_REMATCH[3]}
+    SCREEN_Y=${BASH_REMATCH[4]}
+
+    SQUARE_X=$((($SCREEN_WIDTH - $SQUARE_W) / 2 + $SCREEN_X))
+    SQUARE_Y=$((($SCREEN_HEIGHT - $SQUARE_H) / 2 + $SCREEN_Y))
+    SQUARE_X2=$(($SQUARE_X + $SQUARE_W))
+    SQUARE_Y2=$(($SQUARE_Y + $SQUARE_H))
+
+    DRAW+="roundRectangle $SQUARE_X,$SQUARE_Y $SQUARE_X2,$SQUARE_Y2 $SQUARE_R,$SQUARE_R "
+  fi
+done
+
+# GET RANDOM QUOTE
+QUOTE_URL="http://api.forismatic.com/api/1.0/?method=getQuote&format=text&lang=en"
+QUOTE=$(wget $QUOTE_URL -q -O -)
+QUOTE_SIZE=20
+
+if [[ ${#QUOTE_SIZE} > 80 ]]; then
+  QUOTE_SIZE=16
+fi
+
+scrot $TMPBG 
+convert $TMPBG "${HUE[@]}" "${EFFECT[@]}" -draw "fill black fill-opacity $SQUARE_O $DRAW" $TMPBG
+convert $TMPBG -gravity center -font NexaLight -pointsize $QUOTE_SIZE -style italic -draw "fill white fill-opacity .3 text 0,300 '$QUOTE'" $TMPBG
+convert -gravity center -geometry +0-63 $TMPBG $LOCK_ICON -composite $TMPBG
+
+  #--datestr "Digite uma senha para desbloquear..." 
+i3lock \
+  -i $BG \
+  -e \
+  --timepos="ix-cw/2:iy+60" \
+  --datepos="tx:iy+100" \
+  --indpos="x+w/2:y+h/2-60" \
+  --timesize=48 \
+  --datesize=16 \
+  --redraw-thread \
+  --clock \
+  --indicator \
+  --datestr="%A, %d %b" \
+  --insidecolor=00000000 \
+  --ringcolor=ffffff33 \
+  --separatorcolor=00ffff00 \
+  --insidevercolor=00000000 \
+  --insidewrongcolor=00000000 \
+  --linecolor=00000000 --timefont="Nexa Bold" --datefont="Nexa Light" \
+  --ringvercolor=ffffffAA --ringwrongcolor=c62d2d77 --keyhlcolor=ffffff99 \
+  --radius=70 --veriftext="" --wrongtext="" \
+  --textcolor="ffffffff" --timecolor="ffffffff" --datecolor="ffffff66"

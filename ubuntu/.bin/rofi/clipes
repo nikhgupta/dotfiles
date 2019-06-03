@@ -1,0 +1,21 @@
+#!/bin/bash
+
+dir="${HOME}/video/clipes"
+
+[ ! -d $dir ] && echo "Diretório $dir não encontrado." && exit 0
+
+entrada=$(rofi -dmenu -input /dev/null -p "Video: " -lines 0 -show run -opacity "80" -width 20 -padding 16)
+
+:> /tmp/fap.txt
+
+if [ "$entrada" ]; then
+	cd $dir
+	videos=($entrada)
+	for video in ${videos[@]}; do
+		find $dir -iname "*${video}*" -printf '"%f"\n' >> /tmp/fap.txt
+	done
+	(cat /tmp/fap.txt | uniq | xargs mpv 1> /dev/null 2> /dev/null &)
+	sleep 3 && dbus-launch i3-msg '[class="mpv"] sticky enable'
+fi
+
+

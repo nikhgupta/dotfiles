@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+#
+# ---------------------------------------------------------------------
+#
+#   Summary: Log important brew commands
+#   Author:  Nikhil Gupta
+#   Usage:   brew -h
+#
+# ---------------------------------------------------------------------
+#
+
+command   = ARGV.first.downcase if ARGV.first
+args      = ARGV.join " "
+loggable  = /(?:|re|un)(install|tap|link)(?:|apps)/
+# => matches: install tap link linkapps reinstall uninstall untap unlink unlinkapps
+
+if command =~ loggable
+  list_file = File.join ENV['DOTCASTLE'], "bootstrap", "brew-list.txt"
+  File.open(list_file, "a"){|f| f.puts args}
+end
+
+brew = %w[
+  /usr/local/bin/brew
+  /home/linuxbrew/.linuxbrew/bin/brew
+].detect{|f| File.exists?(f)}
+
+if brew
+  exec "#{brew} #{args}"
+else
+  puts "Could not find brew binary: $$0"
+end

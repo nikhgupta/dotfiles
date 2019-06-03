@@ -1,0 +1,125 @@
+/**
+ * User: qball
+ * Copyright: Dave Davenport
+ */
+ 
+/* #100%: FF - 95%: F2 - 90%: E6 - 85%: D9 - 80%: CC - 75%: BF - 70%: B3 - 65%: A6 - 60%: 99 - 55%: 8C - 50%: 80 - 45%: 73 - 40%: 66 - 35%: 59 - 30%: 4D - 25%: 40 - 20%: 33 - 15%: 26 - 10%: 1A - 5%: 0D - 0%: 00  */
+ 
+* {
+    text-color:  #54576b;
+    background-color:  rgba(0,0,0,0);
+
+    fundo:  #2E3440;
+	fundo-trans: #2E3440F2; 
+	texto-trans: #39393AC5; 
+    
+    red:         #cd5c5c;
+    lightred:    #cc5533;
+    green:       #86af80;
+    lightgreen:  #88cc22;
+    yellow:      #e8ae5b;
+    lightyellow:     #ffa75d;
+    blue:      #6495ed;
+    branco:     #ffffff;
+    magenta:      #deb887;
+    lightmagenta:     #996600;
+    cyan:      #b0c4de;
+    lightcyan:     #b0c4de;
+    white:      #bbaa99;
+    cinza:     #797d89;
+    highlight:     bold #ffffff;
+    font: "Open Sans 11";
+}
+
+#window {
+    fullscreen: true;
+    location: west; 
+    anchor:   west;
+    border:  0px 2px 0px 0px;
+    text-color: @cinza;
+	transparency: "real";
+
+    orientation: horizontal;
+    children: [mainbox, dummy];
+}
+
+#dummy {
+    expand: true;
+}
+
+#sidebar {
+    border: 0px 0px 0px 0px;
+    background-color: @fundo;
+    padding: 0px;
+}
+
+#button selected {
+    border-color: @lightgreen;
+    text-color: @branco;
+}
+
+#button {
+	padding:    10px;
+}
+
+#inputbar {
+    background-color: @fundo;
+    text-color: @branco;
+	padding: 5px;
+	spacing: 5px;
+    border: 0px 0px 2px 0px;
+}
+
+#mainbox {
+    expand: false;
+    background-color: @fundo-trans;
+    spacing: 0.8em;
+}
+
+#listview {
+    padding: 0em 0.4em 0em 1em;
+    dynamic: false;
+    lines: 0;
+}
+
+#prompt {
+	font: "Open Sans SemiBold Italic 11";
+}
+
+#entry {
+	font: "Open Sans Italic 11";
+	width: 15em;
+}
+
+#element {
+	font:     "Open Sans 13";
+	padding:  10px 1.5em 10px 14px;
+}
+
+#element.normal.normal {
+    text-color:       @cinza;
+}
+#element.normal.urgent {
+    text-color:       @cinza;
+}
+#element.normal.active {
+    text-color:       @branco;
+}
+#element.selected.normal {
+    text-color:       @branco;
+}
+#element.selected.urgent {
+    text-color:       @cinza;
+}
+#element.selected.active {
+    text-color:       @cinza;
+}
+#element.alternate.normal {
+    text-color:       @cinza;
+}
+#element.alternate.urgent {
+    text-color:       @cinza;
+}
+#element.alternate.active {
+    text-color:       @cinza;
+}

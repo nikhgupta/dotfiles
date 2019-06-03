@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+source $DOTCASTLE/terminal/utils.sh
+source $DOTCASTLE/terminal/zsh/prompt.zsh
+
+[[ "$1" == "battery" ]] && print -P "$(_battery_remaining)"

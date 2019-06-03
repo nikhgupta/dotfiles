@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# this must be the last command, and it must be 'non forking', as expected by 'xautolock'
+#i3lock -n -e -f -i /home/ruben/background.png -t
+#i3lock-fancy -f "Iosevka-Thin" -t "Arch Linux" -p -g -- scrot -z
+
+wallpapers="${HOME}/.local/share/backgrounds"
+[ ! -d $wallpapers ] && mkdir -p $wallpapers
+
+
+if [ $1 ]; then
+	if [ "$1" = "off" ]; then
+		$(sleep 2h && xset dpms force off) &
+	else
+		lockbg="$1"
+	fi
+else
+	if ! ls $wallpapers/firefox*.png 1> /dev/null 2>&1; then
+		curl -s -L -o $wallpapers/firefox1.png https://i.imgur.com/99TRx5U.png
+		curl -s -L -o $wallpapers/firefox2.png https://i.imgur.com/XLSVgfc.png
+	fi
+	lockbg=$(find $wallpapers/firefox*.png -type f | shuf -n 1)
+fi
+
+# change layout to us
+#setxkbmap us
+# pause dunst
+pkill -u $USER -USR1 dunst
+
+i3lock -n -e -k \
+       -i "$lockbg" \
+       --veriftext="" \
+       --wrongtext="" \
+       --radius=15 \
+       --indpo="x+80:h-70" \
+       --ringcolor=ffffffff \
+       --ringvercolor=ffffffff \
+       --ringwrongcolor=ffffffff \
+       --insidecolor=37344500 \
+       --insidevercolor=407ee7ff \
+       --insidewrongcolor=f22c40ff \
+       --line-uses-inside \
+       --keyhlcolor=407ee7ff \
+       --bshlcolor=407ee7ff \
+       --separatorcolor=00000000 \
+       --timepos="w-320:h-180" \
+       --timecolor=ffffffff \
+       --datecolor=ffffffff \
+       --datestr="%A, %d %b"
+
+# resume dunst
+pkill -u $USER -USR2 dunst

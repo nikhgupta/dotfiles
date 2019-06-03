@@ -1,0 +1,39 @@
+#!/bin/bash
+
+nome="Rofi Wallpaper: $(basename $(pwd))"
+dir="/home/lucas/github/majestic/home/lucas/.config/rofi/scripts"
+script="${HOME}/.config/polybar/scripts/wallpaper.sh"
+last="/home/lucas"
+fullpath=$(readlink -e $0)
+
+ROFI="rofi -dmenu -p"
+
+if [ ! -z $last ]; then
+  cd $last
+fi
+
+while true; do
+  caminho=$(readlink -e $(pwd))
+  sed -i "s|^last=.*|last=\"${caminho}\"|g" $fullpath
+  opt=$(echo -e "[OK]\n[Sair]\n..\n$(ls -1 -d */ 2> /dev/null)\n" | $ROFI "${nome}" -width 10 -lines 10 -separator-style none -location 0 -hide-scrollbar)
+
+  if [ $opt ]; then
+    if [ -d $opt ]; then
+      nome="Rofi Wallpaper: $(basename $(pwd))"
+      cd $opt
+    elif [[ $opt == *"OK"* ]]; then
+      opt=$(echo -e "Sim\nNão" | $ROFI "Tem certeza?" -width 8 -lines 2 -separator-style none -location 0 -hide-scrollbar)
+      if [ $opt == "Sim" ]; then
+        if [ -f $script ]; then
+          sed -i "s|^dir=.*|dir=\"${caminho}\"|g" $script
+          break
+        else
+          rofi -e "$script não encontrado!"
+          break
+        fi
+      fi
+    elif [[ $opt == *Sair* ]]; then
+      break
+    fi
+  fi
+done

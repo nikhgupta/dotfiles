@@ -1,27 +1,13 @@
-# ignore the private files that are not meant to be versioned
-/private
-/editor/vim/spell/private.utf-8.add*
+*/.atom/.apm/
+*/.atom/.node-gyp/
+*/.atom/blob-store/
+*/.atom/compile-cache/
+*/.atom/packages/
+*/.atom/storage/
+*/.bin/test.sh
+*/.config/mpv/watch_later/
+*/.vim/bundle/*
+*/.vim/tmp/*
 
-# ignore ./tmp and sessions directory, but keep the structure
-/editor/vim/tmp/*
-!/editor/vim/tmp/cache
-/editor/vim/tmp/cache/*
-/editor/vim/sessions/*
-
-# ignore these specific files
-.netrwhist
-/editor/vim/wiki/
-/editor/vim/tasks.txt
-
-# ignore vim bundles cache
-/editor/vim/bundle
-!/editor/vim/bundle/vundle/
-!/editor/vim/bundle/vundle/*
-
-# repos downloaded by bootstrapper
-/terminal/iterm2/base16-shell
-/miscelleneous/powerline-fonts
-/ubersicht
-
-.DS_Store
-*.swp
+# but do not ignore these
+!*/.vim/bundle/.keep

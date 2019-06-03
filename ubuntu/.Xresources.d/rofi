@@ -1,0 +1,7 @@
+!rofi.lines:                         2
+rofi.color-enabled:                 true
+rofi.separator-style:               none
+rofi.width:                         33
+rofi.line-padding:                  6
+rofi.hide-scrollbar:                True
+!rofi.columns:                       2

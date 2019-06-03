@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# rofi kill
+#
+# Desenvolvido por Lucas Saliés Brum <lucas@archlinux.com.br>
+#
+# Criado em: 11/03/2018 15:21:12
+# Última Atualização: 11/03/2018 15:21:12
+
+
+apps=$(ps -A -o comm | egrep -v "COMMAND|^ps$|^i3$|cpu.sh|^ssh$|cat|chrome-|anacron|tumblerd|upowerd|janela.sh|ufw.sh|python|sudo|polybar|lightdm|compton|tail|mpd|dunst|xautolock|vmstat|Web|NetworkManager|uniq|crond|unbound|awk|grep|tee|xfconf|gconfd|bash|polkitd|sd-pam|mm_percpu_wq|rcu_preempt|rcu_sched|rcu_bh|kdevtmpfs|netns|rcu_tasks_kthre|oom_reaper|writeback|kcompactd0|ksmd|khugepaged|crypto|kintegrityd|kblockd|edac-poller|devfreq_wq|watchdogd|kswapd0|kthrotld|nvme-wq|kstrp|charger_manager|lvmetad|led_workqueue|kworker|scsi|steamwebhelper|plugin_host|net.downloadhel|rtkit|gvfs|at-spi|dbus|nvidia|\/|systemd|kthreadd|udisk|pulse|ext4|iprt|cfg80211|ipv6_addrconf|acpi|khungtaskd|Xorg|wpa_supplicant|ata_sff" | uniq)
+icone="/usr/share/icons/Oranchelo/apps/scalable/xkill.svg"
+numero=$(echo "$apps" | wc -l)
+[ $numero -gt 10 ] && numero=10
+
+matar=$(echo -e "$apps" | uniq -u | rofi -p "Rofi Kill: " -lines "$numero" -dmenu -bw 0 -separator-style none -location 0 -width 250 -hide-scrollbar -padding 5)
+
+if [ $matar ]; then
+	#notify-send -i $icone "Rofi Kill" "Tentando matar: $matar"
+	killall $matar
+	#while true; do 
+		if [ $(killall -q -0 $matar) ]; then
+			notify-send -i $icone "Rofi Kill" "Não morreu: $matar"
+			#notify-send -i $icone "Rofi Kill" "Morto: $matar"
+		else
+			notify-send -i $icone "Rofi Kill" "Morto: $matar"
+			#notify-send -i $icone "Rofi Kill" "Não morreu: $matar"
+			#break
+		fi
+	#done
+fi

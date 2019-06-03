@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+source $HOME/.envs
+
+dir="$WALLPAPERS"
+wallpaper=$(find "$dir" -type f | shuf -n 1)
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -s "$wallpaper"
+

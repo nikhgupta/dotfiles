@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+name="ubuntu"
+dir="$HOME/.dotfiles"
+
+sudo apt-get update
+sudo apt-get upgrade -y
+
+sudo apt install git curl wget stow make build-essential wget curl llvm xz-utils
+sudo apt install build-essentials fasd ntfs-3g
+
+# install ruby, python, nodejs
+sudo apt install ruby nodejs npm python3 python3-pip
+
+# miscelleneous
+sudo apt install python-gpgme youtube-dl zsh
+sudo apt install libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libncurses5-dev tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+sudo apt install libxcb-xinerama0-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-shape0-dev
+sudo apt install cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python-xcbgen xcb-proto libxcb-xrm-dev libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev xcb libxcb-ewmh2
+sudo apt install fonts-firacode fonts-font-awesome fonts-siji
+
+# dotfiles
+git clone https://github.com/nikhgupta/dotcastle $dir
+stow -t $HOME -v -d $dir $name --ignore=.gitconfig
+rm -f ~/.gitconfig
+cp $dir/$name/.gitconfig ~/.gitconfig
+ln -sf $dir/$name/.gitignore ~/.gitignore
+
+# gitconfig
+git config --global core.editor $EDITOR
+git config --global user.name $NICK
+git config --global user.email $EMAIL
+git config --global github.user $NICK
+git config --global github.token $GITHUB_TOKEN
+git config --global github.password $GITHUB_TOKEN
+git config --global github.oauth-token $GITHUB_TOKEN
+git config --global sendmail.smtpuser $EMAIL
+
+vim +PlugInstall +qall

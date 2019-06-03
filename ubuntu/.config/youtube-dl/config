@@ -1,0 +1,18 @@
+# Configuration values for Youtube-DL.
+#
+# FIXME: mix this up with `aria2c` for faster downloads
+#
+--ignore-errors
+--mark-watched
+--no-playlist
+--min-filesize 50k
+--retries 5
+--download-archive ~/.youtube-dl-archive
+--restrict-filenames
+--continue
+--console-title
+# --print-traffic
+--no-check-certificate
+--prefer-ffmpeg
+--output "%(title)s.%(ext)s"
+-f bestvideo[width>=1920]+bestaudio[ext!=webm]/bestvideo[ext!=webm]+bestaudio[ext!=webm]/best[ext!=webm]

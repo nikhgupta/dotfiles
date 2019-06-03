@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# > /dev/null 2>&1
+
+params=\"$@\"
+(mpv --really-quiet --profile=youtube ytdl://ytsearch10:"$params") &
+i3-msg '[class="mpv"] floating enable, sticky enable, move absolute position 0 px 0 px' &
+

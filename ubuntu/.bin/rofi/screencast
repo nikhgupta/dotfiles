@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if pgrep -x "ffmpeg" > /dev/null; then
+	acao="Parar"
+else
+	acao="Iniciar"
+fi
+
+res=$(echo "$acao;Limpar" | rofi -sep ";" -dmenu -p "Rofi Screencast" -bw 0 -lines 2 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 1)
+
+if [ ! -z $res ]; then
+	case $res in
+		Iniciar|Parar) termite -e ~/.local/bin/screencast & ;;
+		Limpar) ~/.local/bin/screencast clear & ;;
+		*) break ;;
+	esac
+fi

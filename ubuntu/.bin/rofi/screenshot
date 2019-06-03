@@ -1,0 +1,115 @@
+#!/bin/bash
+
+app="maim -u"
+dir="${HOME}/img/shots/"
+data=$(date +%Y-%m-%d_%H-%M-%S)
+nome="ss-${data}"
+extensao=".png"
+atraso=10
+tipo="image/png"
+icone="/usr/share/icons/Arc/devices/24@2x/video-display.png"
+editor="gimp"
+
+command -v $app >/dev/null 2>&1 || { echo >&2 "Instale o programa: $app antes. Abortando..."; exit 1; }
+
+if [ ! -d $dir ]; then
+	mkdir -p $dir
+fi
+
+function screens {
+	if [ ! -z $2 ] && [ $2 != 0 ] && [ $2 != 1 ]; then
+		delay="-d $2"
+	else
+		delay="-d 1"
+	fi
+
+	if [ "$1" == "1" ]; then
+		arquivo="${nome}-full${extensao}"
+		$app $delay ${dir}${arquivo}
+		msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+	elif [ "$1" == "2" ]; then
+		arquivo="${nome}-window${extensao}"
+		$app $delay -i $(xdotool getactivewindow) ${dir}${arquivo}
+		msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+	elif [ "$1" == "3" ]; then
+		arquivo="${nome}-rec${extensao}"
+	    $app $delay -s ${dir}${arquivo}
+	    msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+	elif [ "$1" == "4" ]; then
+		arquivo="${nome}-full${extensao}"
+		$app $delay ${dir}${arquivo}
+		$editor ${dir}${arquivo}
+		msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+	elif [ "$1" == "5" ]; then
+		arquivo="${nome}-window${extensao}"
+		$app $delay -i $(xdotool getactivewindow) ${dir}${arquivo}
+		$editor ${dir}${arquivo}
+		msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+	elif [ "$1" == "6" ]; then
+		arquivo="${nome}-rec${extensao}"
+	    $app $delay -s ${dir}${arquivo}
+	    viewnior ${dir}${arquivo}
+	    msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+	elif [ "$1" == "7" ]; then
+	    arquivo="${nome}.gif"
+	    tipo="image/gif"
+
+	    duracao=$(echo "5;10;15;30;45;60;90;120" | \
+	    rofi -sep ";" -dmenu -p "Duração(segundos):" -bw 0 -lines 8 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+
+	    atraso=$(echo "0;1;2;3;5;10;15;30;45;60" | \
+	    rofi -sep ";" -dmenu -p "Atraso(segundos):" -bw 0 -lines 10 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+
+	    if [ -z $atraso ]; then
+	    	atraso=2
+	    fi
+
+	    if [ ! -z $duracao ]; then
+	    	byzanz-record --delay=$atraso -d $duracao ${dir}${arquivo}
+	    	msg="A screenshot <b>$arquivo</b> foi salva em <b>$dir</b>..."
+		else
+			msg="Screenshot cancelada..."
+	    fi
+	else
+		arquivo="${nome}${extensao}"
+		$app ${dir}${arquivo}
+		msg="A screenshot <b>$arquivo</b> salva em <b>$dir</b>..."
+	fi
+
+	if [ ! -z $arquivo ]; then
+		xclip -selection c -t $tipo -i ${dir}${arquivo}
+	fi
+
+	notify-send -i $icone "ScreenShot" "$msg"
+}
+
+res=$(echo "Tela;Janela;Area;Editar" | rofi -sep ";" -dmenu -p "Rofi Screenshot" -bw 0 -lines 4 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+
+if [ $res ]; then
+	atraso=$(echo "1;2;3;5;10;15;30" | rofi -sep ";" -dmenu -p "Atraso(segundos):" -bw 0 -lines 7 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+fi
+
+if [ $res ]; then
+	case $res in
+		'Tela') 
+			screens 1 $atraso 
+		;;
+		'Janela') 
+			screens 2 $atraso 
+		;;
+		'Area') 
+			screens 3 $atraso 
+		;;
+		'Editar') 
+			screens 4 $atraso 
+		;;					
+
+		#reiniciar)
+		#	confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+		#	[ $confirma = "Sim" ] && systemctl reboot
+		#;;
+		*)
+		;;
+	esac
+fi
+
