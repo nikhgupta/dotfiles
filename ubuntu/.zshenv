@@ -35,10 +35,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 if is_macosx; then
   setenv BREW_PREFIX /usr/local
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-else
-  export BREW_PREFIX=/home/linuxbrew/.linuxbrew
 fi
-init_cache brew "$BREW_PREFIX/bin/brew shellenv"
 
 setenv ZSH "$HOME/.oh-my-zsh" # required by OhMyZSH!
 
@@ -48,20 +45,21 @@ path_prepend ~/.bin
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
 export GPG_TTY=$(tty)
 
-# => ensure that homebrew is in our path.
-path_prepend "${BREW_PREFIX}/bin"
-path_prepend "${BREW_PREFIX}/sbin"
-
 # load rbenv and pyenv, if available
 export WORKON_HOME=~/.venv
 export PROJECT_HOME=~/Code/python/workspace
 export PIP_REQUIRE_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-setenv RBENV_ROOT $BREW_PREFIX/var/rbenv
-setenv PYENV_ROOT $BREW_PREFIX/var/pyenv
+setenv RBENV_ROOT $HOME/.rbenv
+setenv PYENV_ROOT $HOME/.pyenv
+path_prepend $PYENV_ROOT/bin
+path_prepend $RBENV_ROOT/bin
+# eval "$(rbenv init --no-rehash - zsh)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 is_installed rbenv && init_cache rbenv "rbenv init --no-rehash - zsh"
 is_installed pyenv && init_cache pyenv "pyenv init - zsh"
-[[ -z $USING_BASH ]] && is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"
+is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"
 gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@"; }
 gpip3(){ PIP_REQUIRE_VIRTUALENV="" pip3 "$@"; }
 

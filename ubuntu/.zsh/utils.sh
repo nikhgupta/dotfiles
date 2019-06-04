@@ -65,10 +65,10 @@ setenv(){
 init_cache(){
   file_name=$HOME/.init-cache/$1
   if [[ -f $file_name ]]; then
-    source $file_name
+    . $file_name
   else
     mkdir -p $HOME/.init-cache
     eval "$(echo $2)" > $file_name
-    source $file_name
+    . $file_name
   fi
 }

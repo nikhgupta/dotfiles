@@ -26,7 +26,7 @@ session=${1:-bspwm}
 
 case $session in
   bspwm)
-    exec bspwm
+    exec bspwm;
     ;;
   *)
     exec $1;
