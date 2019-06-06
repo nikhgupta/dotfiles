@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Utility script to be sourced into config files
 
+[[ -n "$UTILS_SOURCED" ]] && return
+UTILS_SOURCED=1
 ESCAPE=$'\e'
 
 txtblk="${ESCAPE}[0;30m" # Black - Regular

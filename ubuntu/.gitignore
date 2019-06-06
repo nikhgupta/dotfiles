@@ -56,7 +56,7 @@ Thumbs.db
 Desktop.ini
 
 # scm revert files
-**.orig
+*.orig
 # Netbeans project directory
 /nbproject/
 # RubyMine project files

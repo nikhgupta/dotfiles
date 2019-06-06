@@ -20,6 +20,16 @@
 
 source ~/.zsh/utils.sh
 
+# Updates editor information when the keymap changes.
+function zle-line-init zle-keymap-select {
+    RPS1="${${KEYMAP/vicmd/◉}/(main|viins)/}"
+    RPS2=$RPS1
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
 PROMPT_BREAKPOINTS=(60 0)
 PROMPT_FILE=~/.zsh/prompt.zsh
 
@@ -215,7 +225,7 @@ _prompt_60(){
   # emacs gui messes up command ouputs unless columns size is specified manually
   is_emacs && let COLUMNS=COLUMNS-2
 
-  RPROMPT='$(_pending_jobs) '
+  RPROMPT+='$(_pending_jobs) '
   # NOTE: I never look at this info, anyways and this takes a 60-70ms each time.
   RPROMPT+='$(git_prompt_status)'"%{$reset_color%} "
   [[ -z "$TMUX" ]] && RPROMPT+='$(_current_time) '

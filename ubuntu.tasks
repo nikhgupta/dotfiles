@@ -24,7 +24,6 @@
 ☐ @replacement tunnelblick/openvpn
 ☐ @replacement ubersicht
 ☐ @workflow openvpn selection
-☐ @workflow wifi selection
 ☐ @task map ScreenCast video on keyboard to ScreenCast utility
 ☐ @workflow download mp3 from youtube videos and add them to mpd
 ☐ @workflow sort downloaded files based on dates
@@ -35,9 +34,13 @@
 ☐ @workflow backup files 15 minutes after logging in daily
 ☐ @workflow automatically download subtitles for currently playing movie
 ☐ @workflow bluetooth selection
+☐ @workflow mutt and notmuch for emails / sup
+☐ @improve nnn vs ranger, rg and fd vs pt and find
+☐ @research system tray for polybar
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ @workflow wifi selection @done(2019-06-05 09:26) @project
   ✔ @task make a backup of pictures on hard drive @done(2019-06-02 18:16) @project
   ✔ @bug Linux partition is mounted as readonly @done(2019-06-02 07:56) @project
   ✔ @bug deletes from ntfs drives not going to trash @done(2019-06-02 07:56) @project

@@ -83,6 +83,12 @@ alias dumppath='echo -e ${PATH//:/\\n}'
 # (useful when executing time-consuming commands)
 alias badge="tput bel"
 
+# replacements
+alias fd=fdfind
+alias find=fd
+alias ag=rg
+alias pt=rg
+
 # One of @janmoesen’s ProTip™s
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
@@ -154,8 +160,9 @@ if which brew &>/dev/null; then
   export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$BREW_PREFIX/share/zsh-syntax-highlighting/highlighters
 
   # source $BREW_PREFIX/opt/autoenv/activate.sh
-  init_cache fasd 'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
 fi
+
+init_cache fasd 'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
 
 function addscript() {
   local file="$DOTCASTLE/bin/$1"
@@ -206,10 +213,20 @@ function ngrok() {
 alias rand_alphanum="cat /dev/random | head -c 200 | sha256sum - | cut -d ' ' -f 1"
 
 # miscelleneous
-alias ydlmp3='youtube-dl --extract-audio --audio-format mp3 -o "${HOME}/Music/downloaded/%(title)s.%(ext)s"'
-alias ydllist='youtube-dl --username nikhgupta --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
-alias fullsync='rsync -aAXvz --exclude={"tmp/backup","usr/bin/ssh-agent","var/cache/yum","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/var/tmp/","/lost+found",".vzfifo",".cpt_hardlink*",".autorelabel","/etc/shadow","/etc/shadow-","/etc/gshadow","/etc/gshadow-"}'
 alias ue='systemctl list-unit-files | grep enabled'
 alias uue='systemctl --user list-unit-files | grep enabled'
 alias stowlinux='stow -t $HOME -v -d $HOME/.dotfiles ubuntu --ignore=.gitconfig'
 alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/*'
+
+function ydlmp3() {
+  destin="${2:-mixed}"
+  youtube-dl --extract-audio --audio-format mp3 \
+    -o "${HOME}/Music/Downloaded/$destin/%(title)s.%(ext)s" \
+    --download-archive ~/.cache/youtube-dl/mp3-archive.txt $1
+}
+
+function ydlsong() {
+  destin="${2:-mixed}"
+  youtube-dl -o "${HOME}/Videos/Downloaded/$destin/%(title)s.%(ext)s" \
+    --download-archive ~/.cache/youtube-dl/songs-archive.txt $1
+}

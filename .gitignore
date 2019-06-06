@@ -8,6 +8,9 @@
 */.config/mpv/watch_later/
 */.vim/bundle/*
 */.vim/tmp/*
+*/.vim/.netrwhist
+*/.config/mps-youtube/*
 
 # but do not ignore these
 !*/.vim/bundle/.keep
+!*/.config/mps-youtube/config

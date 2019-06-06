@@ -1,0 +1,120 @@
+# TODO: enable replaygain, web, buckets
+directory: ~/Music
+library: ~/Music/Beets/library.db
+pluginpath: ~/.config/beets/plugins
+ignore_hidden: yes
+asciify_paths: yes
+art_filename: cover
+threaded: yes
+format_item: $lyrics_icon %colorize{$duration,yellow} %rpad{%colorize{$artist,turquoise},40} %colorize{$title,green}
+format_album: $lyrics_icon %colorize{$duration,yellow} $missing_icon %rpad{%colorize{$albumartist,turquoise},40} %colorize{$album,green}
+sort_item: artist+ album+ duration_sort- disc+ track+
+sort_album: albumartist+ album+ duration_sort-
+sort_case_insensitive: yes
+original_date: no
+artist_credit: no
+per_disc_numbering: no
+color: yes
+import:
+  write: yes
+  move: yes
+  resume: yes
+  incremental: yes
+  incremental_skip_later: no
+  from_scratch: no
+  none_rec_action: ask
+  timid: no
+  log: ~/.beets/lastimport.log
+  default_action: apply
+  languages: en hi es
+  detail: no
+  group_albums: no
+  autotag: yes
+  duplicate_action: remove
+  bell: no
+match:
+  strong_rec_thresh: 0.04
+  preferred:
+    countries: ['IN', 'US', 'GB|UK']
+    media: ['CD', 'Digital Media|File']
+    original_year: yes
+  ignored: ''
+  required: ''
+  ignored_media: []
+  ignore_data_tracks: yes
+  ignore_video_tracks: yes
+paths:
+    default: Albums/$albumartist/$album%aunique{}/$track $title
+    singleton:true: Singles/$artist/$title
+    comp:true: Compilations/$album%aunique{}/$track $title
+    albumtype:soundtrack: Soundtracks/$album/$track $title
+    lang:hi: Hindi/$album%aunique{}/$track $title
+
+chroma:
+  auto: yes
+acoustid:
+  apikey: u7AgrxHVi8
+convert:
+  auto: yes
+  copy_album_art: yes
+  album_art_maxwidth: 1000
+  embed: yes
+  never_convert_lossy_files: no
+  quite: false
+  format: mp3
+discogs:
+  user_token: RjDuqWFXMGngKvgSRtequyvAmyYDlKIiWaRLjWCW
+embedart:
+  auto: yes
+  compare_threshold: 0
+  ifempty: no
+  maxwidth: 1000
+  remove_art_file: yes
+fetchart:
+  auto: yes
+  cautious: no
+  cover_names: cover front art album folder
+  minwidth: 200
+  maxwidth: 1000
+  enfore_ratio: 5%
+  sources: filesystem coverart itunes amazon albumart wikipedia
+ftintitle:
+  auto: yes
+  drop: no
+  format: feat. {0}
+lyrics:
+  auto: yes
+  force: no
+play:
+  relative_to: ~/Music
+  command: bash -c "mpc clear;cat $0 | mpc add;mpc play"
+playlist:
+  auto: no
+  relative_to: ~/Music
+  playlist_dir: ~/Music/Playlists
+scrub:
+  auto: yes
+smartplaylist:
+  relative_to: ~/Music
+  playlist_dir: ~/Music/Playlists
+  playlists:
+    - name: all.m3u
+      query: 'year-'
+thumbnails:
+  auto: yes
+  force: no
+zero:
+  auto: no
+  fields: month day genre comments
+  comments: [EAC, LAME, from.+collection, 'ripped by']
+  genre: [rnb, 'power metal']
+  update_database: true
+plugins: betterlisting badfiles zero types thumbnails smartplaylist scrub rewrite random chroma convert discogs duplicates edit embedart fetchart filefilter fromfilename ftintitle fuzzy inline info lastgenre lyrics mbsync missing mpdstats mpdupdate play playlist
+betterlisting:
+  track_length: 360
+  duration_format: '{mins:02d}:{secs:02d}'
+  icon_missing_none: ''
+  icon_missing_some: %colorize{◎,red}
+  icon_lyrics_all: %colorize{🗸, green}
+  icon_lyrics_some: %colorize{-,yellow}
+  icon_lyrics_none: %colorize{🗴, red}

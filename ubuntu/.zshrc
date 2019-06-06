@@ -29,6 +29,10 @@
 #   Additionally, for convenience, `~/.zsh/completions` is already added
 #   to `$fpath`, and hence, on both MacOSX and Ubuntu, you can add your
 #   completions to this directory.
+#
+#   05-06-19 21:22:18: Using `rg` in place of ag, pt, grep, ack, etc.
+#   05-06-19 21:22:18: Using `fd` in place of find
+#   05-06-19 21:22:18: Using `fzf` in place of fasd, etc.
 
 # => basic locales and ZSH options
 LANG=en_US.UTF-8
@@ -55,16 +59,6 @@ unsetopt correct_all
 # other terminal related basic configuration
 typeset -U path # set $path variable to only have unique values
 
-bindkey '^[OB' history-beginning-search-forward
-bindkey '^[OA' history-beginning-search-backward
-bindkey '^x^a' beginning-of-line
-
-# Use Ctrl-x,Ctrl-l to get the output of the last command
-zmodload -i zsh/parameter
-insert-last-command-output() { LBUFFER+="$(eval $history[$((HISTCMD-1))])"; }
-zle -N insert-last-command-output
-bindkey '^x^l' insert-last-command-output
-
 export TERM=screen-256color
 export GREP_COLORS=31        # grep should use red for highlighting matches
 export MAILCHECK=0
@@ -74,33 +68,41 @@ export DISABLE_UPDATE_PROMPT=true
 export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside editors
 
 # => load OhMyZSH and some relevant plugins
-plugins=(bundler coffee common-aliases emoji-clock extract bgnotify branch
-gem golang history-substring-search ssh-agent transfer)
+plugins=(bundler coffee common-aliases emoji-clock extract bgnotify
+branch fzf gem golang history-substring-search ssh-agent transfer)
 is_macosx && plugins+=( osx )
-
-#zstyle :omz:plugins:ssh-agent agent-forwarding on
-#zstyle :omz:plugins:ssh-agent identities nikhgupta
 
 source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
 
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities nikhgupta
+
 unalias run-help &>/dev/null; autoload run-help
-HELPDIR=$BREW_PREFIX/share/zsh/help
 
-# make sure we use gnu version of commands like ls, etc.
-# rehash -f     # gnu-utils OMZ plugin
-for package in coreutils gnu-sed gnu-tar; do
-  if [[ -d $BREW_PREFIX/opt/$package/libexec/gnubin ]]; then
-    PATH="$BREW_PREFIX/opt/$package/libexec/gnubin:$PATH"
-    MANPATH="$BREW_PREFIX/opt/$package/libexec/gnuman:$MANPATH"
-  fi
-done
+# set vim bindings for zsh
+bindkey -v
+bindkey "^?" backward-delete-char
+bindkey "^W" backward-kill-word
+bindkey "^H" backward-delete-char      # Control-h also deletes the previous char
+bindkey "^U" backward-kill-line
 
-# path_append $BREW_PREFIX/pear/bin
-# path_append $HOME/.cabal/bin
-# path_append $HOME/node_modules/.bin
-# path_append "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
+# bindkey '^[OB' history-beginning-search-forward
+# bindkey '^[OA' history-beginning-search-backward
+# bindkey '^a' beginning-of-line
+# bindkey '^e' end-of-line
+# # Use Ctrl-x,Ctrl-l to get the output of the last command
+# zmodload -i zsh/parameter
+# insert-last-command-output() { LBUFFER+="$(eval $history[$((HISTCMD-1))])"; }
+# zle -N insert-last-command-output
+# bindkey '^x^l' insert-last-command-output
 
 source ~/.zsh/aliases.zsh
+source ~/.zsh/fuzzy.zsh
 source ~/.zsh/prompt.zsh
 source_if_exists ~/.zshrc.local
 
@@ -108,18 +110,10 @@ if [ -f ~/.zsh_nocorrect ]; then
   while read -r COMMAND; do alias $COMMAND="nocorrect $COMMAND"; done < ~/.zsh_nocorrect
 fi
 
-# added by travis gem
-[ -f /Users/nikhgupta/.travis/travis.sh ] && source /Users/nikhgupta/.travis/travis.sh
-
-export NVM_DIR="/Users/nikhgupta/.nvm"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # => add ~/.zsh to functions' path in ZSH can be used for adding completions
 [[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
 source ~/.zsh/completions/_tmuxinator
-
-# ### Bashhub.com Installation
-# if [ -f ~/.bashhub/bashhub.zsh ]; then
-#     source ~/.bashhub/bashhub.zsh
-# fi
-
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

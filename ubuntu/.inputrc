@@ -1,1 +1,103 @@
 set editing-mode vi
+# carries over site-wide readline configuration to the user configuration
+# $include /etc/inputrc
+
+# This line sets readline to display possible completions using different
+# colors to indicate their file types. The colors are determined by the
+# environmental variable LS_COLORS, which can be nicely configured.
+set colored-stats On
+
+# This line sets auto completion to ignore cases.
+set completion-ignore-case On
+
+# This line sets 3 to be the maximum number of characters to be the common
+# prefix to display for completions. If the common prefix has more than
+# 3 characters, they are replaced by ellipsis
+#
+# set completion-prefix-display-length 3
+
+# This line sets every completion which is a symbolic link to a directory to
+# have a slash appended.
+set mark-symlinked-directories On
+
+#  This line sets the completions to be listed immediately instead of ringing
+#  the bell, when the completing word has more than one possible completion.
+set show-all-if-ambiguous On
+
+# This line sets the completions to be listed immediately instead of ringing
+# the bell, when the completing word has more than one possible completion but
+# no partial completion can be made.
+set show-all-if-unmodified On
+
+# This lines sets completions to be appended by characters that indicate their
+# file types reported by the stat system call.
+set visible-stats On
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# Show all autocomplete results at once
+set page-completions off
+
+# If there are more than 200 possible completions for a word, ask to show them all
+set completion-query-items 200
+
+# Be more intelligent when autocompleting by also looking at the text after
+# the cursor. For example, when the current line is "cd ~/src/mozil", and
+# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
+# ~/src/mozillail", but to "cd ~/src/mozilla". (This is supported by the
+# Readline used by Bash 4.)
+set skip-completed-text on
+
+# Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# # Show the current mode (insert/command) in the bash prompt
+set show-mode-in-prompt on
+set vi-ins-mode-string \1\e[5 q\2
+set vi-cmd-mode-string \1\e[2 q\2
+
+# mode specific keybindings
+$if mode=emacs
+  # Readline specific functions
+  "\e[1~": beginning-of-line           # CTRL + A
+  "\e[4~": end-of-line                 # CTRL + E
+  "\e[5C": forward-word                # Control + Right
+  "\e[5D": backward-word               # Control + Left
+  "\e[3~": delete-char                 # Delete
+  "\e[2~": quoted-insert               # CTRL + v
+  "\e[5~": history-search-backward     # Page Up
+  "\e[6~": history-search-forward      # Page Down
+  #"\t": menu-complete                 # Tab cycles through completions
+
+  # If the above prevents Left and Right from working, try this:
+  #"\e[C": forward-char                # Move forward one character.
+  #"\e[D": backward-char               # Move backwards one character.
+$endif
+
+# Avoid binding ^J, ^M,  ^C, ^?, ^S, ^Q, etc.
+$if mode=vi
+  set keymap vi-command
+  "gg": beginning-of-history
+  "G": end-of-history
+  "k": history-incremental-search-backward
+  "j": history-incremental-search-forward
+  "?": reverse-search-history
+  "/": forward-search-history
+
+  set keymap vi-insert
+  "\C-l": clear-screen
+  "\C-w": backward-kill-word
+  "\C-a": beginning-of-line
+  "\C-e": end-of-line
+  "\C-?": backward-delete-char
+  "\e[A": history-beginning-search-backward
+  "\e[B": history-beginning-search-forward
+
+$endif
+
+# IPython needs this to appear at the bottom of the
+# file for clear-screen to work
+# set keymap vi

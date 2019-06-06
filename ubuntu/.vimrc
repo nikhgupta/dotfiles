@@ -20,7 +20,7 @@
 "   You can find me at http://nikhgupta.com
 "
 "   You can find an online version of this file at:
-"   https://github.com/nikhgupta/dotfiles/blob/master/editor/vimrc
+"   https://github.com/nikhgupta/dotfiles/blob/master/ubuntu/.vimrc
 "
 "   This is the personal vim configuration file of Nikhil Gupta.
 "   While much of it is beneficial for general use, I would
@@ -31,7 +31,7 @@
 "   Configuration inside this file is meant to be utilized by VIM editor.
 "   Please, note that GUI (Macvim) cannot read environment variables defined in
 "   either `~/.zshrc` or `~/.zshrc.local`, which is why you MUST define your api
-"   tokens, etc. in `~/.zshenv.local`, so that they can be picked up by MacVim.
+"   tokens, etc. in `~/.zshenv`, so that they can be picked up by MacVim.
 "
 "   This VIM configuration does not split configuration between GUI and Terminal
 "   VIM via a separate `~/.gvimrc`, and instead, incorporates it within this
@@ -40,9 +40,10 @@
 " }}}
 " Compatibility: """""""""""""""""""""""""""""""""""""""""""""" {{{
 "
-"   I am on a MacOSX, and the configuration works wonderfully on it.
+"   I used to be on a MacOSX, but have recently switched to using linux,
+"   and the configuration works wonderfully on it.
 "
-"   I have not, yet, checked this configuration for Linux environment, but
+"   I have not, yet, checked the latest configuration for OSX environment, but
 "   I am quite sure that the configuration should work nicely with it :)
 "
 "   Since, I never use Windows, this configuration might not be (and, I know for
@@ -185,7 +186,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
-  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/Code/dotcastle' ]
+  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/.dotfiles/ubuntu/' ]
 " }}}
 " }}}
 
@@ -277,7 +278,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plug 'connorholyday/vim-snazzy'
 
   " collections:
-  Plug 'chriskempson/base16-vim'
+  " Plug 'chriskempson/base16-vim'
   Plug 'chriskempson/vim-tomorrow-theme'
 " }}}
 " Personalize: highlight current line, but not the current column {{{
@@ -288,7 +289,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Personalize: highlight column markers for several columns {{{
   if has('syntax')
-    let &colorcolumn="+1,+41,+81"
+    let &colorcolumn="+1,+21,+41,+81"
   end
 
 " }}}
@@ -387,7 +388,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   hi! default link StartifySpecial Special
 
   " mappings and miscelleneous behaviour
-  nmap <silent> <leader>as :Startify<CR>
+  nmap <silent> <leader>st :Startify<CR>
   augroup vim_startup_screen
     au!
     au User Startified setl colorcolumn=0 buftype=
@@ -415,18 +416,29 @@ set nocompatible     " No to the total compatibility with the ancient vi
           \ %=[%{g:ui_type}]\ %-17.(%l,%c%V%)\ %p\%\%\ \ \ %LL\ TOTAL
   endif
 
-  " use airline themes depending upon day or night time, as default in Thematic
-  let g:airline_powerline_fonts  = 0 " use powerline symbols
-  " use the given separator symbols (powerline enabled font required!)
-  let g:airline_inactive_collapse=0
+  let g:airline_powerline_fonts = 1 " use powerline symbols
+  let g:airline_detect_modified = 1
+  " let g:airline_detect_paste = 1
+  " let g:airline_detect_crypt = 1
+  " let g:airline_detect_spell = 1
+  " let g:airline_detect_spelllang = 1
+  let g:airline_inactive_collapse = 0
   " let g:thematic#defaults['airline-theme'] = DayOrNight("solarized", "base16")
+
+  let g:airline_skip_empty_sections = 1
+
+  " powerline symbols
+  " if get(g:, 'airline_powerline_fonts', 1)
+    " let g:airline_left_sep = "\uE0C4"
+    " let g:airline_right_sep = "\uE0C5"
+  " endif
 
   " customize the Airline sections
   let g:airline_section_y = "%{airline#util#wrap(airline#parts#ffenc() . ' ' . g:ui_type, 0)}"
 
   " set a default airline theme, if none has, been defined!
-  if !exists('g:airline_theme') | let g:airline_theme = 'nova' | endif
-  if !is_gui | let g:airline_theme = 'nova' | endif
+  if !exists('g:airline_theme') | let g:airline_theme = 'onedark' | endif
+  if !is_gui | let g:airline_theme = 'onedark' | endif
 " }}}
 " Upgrade:     displays tab titles in a beautiful way (via: Airline) {{{
   let g:airline#extensions#tabline#enabled = 1
@@ -436,11 +448,14 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:airline#extensions#tabline#tab_min_count = 2
   let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
   let g:airline#extensions#tabline#show_tab_type = 0
-  let g:airline#extensions#tabline#show_close_button = 1
-  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#show_close_button = 0
+  let g:airline#extensions#tabline#show_tab_nr = 1
+  let g:airline#extensions#tabline#buffers_label = 'B'
+  let g:airline#extensions#tabline#tabs_label = ''
   let g:airline#extensions#tabline#left_alt_sep = ''
-  let g:airline#extensions#tabline#right_sep = ''
   let g:airline#extensions#tabline#right_alt_sep = ''
+  "let g:airline#extensions#tabline#left_sep = ''
+  "let g:airline#extensions#tabline#right_sep = ''
 " }}}
 " Advanced:    disables unnecessary interfaces in GUI {{{
   if g:is_gui
@@ -506,7 +521,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   set nowrap                      " don't wrap lines
   set linebreak                   " break long lines at words, when wrap is on
   set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
-  " set showbreak=↪ 
+  " set showbreak=↪
   let &showbreak="\u21aa "        " string to put at the starting of wrapped lines
   set textwidth=120               " wrap after this many characters in a line
 " }}}
@@ -1414,34 +1429,72 @@ endif
   set suffixes+=.png,.jpg,.gif
 " }}}
 " Component:   provides a fuzzy finder for files, buffers, tags, etc. {{{
-  Plug 'ctrlpvim/ctrlp.vim'
-  " notes:
-  "   - when CtrlP window is open:
-  "   : f5 will clear the CtrlP cache (useful if you add new files during the session)
-  "   : <C-f> & <C-b> will cycle between CtrlP modes
-  "   : Press <c-d> to switch to filename only search instead of full path.
-  "   : Press <c-r> to switch to regexp mode.
-  "   : Use <c-j>, <c-k> or the arrow keys to navigate the result list.
-  "   : Use <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
-  "   : Use <c-n>, <c-p> to select the next/previous string in the prompt's history.
-  "   : Use <c-y> to create a new file and its parent directories.
-  "   : Use <c-z> to mark/unmark multiple files and <c-o> to open them.
-  " Set no max file limit
-  let g:ctrlp_max_files = 100
-  " Ignore files matching the following patterns
-  let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
-  " Store cache in this directory
-  let g:ctrlp_cache_dir = expand("~/.vim") . "/tmp/cache/ctrlp"
-  " Use ag/pt in CtrlP for listing files. Lightning fast and respects .gitignore
-  if executable("ag") | let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' | endif
-  if executable("pt") | let g:ctrlp_user_command = 'pt %s -l --nocolor -g ""' | endif
-  " switch between buffers, easily.
-  " disabling movement between buffers, because of this :)
-  map <C-p> :CtrlPMRUFiles<CR>
-  map <C-b> :CtrlPBuffer<CR>
-  " Search from current directory instead of project root
-  map <C-o> :CtrlP %:p:h<CR>
-  nnoremap <leader>. :CtrlPTag<cr>
+  if executable('fzf')
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+
+    " <C-p> or <C-t> to search files
+    nnoremap <silent> <C-t> :FZF -m<cr>
+    nnoremap <silent> <C-p> :FZF -m<cr>
+    nnoremap <silent> <C-b> :Buffers<cr>
+    nnoremap <silent> <C-o> :Buffers<cr>
+
+    nnoremap <silent> <leader>fb :Buffers<cr>
+    nnoremap <silent> <leader>ff :Files<cr>
+    nnoremap <silent> <leader>ft :Tags<cr>
+    nnoremap <silent> <leader>fh :History<cr>
+    nnoremap <silent> <leader>fl :Lines<cr>
+    nnoremap <silent> <leader>fgc :Commits<cr>
+    nnoremap <silent> <leader>fgb :BCommits<cr>
+    nnoremap <silent> <leader>fgf :GFiles<cr>
+    nnoremap <silent> <leader>fft :Filetypes<cr>
+
+    " Insert mode completion
+    imap <c-x><c-k> <plug>(fzf-complete-word)
+    imap <c-x><c-f> <plug>(fzf-complete-path)
+    imap <expr> <c-x><c-g> fzf#vim#complete#path('git ls-files $(git rev-parse --show-toplevel)')
+
+    " Better command history with q:
+    command! CmdHist call fzf#vim#command_history({'right': '40'})
+    nnoremap q: :CmdHist<CR>
+
+    " Better search history
+    command! QHist call fzf#vim#search_history({'right': '40'})
+    nnoremap q/ :QHist<CR>
+
+    command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'down': '40%', 'options': --no-color'})
+  else
+    Plug 'ctrlpvim/ctrlp.vim'
+    " notes:
+    "   - when CtrlP window is open:
+    "   : f5 will clear the CtrlP cache (useful if you add new files during the session)
+    "   : <C-f> & <C-b> will cycle between CtrlP modes
+    "   : Press <c-d> to switch to filename only search instead of full path.
+    "   : Press <c-r> to switch to regexp mode.
+    "   : Use <c-j>, <c-k> or the arrow keys to navigate the result list.
+    "   : Use <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
+    "   : Use <c-n>, <c-p> to select the next/previous string in the prompt's history.
+    "   : Use <c-y> to create a new file and its parent directories.
+    "   : Use <c-z> to mark/unmark multiple files and <c-o> to open them.
+    " Set no max file limit
+    let g:ctrlp_max_files = 100
+    " Ignore files matching the following patterns
+    let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+    " Store cache in this directory
+    let g:ctrlp_cache_dir = expand("~/.vim") . "/tmp/cache/ctrlp"
+    " Use ag/pt/rg in CtrlP for listing files. Lightning fast and respects .gitignore
+    if executable("ag") | let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" --hidden' | endif
+    if executable("pt") | let g:ctrlp_user_command = 'pt %s -l --nocolor -g "" --hidden' | endif
+    if executable("rg") | let g:ctrlp_user_command = 'rg %s -l --nocolor -g "" --hidden' | endif
+
+    " switch between buffers, easily.
+    " disabling movement between buffers, because of this :)
+    map <C-p> :CtrlPMRUFiles<CR>
+    map <C-b> :CtrlPBuffer<CR>
+    " Search from current directory instead of project root
+    map <C-o> :CtrlP %:p:h<CR>
+    nnoremap <leader>. :CtrlPTag<cr>
+  endif
 " }}}
 " Upgrade:     provides a feature-rich file explorer in a sidebar {{{
 
@@ -1527,8 +1580,13 @@ endif
   " Supports converting to and from snake_case, camelCase, MixedCase & UPPER_CASE
   Plug 'tpope/vim-abolish'
 " }}}
-" Upgrade:     prefers 'silver-searcher' over 'ack' for searching, when possible {{{
-  if executable('pt')
+" Upgrade:     prefers 'rimgrep' over 'ack' for searching, when possible {{{
+  if executable('rg')
+    let g:ptprg='rg --vimgrep -S'
+    set grepprg=rg\ --vimgrep\ -S
+    Plug 'jremmen/vim-ripgrep'
+    nnoremap <leader>a :Rg <Space>
+  elseif executable('pt')
     Plug 'nazo/pt.vim'
     let g:ptprg='pt --vimgrep -S'
     set grepprg=pt\ --vimgrep\ -S
@@ -1839,19 +1897,19 @@ endif
   " auto-corrections for spellings
   " call SourceIfReadable('~/.vim/spell/autocorrect.vim')
   iabbr NG@  Nikhil Gupta
-  iabbr WD@  Wicked Developers
+  iabbr CS@  CodeWithSense
 
   iabbr ng@  me@nikhgupta.com
   iabbr mg@  mestoic@gmail.com
-  iabbr wd@  nikhil@wickeddevelopers.com
+  iabbr cs@  nick@codewithsense.com
 
   iabbr ng/  http://nikhgupta.com/
-  iabbr wd/  http://wickeddevelopers.com/
+  iabbr cs/  https://codewithsense.com/
   iabbr gh/  http://github.com/
   iabbr ghn/ http://github.com/nikhgupta/
 
   iabbr nsig --<cr>Nikhil Gupta<cr>me@nikhgupta.com
-  iabbr wsig --<cr>Nikhil Gupta<cr>nikhil@wickeddevelopers.com
+  iabbr csig --<cr>Nikhil Gupta<cr>nick@codewithsense.com
 " }}}
 " Epilogue:                                                          {{{
   if filereadable("~/.gvimrc") | source ~/.gvimrc | endif
@@ -1892,9 +1950,6 @@ endif
       au!
       autocmd FileType nerdtree setlocal nolist
     augroup END
-
-    let g:airline_left_sep = "\uE0C4"
-    let g:airline_right_sep = "\uE0C5"
   end
 
   " required by vimPlug
@@ -1907,7 +1962,7 @@ endif
   endif
   colorscheme snazzy
   " let base16colorspace=256
-  let g:airline_theme='nova'
+  " let g:airline_theme='nova'
   " hi! ColorColumn guibg=#556873 guifg=#F2C38F
   hi! ErrorMsg guifg=#D18EC2 guibg=#3C4C55
   hi link rubySymbol SpecialKey
@@ -1915,7 +1970,7 @@ endif
   " colorscheme gruvbox
   " set bg=dark
   " colors dracula
-  " let g:airline_theme='onehalfdark'
+  let g:airline_theme='cool'
   " colorscheme onehalflight
   " set bg=light
   " if g:is_gui

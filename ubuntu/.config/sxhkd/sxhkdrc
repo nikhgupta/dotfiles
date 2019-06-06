@@ -34,8 +34,14 @@ alt + e
 alt + n
   nautilus
 
-alt + l
-  alacritty -t Lyricist -e bash -c "less ~/Music/lyrics/\"\$(mpc | grep -m1 \"\")\".txt"
+super + l
+  alacritty --class lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".t
+
+alt + m
+  killall ncmpcpp; alacritty --class ncmpcpp -e ncmpcpp
+
+super + d
+  alacritty --class fzfmenu -e ~/.bin/fuzzy dotfiles -d 80x10
 
 # GNOME System Monitor
 alt + shift + Escape
@@ -53,6 +59,9 @@ alt + space
 
 alt + Tab
   rofi -show window
+
+# alt + ctrl + c
+#   ~/.bin/get_chrome_url.sh
 
 #
 # bspwm hotkeys

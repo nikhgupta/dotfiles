@@ -25,10 +25,13 @@ setenv CURRENT_EDITOR 'vim'
 setenv EDITOR    $CURRENT_EDITOR
 setenv VISUAL    $CURRENT_EDITOR
 setenv GUIEDITOR $CURRENT_EDITOR
-setenv TERMINAL  gnome-terminal
+setenv TERMINAL  alacritty
 echo $CURRENT_EDITOR | grep vim &>/dev/null || alias vim=$CURRENT_EDITOR
 # setenv BROWSER   "open -a 'Google Chrome'"
 # browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
+
+# dont wait for long timeouts when switching vi modes
+export KEYTIMEOUT=1
 
 # => other OSX dependent environment variables and mods
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -40,7 +43,6 @@ fi
 setenv ZSH "$HOME/.oh-my-zsh" # required by OhMyZSH!
 
 # => load local configuration, if available
-path_prepend ~/.bin
 # ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
 [[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
 export GPG_TTY=$(tty)
@@ -72,3 +74,9 @@ path_append ~/.composer/vendor/bin
 # snaptic - ubuntu
 which snap > /dev/null && path_prepend "/snap/bin"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig"
+
+path_prepend ~/.local/bin
+path_prepend ~/.bin
+
+[[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
+is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"

@@ -19,6 +19,8 @@
 - /home/*/.cache/chromium/*/*Cache
 - /home/*/.mozilla/firefox/*/*Cache
 - /home/*/.cache/google-chrome/*/*Cache
+- /home/*/.cache/mozilla
+- /home/*/.cache/yarn
 - /home/*/.cache/thumbnails
 - /home/*/.thumbnails
 - /home/*/Dropbox
