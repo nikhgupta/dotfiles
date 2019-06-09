@@ -82,5 +82,6 @@ export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig:/us
 path_prepend ~/.local/bin
 path_prepend ~/.bin
 
+[[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 [[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
 is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"

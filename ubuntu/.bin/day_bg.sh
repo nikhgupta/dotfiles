@@ -1,44 +1,25 @@
 #!/bin/bash
 
 debug=0
-dir="${HOME}/img/day2"
-hora=`date +%H`
-comando="feh --bg-fill"
+dir="${XDG_WALLPAPER_DIR}/timeshift"
+cmd="feh --bg-fill"
+hour=`date +%H`
 
-arquivos=(
-    01.png
-    02.png
-    03.png
-    04.png
-    05.png
-    06.png
-    07.png
-    08.png
-)
+files=(01.png 02.png 03.png 04.png 05.png 06.png 07.png 08.png)
+max=${#files[@]}
 
-max=${#arquivos[@]}
-
-tempo=(
-    4
-    10
-    12
-    16
-    18
-    19
-    21
-	0
-)
+tempo=(4 10 12 16 18 19 21 23)
 
 # {START..END..INCREMENT}
 for i in {7..0..-1}
-do 
-    if [ $hora -ge ${tempo[i]} ]; 
-	then
-        $comando $dir/${arquivos[i]}
-        [ $debug -eq 1 ] && echo -e "Indice: ${i}\nHora: ${hora}\nNumero de fotos ${#arquivos[@]}\nWallpaper: ${arquivos[i]}"
+do
+    if [ $hour -ge ${tempo[i]} ];
+  then
+        $cmd $dir/${files[i]}
+        [ $debug -eq 1 ] && echo -e "Index: ${i}\nHour: ${hour}\nNumber of photos ${#files[@]}\nWallpaper: ${files[i]}"
         exit
     fi
 done
 
-$comando $dir/${file[${#arquivos[@]}]}
-[ $debug -eq 1 ] && echo -e "Numero de fotos ${#arquivos[@]}\nWallpaper: ${arquivos[i]}"
+$cmd $dir/${files[i]}
+[ $debug -eq 1 ] && echo -e "Number of photos ${#files[@]}\nWallpaper: ${files[i]}"

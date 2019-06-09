@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dir="${HOME}/.config/rofi/scripts/"
+dir="${HOME}/.bin/rofi/"
 oldpwd=$(pwd)
 cd $dir
 entrada=$(ls $dir | rofi -dmenu -p "Rofi Scripts" -lines "$(ls -1 $dir | wc -l)" -show run -opacity "80" -width 20 -padding 16)

@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-[ -f ~/.config/user-dirs.dirs ] && source ~/.config/user-dirs.dirs
-
-dir="${XDG_PICTURES_DIR:-${HOME}/Pictures}/wallpapers"
-unsplash_dir="${XDG_PICTURES_DIR:-${HOME}/Pictures}/wallpapers/unsplash"
-default="$dir/carmine-de-fazio-31543-unsplash.jpg"
+dir="${XDG_WALLPAPER_DIR}"
+unsplash_dir="${dir}/unsplash"
+default="${dir}/_default.jpg"
 ultima="/home/nikhgupta/Pictures/wallpapers/20170629-35217410000_3413d0241f_h.jpg"
 modo="--bg-fill"
 indice=0

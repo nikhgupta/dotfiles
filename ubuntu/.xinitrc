@@ -14,7 +14,7 @@ fi
 export EDITOR=vim
 export BROWSER=google-chrome
 export TERMINAL=alacritty
-source ~/.zshenv.local
+source ~/.zshenv
 
 # disable touchpad when typing
 syndaemon -K -i 0.5 -R -d

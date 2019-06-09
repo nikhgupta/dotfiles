@@ -1,0 +1,25 @@
+{
+  "load_extensions": {
+    "nbextensions_configurator/config_menu/main": true,
+    "contrib_nbextensions_help_item/main": true,
+    "code_prettify/code_prettify": true,
+    "help_panel/help_panel": true,
+    "navigation-hotkeys/main": true,
+    "scroll_down/main": true,
+    "execute_time/ExecuteTime": true,
+    "select_keymap/main": true,
+    "snippets_menu/main": true,
+    "keyboard_shortcut_editor/main": true,
+    "toggle_all_line_numbers/main": true,
+    "gist_it/main": true
+  },
+  "snippets": {
+    "sibling_selector": "#kernel_menu",
+    "include_submenu": {
+      "sympy": false,
+      "astropy": false,
+      "h5py": false,
+      "numba": false
+    }
+  }
+}

@@ -116,7 +116,7 @@ bspc rule -a Steam                          desktop=^9 follow=on
 #feh --bg-fill "/home/gamehelp16/Pictures/unsplashwall.jpg"
 #feh --bg-fill ~/Pictures/zF1V6EE.jpg
 #feh --randomize --bg-fill /media/JukeBox/Wallpapers
-feh --bg-fill ~/Pictures/wallpapers/carmine-de-fazio-31543-unsplash.jpg
+feh --bg-fill $XDG_WALLPAPER_DIR/_default.jpg
 #gnome-wallpaper-changer &
 compton -b
 xrdb -merge ~/.Xdefaults

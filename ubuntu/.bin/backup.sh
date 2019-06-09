@@ -18,9 +18,6 @@ if ! grep "$DESTIN " /proc/mounts &> /dev/null; then
   exit 127
 fi
 
-# dump brew environment
-sudo su - nikhgupta -c 'cd ~/Dropbox/DotCastle; rm -f Brewfile; brew bundle dump'
-
 # autoremove unused installs
 rm -rf /home/*/.cache/pip
 rm -rf /home/*/.cache/Homebrew
@@ -30,8 +27,7 @@ rm -rf /home/*/.cache/google-chrome/Default/Code\ Cache
 
 # keep journalctl logs sane
 sudo apt autoremove -y
-sudo journalctl --vacuum-time=7d
-sudo journalctl --vacuum-size=512M
+sudo /home/nikhgupta/.bin/clearlogs.sh
 
 # backup
 $BACKUP \

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "Exporter": {
+    "template_path": [
+      ".",
+      "/home/nikhgupta/.pyenv/versions/3.6.8/envs/tensorflow/lib/python3.6/site-packages/jupyter_contrib_nbextensions/templates"
+    ],
+    "preprocessors": [
+      "jupyter_contrib_nbextensions.nbconvert_support.CodeFoldingPreprocessor",
+      "jupyter_contrib_nbextensions.nbconvert_support.PyMarkdownPreprocessor"
+    ]
+  }
+}

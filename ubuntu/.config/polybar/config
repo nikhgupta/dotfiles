@@ -102,8 +102,8 @@ font-1 = FontAwesome:pixelsize=11;3
 font-2 = feather:pixelsize=11;3
 
 modules-left = launcher uptime sep bitcoin
-modules-center = browser mail file terminal editor social weechat sep lixo pavu mpd
-modules-right = pub-ip networkspeed refresh cron2m
+modules-center = browser mail file terminal editor social weechat sep pavu mpd
+modules-right = pub-ip networkspeed cron2m lixo
 
 tray-position = right
 ;tray-padding = 1
