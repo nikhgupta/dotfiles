@@ -65,6 +65,10 @@ is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-i
 gpip(){ PIP_REQUIRE_VIRTUALENV="" pip "$@"; }
 gpip3(){ PIP_REQUIRE_VIRTUALENV="" pip3 "$@"; }
 
+# required by spacevim to function properly
+export PYTHON_HOST_PROG="$HOME/.pyenv/versions/neovim2/bin/python"
+export PYTHON3_HOST_PROG="$HOME/.pyenv/versions/neovim3/bin/python3"
+
 # GO Language
 setenv GOPATH $HOME/.golang
 path_append "${GOPATH}/bin"

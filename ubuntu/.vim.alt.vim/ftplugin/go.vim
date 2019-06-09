@@ -1,1 +1,0 @@
-/Users/nikhgupta/dotfiles/vim/ftplugin/go.vim

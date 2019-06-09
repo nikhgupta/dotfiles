@@ -93,7 +93,7 @@
   name = "tags"
 
 [[layers]]
-  name = "unite"
+  name = "fzf"
 
 [[layers]]
   name = "checkers"
