@@ -11,7 +11,8 @@
     "snippets_menu/main": true,
     "keyboard_shortcut_editor/main": true,
     "toggle_all_line_numbers/main": true,
-    "gist_it/main": true
+    "gist_it/main": true,
+    "jupyter-js-widgets/extension": true
   },
   "snippets": {
     "sibling_selector": "#kernel_menu",
@@ -21,5 +22,6 @@
       "h5py": false,
       "numba": false
     }
-  }
+  },
+  "scrollDownIsEnabled": true
 }

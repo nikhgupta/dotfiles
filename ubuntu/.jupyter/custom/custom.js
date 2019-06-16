@@ -18,7 +18,7 @@ require(["nbextensions/snippets_menu/main"], function (snippets_menu) {
           "from os.path import join, expanduser",
           "from backfolio.datacenter import CryptocurrencyDatacenter as CryptoDC",
           "dc = CryptoDC('binance', timeframe='1h', to_sym='USDT')",
-          "dc.reset(root_dir=join(expanduser("~"), ".backfolio"))",
+          'dc.reset(root_dir=join(expanduser("~"), ".backfolio"))',
           "dc.reload_history(refresh=True)"
         ],
       },
