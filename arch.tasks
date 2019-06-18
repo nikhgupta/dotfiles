@@ -1,0 +1,67 @@
+☐ Snazzy colorscheme everywhere
+☐ polybar leftovers to arch DDE
+☐ tiling manager in DDE
+☐ separate dotfiles for deepin DE
+☐ remove splash screen
+☐ remove refind and instead use BIOS selection
+✔ @bug touchpad jumps and clicks when typing @done(2019-06-19 01:31) @project
+✔ @bug double-width unicodes in alacritty @done(2019-06-19 01:31) @project
+☐ @check nvidia graphics
+☐ @check pulseaudio
+☐ @howto 3 finger drag/selection
+☐ @howto double speed fans in ubuntu
+✔ @install autokey @done(2019-06-19 01:31) @project
+☐ @install incron (hazel replacement?)
+☐ @install keepassx
+☐ @install pycharm
+☐ @install skype
+☐ @install todoist
+☐ @install upwork
+☐ @replacement alfred 3
+☐ @replacement apple mail
+☐ @replacement apple photos
+☐ @replacement apple quicklook
+☐ @replacement dropzone
+☐ @replacement hammerspoon
+☐ @replacement iterm2
+☐ @replacement itunes
+☐ @replacement nvALT/simplenote
+☐ @replacement onedrive
+☐ @replacement tunnelblick/openvpn
+☐ @replacement ubersicht
+☐ @workflow openvpn selection
+☐ @task map ScreenCast video on keyboard to ScreenCast utility
+☐ @workflow download mp3 from youtube videos and add them to mpd
+☐ @workflow sort downloaded files based on dates
+☐ @workflow sort screenshots based on dates
+☐ @workflow automatically play music when headphones are inserted
+☐ @bug suspend when lid is closed
+☐ @task use screenshot script to capture screenshot with Print button on keyboard
+☐ @workflow backup files 15 minutes after logging in daily
+☐ @workflow automatically download subtitles for currently playing movie
+☐ @workflow bluetooth selection
+☐ @workflow mutt and notmuch for emails / sup
+☐ @improve nnn vs ranger, rg and fd vs pt and find
+☐ @research system tray for polybar
+☐ @workflow wifi selection
+☐ @task make a backup of pictures on hard drive
+☐ @bug Linux partition is mounted as readonly
+☐ @bug deletes from ntfs drives not going to trash
+☐ @install darktable
+☐ @replacement timemachine
+☐ @workflow backup everything
+☐ @bug rofi should wait after a command is run in terminal
+☐ @task ncmpcpp lyrics mode
+☐ @polybar start button should show rofi run menu
+☐ @task symlink music, videos, pictures, etc. to HDD
+☐ @install slack
+☐ @install vlc
+☐ @install telegram
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+  ✔ Fix fonts @done(2019-06-19 01:24) @project
+  ✔ Splash Screen @done(2019-06-19 01:25) @project
+  ✔ Refind Theme @done(2019-06-19 01:25) @project
+  ✔ ntfs partitions are read only @done(2019-06-19 01:25) @project
+  ✔ ssh-agent issue @project @done(2019-06-19 01:24)
