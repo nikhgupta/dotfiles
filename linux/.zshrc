@@ -76,7 +76,7 @@ source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent identities nikhgupta
-ssh-add ~/.ssh/nikhgupta
+ssh-add ~/.ssh/nikhgupta &> /dev/null
 
 unalias run-help &>/dev/null; autoload run-help
 

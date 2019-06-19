@@ -4,14 +4,14 @@
 #
 # Developed by Nikhil Gupta <me@nikhgupta.com>
 #
-# Created: Jun 02, 2019
-# Updated: Jun 02, 2019
+# Created: 02-06-19 06:23:12
+# Updated: 19-06-19 01:45:16
 #
 #
 
 DESTIN="/media/Backups"
 BACKUP="$(which rdiff-backup)"
-DESTIN_RSYNC="$DESTIN/ubuntu/"
+DESTIN_RSYNC="$DESTIN/$(/home/nikhgupta/.bin/os.sh)/"
 
 if ! grep "$DESTIN " /proc/mounts &> /dev/null; then
   echo "$DESTIN is not mounted. Skipping..."
@@ -20,13 +20,11 @@ fi
 
 # autoremove unused installs
 rm -rf /home/*/.cache/pip
-rm -rf /home/*/.cache/Homebrew
 rm -rf /home/*/.cache/thumbnails
 rm -rf /home/*/.cache/google-chrome/Default/Cache
 rm -rf /home/*/.cache/google-chrome/Default/Code\ Cache
 
 # keep journalctl logs sane
-sudo apt autoremove -y
 sudo /home/nikhgupta/.bin/clearlogs.sh
 
 # backup

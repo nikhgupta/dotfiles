@@ -83,18 +83,11 @@ alias dumppath='echo -e ${PATH//:/\\n}'
 # (useful when executing time-consuming commands)
 alias badge="tput bel"
 
-# replacements
-alias fd=fdfind
-alias find=fd
-alias ag=rg
-alias pt=rg
-
 # One of @janmoesen’s ProTip™s
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
 
-alias import_utils="source $DOTCASTLE/bin/utils.sh"
 if is_macosx; then
   # other miscelleneous commands
   alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
@@ -121,9 +114,6 @@ if is_macosx; then
   # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
   alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 fi
-
-# alias SilverSearch to PlatinumSearcher
-which pt &>/dev/null && alias ag=pt
 
 # todo.txt
 alias t='todo.sh -d ~/Documents/todo/todo.cfg'
@@ -221,12 +211,20 @@ alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/*'
 function ydlmp3() {
   destin="${2:-mixed}"
   youtube-dl --extract-audio --audio-format mp3 \
-    -o "${HOME}/Music/Downloaded/$destin/%(title)s.%(ext)s" \
+    -o "${XDG_DOWNLOAD_MUSIC_DIR}/$destin/%(title)s.%(ext)s" \
     --download-archive ~/.cache/youtube-dl/mp3-archive.txt $1
 }
 
 function ydlsong() {
   destin="${2:-mixed}"
-  youtube-dl -o "${HOME}/Videos/Downloaded/$destin/%(title)s.%(ext)s" \
+  youtube-dl -o "${XDG_DOWNLOAD_VIDEO_DIR}/$destin/%(title)s.%(ext)s" \
     --download-archive ~/.cache/youtube-dl/songs-archive.txt $1
+}
+
+# https://wiki.archlinux.org/index.php/Rsync#As_cp/mv_alternative
+function cpr() {
+  rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 "$@"
+}
+function mvr() {
+  rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 --remove-source-files "$@"
 }

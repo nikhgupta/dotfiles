@@ -32,6 +32,9 @@ case $session in
 
     exec bspwm;
     ;;
+  deepin)
+    exec startdde;
+    ;;
   *)
     exec $1;
     ;;
