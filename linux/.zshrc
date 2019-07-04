@@ -120,3 +120,5 @@ source ~/.zsh/completions/_tmuxinator
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+is_installed fasd && init_cache fasd "fasd --init auto"
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh

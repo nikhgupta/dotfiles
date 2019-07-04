@@ -5,11 +5,11 @@ killall -9 sxhkd compton dunst redshift syndaemon
 
 sxhkd &
 
-bspc monitor -d term web code music files mail chat settings automation 9
+bspc monitor -d web term code music files mail chat settings automation 9
 # bspc monitor -d I II III IV V VI VII VIII IX X
 
-bspc desktop ^1 -l tiled
-bspc desktop ^2 -l monocle
+bspc desktop ^1 -l monocle
+bspc desktop ^2 -l tiled
 bspc desktop ^3 -l monocle
 bspc desktop ^4 -l tiled
 bspc desktop ^5 -l monocle
@@ -55,21 +55,21 @@ bspc rule -a Pulseffects                    state=floating focus=on
 bspc rule -a alsamixer                      state=floating focus=on
 # bspc rule -a Kupfer.py focus=on
 
-# desktop 1 - terminals/landing/homepage
-bspc rule -a urxvt                          desktop=^1 follow=on focus=on
-bspc rule -a xterm                          desktop=^1 follow=on focus=on
-bspc rule -a xfce4-terminal                 desktop=^1 follow=on focus=on
-bspc rule -a xfontsel                       desktop=^1 follow=on focus=on
-bspc rule -a easystroke                     desktop=^1 follow=on focus=on
-bspc rule -a Termite                        desktop=^1 follow=on focus=on
-bspc rule -a Gnome-terminal                 desktop=^1 follow=on focus=on
-bspc rule -a Alacritty                      desktop=^1 follow=on focus=on
+# desktop 1 - web
+bspc rule -a Firefox                        desktop=^1 follow=on
+bspc rule -a Google-chrome                  desktop=^1 follow=on
+bspc rule -a Chromium                       desktop=^1 follow=on
+bspc rule -a qutebrowser                    desktop=^1 follow=on
 
-# desktop 2 - web
-bspc rule -a Firefox                        desktop=^2 follow=on
-bspc rule -a Google-chrome                  desktop=^2 follow=on
-bspc rule -a Chromium                       desktop=^2 follow=on
-bspc rule -a qutebrowser                    desktop=^2 follow=on
+# desktop 2 - terminals/landing/homepage
+bspc rule -a urxvt                          desktop=^2 follow=on focus=on
+bspc rule -a xterm                          desktop=^2 follow=on focus=on
+bspc rule -a xfce4-terminal                 desktop=^2 follow=on focus=on
+bspc rule -a xfontsel                       desktop=^2 follow=on focus=on
+bspc rule -a easystroke                     desktop=^2 follow=on focus=on
+bspc rule -a Termite                        desktop=^2 follow=on focus=on
+bspc rule -a Gnome-terminal                 desktop=^2 follow=on focus=on
+bspc rule -a Alacritty                      desktop=^2 follow=on focus=on
 
 # desktop 3 - code
 bspc rule -a Atom                           desktop=^3 follow=on
@@ -101,6 +101,7 @@ bspc rule -a Darktable                      desktop=^5 state=floating follow=on
 bspc rule -a Caja                           desktop=^5 follow=on
 bspc rule -a File-roller                    desktop=^5 state=floating center=on
 bspc rule -a nitrogen                       desktop=^5 state=floating focus=on
+bspc rule -a dde-file-manager               desktop=^5 follow=on focus=on
 
 # desktop 7 - chats
 bspc rule -a TelegramDesktop                desktop=^7 follow=on
@@ -108,6 +109,7 @@ bspc rule -a TelegramDesktop                desktop=^7 follow=on
 # desktop 8 - tools, utils
 bspc rule -a GParted                        desktop=^8 follow=on focus=on
 bspc rule -a Gnome-system-monitor           desktop=^8 state=floating center=on follow=on focus=on
+bspc rule -a deepin-system-monitor           desktop=^8 state=floating center=on follow=on focus=on
 
 # desktop 9 - miscelleneous
 bspc rule -a Steam                          desktop=^9 follow=on
@@ -124,7 +126,7 @@ xrdb -merge ~/.Xdefaults
 #/home/gamehelp16/allfloat.sh &
 xsetroot -cursor_name left_ptr
 # syndaemon -dkK -i 0.8 &
-light -S 25 # https://github.com/haikarainen/light
+light -S 45 # https://github.com/haikarainen/light
 
 #panel &
 ~/.config/polybar/launch.sh &

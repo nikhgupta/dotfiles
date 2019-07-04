@@ -15,7 +15,8 @@ if [[ "$XDG_SESSION_DESKTOP" == "deepin" ]]; then
   # set backlight to 25%
   light -S 25
 
+  mpd
   while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-  # polybar -q top &
+  polybar -q deepin &
 fi
 

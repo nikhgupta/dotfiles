@@ -4,6 +4,7 @@
 */.atom/compile-cache/
 */.atom/packages/
 */.atom/storage/
+*/.atom/.atom-socket-*
 */.bin/test.sh
 */.config/mpv/watch_later/
 */.vim/bundle/*

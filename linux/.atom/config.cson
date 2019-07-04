@@ -1,5 +1,18 @@
 "*":
   core:
+    autoHideMenuBar: true
+    closeDeletedFileTabs: true
     telemetryConsent: "no"
+  editor:
+    fontFamily: "Fira Code, Menlo, Consolas, DejaVu Sans Mono, monospace"
   "exception-reporting":
     userId: "aa82a5c4-01bf-4c7f-b7de-08d3cee14687"
+  "fuzzy-finder":
+    scoringSystem: "fast"
+    useRipGrep: true
+  "spell-check":
+    locales: [
+      "en-US"
+    ]
+  welcome:
+    showOnStartup: false

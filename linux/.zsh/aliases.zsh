@@ -208,6 +208,13 @@ alias uue='systemctl --user list-unit-files | grep enabled'
 alias stowlinux='stow -t $HOME -v -d $HOME/.dotfiles linux --ignore=.gitconfig'
 alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/*'
 
+if ! which open > /dev/null; then
+  alias open='xdg-open'
+fi
+if ! which google-chrome > /dev/null; then
+  alias google-chrome='google-chrome-stable'
+fi
+
 function ydlmp3() {
   destin="${2:-mixed}"
   youtube-dl --extract-audio --audio-format mp3 \

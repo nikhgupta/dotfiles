@@ -26,13 +26,13 @@ alt + Return
   alacritty
 
 alt + w
-  google-chrome
+  google-chrome-stable
 
 alt + e
   atom
 
 alt + n
-  nautilus
+  dde-file-manager
 
 super + l
   alacritty --class lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".t
@@ -45,7 +45,7 @@ super + d
 
 # GNOME System Monitor
 alt + shift + Escape
-  gnome-system-monitor
+  deepin-system-monitor
 
 alt + backslash
   rofi -show ssh
@@ -177,20 +177,12 @@ super + ctrl + {Left,Right,Up,Down}
 
 # Screenshots
 Print
-  gnome-screenshot; \
+  deepin-screenshot -f; \
   notify-send "Screenshot saved"
 
 ctrl + Print
-  gnome-screenshot -c; \
-  notify-send "Screenshot copied to clipboard"
-
-shift + Print
-  gnome-screenshot -a; \
+  deepin-screenshot -w; \
   notify-send "Screenshot saved"
-
-ctrl + shift + Print
-  gnome-screenshot -ac; \
-  notify-send "Screenshot copied to clipboard"
 
 # VOLUME
 

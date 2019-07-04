@@ -8,8 +8,7 @@ try:
   tickers, balances = b.fetch_tickers(), b.fetch_balance()
 
   btc_rate = float(tickers['BTC/USDT']['last'])
-  balances = {x['asset']: float(x['locked'])+float(x['free']) for x in balances["info"]["balances"]}
-  balances = {k: v for k,v in balances.items() if v > 0}
+  balances = {k: v for k,v in balances['total'].items() if v > 0}
   tickers = {k[:-4]: float(v['last']) for k,v in tickers.items() if k[-3:] == "BTC"}
   summary = [((k, v, tickers[k]*v if k in tickers else (v if k=="BTC" else 0))) for k,v in balances.items()]
   summary = sorted(summary, key=lambda x: x[-1], reverse=True)

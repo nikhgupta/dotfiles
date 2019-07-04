@@ -12,7 +12,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 export EDITOR=vim
-export BROWSER=google-chrome
+export BROWSER=google-chrome-stable
 export TERMINAL=alacritty
 source ~/.zshenv
 
@@ -27,13 +27,10 @@ case $session in
     # disable touchpad when typing
     # syndaemon -K -i 0.5 -R -d
 
-    [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services" ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
-    ln -sfT "/usr/share/dbus-1/services/org.knopwob.dunst.service" "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"
+    # [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services" ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
+    # ln -sfT "/usr/share/dbus-1/services/org.knopwob.dunst.service" "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"
 
     exec bspwm;
-    ;;
-  deepin)
-    exec startdde;
     ;;
   *)
     exec $1;
