@@ -69,11 +69,14 @@ export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside e
 
 # => load OhMyZSH and some relevant plugins
 plugins=(bundler coffee common-aliases emoji-clock extract bgnotify
-branch fzf gem golang history-substring-search ssh-agent transfer
-zsh-syntax-highlighting)
+branch fzf gem golang history-substring-search ssh-agent transfer)
+local zshhl=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f $zshhl ] || plugins += (zsh-syntax-highlighting)
 is_macosx && plugins+=( osx )
 
 source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
+[ -f $zshhl ] && source $zshhl
+
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent identities nikhgupta

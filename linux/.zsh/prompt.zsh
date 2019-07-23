@@ -207,6 +207,7 @@ _prompt_0(){
   # == every prompt should display the following information
   # display a telephone icon when we are in a SSH session.
   [[ -n $SSH_CONNECTION ]] && PROMPT+="%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
+  [[ -f $HOME/.nasnix ]] && PROMPT+="%{$fg[cyan]%}🖴 %{$reset_color%} " # <-- CAREFUL. emoji here.
 
   PROMPT+='$(_set_prompt_char)'     # prompt icon for repo
   PROMPT+='$timer_show'             # time taken to run last command
@@ -237,6 +238,7 @@ _prompt_60(){
   # == every prompt should display the following information
   # display a telephone icon when we are in a SSH session.
   [[ -n $SSH_CONNECTION ]] && PROMPT+="%{$fg[cyan]%}☎ %{$reset_color%} " # <-- CAREFUL. emoji here.
+  [[ -f $HOME/.nasnix ]] && PROMPT+="%{$fg[cyan]%}🖴 %{$reset_color%} " # <-- CAREFUL. emoji here.
 
   PROMPT+='$(_set_prompt_char)'     # prompt icon for repo
   PROMPT+='$timer_show'             # time taken to run last command
