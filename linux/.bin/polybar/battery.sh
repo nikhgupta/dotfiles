@@ -14,7 +14,12 @@ if ! on_ac_power; then
     notify-send "Battery is really low." "Need charging! Please plug your AC adapter.<br/>You will be locked out in 20 seconds, otherwise.<br/>Charging: ${battery_level}%" -i $ICON -u critical
     sleep 20
     if ! on_ac_power; then
-      gnome-screensaver-command -l   ## lock the screen if you don't plug AC adapter after 20 seconds
+      if which gnome-screensaver-command >/dev/null; then
+        gnome-screensaver-command -l   ## lock the screen if you don't plug AC adapter after 20 seconds
+      fi
+      if which dde-lock >/dev/null; then
+        dde-lock
+      fi
     fi
   elif [ $battery_level -le $LOW ]; then
     notify-send "Battery on low charge." "Need charging! Please plug-in your AC adapter.<br/>Charging: ${battery_level}%" -i $ICON

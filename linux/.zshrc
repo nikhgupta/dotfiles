@@ -69,7 +69,8 @@ export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside e
 
 # => load OhMyZSH and some relevant plugins
 plugins=(bundler coffee common-aliases emoji-clock extract bgnotify
-branch fzf gem golang history-substring-search ssh-agent transfer)
+branch fzf gem golang history-substring-search ssh-agent transfer
+zsh-syntax-highlighting)
 is_macosx && plugins+=( osx )
 
 source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
@@ -117,7 +118,6 @@ export NVM_DIR="$HOME/.nvm"
 # => add ~/.zsh to functions' path in ZSH can be used for adding completions
 [[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
 source ~/.zsh/completions/_tmuxinator
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 is_installed fasd && init_cache fasd "fasd --init auto"

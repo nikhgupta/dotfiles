@@ -94,6 +94,7 @@ bspc rule -a Alacritty:ranger               desktop=^5 follow=on focus=on
 bspc rule -a Org.gnome.Nautilus             desktop=^5 follow=on focus=on
 bspc rule -a Thunar                         desktop=^5 follow=on focus=on
 bspc rule -a Deluge                         desktop=^5 follow=on
+bspc rule -a Transmission-gtk               desktop=^5 follow=on
 bspc rule -a qBittorrent                    desktop=^5 follow=on
 bspc rule -a Zathura                        desktop=^5 follow=on state=tiled
 bspc rule -a Gimp                           desktop=^5 state=floating follow=on

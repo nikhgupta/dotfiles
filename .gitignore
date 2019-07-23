@@ -11,6 +11,7 @@
 */.vim/tmp/*
 */.vim/.netrwhist
 */.config/mps-youtube/*
+*/.config/rtorrent/sessions
 
 # but do not ignore these
 !*/.vim/bundle/.keep
