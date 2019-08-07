@@ -1965,7 +1965,7 @@ endif
   " let g:airline_theme='nova'
   " hi! ColorColumn guibg=#556873 guifg=#F2C38F
   hi! ErrorMsg guifg=#D18EC2 guibg=#3C4C55
-  hi link rubySymbol SpecialKey
+  hi link rubySymbol String
   " let g:gruvbox_contrast_dark = "soft"
   " colorscheme gruvbox
   " set bg=dark

@@ -9,9 +9,10 @@
 #
 #
 
-DESTIN="/media/Backups"
+DESTIN="${1:-/media/Backups}"
 BACKUP="$(which rdiff-backup)"
-DESTIN_RSYNC="$DESTIN/$(/home/nikhgupta/.bin/os.sh)/"
+BIN_DIR=/home/nikhgupta/.bin
+DESTIN_RSYNC="$DESTIN/$($BIN_DIR/os.sh)/"
 
 if ! grep "$DESTIN " /proc/mounts &> /dev/null; then
   echo "$DESTIN is not mounted. Skipping..."
@@ -25,7 +26,7 @@ rm -rf /home/*/.cache/google-chrome/Default/Cache
 rm -rf /home/*/.cache/google-chrome/Default/Code\ Cache
 
 # keep journalctl logs sane
-sudo /home/nikhgupta/.bin/clearlogs.sh
+sudo $BIN_DIR/clearlogs.sh
 
 # backup
 $BACKUP \

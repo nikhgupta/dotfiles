@@ -37,7 +37,7 @@ resolution_default=$bing$(echo $(curl -s $xmlurl) | grep -oP "<url>(.*)</url>" |
 if wget --quiet --spider "$resolution"
 then
     # Set image to the desired image
-    image=${resolution##*/}
+    image=$(echo ${resolution##*/} | cut -d'=' -f2)
     # Download the Bing pic of the day at desired resolution
     curl -s -o $dir$image $resolution
 else

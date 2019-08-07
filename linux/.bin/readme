@@ -26,7 +26,7 @@ font_url="https://fonts.googleapis.com/css?family=PT+Sans"
 css_path="${HOME}/Code/dotcastle/miscelleneous/github-pandoc.css"
 css_url="https://gist.githubusercontent.com/dashed/6714393/raw/ae966d9d0806eb1e24462d88082a0264438adc50/github-pandoc.css"
 
-which pandoc &>/dev/null || brew install pandoc
+which pandoc &>/dev/null || sudo pacman -S pandoc
 [[ -f "${css_path}" ]] || wget "${css_url}" -o "${css_path}"
 
 if [[ -d "${src}" ]]; then

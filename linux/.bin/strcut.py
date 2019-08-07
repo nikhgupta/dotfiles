@@ -9,15 +9,15 @@
 max = 30
 
 while True:
-	try:
-		s = str(input())
-		if (len(s) > max):
-			#s = s[:49] + '...' + s[-50:]  começo...fim
-			s = s[:max] + '...'
-		print(s)
+        try:
+                s = str(input())
+                if (len(s) > max):
+                        #s = s[:49] + '...' + s[-50:]  começo...fim
+                        s = s[:max] + '...'
+                print(s)
 
-	except ValueError:
-		print("Erro redução da string...")
-		continue
-	else:
-		break
+        except ValueError:
+                print("Erro redução da string...")
+                continue
+        else:
+                break
