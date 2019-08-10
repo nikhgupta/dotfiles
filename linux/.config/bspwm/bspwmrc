@@ -120,7 +120,8 @@ bspc rule -a Steam                          desktop=^9 follow=on
 #feh --bg-fill ~/Pictures/zF1V6EE.jpg
 #feh --randomize --bg-fill /media/JukeBox/Wallpapers
 #feh --bg-fill $XDG_WALLPAPER_DIR/_default.jpg
-bash ~/.bin/chwall.sh
+# ~/.bin/chwall.sh
+feh /media/Data/Pictures/UNMATCHED/144474.jpg --bg-fill
 #gnome-wallpaper-changer &
 compton -b
 xrdb -merge ~/.Xdefaults
