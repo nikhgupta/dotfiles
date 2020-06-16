@@ -19,26 +19,26 @@ super + Escape
 
 # terminal emulator
 super + Return
-  alacritty
+  kitty
 
 # terminal emulator
 alt + Return
-  alacritty
+  kitty
 
 alt + w
   google-chrome-stable
 
 alt + e
-  atom
+  code
 
 alt + n
-  dde-file-manager
+  io.elementary.files
 
 super + l
-  alacritty --class lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".t
+  kitty --class lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".t
 
 alt + m
-  killall ncmpcpp; alacritty --class ncmpcpp -e ncmpcpp
+  killall ncmpcpp; kitty --class ncmpcpp -e ncmpcpp
 
 super + d
   alacritty --class fzfmenu -e ~/.bin/fuzzy dotfiles -d 80x10
@@ -132,6 +132,9 @@ super + {_,shift + }{1-9,0}
 # focus the next/previous node in the same window
 super + {comma,period}
     bspc node -f {next,prev}.local
+
+super + p
+    ~/.bin/polybar-toggle.sh
 
 #
 # preselect

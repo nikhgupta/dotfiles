@@ -276,6 +276,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plug 'minofare/VIM-Railscasts-Color-Theme'
   Plug 'dracula/vim'
   Plug 'connorholyday/vim-snazzy'
+  Plug 'arcticicestudio/nord-vim'
 
   " collections:
   " Plug 'chriskempson/base16-vim'
@@ -500,6 +501,19 @@ set nocompatible     " No to the total compatibility with the ancient vi
 
     nnoremap zG 2zg
   endif
+" }}}
+" Personalize: zen or distraction free mode {{{
+  Plug 'junegunn/goyo.vim'
+
+  function! GoyoEnter()
+    hi! CursorLine guibg=bg ctermbg=bg
+  endfunction
+  function! GoyoLeave()
+    hi! CursorLine term=underline ctermbg=236 guibg=#3a3d4d guisp=#3a3d4d
+  endfunction
+
+  autocmd! User GoyoEnter nested call GoyoEnter()
+  autocmd! User GoyoLeave nested call GoyoLeave()
 " }}}
 " Recommend:   minimal set of sensible configuration for the editor {{{
   set virtualedit=onemore         " allow cursor 1 char beyond end of current line
@@ -874,6 +888,8 @@ endif
   Plug 'itspriddle/vim-jquery'          " jQuery
   Plug 'mmalecki/vim-node.js'           " Node.js
   Plug 'posva/vim-vue'                  " Vue.js
+  Plug 'dart-lang/dart-vim-plugin'
+  Plug 'thosakwe/vim-flutter'
 
   " php
   Plug 'spf13/PIV'                      " PHP integrated environment
@@ -1430,6 +1446,7 @@ endif
 " }}}
 " Component:   provides a fuzzy finder for files, buffers, tags, etc. {{{
   if executable('fzf')
+    set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
 

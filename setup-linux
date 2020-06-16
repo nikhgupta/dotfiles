@@ -13,18 +13,13 @@ sudo apt install build-essentials fasd ntfs-3g
 sudo apt install ruby nodejs npm python3 python3-pip
 
 # miscelleneous
-sudo apt install python-gpgme youtube-dl zsh
-sudo apt install libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libncurses5-dev tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-sudo apt install libxcb-xinerama0-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util0-dev libxcb-ewmh-dev libxcb-keysyms1-dev libxcb-shape0-dev
-sudo apt install cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev libxcb-util0-dev libxcb-xkb-dev pkg-config python-xcbgen xcb-proto libxcb-xrm-dev libasound2-dev libmpdclient-dev libiw-dev libcurl4-openssl-dev libpulse-dev libxcb-composite0-dev xcb libxcb-ewmh2
-sudo apt install fonts-firacode fonts-font-awesome fonts-siji
 
 # dotfiles
-git clone https://github.com/nikhgupta/dotcastle $dir
-stow -t $HOME -v -d $dir $name --ignore=.gitconfig
-rm -f ~/.gitconfig
-cp $dir/$name/.gitconfig ~/.gitconfig
-ln -sf $dir/$name/.gitignore ~/.gitignore
+# git clone https://github.com/nikhgupta/dotcastle $dir
+# stow -t $HOME -v -d $dir $name --ignore=.gitconfig
+# rm -f ~/.gitconfig
+# cp $dir/$name/.gitconfig ~/.gitconfig
+# ln -sf $dir/$name/.gitignore ~/.gitignore
 
 # gitconfig
 git config --global core.editor $EDITOR

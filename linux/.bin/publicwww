@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+
+PATH = File.join(ENV['HOME'], "Code", "crawler", "publicwww")
+API_KEY = ENV.fetch("PUBLICWWW_API_KEY"){ "fbef9b2f53517baa1487173fa832d804" }
+URL = "https://publicwww.com/websites/%{query}/?export=csvu&key=#{API_KEY}"
+
+if ARGV.length == 2
+  path = File.join(PATH, "#{ARGV[0]}.csv")
+  url = URL % {query: URI.escape("\"#{ARGV[1].gsub('"', '\"')}\"")}
+
+  exec %Q{wget '#{url}' -O #{path}}
+else
+  puts "Usage: publicwww [name] [query]"
+end

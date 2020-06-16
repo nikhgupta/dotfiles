@@ -61,18 +61,15 @@ foreground = ${colors.foreground}
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 0
+module-margin-left = 2
 module-margin-right = 2
 
 font-0 = Fira Code:size=10:style=Regular;3
-font-1 = Font Awesome 5 Free:style=Solid:pixelsize=11;3
-font-2 = Font Awesome 5 Free:style=Regular:pixelsize=11;3
-font-3 = Font Awesome 5 Brands:pixelsize=11;3
-font-4 = feather:pixelsize=11;3
+font-1 = FontAwesome:style=Regular:pixelsize=11;3
 
 modules-left = bspwm
 modules-center = window sep screencast screenshot
-modules-right = filesystem cpu ram temp network networkconn battery vol date wallpaper power
+modules-right = filesystem cpu ram temp networkconn battery vol date wallpaper power
 
 ;cursor-click = pointer
 ;cursor-scroll = ns-resize
@@ -101,9 +98,11 @@ module-margin-right = 2
 
 font-0 = Fira Code:size=10:style=Regular;3
 font-1 = Font Awesome 5 Free:style=Solid:pixelsize=11;3
-font-2 = Font Awesome 5 Free:style=Regular:pixelsize=11;3
-font-3 = Font Awesome 5 Brands:pixelsize=11;3
+font-2 = Font Awesome 5 Brands:pixelsize=11;3
+font-3 = FontAwesome:style=Regular:pixelsize=11;3
 font-4 = feather:pixelsize=11;3
+font-5 = Noto Sans:pixelsize=11;3
+font-6 = PowerlineSymbols:pixelsize=11;3
 
 modules-left = launcher uptime sep bitcoin
 modules-center = browser mail file terminal editor social weechat sep pavu mpd
@@ -148,6 +147,38 @@ underline-size = 2
 underline-color = ${colors.primary}
 
 ;----------------------------------------------------------
+; BAR/ELEMENTARY
+;----------------------------------------------------------
+[bar/elementary]
+; monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 30
+fixed-center = true
+
+background = ${colors.transparent}
+foreground = ${colors.gray}
+
+padding-left = 16
+padding-right = 38
+
+module-margin-left = 0
+module-margin-right = 2
+
+font-0 = Fira Code:size=10:style=Regular;3
+font-1 = FontAwesome:style=Regular:pixelsize=11;3
+font-2 = feather:pixelsize=11;3
+
+modules-left = uptime sep bitcoin pub-ip
+; modules-center = window sep screencast screenshot lixo
+modules-right = networkspeed sep filesystem cpu ram temp wallpaper
+
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+underline-size = 2
+underline-color = ${colors.primary}
+
+;----------------------------------------------------------
 ; BSPWM
 ;----------------------------------------------------------
 [module/bspwm]
@@ -155,14 +186,14 @@ type = internal/bspwm
 format = <label-state> <label-mode>
 
 ws-icon-0 = web;
-ws-icon-1 = term;
-ws-icon-2 = code;
-ws-icon-3 = music;
-ws-icon-4 = files;
-ws-icon-5 = mail;
+ws-icon-1 = term;
+ws-icon-2 = code;
+ws-icon-3 = music;
+ws-icon-4 = files;
+ws-icon-5 = mail;
 ws-icon-6 = chat;
-ws-icon-7 = settings;
-ws-icon-8 = automation;
+ws-icon-7 = settings;
+ws-icon-8 = automation;
 ws-icon-9 = 9;
 ws-icon-default = 
 
@@ -208,7 +239,7 @@ tail = true
 type = custom/script
 interval = 300
 format = <label>
-format-prefix = " "
+format-prefix = " "
 tail = true
 click-left = ~/.bin/polybar/arch.sh --check &
 click-right = ~/.bin/polybar/arch.sh --list &
@@ -219,7 +250,7 @@ exec = ~/.bin/polybar/arch.sh
 ;----------------------------------------------------------
 [module/launcher]
 type = custom/text
-content = 
+content = 
 format-padding = 2
 content-foreground = ${colors.blue}
 click-left = ~/.bin/rofi/drun &
@@ -232,7 +263,7 @@ click-right = ~/.bin/rofi/drun &
 [module/title]
 type = internal/xwindow
 
-format-prefix = " "
+format-prefix = " "
 format = <label>
 
 label = %title%
@@ -244,7 +275,7 @@ label-maxlen = 50
 [module/window]
 type = custom/script
 interval = 1
-format-prefix = " "
+format-prefix = " "
 ;label = %output:0:45:...%  %{B- -o -u}
 label = %output:0:40:...%
 click-left = ~/.bin/polybar/window.sh -i
@@ -259,7 +290,7 @@ exec = ~/.bin/polybar/window.sh
 type = custom/script
 interval = 1
 label = %output%
-click-left = gnome-terminal -- ~/.bin/screencast &
+click-left = $TERMINAL ~/.bin/screencast &
 click-right = ~/.bin/screencast clear &
 exec = ~/.bin/screencast status
 tail = true
@@ -284,7 +315,7 @@ interval = 25
 
 mount-0 = /
 
-label-mounted =  %percentage_used:3:3%%
+label-mounted =  %percentage_used:3:3%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -294,7 +325,7 @@ label-unmounted-foreground = ${colors.foreground-alt}
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = 
+format-prefix = 
 label = %percentage:3:3%%
 
 ;----------------------------------------------------------
@@ -303,7 +334,7 @@ label = %percentage:3:3%%
 [module/ram]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = " "
 label = %percentage_used%%
 
 ;----------------------------------------------------------
@@ -317,8 +348,8 @@ interval = 3.0
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
 
-format-connected-prefix = " "
-format-disconnected-prefix = " "
+format-connected-prefix = " "
+format-disconnected-prefix = " "
 format-connected-underline = ${colors.green}
 format-disconnected-underline = ${colors.pink}
 
@@ -330,7 +361,7 @@ label-disconnected = down
 
 [module/networkconn]
 type = custom/text
-content = " "
+content = " "
 click-left = ~/.bin/rofi/wifi
 
 [module/networkspeed]
@@ -408,12 +439,12 @@ format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage:3%%
 
 format-volume-muted = <label-muted>
-label-muted = 
+label-muted = 
 label-muted-foreground = ${colors.pink}
 
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 ;----------------------------------------------------------
 ;           V O L U M E 2
@@ -422,9 +453,9 @@ ramp-volume-2 = 
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
-label-volume = 
+label-volume = 
 
-format-muted-prefix = " "
+format-muted-prefix = " "
 label-muted = muted
 label-muted-foreground = ${colors.pink}
 
@@ -458,7 +489,7 @@ date-alt = " %d-%m-%Y"
 time = %H:%M
 ;time-alt = %H:%M:%S
 
-format-prefix = 
+format-prefix = 
 label = %date% %time%
 
 
@@ -467,7 +498,7 @@ label = %date% %time%
 ;----------------------------------------------------------
 [module/wallpaper]
 type = custom/text
-content = 
+content = 
 click-left = ~/.bin/polybar/wallpaper.sh x &
 click-middle = ~/.bin/polybar/wallpaper.sh dd &
 click-right = ~/.bin/polybar/wallpaper.sh d &
@@ -489,7 +520,7 @@ label-open-foreground = ${colors.blue}
 label-close = 
 label-close-foreground = ${colors.green}
 ;label-separator = |
-label-separator = 
+label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = "logout"
@@ -565,22 +596,22 @@ click-right = firefox &
 
 [module/mail]
 type = custom/text
-content = 
+content = 
 click-left = thunderbird &
 
 [module/file]
 type = custom/text
-content = 
-click-left = nautilus &
+content = 
+click-left = io.elementary.files &
 
 [module/terminal]
 type = custom/text
-content = 
+content = 
 click-left = $TERMINAL &
 
 [module/social]
 type = custom/text
-bontent = 
+bontent = 
 click-left = slack &
 click-middle = telegram-desktop &
 click-right = skype &
@@ -597,12 +628,12 @@ click-left = weechat
 
 [module/editor]
 type = custom/text
-content = 
-click-left = atom &
+content = 
+click-left = code &
 
 [module/pavu]
 type = custom/text
-content = 
+content = 
 click-left = pavucontrol &
 
 [module/mpcrebuild]
@@ -623,7 +654,7 @@ click-middle = ~/.bin/polybar/windows.sh -c &
 
 [module/sep]
 type = custom/text
-content = 
+content = |
 
 ;-----------------------------------------------------------------
 ; EXTRAS

@@ -1,0 +1,89 @@
+[
+	{
+		"id": 2005985126,
+		"name": "Inbox",
+		"comment_count": 0
+	},
+	{
+		"id": 2013316454,
+		"name": "Team Inbox",
+		"comment_count": 0
+	},
+	{
+		"id": 2192851704,
+		"order": 1,
+		"name": "Home",
+		"comment_count": 0
+	},
+	{
+		"id": 2191602177,
+		"order": 2,
+		"name": "Work",
+		"comment_count": 0
+	},
+	{
+		"id": 2207900366,
+		"order": 3,
+		"name": "Happiness",
+		"comment_count": 0
+	},
+	{
+		"id": 2219220099,
+		"order": 4,
+		"name": "Startups",
+		"comment_count": 0
+	},
+	{
+		"id": 2191766659,
+		"order": 5,
+		"name": "Errands",
+		"comment_count": 0
+	},
+	{
+		"id": 2191766525,
+		"order": 6,
+		"name": "Ideas",
+		"comment_count": 0
+	},
+	{
+		"id": 2075007184,
+		"order": 7,
+		"name": "Someday",
+		"comment_count": 0
+	},
+	{
+		"id": 2219229479,
+		"parent": 2191602177,
+		"order": 1,
+		"name": "VGKids",
+		"comment_count": 0
+	},
+	{
+		"id": 2219229438,
+		"parent": 2219220099,
+		"order": 1,
+		"name": "Ideas",
+		"comment_count": 0
+	},
+	{
+		"id": 2219229419,
+		"parent": 2219220099,
+		"order": 2,
+		"name": "AlgoTrading",
+		"comment_count": 0
+	},
+	{
+		"id": 2219229361,
+		"parent": 2219220099,
+		"order": 3,
+		"name": "KotiShastra",
+		"comment_count": 0
+	},
+	{
+		"id": 2219229362,
+		"parent": 2219220099,
+		"order": 4,
+		"name": "Freelancing",
+		"comment_count": 0
+	}
+]

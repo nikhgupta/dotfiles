@@ -1,5 +1,5 @@
 # tmux run command
-th(){ tmux split -h "$@"; }
+#th(){ tmux split -h "$@"; }
 tv(){ tmux split -v "$@"; }
 tw(){ tmux new-window "$@"; }
 alias tl="tmux list-sessions"

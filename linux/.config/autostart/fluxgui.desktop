@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=f.lux indicator applet
+Exec=sh -c "\\"\\$SHELL\\" -c fluxgui"
+Icon=fluxgui
+X-GNOME-Autostart-enabled=true
+

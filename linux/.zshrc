@@ -70,12 +70,9 @@ export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside e
 # => load OhMyZSH and some relevant plugins
 plugins=(bundler coffee common-aliases emoji-clock extract bgnotify
 branch fzf gem golang history-substring-search ssh-agent transfer)
-local zshhl=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -f $zshhl ] || plugins += (zsh-syntax-highlighting)
 is_macosx && plugins+=( osx )
 
 source $ZSH/oh-my-zsh.sh || echo '[WARN] OhMyZSH was not loaded.'
-[ -f $zshhl ] && source $zshhl
 
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
@@ -122,6 +119,27 @@ export NVM_DIR="$HOME/.nvm"
 [[ -d ~/.zsh/completions ]] && fpath=( ~/.zsh/completions $fpath )
 source ~/.zsh/completions/_tmuxinator
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-is_installed fasd && init_cache fasd "fasd --init auto"
-[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+source_if_exists ~/.fzf.zsh
+is_installed fasd && init_cache fasd "fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install"
+source_if_exists /usr/share/z/z.sh
+source_if_exists /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+if [[ -d /usr/local/cuda-10.0 ]]; then
+  export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}
+  export LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+  export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+fi
+
+[[ -d ~/.pycharm ]]  && export PATH="${PATH}:$HOME/.pycharm/bin"
+[[ -d ~/.rubymine ]] && export PATH="${PATH}:$HOME/.rubymine/bin"
+echo "Welcome, Nick!"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
+
+## flutter
+export ANDROID_HOME=$HOME/Code/lib/android-sdk
+export PATH="$PATH:$HOME/Code/lib/flutter/bin"
+export PATH="$PATH:$HOME/Code/lib/android-sdk/bin"
+export PATH="$PATH:$HOME/Code/lib/android-studio/bin"

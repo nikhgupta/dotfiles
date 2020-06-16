@@ -70,6 +70,7 @@ alias ec='emacsclient -nca ""';
 
 # ruby, rails, rspec and so on..
 alias rspecff='rspec --fail-fast'
+alias rspecof='rspec --only-failures'
 alias rspecffof='rspec --fail-fast --only-failures'
 alias bundled="bundle install --local || bundle install || bundle update"
 
@@ -145,15 +146,6 @@ proxy() {
   fi
 }
 
-if which brew &>/dev/null; then
-  # source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$BREW_PREFIX/share/zsh-syntax-highlighting/highlighters
-
-  # source $BREW_PREFIX/opt/autoenv/activate.sh
-fi
-
-init_cache fasd 'fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install'
-
 function addscript() {
   local file="$DOTCASTLE/bin/$1"
   touch $file
@@ -215,6 +207,9 @@ if ! which google-chrome > /dev/null; then
   alias google-chrome='google-chrome-stable'
 fi
 
+alias ydl=youtube-dl
+alias ydlpl="youtube-dl --yes-playlist"
+
 function ydlmp3() {
   destin="${2:-mixed}"
   youtube-dl --extract-audio --audio-format mp3 \
@@ -237,4 +232,9 @@ function mvr() {
 }
 
 # sync pictures and videos with onedrive storage
-alias onedrivesync="rclone sync /media/Data onedrive:Photography -P --delete-excluded --fast-list --log-level=INFO --no-check-certificate --no-update-modtime"
+alias onedrivesync="rclone sync /media/nikhgupta/Data onedrive:Photography -P --delete-excluded --fast-list --log-level=INFO --no-check-certificate --no-update-modtime"
+
+# downloaders
+alias coursera-dl="cd /media/nikhgupta/Backups/Tutorials/coursera; pyenv activate ai; coursera-dl --download-quizzes --download-notebooks -sl en -u me@nikhgupta.com -p x"
+
+alias download="aria2c --file-allocation=none -s 16 -x 16"

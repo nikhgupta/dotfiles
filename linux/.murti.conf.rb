@@ -27,6 +27,8 @@ raw2jpg = Proc.new do
     success = system(command.join(" && "))
     puts "[FAIL]: #{path} => PROCESSING RAW2JPG" unless success
     add_file_for_migration jpg_path if File.exist?(jpg_path)
+  else
+    puts "[SKIP]: #{path} => NOT PROCESSING RAW2JPG"
   end
 end
 
@@ -53,34 +55,34 @@ Murti.configure do
     # config, and there is really no need to re-organize them (which will do
     # nothing and waste a lot of time). However, if I add a new matching rule,
     # I can use `--refresh` CLI flag to re-organize these directories.
-    source_directory "/media/Data/DUMP"
-    source_directory "/media/Data/UNMATCHED"
-    source_directory "/media/Data/RAW/UNMATCHED"
-    source_directory "/media/Data/Videos/UNMATCHED"
-    source_directory "/media/Data/Pictures/UNMATCHED"
-    source_directory "/media/Data/Live Photos/UNMATCHED"
-    source_directory "/media/Data/RAW", on: :refresh
-    source_directory "/media/Data/Videos", on: :refresh
-    source_directory "/media/Data/Pictures", on: :refresh
-    source_directory "/media/Data/Live Photos", on: :refresh
+    source_directory "/media/nikhgupta/Data/DUMP"
+    source_directory "/media/nikhgupta/Data/UNMATCHED"
+    source_directory "/media/nikhgupta/Data/RAW/UNMATCHED"
+    source_directory "/media/nikhgupta/Data/Videos/UNMATCHED"
+    source_directory "/media/nikhgupta/Data/Pictures/UNMATCHED"
+    source_directory "/media/nikhgupta/Data/Live Photos/UNMATCHED"
+    source_directory "/media/nikhgupta/Data/RAW", on: :refresh
+    source_directory "/media/nikhgupta/Data/Videos", on: :refresh
+    source_directory "/media/nikhgupta/Data/Pictures", on: :refresh
+    source_directory "/media/nikhgupta/Data/Live Photos", on: :refresh
 
     # Target directory where the files will be moved/copied to.
     # `save_in` paths (specified in this config) are relative to this directory.
-    target_directory "/media/Data"
+    target_directory "/media/nikhgupta/Data"
   end
 
   group :gphotos do
-    source_directory "/media/Data/Pictures/2000"
-    source_directory "/media/Data/Pictures/2007"
-    source_directory "/media/Data/Pictures/2008"
-    source_directory "/media/Data/Pictures/2009"
-    source_directory "/media/Data/Pictures/2010"
-    source_directory "/media/Data/Pictures/2011"
-    source_directory "/media/Data/Pictures/2012"
+    source_directory "/media/nikhgupta/Data/Pictures/2000"
+    source_directory "/media/nikhgupta/Data/Pictures/2007"
+    source_directory "/media/nikhgupta/Data/Pictures/2008"
+    source_directory "/media/nikhgupta/Data/Pictures/2009"
+    source_directory "/media/nikhgupta/Data/Pictures/2010"
+    source_directory "/media/nikhgupta/Data/Pictures/2011"
+    source_directory "/media/nikhgupta/Data/Pictures/2012"
 
     # Target directory where the files will be moved/copied to.
     # `save_in` paths (specified in this config) are relative to this directory.
-    target_directory "/media/Data/gphotos"
+    target_directory "/media/nikhgupta/Data/gphotos"
   end
 
   # Another named group. I can ask Murti to focus on this group by passing the
@@ -298,7 +300,7 @@ Murti.configure do
   #
   # Therefore, if the source_directory is `/path/to/source`,
   # and RAW image was found in `/path/to/source/raw/images/1.CR2`,
-  # this file will be moved to: `<target-directory>/RAW/DUMP/raw/images/1.CR2`
+  # this file will be moved to: `<target-directory>/RAW/UNMATCHED/raw/images/1.CR2`
   rule extension: [:cr2, :raw, :nef] do
     migrate(&raw2jpg)
     save_in "RAW/UNMATCHED/%{path_component}"

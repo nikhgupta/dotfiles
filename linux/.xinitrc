@@ -11,21 +11,22 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-export EDITOR=vim
-export BROWSER=google-chrome-stable
-export TERMINAL=alacritty
-source ~/.zshenv
-
-# nvidia
-xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --auto
-
 session=${1:-bspwm}
 
 case $session in
   bspwm)
+
+    export EDITOR=vim
+    export BROWSER=google-chrome-stable
+    export TERMINAL=kitty
+    source ~/.zshenv
+
+    # nvidia
+    xrandr --setprovideroutputsource modesetting NVIDIA-0
+    xrandr --auto
+
     # disable touchpad when typing
-    # syndaemon -K -i 0.5 -R -d
+    syndaemon -K -i 0.5 -R -d
 
     # [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services" ] && mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services"
     # ln -sfT "/usr/share/dbus-1/services/org.knopwob.dunst.service" "${XDG_DATA_HOME:-$HOME/.local/share}/dbus-1/services/org.freedesktop.Notifications.service"

@@ -25,7 +25,7 @@ setenv CURRENT_EDITOR 'vim'
 setenv EDITOR    $CURRENT_EDITOR
 setenv VISUAL    $CURRENT_EDITOR
 setenv GUIEDITOR $CURRENT_EDITOR
-setenv TERMINAL  alacritty
+setenv TERMINAL  kitty
 echo $CURRENT_EDITOR | grep vim &>/dev/null || alias vim=$CURRENT_EDITOR
 # setenv BROWSER   "open -a 'Google Chrome'"
 # browser(){ eval "$BROWSER '$1'"; }; alias browse=browser
@@ -38,13 +38,17 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 if is_macosx; then
   setenv BREW_PREFIX /usr/local
   export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+else
+  setenv BREW_PREFIX /home/linuxbrew/.linuxbrew
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
 
 setenv ZSH "$HOME/.oh-my-zsh" # required by OhMyZSH!
 
 # => load local configuration, if available
 # ssh-add $HOME/.ssh/`whoami` &>/dev/null || echo "SSH identity could not be added!"
-[[ -s ~/.zshenv.local ]] && source ~/.zshenv.local
+source_if_exists ~/.zshenv.local
+source_if_exists ~/.localrc
 export GPG_TTY=$(tty)
 
 # load rbenv and pyenv, if available
@@ -85,3 +89,7 @@ path_prepend ~/.bin
 [[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 [[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
 is_installed pyenv-virtualenv && init_cache pyenv-virtualenv "pyenv virtualenv-init -"
+
+# Erlang/Elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
+touch ~/.iex_history # needed for up/down key support in IEx sessions

@@ -53,6 +53,10 @@ bspc rule -a Pavucontrol                    state=floating focus=on center=on
 bspc rule -a Pulseaudio-equalizer-gtk       state=floating focus=on
 bspc rule -a Pulseffects                    state=floating focus=on
 bspc rule -a alsamixer                      state=floating focus=on
+bspc rule -a io.elementary.shortcut-overlay state=floating focus=on
+bspc rule -a io.elementary.calculator       state=floating focus=on
+bspc rule -a io.elementary.calendar         state=floating focus=on
+bspc rule -a io.elementary.screenshot-tool  state=floating focus=on
 # bspc rule -a Kupfer.py focus=on
 
 # desktop 1 - web
@@ -70,6 +74,8 @@ bspc rule -a easystroke                     desktop=^2 follow=on focus=on
 bspc rule -a Termite                        desktop=^2 follow=on focus=on
 bspc rule -a Gnome-terminal                 desktop=^2 follow=on focus=on
 bspc rule -a Alacritty                      desktop=^2 follow=on focus=on
+bspc rule -a kitty                          desktop=^2 follow=on focus=on
+bspc rule -a io.elementary.terminal         desktop=^2 follow=on focus=on
 
 # desktop 3 - code
 bspc rule -a Atom                           desktop=^3 follow=on
@@ -79,6 +85,7 @@ bspc rule -a Genymotion                     desktop=^3
 bspc rule -a Notepadqq                      desktop=^3 follow=on
 bspc rule -a Mousepad                       desktop=^3 follow=on
 bspc rule -a Gedit                          desktop=^3 state=floating
+bspc rule -a io.elementary.code             desktop=^3 state=floating
 
 # desktop 4 - music/videos
 bspc rule -a mpv                            desktop=^4 follow=on state=floating center=on focus=on
@@ -88,6 +95,10 @@ bspc rule -a Spacefm                        desktop=^4 follow=on
 bspc rule -a Alacritty:ncmpcpp              desktop=^4 follow=on
 bspc rule -a mplayer2                       desktop=^4 state=floating
 bspc rule -a Alacritty:lyricist             desktop=^4 follow=on
+bspc rule -a io.elementary.music            desktop=^4 follow=on
+bspc rule -a io.elementary.videos           desktop=^4 follow=on
+bspc rule -a io.elementary.photos           desktop=^4 follow=on
+bspc rule -a io.elementary.camera           desktop=^4 follow=on
 
 # desktop 5 - files, torrents, etc.
 bspc rule -a Alacritty:ranger               desktop=^5 follow=on focus=on
@@ -103,6 +114,7 @@ bspc rule -a Caja                           desktop=^5 follow=on
 bspc rule -a File-roller                    desktop=^5 state=floating center=on
 bspc rule -a nitrogen                       desktop=^5 state=floating focus=on
 bspc rule -a dde-file-manager               desktop=^5 follow=on focus=on
+bspc rule -a Io.elementary.files            desktop=^5 follow=on focus=on
 
 # desktop 7 - chats
 bspc rule -a TelegramDesktop                desktop=^7 follow=on
@@ -110,7 +122,8 @@ bspc rule -a TelegramDesktop                desktop=^7 follow=on
 # desktop 8 - tools, utils
 bspc rule -a GParted                        desktop=^8 follow=on focus=on
 bspc rule -a Gnome-system-monitor           desktop=^8 state=floating center=on follow=on focus=on
-bspc rule -a deepin-system-monitor           desktop=^8 state=floating center=on follow=on focus=on
+bspc rule -a deepin-system-monitor          desktop=^8 state=floating center=on follow=on focus=on
+bspc rule -a io.elementary.switchboard      desktop=^8 state=floating center=on follow=on focus=on
 
 # desktop 9 - miscelleneous
 bspc rule -a Steam                          desktop=^9 follow=on
@@ -121,7 +134,7 @@ bspc rule -a Steam                          desktop=^9 follow=on
 #feh --randomize --bg-fill /media/JukeBox/Wallpapers
 #feh --bg-fill $XDG_WALLPAPER_DIR/_default.jpg
 # ~/.bin/chwall.sh
-feh /media/Data/Pictures/UNMATCHED/144474.jpg --bg-fill
+feh --bg-fill ~/Pictures/default.jpg
 #gnome-wallpaper-changer &
 compton -b
 xrdb -merge ~/.Xdefaults
