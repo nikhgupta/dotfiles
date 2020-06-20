@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+alias edit="$EDITOR"
+alias reload=" source $HOME/.zshrc"
+
+# chmod
+alias w+="sudo chmod +w"                            # quickly make a file writeable
+alias w-="sudo chmod -w"                            # quickly make a file un-writeable
+alias x+="sudo chmod +x"                            # quickly make a file executable
+alias x-="sudo chmod -x"                            # quickly make a file un-executable
+
+# ls
+alias ls='ls -F --color=always --group-directories-first'
+alias la="ls -alh"
+alias lS='ls -1FSsh | sort -r'                      # sort by size
+alias lx='ls -lAFhXB'                               # sort by extension - GNU only
+alias lR='ls -AFtrd *(R)'                           # show readable files
+alias lRnot='ls -AFtrd *(^R)'                       # show non-readable files
+
+# handy utils
+alias du1='du -hd 1'                                # disk usage with human sizes and minimal depth (prefer: dsize)
+alias fn='find . -iname'                            # find files by name, in current directory
+alias p="ps -eo pid,command|grep -v grep|grep -i"   # find a process in the activity monitor
+alias history="fc -il 1"                            # show timestamps in history
+alias grep="grep -i --color"
+
+# killers
+alias k9="kill -9"
+alias ka9="killall -9"
+
+# dump path - each directory on separate line
+alias dumppath='echo -e ${PATH//:/\\n}'
+
+# miscelleneous
+alias getsshkey="cat $HOME/.ssh/`whoami`.pub COPY"
+alias download="aria2c --file-allocation=none -s 16 -x 16"
+alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/*'
+
+# READ THE FUCKING MANUAL!!
+rtfm() {
+  help $@ 2&>/dev/null ||
+   man $@ 2&>/dev/null ||
+   browse "http://www.google.com/search?q=$@"
+}
+
+# quickly create a script that is available globally
+function addscript() {
+  local file="$HOME/.bin/$1"
+  touch $file
+  chmod +x $file
+  vim $file
+}
+
+function md5() { echo $@ | md5sum | cut -d ' ' -f1; }
+function whois() { dig +nocmd $1 any +multiline +noall +answer; }
+function update-antibody-config() { antibody bundle < ~/.zsh/plugs.txt > ~/.zshplugs; }
+
+# sync pictures and videos with onedrive storage
+alias onedrivesync=rclone sync /media/nikhgupta/Data onedrive:Photography -P \
+  --delete-excluded --fast-list --log-level=INFO --no-check-certificate --no-update-modtime
+
+# source scripts containing other aliases
+# source ~/.zsh/tmux.sh
+# source_if_exists ~/.zsh/funalias.zsh
+# source_if_exists ~/.zsh/usefulscripts.zsh
+# source_if_exists ~/.zsh/commandlinefu.zsh

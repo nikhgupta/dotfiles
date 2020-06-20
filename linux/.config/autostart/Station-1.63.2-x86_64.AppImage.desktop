@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Version=1.0
-Name=Station-1.63.2-x86_64.AppImage
-Comment=Station-1.63.2-x86_64.AppImagestartup script
-Exec=/media/nikhgupta/JukeBox/Downloads/Station-1.63.2-x86_64.AppImage
-StartupNotify=false
-Terminal=false

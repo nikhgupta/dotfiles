@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$1" == "dotfiles" ]]; then
-  fdfind -Hast f . -E .git ~/.dotfiles | ~/.fzf/bin/fzf | xargs -I {} nvim {}
-fi

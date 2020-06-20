@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name[en_IN]=Custom Command
-Comment[en_IN]=quicktile --daemonize
-Exec=quicktile --daemonize
-Icon=application-default-icon
-X-GNOME-Autostart-enabled=true
-Type=Application
