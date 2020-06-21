@@ -15,6 +15,6 @@
 #
 
 # Run other scripts
-perl $(dirname $0)/color-spaces
-bash $(dirname $0)/color-lines
-bash $(dirname $0)/color-columns
+perl $(dirname $0)/color-spaces.perl
+bash $(dirname $0)/color-lines.sh
+bash $(dirname $0)/color-columns.sh
