@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#
+# Pacote: i3lock-fancy-git
+#
+xautolock -detectsleep -time 15 -locker "${HOME}/.local/bin/lockscreen" -nowlocker "${HOME}/.local/bin/lockscreen"

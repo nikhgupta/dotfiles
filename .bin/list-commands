@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+#
+# ---------------------------------------------------------------------
+#
+#   Summary: Script to list all custom commands inside our dotfiles config.
+#   Author:  Nikhil Gupta
+#   Usage:   list-commands [-d|--with-description] [COMMANDS?]
+#            list-commands <command-name> <command-name2>
+#
+# ---------------------------------------------------------------------
+#
+
+def extract_comments(file, with_desc = false)
+  data = File.read(file)
+  data = data.match(/\#\s+\-+\n\#\s+(.*)\s+\#\s+\-+/mi)[1] rescue nil
+  return "\e[31mno help docs found for this command!\e[0m" unless data
+  return data.gsub(/^\#/, '') if with_desc
+  match = data.match(/\#\s+Summary:\s+(.*?)$/)
+  match ? match[1] : "\e[31msummary could not be extracted!\e[0m"
+end
+
+require 'optparse'
+
+desc = false
+ARGV.options do |opts|
+  opts.on("-d", "--with-description") { desc = true }
+  opts.on("-h", "--help") { puts %x(list-commands #{$0}); exit(0) }
+  opts.parse!
+end
+desc = true if ARGV.any?
+
+files = Dir
+  .glob(File.join(ENV['DOTCASTLE'], "bin", '*'))
+  .reject{|file| File.directory?(file)}
+  .reject{|file| !File.readable?(file)}
+  # .reject{|file| file == $0}
+
+files = files.select do |f|
+  ARGV.include?(File.basename(f)) || ARGV.include?(f)
+end if ARGV.any?
+puts "\e[31mNo such custom command(s) found!\e[0m" if files.empty?
+max_length = files.map{|i| File.basename(i)}.max_by(&:length).length rescue 0
+
+files.each_with_index do |file, index|
+  name = File.basename(file)
+  if desc and ARGV.length > 1
+    puts unless index == 0
+    puts name
+    puts '-' * name.length
+  elsif !desc
+    print "#{name}#{" " * (max_length - name.length)}"
+    print " -- "
+  end
+  puts extract_comments(file, desc)
+end

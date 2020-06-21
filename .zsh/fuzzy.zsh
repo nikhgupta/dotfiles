@@ -1,48 +1,57 @@
 # source fzf keybindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias rgf='rg -Sl --color=never --no-messages -g'
-# To apply the command to CTRL-T as well
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--height=30% --reverse'
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+export FZF_DEFAULT_OPTS="
+--layout=reverse
+--info=inline
+--height=80%
+--multi
+--preview-window=:hidden
+--preview '([[ -f {} ]] && (bat --theme=OneHalfDark --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
+--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
+--prompt='$ ' --pointer='▶' --marker='✓'
+--bind '?:toggle-preview'
+--bind 'ctrl-a:select-all'
+--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'
+--bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
+--bind 'ctrl-x:execute(code {+})'
+"
 
-# # Directly executing the command (CTRL-X CTRL-R)
-# fzf-history-widget-accept() {
-#   fzf-history-widget
-#   zle accept-line
-# }
-# zle     -N     fzf-history-widget-accept
-# bindkey '^X^R' fzf-history-widget-accept
+_fzf_compgen_path() { fd . "$1"; }
+_fzf_compgen_dir() { fd --type d . "$1"; }
+
+# search for a needle in all files
+alias rgf='rg -Sl --color=never --no-messages --hidden'
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
 fe() {
-  local files
-  IFS=$'\n' files=($(rg -Sl --color=never --no-messages --files --hidden | fzf --query "$1" --multi --select-1 --exit-0))
-  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+  IFS=$'\n' _files=($(rgf --files | fzf --query "$1" --multi --select-1 --exit-0))
+  [[ -n "$_files" ]] && ${EDITOR:-vim} "${_files[@]}"
 }
 
 # fkill - kill processes - list only the ones you can kill.
-fkill() {
-    local pid
-    if [ "$UID" != "0" ]; then
-        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
-    else
-        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-    fi
+kp() {
+  if [ "$UID" != "0" ]; then
+    _pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+  else
+    _pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+  fi
 
-    if [ "x$pid" != "x" ]
-    then
-        echo $pid | xargs kill -${1:-9}
-    fi
+  if [ -n "$_pid" ]; then
+    echo $_pid | xargs kill -${1:-9}
+  fi
 }
 
 # fshow - git commit browser
-fshow() {
+git-search() {
   git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
       --bind "ctrl-m:execute:
                 (grep -o '[a-f0-9]\{7\}' | head -1 |
                 xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
@@ -50,23 +59,18 @@ fshow() {
 FZF-EOF"
 }
 
-# fch - browse chrome history
-fch() {
-  local cols sep google_history open
-  cols=$(( COLUMNS / 3 ))
-  sep='{::}'
-
-  if [ "$(uname)" = "Darwin" ]; then
-    google_history="$HOME/Library/Application Support/Google/Chrome/Default/History"
-    open=open
-  else
-    google_history="$HOME/.config/google-chrome/Default/History"
-    open=xdg-open
+# find-in-file - usage: fif <SEARCH_TERM>
+fif() {
+  if [ ! "$#" -gt 0 ]; then
+    echo "Need a string to search for!"
+    return 1
   fi
-  \cp -f "$google_history" /tmp/h
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-     from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
+  rg --files-with-matches --no-messages "$1" | fzf $FZF_PREVIEW_WINDOW --preview "rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+# like normal z when used with arguments but displays an fzf prompt when used without.
+unalias z 2>/dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }

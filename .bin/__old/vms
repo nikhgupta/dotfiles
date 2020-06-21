@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# headless|normal
+modo="headless"
+vm="$2"
+s=$(VBoxManage list runningvms | grep "$vm")
+cor=$(awk -F# '/destaque/{print $2;exit}' ${HOME}/.config/polybar/config)
+
+normal() {
+	VBoxManage startvm "$1" --type headless	
+}
+
+headless() {
+	VBoxManage startvm "$1" --type headless		
+}
+
+desligar() {
+	VBoxManage controlvm "$1" poweroff	
+}
+
+estado() {
+	if [ -z "$s" ]; then
+		if [ "$(pgrep -x polybar)" ]; then 
+			echo "%{F#${cor}}%{F-}"
+		else
+			echo "VM: $1 rodando"
+		fi
+	else
+		if [ "$(pgrep -x polybar)" ]; then 
+			echo ""
+		else
+			echo "VM: $1 parada"
+		fi
+	fi
+}
+
+if [ "$1" == "ligar" ]; then
+	if [ -z "$s" ]; then
+		$modo "$vm"
+	fi
+elif [ "$1" == "desligar" ]; then
+	if [ ! -z "$s" ]; then
+		desligar "$vm"
+	fi
+elif [ "$1" == "estado" ]; then
+	estado "$vm"
+else
+	echo "Parametros incorretos"
+fi
+
+exit 0

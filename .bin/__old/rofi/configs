@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+#
+# Arquivo: alarme.sh
+#
+# Feito por Lucas Saliés Brum a.k.a. sistematico, <lucas@archlinux.com.br>
+#
+# Criado em: 10/07/2018 14:25:18
+# Última alteração: 10/07/2018 14:25:27
+
+tema="-theme ~/.config/rofi/themes/dark.rasi"
+editor="subl"
+
+configs=(
+'i3'
+'Polybar'
+'Conky'
+'LX Appearance'
+'Dunst'
+'Compton'
+'Rofi'
+'LightDM'
+'qutebrowser'
+'ncmpcpp'
+'StartPage'
+'Home'
+'Termite'
+'st'
+)
+
+res=$(printf "%s\n" "${configs[@]}" | rofi $tema -dmenu -p "Rofi Config" -bw 0 -lines "${#configs[@]}" -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+
+if [ "$res" ]; then
+	case $res in
+		'i3') i3-msg exec $editor ~/.config/i3/config ;;
+		'i3blocks')
+			i3blocks=$(echo "Config;Apps" | rofi $tema -sep ";" -dmenu -p "i3blocks" -bw 0 -lines 2 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+			if [ $i3blocks ]; then
+				case $i3blocks in
+					'Config') i3-msg exec $editor "${HOME}/.config/i3blocks/config" ;;
+					'Apps')
+						i3blocksapps=$(ls "${HOME}/.config/i3blocks/scripts/" | rofi $tema -dmenu -p "i3 Blocks Apps" -bw 0 -lines 16 -separator-style none -location 0 -width 150 -hide-scrollbar -padding 5)	
+						if [ $i3blocksapps ]; then
+							i3-msg exec $editor ~/.config/i3blocks/scripts/${i3blocksapps}
+						fi
+					;;
+				esac
+			fi
+		;;
+		'Polybar')
+			polyconfig=$(echo "Config;Apps;Reload" | rofi $tema -sep ";" -dmenu -p "Polybar" -bw 0 -lines 3 -separator-style none -location 0 -width 160 -hide-scrollbar -padding 5)
+			if [ "$polyconfig" = "Reload" ]; then
+				~/.config/polybar/launch.sh
+			elif [ "$polyconfig" = "Apps" ]; then
+				app=$( ls "${HOME}/.config/polybar/scripts/" | egrep "\.sh|\.py" | rofi $tema -dmenu -p "Polybar Apps" -bw 0 -lines "$(ls -1 ${HOME}/.config/polybar/scripts/ | egrep "\.sh|\.py" | wc -l)" -separator-style none -location 0 -width 240 -hide-scrollbar -padding 5)
+				if [ $app ]; then
+					i3-msg exec $editor "${HOME}/.config/polybar/scripts/${app}"
+				fi
+			elif [ "$polyconfig" == "Config" ]; then
+				i3-msg exec $editor ${HOME}/.config/polybar/config
+			fi
+		;;
+		'Conky') i3-msg exec $editor ~/.config/conky/conky.conf ;;
+		'LX Appearance') i3-msg exec lxappearance ;;
+		'Dunst')
+			dunstconfig=$(echo "Config;Reload" | rofi $tema -sep ";" -dmenu -p "Polybar" -bw 0 -lines 2 -separator-style none -location 0 -width 160 -hide-scrollbar -padding 5)
+			if [ "$dunstconfig" = "Reload" ]; then
+				killall dunst && dunst &
+			elif [ $dunstconfig ]; then
+				i3-msg exec $editor ~/.config/dunst/dunstrc
+			fi
+		;;
+		'Compton')
+			comptonconfig=$(echo "Config;Reload" | rofi $tema -sep ";" -dmenu -p "Polybar" -bw 0 -lines 2 -separator-style none -location 0 -width 160 -hide-scrollbar -padding 5)
+			if [ "$comptonconfig" = "Reload" ]; then
+				killall compton && compton &
+			elif [ $comptonconfig ]; then
+				i3-msg exec $editor ~/.config/compton.conf
+			fi
+		;;
+		'Rofi')
+			roficonfig=$(echo "Apps;Config;Themes" | rofi $tema -sep ";" -dmenu -p "Rofi" -bw 0 -lines 3 -separator-style none -location 0 -width 160 -hide-scrollbar -padding 5)
+
+			if [ "$roficonfig" = "Apps" ]; then
+				app=$( ls "${HOME}/.config/rofi/scripts/" | rofi $tema -dmenu -p "Rofi Apps" -bw 0 -lines "$(ls -1 ${HOME}/.config/rofi/scripts/ | wc -l)" -separator-style none -location 0 -width 250 -hide-scrollbar -padding 5)
+				if [ $app ]; then
+					i3-msg exec $editor "${HOME}/.config/rofi/scripts/${app}"
+				fi
+			elif [ "$roficonfig" = "Themes" ]; then
+				tema=$( ls "${HOME}/.config/rofi/themes/" | rofi $tema -dmenu -p "Rofi Themes" -bw 0 -lines 4 -separator-style none -location 0 -width 250 -hide-scrollbar -padding 5)
+				if [ $tema ]; then
+					i3-msg exec $editor "${HOME}/.config/rofi/themes/${tema}"
+				fi
+			elif [ $roficonfig ]; then
+				i3-msg exec $editor ~/.config/rofi/config.rasi
+			fi
+		;;
+		'LightDM')
+			ldm=$(echo "lightdm;lightdm-gtk-greeter" | rofi $tema -sep ";" -dmenu -p "LightDM" -bw 0 -lines 2 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+
+			if [ $ldm ]; then
+				i3-msg exec sudo $editor "/etc/lightdm/${ldm}.conf"
+			fi
+		;;
+		'ncmpcpp')
+		    i3-msg exec $editor "${HOME}/.config/ncmpcpp/config"
+		;;
+		'qutebrowser') i3-msg exec $editor ~/.config/qutebrowser/config.py ;;
+		'StartPage')
+		    i3-msg exec $editor "${HOME}/.config/startpage/*.html"
+		;;
+		'Home')
+			homefiles=$(echo ".Xresources;.xinitrc;.xprofile;.Xdefaults;.bashrc;.bash_aliases;.bash_profile;.vimrc;mimeapps;bin;.bin" | rofi $tema -sep ";" -dmenu -p "Home Files" -bw 0 -lines 11 -separator-style none -location 0 -width 190 -hide-scrollbar -padding 5)
+
+			if [ "$homefiles" = ".Xresources" ]; then
+				resfiles=$( echo "Config;Cores" | rofi -sep ";" -dmenu -p "~/.Xresources" -bw 0 -lines 2 -separator-style none -location 0 -width 150 -hide-scrollbar -padding 5)
+				if [ "$resfiles" == "Config" ]; then
+					i3-msg exec $editor ~/.Xresources
+				elif [ "$resfiles" == "Cores" ]; then
+					colorfiles=$(ls "${HOME}/.colors/" | rofi $tema -dmenu -p "Xresources Colors" -bw 0 -lines 10 -separator-style none -location 0 -width 160 -hide-scrollbar -padding 5)
+					if [ $colorfiles ]; then
+						i3-msg exec $editor ~/.colors/${colorfiles}
+					fi
+				fi
+			elif [ "$homefiles" = "bin" ]; then
+				binfiles=$(ls "${HOME}/bin/" | rofi -dmenu -p "~/bin" -bw 0 -lines 10 -separator-style none -location 0 -width 150 -hide-scrollbar -padding 5)
+				if [ $binfiles ]; then
+					i3-msg exec $editor ~/bin/${binfiles}
+				fi
+            elif [ "$homefiles" = ".bin" ]; then
+				dotbinfiles=$(ls "${HOME}/.local/bin/" | rofi $tema -dmenu -p "~/.local/bin" -bw 0 -lines 11 -separator-style none -location 0 -width 180 -hide-scrollbar -padding 5)
+				if [ $dotbinfiles ]; then
+					i3-msg exec $editor ~/.local/bin/${dotbinfiles}
+				fi
+			elif [ "$homefiles" = "mimeapps" ]; then
+				i3-msg exec $editor ~/.config/mimeapps.list
+			elif [ $homefiles ]; then
+				i3-msg exec $editor ~/${homefiles}
+			fi
+		;;
+		'Termite') i3-msg exec $editor ~/.config/termite/config ;;
+		'st') i3-msg exec $editor ~/aur/st-scrollback-git/config.h ;;
+	esac
+fi

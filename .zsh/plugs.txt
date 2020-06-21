@@ -1,4 +1,5 @@
 # ohmyzsh/ohmyzsh path:plugins/asdf
+ohmyzsh/ohmyzsh path:plugins/z
 ohmyzsh/ohmyzsh path:lib/history.zsh
 djui/alias-tips
 Aloxaf/fzf-tab

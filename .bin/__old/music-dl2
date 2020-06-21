@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+#
+# Script to download songs and metadata from Saavn.com
+#
+
+require 'pry'
+require 'yaml'
+require 'taglib'
+require 'open-uri'
+require 'mechanize'
+
+class MusicDL
+  PLAYLIST_API = "https://www.jiosaavn.com/api.php?__call=playlist.getFeaturedPlaylists&language=%{lang}&offset=0&size=%{size}&_format=json"
+
+  def initialize(playlists=[])
+    self.playlists = playlists
+  end
+
+  def playlists=(playlists=[])
+    if playlists.empty?
+    end
+    @playlists = playlists
+  end
+end
+def scrape_playlists(lang: 'hindi', size: 100)
+  url = "https://www.jiosaavn.com/api.php?__call=playlist.getFeaturedPlaylists&language=#{lang}&offset=0&size=#{size}&_format=json"
+  page = AGENT.get url
+  lists = JSON.parse page.search("body").text
+  lists['featuredPlaylists'].map do |list|
+    puts "================:"
+    puts "Scraping playist: #{list['listname']}(#{list['numsongs']}) @#{list['perma_url']}"
+    scrape list['perma_url'], list
+  end.flatten.uniq
+end

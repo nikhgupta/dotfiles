@@ -25,6 +25,7 @@ setopt auto_menu              # show completion menu on successive tab press
 setopt complete_in_word
 setopt always_to_end
 setopt pushdminus
+setopt interactivecomments
 
 # other terminal related basic configuration
 typeset -U path # set $path variable to only have unique values
@@ -49,9 +50,6 @@ bindkey "^[[B" history-beginning-search-forward-end
 . $HOME/.asdf/asdf.sh
 fpath=(${HOME}/.asdf/completions $fpath)
 
-# fzf
-source_if_exists ~/.fzf.zsh
-
 # dircolors
 [[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 [[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
@@ -61,6 +59,7 @@ source ~/.zshplugs
 source ~/.zsh/platform.zsh
 source ~/.zsh/topics.zsh
 source ~/.zsh/aliases.zsh
+source ~/.zsh/fuzzy.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
 

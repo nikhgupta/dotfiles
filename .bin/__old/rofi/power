@@ -1,0 +1,76 @@
+#!/bin/bash
+
+function programado() {
+	letras=$(echo "$2" | tr -dc '[a-z][A-Z]')
+	numeros=$(echo "$2" | tr -dc '[0-9]')
+
+	if [[ $letras == hora* ]]; then
+		tmp="hour"
+	elif [[ $letras == minuto* ]]; then
+		tmp="minute"
+	fi
+
+	quando=$(date -d "+${numeros} ${tmp}" '+%H:%M')
+	notify-send "$1 programado(a)" "$1 em ${quando}"
+
+	if [ "$1" == "Desligamento" ]; then
+		sudo shutdown -P "$quando"
+	elif [ "$1" == "Suspensao" ]; then
+		systemctl suspend | at "$quando"
+	fi
+}
+
+res=$(echo "desligar;reiniciar;suspender;travar;sair" | rofi -sep ";" -dmenu -p "Rofi Power" -bw 0 -lines 5 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+
+if [ ! -z $res ]; then
+	case $res in
+		desligar)
+
+			quando=$(echo -e "Agora\nDepois" | rofi -dmenu -p "Quando?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+
+			if [ $quando = "Agora" ]; then
+				confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+				[ $confirma = "Sim" ] && systemctl poweroff
+			elif [ $quando = "Depois" ]; then
+				tempo=$(echo "5 minutos;10 minutos;15 minutos;30 minutos;45 minutos;1 hora;2 horas;3 horas;4 horas" | rofi -sep ";" -dmenu -p "Rofi Power" -bw 0 -lines 9 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+				confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+				[ $confirma = "Sim" ] && programado "Desligamento" "$tempo"
+			fi
+
+		;;
+		reiniciar)
+			confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+			[ $confirma = "Sim" ] && systemctl reboot
+		;;
+		suspender)
+
+			quando=$(echo -e "Agora\nDepois" | rofi -dmenu -p "Quando?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+
+			if [ $quando = "Agora" ]; then
+				suspende=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+				[ "$suspende" = "Sim" ] && systemctl suspend
+			elif [ $quando = "Depois" ]; then
+				tempo=$(echo "5 minutos;10 minutos;15 minutos;30 minutos;45 minutos;1 hora;2 horas;3 horas;4 horas" | rofi -sep ";" -dmenu -p "Rofi Power" -bw 0 -lines 9 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+				confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+				[ $confirma = "Sim" ] && programado "Suspensao" "$tempo"
+			fi
+
+		;;
+		programado)
+			tempo=$(echo "5 minutos;10 minutos;15 minutos;30 minutos;45 minutos;1 hora;2 horas;3 horas;4 horas" | rofi -sep ";" -dmenu -p "Rofi Power" -bw 0 -lines 9 -separator-style none -location 0 -width 10 -hide-scrollbar -padding 5)
+			acao=$(echo "Suspensao;Desligamento" | rofi -sep ";" -dmenu -p "Ação" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+			confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+			[ $confirma = "Sim" ] && programado "$acao" "$tempo"
+		;;
+		travar)
+			i3-msg -q 'exec i3lock-fancy -f Iosevka-Thin -t "Arch Linux" -p -- scrot -z'
+		;;
+		sair)
+			confirma=$(echo -e "Sim\nNão" | rofi -dmenu -p "Confirma?" -bw 0 -lines 2 -separator-style none -location 0 -width 7 -hide-scrollbar -padding 5)
+			[ $confirma = "Sim" ] && i3-msg exit
+		;;
+		*)
+		;;
+	esac
+fi
+

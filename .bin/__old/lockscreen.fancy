@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# this must be the last command, and it must be 'non forking', as expected by 'xautolock'
+
+if [ $1 ]; then
+	if [ "$1" = "off" ]; then
+		$(sleep 2h && xset dpms force off) &
+	fi
+fi
+
+# pause dunst
+pkill -u $USER -USR1 dunst
+
+i3lock-fancy -f "Iosevka-Thin" -t " " -p -g -- scrot -z
+
+# resume dunst
+pkill -u $USER -USR2 dunst
