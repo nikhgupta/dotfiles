@@ -64,4 +64,5 @@ source ~/.zsh/aliases.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
 
+ssh-add ~/.ssh/nikhgupta &>/dev/null
 echo "\e[32mWelcome, Nick!\e[0m"
