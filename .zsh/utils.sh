@@ -13,12 +13,6 @@ is_git() { [[ -d '.git' ]] || \ command git rev-parse --git-dir &>/dev/null || \
 is_emacs() { echo $TERMINFO | grep -o emacs >/dev/null; }
 is_vscode() { [[ "$TERM_PROGRAM" == "vscode" ]]; }
 
-path_append() { [[ -d "$1" ]] && export PATH="$PATH:$1"; }
-path_prepend() { [[ -d "$1" ]] && export PATH="$1:$PATH"; }
-is_installed() { type $1 >/dev/null; }
-source_if_exists() { [[ -s "$1" ]] && source "$1"; }
-source_secret() { source_if_exists "$1"; }
-
 warn() { echo "\e[4;33mWarning\e[0m: $@"; }
 error() {
   echo "\e[4;31mError\e[0m: $@"
@@ -35,5 +29,29 @@ init_cache() {
     mkdir -p $HOME/.init-cache
     eval "$(echo $2)" >$file_name
     . $file_name
+  fi
+}
+
+path_append() { [[ -d "$1" ]] && export PATH="$PATH:$1"; }
+path_prepend() { [[ -d "$1" ]] && export PATH="$1:$PATH"; }
+is_installed() { type $1 >/dev/null; }
+
+source_if_exists() { [[ -s "$1" ]] && source "$1"; }
+
+modify_secret_config() {
+  vim $1
+  rm -f $HOME/.secrets/${1:t:r}.decrypted-cache
+}
+source_secret() {
+  destin=$HOME/.secrets/${1:t:r}.decrypted-cache
+  if [[ -s $destin ]]; then
+    source $destin
+  elif [[ -f $1 ]]; then
+    mkdir -p $HOME/.secrets
+    gpg --decrypt $1 2>/dev/null >$destin
+    chmod +x $destin
+    source $destin
+  else
+    echo "No such secret file found: $1"
   fi
 }

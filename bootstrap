@@ -1,7 +1,22 @@
 #!/usr/bin/env zsh
 
+backup=$HOME/OneDrive/Backup
+gpgdir=$backup/workstation/gpg
 source ~/.zsh/utils.sh
-source_secret ~/.zshenv.local
+
+highlight "Checking if OneDrive is setup correctly.."
+[[ -d $gpgdir ]] || error "Please, make sure that $gpgdir is available."
+
+highlight "Setting up GnuPG"
+gpg --import $gpgdir/secret.key
+rm ~/.gnupg/trustdb.gpg
+gpg --import-ownertrust <$gpgdir/trustdb.txt
+
+highlight "Checking if I can access git@github.com with newly set GPG key"
+ssh -T git@github.com 2>&1 | grep $(whoami) || error "SSH from GPG did not work!"
+
+highlight "Checking if I can source secret files.."
+source_secret ~/.dotfiles/secret/zshenv.asc
 source ~/.zsh/aliases.zsh
 
 highlight "Updating the yadm repo origin URL"
@@ -35,6 +50,8 @@ git config --global github.user $NICK
 git config --global github.token $GITHUB_TOKEN
 git config --global github.password $GITHUB_TOKEN
 git config --global github.oauth-token $GITHUB_TOKEN
+git config --global user.signingkey $GPGKEY
+git config --global commit.gpgsign true
 
 highlight "Installing VIM plugins"
 vim +PlugInstall +qall

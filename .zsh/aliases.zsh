@@ -12,6 +12,17 @@ alias -g QUIET='&> /dev/null'
 
 alias edit="$EDITOR"
 alias reload=" source $HOME/.zshrc"
+edit_secrets() {
+  mkdir -p $HOME/.secrets
+  src=$HOME/.dotfiles/secrets/zshenv.asc
+  destin=$HOME/.secrets/zshenv.decrypted-cache
+
+  vim $src
+  rm -f $destin
+  gpg --decrypt $src 2>/dev/null >$destin
+  chmod +x $destin
+  source $destin
+}
 
 # chmod
 alias w+="sudo chmod +w" # quickly make a file writeable
@@ -38,10 +49,15 @@ alias grep="grep -i --color"
 alias k9="kill -9"
 alias ka9="killall -9"
 
+# directories
+alias md="mkdir -p"
+take() { mkdir -p $@ && cd $@; }
+
 # dump path - each directory on separate line
 alias dumppath='echo -e ${PATH//:/\\n}'
 
 # miscelleneous
+alias getgpgkey="gpg -a --export $GPGKEY COPY"
 alias getsshkey="gpg --export-ssh-key $SSHKEY COPY"
 alias download="aria2c --file-allocation=none -s 16 -x 16"
 alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/*'

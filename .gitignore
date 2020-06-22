@@ -95,3 +95,4 @@ cscope.po.out
 # others
 .vim/bundle
 .vim/tmp
+*.decrypted-cache

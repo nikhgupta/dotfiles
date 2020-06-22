@@ -12,6 +12,7 @@
 
 # show help
 [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] && list-commands $0 && exit 1
+backup=$HOME/OneDrive/Backup/workstation/
 
 _os=$(~/.bin/os.sh)
 if [[ $_os == "wsl/ubuntu" ]]; then
@@ -38,4 +39,5 @@ if [[ $_os == "mac" ]]; then
   sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
 fi
 
+gpg --export-ownertrust >$backup/gpg/trustdb.txt
 tput bel
