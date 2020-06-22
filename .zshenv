@@ -14,4 +14,4 @@ is_wsl && export DATA_HOME=/mnt/c/Users/nikhg
 
 # change path and source credentials
 path_prepend ~/.bin
-source_secret ~/.dotfiles/secrets/zshenv.asc
+source_secret ~/.dotfiles/.encrypted/zshenv.asc

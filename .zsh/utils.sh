@@ -40,14 +40,14 @@ source_if_exists() { [[ -s "$1" ]] && source "$1"; }
 
 modify_secret_config() {
   vim $1
-  rm -f $HOME/.secrets/${1:t:r}.decrypted-cache
+  rm -f $HOME/.decrypted/${1:t:r}.decrypted-cache
 }
 source_secret() {
-  destin=$HOME/.secrets/${1:t:r}.decrypted-cache
+  destin=$HOME/.decrypted/${1:t:r}.decrypted-cache
   if [[ -s $destin ]]; then
     source $destin
   elif [[ -f $1 ]]; then
-    mkdir -p $HOME/.secrets
+    mkdir -p $HOME/.decrypted
     gpg --decrypt $1 2>/dev/null >$destin
     chmod +x $destin
     source $destin

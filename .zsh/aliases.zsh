@@ -13,9 +13,9 @@ alias -g QUIET='&> /dev/null'
 alias edit="$EDITOR"
 alias reload=" source $HOME/.zshrc"
 edit_secrets() {
-  mkdir -p $HOME/.secrets
-  src=$HOME/.dotfiles/secrets/zshenv.asc
-  destin=$HOME/.secrets/zshenv.decrypted-cache
+  mkdir -p $HOME/.decrypted
+  src=$HOME/.dotfiles/.encrypted/zshenv.asc
+  destin=$HOME/.decrypted/zshenv.decrypted-cache
 
   vim $src
   rm -f $destin
