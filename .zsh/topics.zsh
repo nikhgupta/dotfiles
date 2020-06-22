@@ -15,6 +15,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 touch ~/.iex_history # needed for up/down key support in IEx sessions
 
 # language: ruby
+alias be='bundle exec'
 alias rspecff='rspec --fail-fast'
 alias rspecof='rspec --only-failures'
 alias rspecffof='rspec --fail-fast --only-failures'
