@@ -3,6 +3,6 @@ ohmyzsh/ohmyzsh path:plugins/z
 ohmyzsh/ohmyzsh path:lib/history.zsh
 djui/alias-tips
 Aloxaf/fzf-tab
-bobsoppe/zsh-ssh-agent
+# bobsoppe/zsh-ssh-agent
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting

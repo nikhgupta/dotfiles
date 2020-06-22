@@ -14,7 +14,7 @@
 
 require 'optparse'
 
-repeat = 5
+repeat = 10
 short = quiet = verbose = false
 
 ARGV.options do |opts|

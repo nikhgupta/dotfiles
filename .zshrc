@@ -54,6 +54,10 @@ fpath=(${HOME}/.asdf/completions $fpath)
 [[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 [[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
 
+# ssh setup using GnuPG
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf &>/dev/null
+
 # source other zsh scripts
 source ~/.zshplugs
 source ~/.zsh/platform.zsh
@@ -63,5 +67,4 @@ source ~/.zsh/fuzzy.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
 
-ssh-add ~/.ssh/nikhgupta &>/dev/null
 echo "\e[32mWelcome, Nick!\e[0m"
