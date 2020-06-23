@@ -15,6 +15,8 @@
 backup=$HOME/OneDrive/Backup/workstation/
 
 _os=$(~/.bin/os.sh)
+source ~/.zsh/utils.sh
+
 if [[ $_os == "wsl/ubuntu" ]]; then
   sudo apt update
   sudo apt upgrade -y
@@ -39,8 +41,14 @@ if [[ $_os == "mac" ]]; then
   sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
 fi
 
+# gpg, ssh related
 mkdir -p $backup/{ssh,gpg}
 cp -r ~/.ssh/{config,knownhosts} $backup/ssh/
 gpg --export-ownertrust >$backup/gpg/trustdb.txt
 gpg --refresh-keys
+
+if is_wsl; then
+  cp $DATA_HOME//AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json ~/.dotfiles/.config/windows-terminal/settings.json
+fi
+
 tput bel

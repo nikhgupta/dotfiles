@@ -98,7 +98,10 @@ if is_wsl; then
   unzip -p /tmp/win32yank.zip win32yank.exe >/tmp/win32yank.exe
   chmod +x /tmp/win32yank.exe
   sudo mv /tmp/win32yank.exe /usr/local/bin
+
+  highlight "Copying WindowsTerminal configuration from backup"
+  cp -r ~/.dotfiles/.config/windows-terminal/settings.json $DATA_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 fi
 
 highlight "Remaining tasks.."
-puts "- You should set keygrip of SSHKEY in ~/.gnupg/sshcontrol"
+echo "- You should set keygrip of SSHKEY in ~/.gnupg/sshcontrol"
