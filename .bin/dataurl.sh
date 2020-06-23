@@ -9,8 +9,6 @@
 # ---------------------------------------------------------------------
 #
 
-[[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] && list-commands $0 && exit 1
-
 mimeType=$(file -b --mime-type "$1")
 if [[ $mimeType == text/* ]]; then
     mimeType="${mimeType};charset=utf-8"

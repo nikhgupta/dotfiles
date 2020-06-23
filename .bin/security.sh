@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# ---
+# summary: |
+#   decrypts ~/.dotfiles/.encrypted/security.asc to provide some
+#   super secret functions written in ruby.
 
 _file=$HOME/.dotfiles/.encrypted/security.asc
 _destin=$HOME/.decrypted/security.rb

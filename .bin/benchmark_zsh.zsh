@@ -1,4 +1,12 @@
 #!/usr/bin/env zsh
+#
+# ---
+# summary: benchmark zsh startup time
+# author: Nikhil Gupta
+# usage: |
+#   $0
+#   $0 /path/to/a/zsh/script/to/benchmark
+#
 logfile=/tmp/zsh.profiler.log
 summaryfile=/tmp/zsh.profiler.summary
 rm -f $logfile

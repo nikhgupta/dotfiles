@@ -1,13 +1,15 @@
 #!/usr/bin/env ruby
 #
-# ---------------------------------------------------------------------
-#
-#   Summary: Get IP address for the domain name provided.
-#   Author:  Nikhil Gupta
-#   Usage:   domain-ip <list-of-domains>
-#            domain-ip nikhgupta.com google.com yahoo.com
-#
-# ---------------------------------------------------------------------
+# ---
+# summary: Get IP address for the domain names provided.
+# author: Nikhil Gupta
+# status: working
+# usage: domain-ip <list-of-domains>
+# example: domain-ip nikhgupta.com google.com yahoo.com
+# output: |
+#   nikhgupta.com    62.171.184.72
+#   google.com       172.217.174.238
+#   yahoo.com        98.138.219.232
 #
 
 require 'optparse'

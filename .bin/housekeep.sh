@@ -10,18 +10,16 @@
 #
 # ---------------------------------------------------------------------
 
-# show help
-[[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] && list-commands $0 && exit 1
-backup=$HOME/OneDrive/Backup/workstation/
+_home=/home/nikhgupta
+_backup=$_home/OneDrive/Backup/workstation/
 
-_os=$(~/.bin/os.sh)
-source ~/.zsh/utils.sh
+source $_home/.zsh/utils.sh
 
-if [[ $_os == "wsl/ubuntu" ]]; then
+if is_ubuntu || is_wsl_ubuntu; then
   sudo apt update
   sudo apt upgrade -y
   sudo apt autoremove
-elif [[ $_os == "mac" ]]; then
+elif is_macosx; then
   sudo softwareupdate -i -a
   brew update
   brew upgrade
@@ -34,21 +32,28 @@ sudo gem update --system
 sudo gem update
 sudo gem cleanup
 
-if [[ $_os == "mac" ]]; then
-  sudo rm -rfv ~/.Trash
+if is_macosx; then
+  sudo rm -rfv $_home/.Trash
   sudo rm -rfv /Volumes/*/.Trashes
   sudo rm -rfv /private/var/log/asl/*.asl
-  sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
+  sqlite3 $_home/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
 fi
 
 # gpg, ssh related
-mkdir -p $backup/{ssh,gpg}
-cp -r ~/.ssh/{config,knownhosts} $backup/ssh/
-gpg --export-ownertrust >$backup/gpg/trustdb.txt
+mkdir -p $_backup/{ssh,gpg}
+cp -r $_home/.ssh/{config,knownhosts} $_backup/ssh/
+gpg --export-ownertrust >$_backup/gpg/trustdb.txt
 gpg --refresh-keys
 
 if is_wsl; then
-  cp $DATA_HOME//AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json ~/.dotfiles/.config/windows-terminal/settings.json
+  # backup windows terminal settings
+  cp $DATA_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+    $_home/.dotfiles/.config/windows-terminal/settings.json
+fi
+
+# elevated priviledges
+if is_ubuntu; then
+  sudo $_home/.bin/clearlogs.sh
 fi
 
 tput bel

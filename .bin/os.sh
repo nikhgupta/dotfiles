@@ -2,7 +2,7 @@
 
 source ~/.zsh/utils.sh
 
-_name=$(lsb_release -i | cut -d: -f2 | tr '[:upper:]' '[:lower:]' | sed -e 's/[[:space:]]*//')
+_name=$(os_release)
 
 if is_macosx; then
   echo "mac"

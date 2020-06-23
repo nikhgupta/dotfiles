@@ -62,7 +62,7 @@ alias getgpgkey="gpg -a --export $GPGKEY COPY"
 alias getsshkey="gpg --export-ssh-key $SSHKEY COPY"
 alias download="aria2c --file-allocation=none -s 16 -x 16"
 alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/*'
-alias benchmark="$HOME/.zsh/benchmark.zsh"
+alias benchmark="$HOME/.bin/benchmark_zsh.zsh"
 
 # READ THE FUCKING MANUAL!!
 rtfm() {
