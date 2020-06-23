@@ -4,7 +4,7 @@
 
 ---
 :verbose: true
-:gem: --no-document
+:gem: --no-document --no-ri --no-rdoc
 :update_sources: true
 :benchmark: false
 :backtrace: false

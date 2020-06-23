@@ -16,5 +16,5 @@ To install, run:
     git clone https://github.com/nikhgupta/dotcastle ~/.dotfiles
     stow -t $HOME -d ~/.dotfiles . -v --ignore=.gitconfig --ignore=bootstrap
     cp ~/.dotfiles/.gitconfig ~/.gitconfig
-    ln -s ~/.dotfiles/.gitignore ~/.gitignore
+    ln -s ~/.dotfiles/.gitignore-global ~/.gitignore
     ~/.dotfiles/bootstrap

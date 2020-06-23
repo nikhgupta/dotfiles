@@ -39,5 +39,8 @@ if [[ $_os == "mac" ]]; then
   sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
 fi
 
+mkdir -p $backup/{ssh,gpg}
+cp -r ~/.ssh/{config,knownhosts} $backup/ssh/
 gpg --export-ownertrust >$backup/gpg/trustdb.txt
+gpg --refresh-keys
 tput bel
