@@ -127,9 +127,11 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:is_gui     = has('gui_running')
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
   let g:is_nix     = has('unix') && !has('macunix') && !has("win32unix")
-  let g:is_macvim  = g:is_mac && g:is_gui && has('gui_macvim')
   let g:is_ubuntu  = g:is_nix && system("uname -a") =~ "Ubuntu"
   let g:is_windows = has('win16') || has('win32') || has('win64')
+  let g:is_wsl     = g:is_nix && system("uname -a") =~ "microsoft"
+  let g:is_nvim    = has('nvim')
+  let g:is_macvim  = g:is_mac && g:is_gui && has('gui_macvim')
 
   " other relevant variables
   let g:is_posix   = 1 " enable better bash syntax highlighting
@@ -145,8 +147,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " Internal:    developer-defined custom functions for this config {{{
   " Function: Open a url/file with the default browser {{{
     function! s:open_with_browser(url, ...)
-      let l:prog = g:is_mac ? "open" : ""
-      let l:prog = g:is_ubuntu ? "xdg-open" : ""
+      let l:prog = "open"
       let l:prog = empty("$BROWSER") ? l:prog : expand("$BROWSER")
       let l:comm = l:prog . " '" . expand(a:url) . "'"
 
@@ -171,19 +172,12 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Appearance:  uses distinct GUI fonts {{{
   if g:is_gui
-    " Use a nice font on the specific OS
-    " No support for Windows, again :)
-    if g:is_mac
-      set macligatures
-      set guifont=Fira\ Code:h16
-      "set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
-      "set guifont=Fira\ Code\ Regular\ Nerd\ Font\ Complete\ Windows\ Compatible:h16
-      " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
-    elseif g:is_ubuntu
-      set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
-    elseif g:is_nix
-      set guifont=Monospace\ 11
-    endif
+    set guifont=Fira\ Code:h16
+    "set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
+    "set guifont=Fira\ Code\ Regular\ Nerd\ Font\ Complete\ Windows\ Compatible:h16
+    "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
+
+    if g:is_mac | set macligatures | endif
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
@@ -1685,17 +1679,33 @@ endif
 " Essential:   do share clipboard between editor and operating system {{{
   if g:is_nix && has('unnamedplus')
     set clipboard=unnamedplus,unnamed      " On Linux use + register for copy-paste
+  elseif g:is_nvim && g:is_wsl && has('unnamedplus') && executable('win32yank.exe')
+    set clipboard=unnamedplus,unnamed
+  elseif g:is_wsl && executable('win32yank.exe')
+    set clipboard=unnamed
+    autocmd TextYankPost * call YankDebounced()
+
+    function! Yank(timer)
+      call system('win32yank.exe -i --crlf', @")
+      redraw!
+    endfunction
+
+    let g:yank_debounce_time_ms = 500
+    let g:yank_debounce_timer_id = -1
+
+    function! YankDebounced()
+      let l:now = localtime()
+      call timer_stop(g:yank_debounce_timer_id)
+      let g:yank_debounce_timer_id = timer_start(g:yank_debounce_time_ms, 'Yank')
+    endfunction
+  elseif has('unnamedplus')
+    set clipboard=unnamedplus,unnamed
   else
     set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
   endif
 " }}}
 " Specialize:  store and cycle through yanked text strings {{{
   Plug 'maxbrunsfeld/vim-yankstack'
-  if g:is_nix && has('unnamedplus')
-    set clipboard=unnamedplus,unnamed      " On Linux use + register for copy-paste
-  else
-    set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
-  endif
 
   " do not use meta keys
   let g:yankstack_map_keys = 0
