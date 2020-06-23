@@ -8,9 +8,9 @@ highlight "Checking if OneDrive is setup correctly.."
 [[ -d $gpgdir ]] || error "Please, make sure that $gpgdir is available."
 
 highlight "Setting up GnuPG"
-gpg --import $gpgdir/secret.key
-rm ~/.gnupg/trustdb.gpg
-gpg --import-ownertrust <$gpgdir/trustdb.txt
+sudo apt install gpg
+import_gnupg.sh
+ln -sf ~/.dotfiles/.gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 highlight "Checking if I can access git@github.com with newly set GPG key"
 ssh -T git@github.com 2>&1 | grep $(whoami) || error "SSH from GPG did not work!"
@@ -28,13 +28,13 @@ sudo apt-get upgrade -y
 
 highlight "Installing dependencies"
 sudo apt install -y curl wget make \
-    libssl-dev automake autoconf libreadline-dev \
-    libncurses5-dev zlib1g-dev build-essential libbz2-dev \
-    libsqlite3-dev libncursesw5-dev libffi-dev liblzma-dev
+  libssl-dev automake autoconf libreadline-dev \
+  libncurses5-dev zlib1g-dev build-essential libbz2-dev \
+  libsqlite3-dev libncursesw5-dev libffi-dev liblzma-dev
 
 highlight "Installing utilities"
 sudo apt install -y curl wget make zsh vim tmux aria2 \
-    rclone ripgrep fd-find jq inotify-tools ncdu
+  rclone ripgrep fd-find jq inotify-tools ncdu
 
 highlight "Installing asdf"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
@@ -43,6 +43,8 @@ git checkout "$(git describe --abbrev=0 --tags)"
 asdfin() { asdf install $@ && asdf global $@; }
 
 highlight "Setting up global gitconfig"
+cp ~/.dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/.gitignore-global ~/.gitignore
 git config --global core.editor $EDITOR
 git config --global user.name $NICK
 git config --global user.email $EMAIL
@@ -93,7 +95,7 @@ antibody bundle <~/.zsh/plugs.txt >~/.zshplugs
 if is_wsl; then
   highlight "Install win32yank.exe for sharing clipboard between Vim and Windows"
   curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
-  unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
+  unzip -p /tmp/win32yank.zip win32yank.exe >/tmp/win32yank.exe
   chmod +x /tmp/win32yank.exe
   sudo mv /tmp/win32yank.exe /usr/local/bin
 fi
