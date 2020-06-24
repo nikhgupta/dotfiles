@@ -30,7 +30,7 @@ setopt interactivecomments
 # other terminal related basic configuration
 typeset -U path # set $path variable to only have unique values
 export MAILCHECK=0
-export TERM=screen-256color
+export TERM=xterm-256color
 export GREP_COLORS=31          # grep should use red for highlighting matches
 export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside editors
 

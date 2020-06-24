@@ -10,50 +10,65 @@
 #
 # ---------------------------------------------------------------------
 
-_home=/home/nikhgupta
+_user=nikhgupta
+_home=/home/$_user
 _backup=$_home/OneDrive/Backup/workstation/
 
+echo -ne "\n\n\n=> Running housekeeping at `date`"
 source $_home/.zsh/utils.sh
 
+(( $UID )) && error "You must run $0 with sudo priviledges."
+
+as_user() { su - $_user -c "source ~/.zshrc > /dev/null; $@"; }
+
+highlight "Upgrading system packages using package manager.."
 if is_ubuntu || is_wsl_ubuntu; then
-  sudo apt update
-  sudo apt upgrade -y
-  sudo apt autoremove
+  apt update
+  apt upgrade -y
+  apt autoremove
 elif is_macosx; then
-  sudo softwareupdate -i -a
-  brew update
-  brew upgrade
-  brew cleanup
+  softwareupdate -i -a
+  as_user "brew update"
+  as_user "brew upgrade"
+  as_user "brew cleanup"
 fi
 
-npm install npm -g
-npm update -g
-sudo gem update --system
-sudo gem update
-sudo gem cleanup
+highlight "Upgrading NPM for user: $_user .."
+as_user "npm install npm -g"
+as_user "npm update -g"
+
+highlight "Upgrading system ruby gems.."
+gem update --system
+gem update
+gem cleanup
 
 if is_macosx; then
-  sudo rm -rfv $_home/.Trash
-  sudo rm -rfv /Volumes/*/.Trashes
-  sudo rm -rfv /private/var/log/asl/*.asl
+  highlight "Emptying trash and space consuming files on MacOSX.."
+  rm -rfv $_home/.Trash
+  rm -rfv /Volumes/*/.Trashes
+  rm -rfv /private/var/log/asl/*.asl
   sqlite3 $_home/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
 fi
 
 # gpg, ssh related
+highlight "Backing up SSH and GPG configuration.."
 mkdir -p $_backup/{ssh,gpg}
-cp -r $_home/.ssh/{config,knownhosts} $_backup/ssh/
-gpg --export-ownertrust >$_backup/gpg/trustdb.txt
-gpg --refresh-keys
+cp -r $_home/.ssh/{config,known_hosts} $_backup/ssh/
+as_user "gpg --export-ownertrust >$_backup/gpg/trustdb.txt"
+as_user "gpg --refresh-keys"
 
 if is_wsl; then
-  # backup windows terminal settings
-  cp $DATA_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+  highlight "Backing up WindowsTerminal settings"
+  _data_home=$(as_user 'echo $DATA_HOME')
+  cp $_data_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
     $_home/.dotfiles/.config/windows-terminal/settings.json
 fi
 
-# elevated priviledges
 if is_ubuntu; then
-  sudo $_home/.bin/clearlogs.sh
+  highlight "Clearing journalctl logs on Ubuntu.."
+  $_home/.bin/clearlogs.sh
 fi
 
-tput bel
+# tput bel
+highlight "Finished."
+exit 0

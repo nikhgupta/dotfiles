@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+_current=$(asdf current python | head -1)
+asdf local python 2.7.18
+/home/nikhgupta/.asdf/shims/python2 "$@"
+asdf local python $_current

@@ -1,5 +1,6 @@
 # source fzf keybindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+path_prepend ~/.fzf/bin
 
 export FZF_DEFAULT_COMMAND="fdfind --hidden --follow --exclude '.git' --exclude 'node_modules'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
