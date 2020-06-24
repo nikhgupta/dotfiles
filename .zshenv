@@ -9,8 +9,8 @@ export GPG_TTY=$(tty)
 unset DISPLAY
 
 # setup data home for WSL
-export DATA_HOME=$HOME
-is_wsl && export DATA_HOME=/mnt/c/Users/nikhg
+export WIN_HOME=$HOME
+is_wsl && export WIN_HOME=/mnt/c/Users/nikhg
 
 # change path and source credentials
 path_prepend ~/.bin

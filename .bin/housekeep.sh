@@ -61,7 +61,7 @@ if is_wsl; then
   highlight "Backing up WindowsTerminal settings"
   _data_home=$(as_user 'echo $DATA_HOME')
   cp $_data_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
-    $_home/.dotfiles/.config/windows-terminal/settings.json
+    $_home/.dotfiles/.config/windows/terminal/settings.json
 fi
 
 if is_ubuntu; then

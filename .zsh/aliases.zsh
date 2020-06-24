@@ -79,6 +79,14 @@ function addscript() {
   vim $file
 }
 
+check_xdg_dirs() {
+  for _var in $(typeset -p | grep export\ XDG_ | cut -d ' ' -f2 | cut -d '=' -f1); do
+    _dir="$(realpath ${(P)_var} 2>/dev/null)"
+    [[ -z "${_dir}" ]] && _dir="${(P)_var}"
+    [[ -d "${_dir}" ]] && echo "\e[32m$_var ===== $_dir" || echo "\e[31m$_var ==!== $_dir"
+  done
+}
+
 function md5() { echo $@ | md5sum | cut -d ' ' -f1; }
 function whois() { dig +nocmd $1 any +multiline +noall +answer; }
 function update-antibody-config() { antibody bundle <~/.zsh/plugs.txt >~/.zshplugs; }

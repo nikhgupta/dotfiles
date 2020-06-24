@@ -100,8 +100,14 @@ if is_wsl; then
   sudo mv /tmp/win32yank.exe /usr/local/bin
 
   highlight "Copying WindowsTerminal configuration from backup"
-  cp -r ~/.dotfiles/.config/windows-terminal/settings.json $DATA_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+  cp -r ~/.dotfiles/.config/windows/terminal/settings.json $DATA_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+
+  highlight "Creating Windows Desktop shortcut for some ncurses programs"
+  $HOME/.config/windows/shortcuts/generate.sh
 fi
+
+highlight "Checking if XDG directories are properly setup"
+check_xdg_dirs
 
 highlight "Remaining tasks.."
 echo "- You should set keygrip of SSHKEY in ~/.gnupg/sshcontrol"

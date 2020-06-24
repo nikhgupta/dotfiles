@@ -55,27 +55,6 @@ scrolling:
   # scrollback is enabled (history > 0).
   multiplier: 3
 
-  # Faux Scrolling
-  #
-  # The `faux_multiplier` setting controls the number of lines the terminal
-  # should scroll when the alternate screen buffer is active. This is used
-  # to allow mouse scrolling for applications like `man`.
-  #
-  # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
-
-  # Scroll to the bottom when new text is written to the terminal.
-  auto_scroll: false
-
-# Spaces per Tab (changes require restart)
-#
-# This setting defines the width of a tab in cells.
-#
-# Some applications, like Emacs, rely on knowing about the width of a tab.
-# To prevent unexpected behavior in these applications, it's also required to
-# change the `it` value in terminfo when altering this setting.
-tabspaces: 4
-
 # Font configuration (changes require restart)
 font:
   # Normal (roman) font face
@@ -114,7 +93,7 @@ font:
     #style: Italic
 
   # Point size
-  size: 12.0
+  size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -344,11 +323,11 @@ live_config_reload: true
 #  program: /bin/bash
 #  args:
 #    - --login
-shell:
-  program: /bin/zsh
-  args:
-    - --login
-
+# shell:
+#   program: /bin/zsh
+#   args:
+#     - --login
+#
 # Windows 10 ConPTY backend (Windows only)
 #
 # This will enable better color support and may resolve other issues,
