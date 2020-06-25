@@ -61,6 +61,13 @@ vim +PlugInstall +qall
 highlight "Installing required components"
 sudo apt install -y postgresql redis-server default-jre default-jdk
 
+highlight "Install homebrew"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+highlight "Install packages depending on brew"
+brew install monolith
+
 highlight "Installing node.js"
 asdf plugin add nodejs
 bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring'

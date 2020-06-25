@@ -28,12 +28,12 @@ alias ydlpl="youtube-dl --yes-playlist"
 function ydlmp3() {
   destin="${2:-mixed}"
   youtube-dl --extract-audio --audio-format mp3 \
-    -o "${DATA_HOME}/Music/downloaded/$destin/%(title)s.%(ext)s" \
+    -o "${XDG_DOWNLOAD_MUSIC_DIR}/$destin/%(title)s.%(ext)s" \
     --download-archive ~/.cache/youtube-dl/mp3-archive.txt $1
 }
 
 function ydlsong() {
   destin="${2:-mixed}"
-  youtube-dl -o "${DATA_HOME}/Videos/downloaded/$destin/%(title)s.%(ext)s" \
+  youtube-dl -o "${XDG_DOWNLOAD_VIDEO_DIR}/$destin/%(title)s.%(ext)s" \
     --download-archive ~/.cache/youtube-dl/songs-archive.txt $1
 }
