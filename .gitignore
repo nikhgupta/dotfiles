@@ -3,3 +3,4 @@
 .vim/tmp
 *.decrypted-cache
 .config/configstore
+.config/windows/shortcuts/*.lnk

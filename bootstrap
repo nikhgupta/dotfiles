@@ -8,7 +8,7 @@ highlight "Checking if OneDrive is setup correctly.."
 [[ -d $gpgdir ]] || error "Please, make sure that $gpgdir is available."
 
 highlight "Setting up GnuPG"
-sudo apt install gpg
+sudo apt install gpg pinentry-curses
 import_gnupg.sh
 ln -sf ~/.dotfiles/.gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
