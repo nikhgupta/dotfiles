@@ -117,6 +117,15 @@ if is_wsl; then
 
   highlight "Creating Windows Desktop shortcut for some ncurses programs"
   $HOME/.config/windows/shortcuts/generate.sh
+
+  highlight "Downloading PulseAudio for enabling Audio in WSL"
+  wget http://bosmans.ch/pulseaudio/pulseaudio-1.1.zip -O /tmp/pulseaudio.zip
+  mkdir -p /tmp/PortableApps/pulseaudio
+  unzip -q /tmp/pulseaudio.zip -d /tmp/PortableApps/pulseaudio
+
+  highlight "Copying PortableApps setup to Windows User directory"
+  cp -r ~/.config/windows/scripts/startup.bat /tmp/PortableApps/startup.bat
+  cp -r /tmp/PortableApps $WIN_HOME/PortableApps
 fi
 
 highlight "Checking if XDG directories are properly setup"
@@ -127,9 +136,11 @@ echo "=> You should set keygrip of SSHKEY in ~/.gnupg/sshcontrol"
 
 if is_wsl; then
   echo "=> You should add startup script to run 30 secs after Windows Login using Windows Task Scheduler"
-  echo "   The Command to add would be $ C:\\Windows\\System32\\wsl.exe -u root /home/$NICK/.config/windows/scripts/startup.sh"
-  echo "   Reference: https://askubuntu.com/a/1178910"
-
-  echo "=> You should setup PulseAudio on Windows to be able to listen to Audio being played on WSL Linux"
-  echo "   Reference: https://web.archive.org/web/20191005201213/https://research.wmz.ninja/articles/2017/11/setting-up-wsl-with-graphics-and-audio.html"
+  echo "   The Command to add would be:"
+  echo ""
+  echo "      C:\Windows\System32\wscript.exe //e:jscript \"C:\Users\nikhg\PortableApps/startup.bat\""
+  echo ""
+  echo "!! WSL is automatically started when you login to Windows due to the above scheduled Task."
+  echo "!! You can update the above startup.bat script to include commands that you want to run on Windows boot."
+  echo "!! You can update ~/.config/windows/scripts/init.sh to include commands that you want to run when WSL starts."
 fi

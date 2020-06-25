@@ -13,6 +13,6 @@ elif is_wsl; then
     _path=$(wslpath -wa $1 2>/dev/null)
     (($?)) && _path=$1
     shift
-    powershell.exe -Command Start-Process $_path $@
+    powershell.exe -Command Start-Process "\"${_path}\"" $@
   }
 fi
