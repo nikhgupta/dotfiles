@@ -110,4 +110,10 @@ highlight "Checking if XDG directories are properly setup"
 check_xdg_dirs
 
 highlight "Remaining tasks.."
-echo "- You should set keygrip of SSHKEY in ~/.gnupg/sshcontrol"
+echo "=> You should set keygrip of SSHKEY in ~/.gnupg/sshcontrol"
+
+if is_wsl; then
+  echo "=> You should add startup script to run 30 secs after Windows Login using Windows Task Scheduler"
+  echo "   The Command to add would be $ C:\\Windows\\System32\\wsl.exe -u root /home/$NICK/.config/windows/scripts/startup.sh"
+  echo "   Reference: https://askubuntu.com/a/1178910"
+fi
