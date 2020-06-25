@@ -326,7 +326,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   let g:indent_guides_guide_size  = 1
   let g:indent_guides_start_level = 2
 " }}}
-" Upgrade:     has a beautiful startup screen (via Startify) {{{
+" Upgrade:     has a beautiful startup screen (via mtartify) {{{
   set shortmess+=I                " do not display intro message on Vim startup
 
   Plug 'mhinz/vim-startify'
@@ -1796,6 +1796,7 @@ endif
     " f: Store file marks ('0 to '9 and 'A to 'Z)
     " Further, reading:  :h viminfo
     set viminfo='500,:100,@100,/20,f1,%,<200
+    set viminfofile=$HOME/.viminfo
   endif
 " }}}
 " Expected:    restores editor's window's size, as well {{{
