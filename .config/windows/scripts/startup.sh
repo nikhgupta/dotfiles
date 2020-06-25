@@ -7,11 +7,10 @@
 #   This script is added to Windows Task Scheduler, and currently,
 #   being run 30 seconds after login to the Windows account.
 
-start_service() { service $1 start; }
-
 if [[ "$(uname -a)" = *microsoft* ]] && [[ $UID -eq 0 ]]; then
-  start_service cron
-  start_service postgresql
+  service cron start
+  service postgresql start
+  su - nikhgupta -c mpd
 else
   echo "Startup script for WSL should be run as root user, and is meant only for Linux OS running on WSL"
   exit 127

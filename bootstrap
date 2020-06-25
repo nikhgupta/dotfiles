@@ -92,6 +92,12 @@ highlight "Installing AntiBody"
 curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
 antibody bundle <~/.zsh/plugs.txt >~/.zshplugs
 
+highlight "Installing MPD && ncmpcpp"
+sudo apt install mpd mpv ncmpcpp
+mkdir .mpd
+mkdir -p ~/Music/Playlists
+touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpd.state}
+
 if is_wsl; then
   highlight "Install win32yank.exe for sharing clipboard between Vim and Windows"
   curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
@@ -116,4 +122,7 @@ if is_wsl; then
   echo "=> You should add startup script to run 30 secs after Windows Login using Windows Task Scheduler"
   echo "   The Command to add would be $ C:\\Windows\\System32\\wsl.exe -u root /home/$NICK/.config/windows/scripts/startup.sh"
   echo "   Reference: https://askubuntu.com/a/1178910"
+
+  echo "=> You should setup PulseAudio on Windows to be able to listen to Audio being played on WSL Linux"
+  echo "   Reference: https://web.archive.org/web/20191005201213/https://research.wmz.ninja/articles/2017/11/setting-up-wsl-with-graphics-and-audio.html"
 fi

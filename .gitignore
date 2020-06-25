@@ -3,4 +3,5 @@
 .vim/tmp
 *.decrypted-cache
 .config/configstore
+.config/pulse
 .config/windows/shortcuts/*.lnk

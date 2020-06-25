@@ -15,4 +15,7 @@ win_shortcut.sh $_dir/vim $_dir/icons/vim.ico $WIN_HOME/AppData/Local/wsltty/bin
 # generate icon for tmux using mintty
 win_shortcut.sh $_dir/tmux $_dir/icons/tmux.ico $WIN_HOME/AppData/Local/wsltty/bin/mintty.exe -o Padding=1 --WSL= --configdir=$wsltty_config -w full -t TMux tmux
 
+# music player for the Windows
+win_shortcut.sh $_dir/play $_dir/icons/play.ico $WIN_HOME/AppData/Local/wsltty/bin/mintty.exe -o Padding=1 --WSL= --configdir=$wsltty_config -w full -t MusicPlayer ncmpcpp
+
 cp $_dir/*.lnk $WIN_HOME/Desktop

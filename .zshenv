@@ -10,7 +10,10 @@ unset DISPLAY
 
 # setup data home for WSL
 export WIN_HOME=$HOME
-is_wsl && export WIN_HOME=/mnt/c/Users/nikhg
+if is_wsl; then
+  export WIN_HOME=/mnt/c/Users/nikhg
+  export PULSE_SERVER=tcp:$(grep nameserver /etc/resolv.conf | awk '{print $2}')
+fi
 
 # change path and source credentials
 path_prepend ~/.bin
