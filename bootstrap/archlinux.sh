@@ -118,17 +118,21 @@ pac_install mpd mpv ncmpcpp
 mkdir ~/.mpd
 mkdir -p ~/Music/Playlists
 touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpd.state}
-enable_services mpd
+sudo systemctl disable --now mpd
 
 highlight "Checking if XDG directories are properly setup"
 check_xdg_dirs
 
-highlight "Install some more utilities.."
+highlight "Installing other useful apps"
+pac_install vlc neofetch
 if is_installed yay; then
   yay -Syu
   yay -aS monolith
   yay -aS google-chrome
   yay -aS visual-studio-code-bin
+else
+  action "You should install the following apps from AUR:"
+  echo "monolith google-chrome visual-studio-code-bin"
 fi
 
 highlight "Remaining tasks.."

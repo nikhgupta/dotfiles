@@ -3,6 +3,7 @@
 .gitignore
 .gitignore-global
 .gnupg
+etc
 bootstrap.sh
 bootstrap
 README.md
