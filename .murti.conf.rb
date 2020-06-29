@@ -55,34 +55,48 @@ Murti.configure do
     # config, and there is really no need to re-organize them (which will do
     # nothing and waste a lot of time). However, if I add a new matching rule,
     # I can use `--refresh` CLI flag to re-organize these directories.
-    source_directory "/media/nikhgupta/Data/DUMP"
-    source_directory "/media/nikhgupta/Data/UNMATCHED"
-    source_directory "/media/nikhgupta/Data/RAW/UNMATCHED"
-    source_directory "/media/nikhgupta/Data/Videos/UNMATCHED"
-    source_directory "/media/nikhgupta/Data/Pictures/UNMATCHED"
-    source_directory "/media/nikhgupta/Data/Live Photos/UNMATCHED"
-    source_directory "/media/nikhgupta/Data/RAW", on: :refresh
-    source_directory "/media/nikhgupta/Data/Videos", on: :refresh
-    source_directory "/media/nikhgupta/Data/Pictures", on: :refresh
-    source_directory "/media/nikhgupta/Data/Live Photos", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/DUMP"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/RAW/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Videos/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Documents/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Wallpapers/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Screenshots/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Live Photos/UNMATCHED"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/RAW", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Videos", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Documents", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Wallpapers", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Screenshots", on: :refresh
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Live Photos", on: :refresh
 
     # Target directory where the files will be moved/copied to.
     # `save_in` paths (specified in this config) are relative to this directory.
-    target_directory "/media/nikhgupta/Data"
+    target_directory "#{ENV['XDG_PICTURES_DIR']}"
   end
 
   group :gphotos do
-    source_directory "/media/nikhgupta/Data/Pictures/2000"
-    source_directory "/media/nikhgupta/Data/Pictures/2007"
-    source_directory "/media/nikhgupta/Data/Pictures/2008"
-    source_directory "/media/nikhgupta/Data/Pictures/2009"
-    source_directory "/media/nikhgupta/Data/Pictures/2010"
-    source_directory "/media/nikhgupta/Data/Pictures/2011"
-    source_directory "/media/nikhgupta/Data/Pictures/2012"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2000"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2007"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2008"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2009"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2010"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2011"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2012"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2013"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2014"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2015"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2016"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2017"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2018"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2019"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2020"
 
     # Target directory where the files will be moved/copied to.
     # `save_in` paths (specified in this config) are relative to this directory.
-    target_directory "/media/nikhgupta/Data/gphotos"
+    target_directory "#{ENV['XDG_PICTURES_DIR']}/gphotos"
   end
 
   # Another named group. I can ask Murti to focus on this group by passing the
@@ -93,10 +107,16 @@ Murti.configure do
     source_directory "/run/media/nikhgupta/PICTURES/RAW/UNMATCHED"
     source_directory "/run/media/nikhgupta/PICTURES/Videos/UNMATCHED"
     source_directory "/run/media/nikhgupta/PICTURES/Pictures/UNMATCHED"
+    source_directory "/run/media/nikhgupta/PICTURES/Documents/UNMATCHED"
+    source_directory "/run/media/nikhgupta/PICTURES/Wallpapers/UNMATCHED"
+    source_directory "/run/media/nikhgupta/PICTURES/Screenshots/UNMATCHED"
     source_directory "/run/media/nikhgupta/PICTURES/Live Photos/UNMATCHED"
     source_directory "/run/media/nikhgupta/PICTURES/RAW", on: :refresh
     source_directory "/run/media/nikhgupta/PICTURES/Videos", on: :refresh
     source_directory "/run/media/nikhgupta/PICTURES/Pictures", on: :refresh
+    source_directory "/run/media/nikhgupta/PICTURES/Documents", on: :refresh
+    source_directory "/run/media/nikhgupta/PICTURES/Wallpapers", on: :refresh
+    source_directory "/run/media/nikhgupta/PICTURES/Screenshots", on: :refresh
     source_directory "/run/media/nikhgupta/PICTURES/Live Photos", on: :refresh
 
     target_directory "/run/media/nikhgupta/PICTURES"

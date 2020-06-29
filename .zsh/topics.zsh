@@ -5,7 +5,6 @@ gpip2(){ PIP_REQUIRE_VIRTUALENV="" pip2 "$@"; }
 gpip3(){ PIP_REQUIRE_VIRTUALENV="" pip3 "$@"; }
 alias venv="python -m env"
 alias venv3="python3 -m env"
-path_prepend "$HOME/.bin/shims"
 
 # language: go
 export GOPATH=$HOME/.golang

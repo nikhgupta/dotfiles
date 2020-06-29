@@ -15,4 +15,4 @@ To install, run:
 
     git clone https://github.com/nikhgupta/dotcastle ~/.dotfiles
     stow -t $HOME -d ~/.dotfiles . -v
-    ~/.dotfiles/bootstrap
+    ~/.dotfiles/bootstrap.sh

@@ -9,6 +9,7 @@ alias -g ERR='2> >(while read line; do echo -e "\e[01;31m$line\e[0m"; done)'
 alias -g NOERR='2> /dev/null'
 alias -g NOOUT='1> /dev/null'
 alias -g QUIET='&> /dev/null'
+alias -g G='| grep'
 
 alias edit="$EDITOR"
 alias reload=" source $HOME/.zshrc"
@@ -80,7 +81,7 @@ function addscript() {
 }
 
 check_xdg_dirs() {
-  for _var in $(typeset -p | grep export\ XDG_ | cut -d ' ' -f2 | cut -d '=' -f1); do
+  for _var in $(typeset -p | grep -E "export XDG_.*_(DIR|HOME)=" | cut -d ' ' -f2 | cut -d '=' -f1); do
     _dir="$(realpath ${(P)_var} 2>/dev/null)"
     [[ -z "${_dir}" ]] && _dir="${(P)_var}"
     [[ -d "${_dir}" ]] && echo "\e[32m$_var ===== $_dir" || echo "\e[31m$_var ==!== $_dir"

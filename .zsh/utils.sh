@@ -8,6 +8,7 @@ os_release() { lsb_release -i | cut -d: -f2 | tr '[:upper:]' '[:lower:]' | sed -
 is_macosx() { [[ "$OSTYPE" = darwin* ]]; }
 is_ubuntu() { [[ "$(uname -a)" = *Ubuntu* ]]; }
 is_debian() { [[ -f "/etc/debian" ]]; }
+is_archlinux() { [[ -f /etc/arch-release ]]; }
 is_wsl() { [[ "$(uname -a)" = *microsoft* ]]; }
 is_wsl_ubuntu() { is_wsl && os_release == "ubuntu" >/dev/null; }
 is_svn() { [[ -d '.svn' ]]; }
@@ -15,6 +16,10 @@ is_hg() { [[ -d '.hg' ]] || command hg root &>/dev/null; }
 is_git() { [[ -d '.git' ]] || \ command git rev-parse --git-dir &>/dev/null || \ command git symbolic-ref HEAD &>/dev/null; }
 is_emacs() { echo $TERMINFO | grep -o emacs >/dev/null; }
 is_vscode() { [[ "$TERM_PROGRAM" == "vscode" ]]; }
+
+has_yum() { is_installed yum; }
+has_pac() { is_installed pacman; }
+has_apt() { is_installed apt-get; }
 
 warn() { echo "\e[4;33mWarning\e[0m: $@"; }
 error() {

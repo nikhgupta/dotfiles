@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-_current=$(asdf current python | head -1)
-asdf local python 3.8.3
-/home/nikhgupta/.asdf/shims/python3 "$@"
-asdf local python $_current

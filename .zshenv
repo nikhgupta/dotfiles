@@ -6,7 +6,6 @@ source ~/.zsh/utils.sh
 export KEYTIMEOUT=1
 export EDITOR=vim
 export GPG_TTY=$(tty)
-unset DISPLAY
 
 # setup data home for WSL
 export WIN_HOME=$HOME

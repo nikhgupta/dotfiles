@@ -1,6 +1,6 @@
 source ~/.zsh/utils.sh
 
-if is_ubuntu; then
+if is_ubuntu || is_archlinux; then
   alias open=xdg-open
   alias pbcopy=xclip -in -selection clipboard
   alias pbpaste=xclip -out -selection clipboard

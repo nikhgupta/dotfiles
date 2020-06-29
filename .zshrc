@@ -51,7 +51,7 @@ bindkey "^[[B" history-beginning-search-forward-end
 fpath=(${HOME}/.asdf/completions $fpath)
 
 # dircolors
-[[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
+[[ -r ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 [[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
 
 # brew

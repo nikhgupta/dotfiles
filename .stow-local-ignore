@@ -3,5 +3,7 @@
 .gitignore
 .gitignore-global
 .gpg-agent.conf
+.gpg-sshcontrol
+bootstrap.sh
 bootstrap
 README.md
