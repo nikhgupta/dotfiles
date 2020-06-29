@@ -21,11 +21,11 @@ enable_services avahi-daemon cronie NetworkManager tlp ufw sshd systemd-timesync
 
 highlight "Setting up GnuPG"
 import_gnupg.sh $gpgdir
-ln -sf ~/.dotfiles/.gpg-agent.conf ~/.gnupg/gpg-agent.conf
+ln -sf ~/.dotfiles/.gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 highlight "Using GPG for SSH authentications"
 killall gpg-agent
-ln -sf ~/.dotfiles/.gpg-sshcontrol ~/.gnupg/sshcontrol
+ln -sf ~/.dotfiles/.gnupg/sshcontrol ~/.gnupg/sshcontrol
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf &>/dev/null
 

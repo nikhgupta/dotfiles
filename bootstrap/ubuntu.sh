@@ -1,16 +1,24 @@
 #!/usr/bin/env zsh
 
-backup=$HOME/OneDrive/Backup
-gpgdir=$backup/workstation/gpg
+gpgdir="${1:-$HOME/OneDrive/Backup/workstation/gpg}"
 source ~/.zsh/utils.sh
 
 highlight "Checking if OneDrive is setup correctly.."
-[[ -d $gpgdir ]] || error "Please, make sure that $gpgdir is available."
+[[ -d $gpgdir ]] || {
+  info "You can pass directory containing GPG keys as first argument to this script."
+  error "Please, make sure that $gpgdir is available."
+}
 
 highlight "Setting up GnuPG"
 sudo apt install gpg pinentry-curses
-import_gnupg.sh
-ln -sf ~/.dotfiles/.gpg-agent.conf ~/.gnupg/gpg-agent.conf
+import_gnupg.sh $gpgdir
+ln -sf ~/.dotfiles/.gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+
+highlight "Using GPG for SSH authentications"
+killall gpg-agent
+ln -sf ~/.dotfiles/.gnupg/sshcontrol ~/.gnupg/sshcontrol
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf &>/dev/null
 
 highlight "Checking if I can access git@github.com with newly set GPG key"
 ssh -T git@github.com 2>&1 | grep $(whoami) || error "SSH from GPG did not work!"
