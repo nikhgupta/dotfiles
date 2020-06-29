@@ -8,3 +8,8 @@ if is_ubuntu || is_wsl_ubuntu; then
 elif is_archlinux; then
   bash $_root/botostrap/archlinux.sh
 fi
+
+pushd ~/.dotfiles
+git remote rm origin
+git remote add origin git@github.com:nikhgupta/dotfiles
+popd

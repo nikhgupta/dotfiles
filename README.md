@@ -13,6 +13,6 @@ from [dotfiles repository](http://github.com/skwp/dotfiles) by
 
 To install, run:
 
-    git clone https://github.com/nikhgupta/dotcastle ~/.dotfiles
+    git clone https://github.com/nikhgupta/dotfiles ~/.dotfiles
     stow -t $HOME -d ~/.dotfiles . -v
     ~/.dotfiles/bootstrap.sh
