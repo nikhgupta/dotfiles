@@ -23,7 +23,7 @@ sudo pacman -Syyu
 is_installed yay && yay
 
 highlight "Installing utilities and essential tools"
-pac_install curl wget make zsh vim tmux aria2 rclone ripgrep fd \
+pac_install curl wget make zsh gvim tmux aria2 rclone ripgrep fd \
     jq inotify-tools ncdu xclip ntfs-3g ttf-fira-code timeshift \
     kitty
 
