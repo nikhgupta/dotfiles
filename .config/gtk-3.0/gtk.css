@@ -1,5 +1,5 @@
 /* UNITE windowDecorations */
-@import url('/usr/share/gnome-shell/extensions/unite@hardpixel.eu/styles/buttons-left/maximized.css');
+@import url('/usr/share/gnome-shell/extensions/unite@hardpixel.eu/styles/buttons-right/maximized.css');
 /* windowDecorations UNITE */
 VteTerminal, vte-terminal {
   padding: 20px;
