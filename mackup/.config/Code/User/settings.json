@@ -1,0 +1,8 @@
+{
+    "workbench.colorTheme": "Snazzy Operator",
+    "editor.formatOnSave": true,
+    "window.menuBarVisibility": "toggle",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "workbench.iconTheme": "vscode-icons"
+}

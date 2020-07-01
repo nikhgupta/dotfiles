@@ -14,10 +14,10 @@ _user=nikhgupta
 _home=/home/$_user
 _backup=$_home/OneDrive/Backup/workstation/
 
-echo -ne "\n\n\n=> Running housekeeping at `date`"
+echo -ne "\n\n\n=> Running housekeeping at $(date)"
 source $_home/.zsh/utils.sh
 
-(( $UID )) && error "You must run $0 with sudo priviledges."
+(($UID)) && error "You must run $0 with sudo priviledges."
 
 as_user() { su - $_user -c "source ~/.zshrc > /dev/null; $@"; }
 
@@ -56,6 +56,10 @@ mkdir -p $_backup/{ssh,gpg}
 cp -r $_home/.ssh/{config,known_hosts} $_backup/ssh/
 as_user "gpg --export-ownertrust >$_backup/gpg/trustdb.txt"
 as_user "gpg --refresh-keys"
+
+# backup various app configs and vscode extensions list
+as_user "mackup backup"
+as_user "code --list-extensions" >$_home/.dotfiles/mackup/.config/Code/User/extensions.txt
 
 if is_wsl; then
   highlight "Backing up WindowsTerminal settings"
