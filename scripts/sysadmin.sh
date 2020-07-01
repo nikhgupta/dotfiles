@@ -22,6 +22,9 @@ highlight "Updating system"
 sudo pacman -Syyu
 is_installed yay && yay
 
+highlight "Enable VA-API support via Intel drivers"
+pac_install libva-intel-driver libva-utils
+
 highlight "Installing utilities and essential tools"
 pac_install curl wget make zsh gvim tmux aria2 rclone ripgrep fd \
     jq inotify-tools ncdu xclip ntfs-3g ttf-fira-code timeshift \

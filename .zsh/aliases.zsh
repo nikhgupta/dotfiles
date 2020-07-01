@@ -84,6 +84,9 @@ function md5() { echo $@ | md5sum | cut -d ' ' -f1; }
 function whois() { dig +nocmd $1 any +multiline +noall +answer; }
 function update-antibody-config() { antibody bundle <~/.zsh/plugs.txt >~/.zshplugs; }
 
+## hardware accelerated programs using nvidia
+alias mpv="prime-run mpv"
+
 # link xdg directories to another folder
 linkdir() {
   _destin="${2:-$HOME/$(basename $1)}"

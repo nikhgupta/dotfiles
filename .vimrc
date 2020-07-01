@@ -172,7 +172,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Appearance:  uses distinct GUI fonts {{{
   if g:is_gui
-    set guifont=Fira\ Code:h16
+    set guifont=Fira\ Code\ 12
     "set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
     "set guifont=Fira\ Code\ Regular\ Nerd\ Font\ Complete\ Windows\ Compatible:h16
     "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
@@ -314,6 +314,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Expected:    maximizes editor window when using GUI {{{ todo: extract
   if g:is_gui
+    set guiheadroom=0
     set lines=999 columns=999   " maximize GUI window
     set guitablabel=%N/\ %t\ %M " show tab number, name and status
   endif
