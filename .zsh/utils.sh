@@ -11,6 +11,7 @@ is_debian() { [[ -f "/etc/debian" ]]; }
 is_archlinux() { [[ -f /etc/arch-release ]]; }
 is_wsl() { [[ "$(uname -a)" = *microsoft* ]]; }
 is_wsl_ubuntu() { is_wsl && os_release == "ubuntu" >/dev/null; }
+
 is_svn() { [[ -d '.svn' ]]; }
 is_hg() { [[ -d '.hg' ]] || command hg root &>/dev/null; }
 is_git() { [[ -d '.git' ]] || \ command git rev-parse --git-dir &>/dev/null || \ command git symbolic-ref HEAD &>/dev/null; }
@@ -21,13 +22,15 @@ has_yum() { is_installed yum; }
 has_pac() { is_installed pacman; }
 has_apt() { is_installed apt-get; }
 
-warn() { echo "\e[4;33mWarning\e[0m: $@"; }
+ok() { echo -ne "\e[32m✓\e[0m $@\n"; }
+warn() { echo -ne "\n\e[4;33mWarning: $@\e[m\n"; }
+info() { echo -ne "\n\e[4;32mInfo: $@\e[0m\n"; }
+action() { echo -ne "\n\e[0;35mACTION: $@\e[0m\n"; }
+highlight() { echo -ne "\n👉 \e[0;34m$@\e[0m\n"; }
 error() {
   echo -ne "\e[4;31mError\e[0m: \e[31m$@\e[0m\n"
   exit 1
 }
-action() { echo "\e[0;35mACTION\e[0m: $@"; }
-highlight() { echo -ne "\n👉  \e[0;34m$@\e[0m\n"; }
 
 init_cache() {
   file_name=$HOME/.init-cache/$1
@@ -51,7 +54,9 @@ modify_secret_config() {
   rm -f $HOME/.decrypted/${1:t:r}.decrypted-cache
 }
 source_secret() {
-  destin=$HOME/.decrypted/${1:t:r}.decrypted-cache
+  name="${1:t:r}"
+  [[ -z "$name" ]] && name=$(basename ${1%.*})
+  destin=$HOME/.decrypted/${name}.decrypted-cache
   if [[ -s $destin ]]; then
     source $destin
   elif [[ -f $1 ]]; then

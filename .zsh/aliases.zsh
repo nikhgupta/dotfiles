@@ -80,6 +80,22 @@ function addscript() {
   vim $file
 }
 
+function md5() { echo $@ | md5sum | cut -d ' ' -f1; }
+function whois() { dig +nocmd $1 any +multiline +noall +answer; }
+function update-antibody-config() { antibody bundle <~/.zsh/plugs.txt >~/.zshplugs; }
+
+# link xdg directories to another folder
+linkdir() {
+  _destin="${2:-$HOME/$(basename $1)}"
+  if [[ -d $1 ]] && [[ ! -L "$_destin" ]]; then
+    [[ -d "$_destin" ]] && mv $_destin/* $1/
+    [[ -d "$_destin" ]] && rmdir $_destin
+    [[ ! -d "$_destin" ]] && ln -s $1 $_destin
+  elif [[ ! -L "$_destin" ]]; then
+    echo "Provided XDG directory for symlinking is not a directory: $1"
+  fi
+}
+
 check_xdg_dirs() {
   for _var in $(typeset -p | grep -E "export XDG_.*_(DIR|HOME)=" | cut -d ' ' -f2 | cut -d '=' -f1); do
     _dir="$(realpath ${(P)_var} 2>/dev/null)"
@@ -88,16 +104,10 @@ check_xdg_dirs() {
   done
 }
 
-function md5() { echo $@ | md5sum | cut -d ' ' -f1; }
-function whois() { dig +nocmd $1 any +multiline +noall +answer; }
-function update-antibody-config() { antibody bundle <~/.zsh/plugs.txt >~/.zshplugs; }
-
 # sync pictures and videos with onedrive storage
-alias onedrivesync=rclone sync /media/nikhgupta/Data onedrive:Photography -P \
-  --delete-excluded --fast-list --log-level=INFO --no-check-certificate --no-update-modtime
-
-# source scripts containing other aliases
-# source ~/.zsh/tmux.sh
-# source_if_exists ~/.zsh/funalias.zsh
-# source_if_exists ~/.zsh/usefulscripts.zsh
-# source_if_exists ~/.zsh/commandlinefu.zsh
+onedrivesync() { 
+  orig=$1; shift
+  dest=$1; shift
+  rclone sync $orig $dest -P --delete-excluded --fast-list --log-level=INFO --no-check-certificate --no-update-modtime $@
+}
+alias onedrivesync_photos="onedrivesync /media/nikhgupta/Gallery onedrive:Photography"
