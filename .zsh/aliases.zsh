@@ -87,18 +87,6 @@ function update-antibody-config() { antibody bundle <~/.zsh/plugs.txt >~/.zshplu
 ## hardware accelerated programs using nvidia
 alias mpv="prime-run mpv"
 
-# link xdg directories to another folder
-linkdir() {
-  _destin="${2:-$HOME/$(basename $1)}"
-  if [[ -d $1 ]] && [[ ! -L "$_destin" ]]; then
-    [[ -d "$_destin" ]] && mv $_destin/* $1/
-    [[ -d "$_destin" ]] && rmdir $_destin
-    [[ ! -d "$_destin" ]] && ln -s $1 $_destin
-  elif [[ ! -L "$_destin" ]]; then
-    echo "Provided XDG directory for symlinking is not a directory: $1"
-  fi
-}
-
 check_xdg_dirs() {
   for _var in $(typeset -p | grep -E "export XDG_.*_(DIR|HOME)=" | cut -d ' ' -f2 | cut -d '=' -f1); do
     _dir="$(realpath ${(P)_var} 2>/dev/null)"

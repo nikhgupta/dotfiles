@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-pac_install() { sudo pacman -S --needed --noconfirm $@; }
+HOMEDIR=$(eval echo ~$SUDO_USER)
+source $HOMEDIR/.zsh/utils.sh
+
 enable_services() { for service in $@; do sudo systemctl enable --now $service; done; }
 yay_install() {
     if is_installed yay; then
@@ -11,9 +13,6 @@ yay_install() {
         action "Install AUR packages: $@"
     fi
 }
-
-HOMEDIR=$(eval echo ~$SUDO_USER)
-source $HOMEDIR/.zsh/utils.sh
 
 highlight "Enabling some basic services"
 enable_services avahi-daemon cronie NetworkManager tlp ufw sshd systemd-timesyncd bluetooth
@@ -28,7 +27,8 @@ pac_install libva-intel-driver libva-utils
 highlight "Installing utilities and essential tools"
 pac_install curl wget make zsh gvim tmux aria2 rclone ripgrep fd \
     jq inotify-tools ncdu xclip ntfs-3g ttf-fira-code timeshift \
-    kitty
+    kitty pkgfile
+pkgfile --update
 
 highlight "Installing dependencies for web dev setup"
 pac_install base-devel

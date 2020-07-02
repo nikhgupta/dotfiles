@@ -29,14 +29,14 @@ echo "  onedrivesync onedrive:Backup /media/nikhgupta/Data/OneDrive/Backup"
 
 action "Setup links to various XDG directories"
 cat <<ENTRIES
-  linkdir /media/nikhgupta/JukeBox/Movies
-  linkdir /media/nikhgupta/JukeBox/Music
-  linkdir /media/nikhgupta/JukeBox/Videos
-  linkdir /media/nikhgupta/JukeBox/Documents
-  linkdir /media/nikhgupta/JukeBox/Downloads
-  linkdir /media/nikhgupta/Data/Backups
-  linkdir /media/nikhgupta/Data/OneDrive
-  linkdir /media/nikhgupta/Gallery ~/Pictures
+  safelink.rb -v /media/nikhgupta/JukeBox/Movies
+  safelink.rb -v /media/nikhgupta/JukeBox/Music
+  safelink.rb -v /media/nikhgupta/JukeBox/Videos
+  safelink.rb -v /media/nikhgupta/JukeBox/Documents
+  safelink.rb -v /media/nikhgupta/JukeBox/Downloads
+  safelink.rb -v /media/nikhgupta/Data/Backups
+  safelink.rb -v /media/nikhgupta/Data/OneDrive
+  safelink.rb -v /media/nikhgupta/Gallery ~/Pictures
 ENTRIES
 
 action "Check if XDG directories are propertly setup"
