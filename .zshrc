@@ -69,5 +69,6 @@ source ~/.zsh/aliases.zsh
 source ~/.zsh/fuzzy.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
+[[ -f ~/.localrc ]] && source ~/.localrc
 
 echo "\e[32mWelcome, Nick!\e[0m"

@@ -1,4 +1,5 @@
 # others
+.localrc
 .vim/bundle
 .vim/tmp
 *.decrypted-cache
