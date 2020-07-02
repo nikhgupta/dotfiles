@@ -1,0 +1,38 @@
+configuration {
+    theme:                          "config";
+    show-icons:                     false;
+}
+
+window {
+    height:                         1200px;
+    width:                          1920px;
+    location:                       center;
+    anchor:                         center;
+    border-radius:                  0px;
+    fullscreen:                     true;
+    transparency:                   "real";
+}
+
+mainbox {
+    width:                          600px;
+    margin:                         200px 660px;
+}
+
+prompt {
+    enabled:                        false;
+}
+
+entry  {
+    expand:                         false;
+    width:                          240px;
+    margin:                         0px 0px 0px 0px;
+}
+
+element {
+    expand:                         false;
+    margin:                         0;
+}
+
+element-text {
+    expand:                         true;
+}

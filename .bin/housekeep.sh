@@ -12,6 +12,8 @@
 
 _user=nikhgupta
 _home=/home/$_user
+_home=$(su - $_user -c "echo \$HOME")
+_dotcastle=$(su - $_user -c "echo \$DOTCASTLE")
 _backup=$_home/OneDrive/Backup/workstation/
 
 echo -ne "\n\n\n=> Running housekeeping at $(date)"
@@ -59,19 +61,10 @@ as_user "gpg --refresh-keys"
 
 # backup various app configs and vscode extensions list
 as_user "mackup backup"
-as_user "code --list-extensions" >$_home/.dotfiles/mackup/.config/Code/User/extensions.txt
+as_user "code --list-extensions" >$_dotcastle/.mackup/.config/Code/User/extensions.txt
 
-if is_wsl; then
-  highlight "Backing up WindowsTerminal settings"
-  _data_home=$(as_user 'echo $DATA_HOME')
-  cp $_data_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
-    $_home/.dotfiles/.config/windows/terminal/settings.json
-fi
-
-if is_ubuntu; then
-  highlight "Clearing journalctl logs on Ubuntu.."
-  $_home/.bin/clearlogs.sh
-fi
+highlight "Clearing journalctl logs on Ubuntu.."
+$_home/.bin/clearlogs.sh
 
 # tput bel
 highlight "Finished."

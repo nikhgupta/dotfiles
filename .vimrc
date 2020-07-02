@@ -181,7 +181,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
-  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', '~/.dotfiles/ubuntu/' ]
+  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', $DOTCASTLE ]
 " }}}
 " }}}
 

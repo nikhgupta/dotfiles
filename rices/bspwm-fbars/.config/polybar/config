@@ -1,0 +1,679 @@
+;----------------------------------------------------------
+; COLORS
+;----------------------------------------------------------
+[colors]
+transparent = #00000000
+
+yellow = #ffb52a
+pink = #e60053
+blue = #20a4f3
+; green = #5FAD56
+green = #7fCF78
+black = #000000
+white = #FFFFFF
+cream = #E4FDE1
+gray  = #85888f
+lightgray = #5A000000
+darkgray = #88000000
+
+primary = ${colors.yellow}
+secondary = ${colors.green}
+tertiary = ${colors.blue}
+alert = ${colors.pink}
+urgent = ${colors.pink}
+highlighted = ${colors.blue}
+dimmed = ${colors.gray}
+
+foreground = ${colors.white}
+foreground-alt = ${colors.dimmed}
+background = ${colors.lightgray}
+background-alt = ${colors.gray}
+background-highlighted = ${colors.darkgray}
+
+;----------------------------------------------------------
+; BAR/TOP
+;----------------------------------------------------------
+[bar/top]
+; monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 27
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 2
+
+font-0 = Fira Code:size=10:style=Regular;3
+font-1 = Font Awesome 5 Free:style=Solid:pixelsize=11;3
+font-2 = Font Awesome 5 Brands:pixelsize=11;3
+font-3 = FontAwesome:style=Regular:pixelsize=11;3
+font-4 = Material Design Icons:style=Regular:pixelsize=18;5
+
+modules-left = bspwm window
+modules-right = filesystem cpu ram temp battery microphone vol-pulse date screencast screenshot wallpaper
+
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+wm-restack=bspwm
+tray-position = right
+tray-padding = 2
+; tray-detached = true
+
+underline-size = 2
+underline-color = ${colors.primary}
+
+;----------------------------------------------------------
+; BAR/BOTTOM
+;----------------------------------------------------------
+[bar/bottom]
+; monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 27
+fixed-center = true
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = Fira Code:size=10:style=Regular;3
+font-1 = Font Awesome 5 Free:style=Solid:pixelsize=11;3
+font-2 = Font Awesome 5 Brands:pixelsize=11;3
+font-3 = FontAwesome:style=Regular:pixelsize=11;3
+font-4 = Material Design Icons:style=Regular:pixelsize=18:5
+
+;modules-center = launcher uptime sep bitcoin
+modules-left = launcher mpd
+modules-center = browser mail file terminal editor social weechat
+modules-right = pub-ip networkspeed cron2m trash power
+wm-restack=bspwm
+
+;----------------------------------------------------------
+; BAR/DEEPIN
+;----------------------------------------------------------
+[bar/deepin]
+; monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 27
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 2
+
+font-0 = Fira Code:size=12:style=Regular;3
+font-1 = Font Awesome 5 Free:style=Solid:pixelsize=11;3
+font-2 = Font Awesome 5 Free:style=Regular:pixelsize=11;3
+font-3 = Font Awesome 5 Brands:pixelsize=11;3
+font-4 = icomoon:pixelsize=11;3
+
+modules-left = uptime sep bitcoin pub-ip
+modules-center = window sep screencast screenshot trash
+modules-right = filesystem cpu ram temp wallpaper sep mpd sep networkspeed
+
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+underline-size = 2
+underline-color = ${colors.primary}
+
+;----------------------------------------------------------
+; BAR/ELEMENTARY
+;----------------------------------------------------------
+[bar/elementary]
+; monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 30
+fixed-center = true
+
+background = ${colors.transparent}
+foreground = ${colors.gray}
+
+padding-left = 16
+padding-right = 38
+
+module-margin-left = 0
+module-margin-right = 2
+
+font-0 = Fira Code:size=10:style=Regular;3
+font-1 = FontAwesome:style=Regular:pixelsize=11;3
+font-2 = icomoon:pixelsize=11;3
+
+modules-left = uptime sep bitcoin pub-ip
+; modules-center = window sep screencast screenshot trash
+modules-right = networkspeed sep filesystem cpu ram temp wallpaper
+
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+underline-size = 2
+underline-color = ${colors.primary}
+
+;----------------------------------------------------------
+; BSPWM
+;----------------------------------------------------------
+[module/bspwm]
+type = internal/bspwm
+format = <label-state> <label-mode>
+
+ws-icon-0 = web;
+ws-icon-1 = term;
+ws-icon-2 = code;
+ws-icon-3 = music;
+ws-icon-4 = files;
+ws-icon-5 = mail;
+ws-icon-6 = chat;
+ws-icon-7 = settings;
+ws-icon-8 = automation;
+ws-icon-9 = 9;
+ws-icon-default = 
+
+label-focused = %icon%
+label-focused-padding = 2
+label-focused-underline = ${colors.yellow}
+label-focused-background = ${colors.background-highlighted}
+label-focused-foreground = ${colors.yellow}
+
+label-unfocused = %icon%
+label-unfocused-foreground = ${colors.cream}
+label-unfocused-padding = 2
+
+label-visible = %icon%
+label-visible-foreground = ${colors.cream}
+label-visible-padding = 2
+
+label-urgent = %icon%
+label-urgent-foreground = ${colors.urgent}
+label-urgent-padding = 2
+
+label-occupied = %icon%
+label-occupied-padding = 2
+label-occupied-foreground = ${colors.green}
+
+label-empty = %icon%
+label-empty-foreground = ${colors.gray}
+label-empty-padding = 2
+
+;----------------------------------------------------------
+; LAUNCHER
+;----------------------------------------------------------
+[module/launcher]
+type = custom/text
+content = 
+format-padding = 2
+content-foreground = ${colors.blue}
+click-left = $RICE_LAUNCHER &
+click-middle = $RICE_LAUNCHER &
+click-right = $RICE_LAUNCHER &
+
+;----------------------------------------------------------
+; TITLE
+;----------------------------------------------------------
+[module/title]
+type = internal/xwindow
+
+format-prefix = " "
+format = <label>
+
+label = %title%
+label-maxlen = 50
+
+;----------------------------------------------------------
+; WINDOW
+;----------------------------------------------------------
+; Label: Title for the current window.
+; Left click: copy title
+; Right Click: Use rofi to switch windows
+; Middle Click: Close active window
+;----------------------------------------------------------
+[module/window]
+interval = 2
+type = custom/script
+label = %output:0:60:...%  %{B- -o -u}
+click-left = $RICE_WINDOW_TITLEIZER -i
+click-middle = $RICE_WINDOW_TITLEIZER -c
+click-right = $RICE_WINDOW_TITLEIZER -w
+exec = $RICE_WINDOW_TITLEIZER
+tail = true
+exec-if = true
+
+;----------------------------------------------------------
+; SCREENCAST
+;----------------------------------------------------------
+; label: display whether we are recording currently
+; left click: record a screencast & exit
+; right click: cache existing screencasts
+;----------------------------------------------------------
+[module/screencast]
+type = custom/script
+label = %output%
+click-left = $RICE_SCREENCASTER &
+click-right = $RICE_SCREENCASTER cache &
+exec = $RICE_SCREENCASTER status
+exec-if = true
+tail = true
+
+;----------------------------------------------------------
+; SCREENSHOT
+;----------------------------------------------------------
+; LEFT CLICK: Take a screenshot for the selected area
+; MIDDLE CLICK: Take a screenshot for the current window
+; RIGHT CLICK: Take a screenshot with the whole screen
+; SCROLL DOWN: Take a screenshot and edit it
+;----------------------------------------------------------
+[module/screenshot]
+type = custom/text
+content = 
+click-left = $RICE_SCREENSHOTTER -s &
+click-middle = $RICE_SCREENSHOTTER -w &
+click-right = $RICE_SCREENSHOTTER &
+scroll-down = $RICE_SCREENSHOTTER -e &
+
+;----------------------------------------------------------
+; FILESYSTEM
+;----------------------------------------------------------
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted =  %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+;----------------------------------------------------------
+; CPU
+;----------------------------------------------------------
+[module/cpu]
+type = internal/cpu
+interval = 2
+label =  %percentage%%
+
+;----------------------------------------------------------
+; RAM
+;----------------------------------------------------------
+[module/ram]
+type = internal/memory
+interval = 2
+label =  %percentage_used%%
+
+;----------------------------------------------------------
+; NETWORK
+;----------------------------------------------------------
+[module/networkspeed]
+type = internal/network
+interface = wlp7s0
+interval = 3.0
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+
+;label-connected = %signal:3%% %{F#F1F1F1} %{F-}%downspeed:5% %{F#F1F1F1} %{F-}%upspeed:5%
+;label-connected = %local_ip%  %downspeed%  %upspeed%
+;label-connected =  %downspeed%  %upspeed%
+label-connected = %{F#e60053} %{F-}%downspeed% %{F#5FAD56} %{F-}%upspeed%
+label-disconnected =
+;----------------------------------------------------------
+; Temperature
+;----------------------------------------------------------
+[module/temp]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input
+units = false
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${colors.pink}
+format-warn-foreground = ${colors.pink}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+
+;----------------------------------------------------------
+; BATTERY
+;----------------------------------------------------------
+[module/battery]
+type = internal/battery
+adapter = ADP0
+battery = BAT0
+full-at = 98
+time-format = %H:%M
+
+# 
+format-full = 
+format-full-foreground = ${colors.green}
+
+format-charging = <animation-charging> <label-charging>
+label-charging = %percentage%%
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%% - %time%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-0-foreground = ${colors.pink}
+ramp-capacity-1-foreground = ${colors.yellow}
+ramp-capacity-2-foreground = ${colors.green}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-foreground = ${colors.yellow}
+animation-charging-framerate = 750
+
+;----------------------------------------------------------
+; VOLUME
+;----------------------------------------------------------
+[module/vol-alsa]
+type = internal/alsa
+
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage:3%%
+
+format-volume-muted = <label-muted>
+label-muted = 󰝟
+label-muted-foreground = ${colors.pink}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/microphone]
+type = custom/script
+exec = $RICE_MIC_NOTIFIER
+tail = true
+format = <label>
+format-foreground = ${colors.green}
+click-left = pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+[module/vol-pulse]
+type = internal/pulseaudio
+format-volume = <ramp-volume> <label-volume>
+
+label-volume = %percentage%%
+label-volume-foreground = ${colors.foreground}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+label-muted = 󰝟
+label-muted-foreground = ${colors.pink}
+
+click-right = pavucontrol &
+
+;----------------------------------------------------------
+;           V O L U M E 2
+;----------------------------------------------------------
+[module/vol2]
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+label-volume = 
+
+format-muted-prefix = " "
+label-muted = muted
+label-muted-foreground = ${colors.pink}
+
+bar-volume-width = 4
+bar-volume-foreground-0 = ${colors.green}
+bar-volume-foreground-1 = ${colors.green}
+bar-volume-foreground-2 = ${colors.green}
+bar-volume-foreground-3 = ${colors.green}
+bar-volume-foreground-4 = ${colors.green}
+bar-volume-foreground-5 = ${colors.yellow}
+bar-volume-foreground-6 = ${colors.pink}
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 3
+bar-volume-fill = ─
+bar-volume-fill-font = 1
+bar-volume-empty = " "
+bar-volume-empty-font = 1
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+;----------------------------------------------------------
+; DATE
+;----------------------------------------------------------
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d-%m-%Y"
+
+time = %H:%M
+;time-alt = %H:%M:%S
+
+format-prefix = 
+label = %date% %time%
+
+
+;----------------------------------------------------------
+; WALLPAPER
+;----------------------------------------------------------
+; LEFT CLICK: Download and set a new wallpaper
+; MIDDLE CLICK: Remove current wallpaper
+; RIGHT CLICK: Set default image as wallpaper
+; SCROLL: scroll through wallpapers in wallpaper dir
+;----------------------------------------------------------
+[module/wallpaper]
+type = custom/text
+content = 
+click-left = $RICE_WALLPAPERIZER d &
+click-middle = $RICE_WALLPAPERIZER dd &
+click-right = $RICE_WALLPAPERIZER x &
+scroll-up = $RICE_WALLPAPERIZER p &
+scroll-down = $RICE_WALLPAPERIZER a &
+
+;----------------------------------------------------------
+; POWER
+;----------------------------------------------------------
+[module/power]
+type = custom/menu
+
+expand-right = false
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.blue}
+label-close = 
+label-close-foreground = ${colors.blue}
+;label-separator = |
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = " "
+menu-0-0-exec = $RICE_SCREENLOCKER
+
+menu-0-1 = ""
+menu-0-1-exec = menu-open-1
+
+menu-0-2 = ""
+menu-0-2-exec = menu-open-2
+
+menu-0-3 = ""
+menu-0-3-exec = menu-open-3
+
+menu-1-0 = "LOGOUT!? "
+menu-1-0-exec = $RICE_SESSION_QUITTER
+
+menu-2-0 = "RESTART!? "
+menu-2-0-exec = systemctl reboot
+
+menu-3-0 = "SHUTDOWN!? "
+menu-3-0-exec = systemctl poweroff
+
+;----------------------------------------------------------
+;          W E A T H E R
+;----------------------------------------------------------
+[module/weather]
+type = custom/script
+interval = 60
+exec = $RICE_WEATHER_NOTIFIER
+
+;----------------------------------------------------------
+; MPD
+;----------------------------------------------------------
+[module/mpd]
+type = internal/mpd
+format-online =  <icon-prev> <icon-stop> <toggle> <icon-next>  <label-song>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 50
+label-song-ellipsis = true
+
+;----------------------------------------------------------
+; TRASH
+;----------------------------------------------------------
+; NORMAL: display number of files in trash
+; LEFT CLICK: empty trash bin forever
+; RIGHT CLICK: open trash bin
+;----------------------------------------------------------
+[module/trash]
+type = custom/script
+;interval = 1
+tail = true
+click-left = $RICE_TRASHER -x &
+click-right = $RICE_TRASHER -o &
+exec = $RICE_TRASHER
+
+;----------------------------------------------------------
+; APPS
+;----------------------------------------------------------
+[module/browser]
+type = custom/text
+content = 
+click-left = google-chrome-stable &
+;click-middle = firefox &
+click-right = qutebrowser &
+
+[module/mail]
+type = custom/text
+content = 
+click-left = thunderbird &
+
+[module/file]
+type = custom/text
+content = 
+click-left = nautilus &
+
+[module/terminal]
+type = custom/text
+content = 
+click-left = kitty &
+
+[module/social]
+type = custom/text
+content = 
+click-left = slack &
+click-middle = telegram-desktop &
+click-right = skypeforlinux &
+
+[module/weechat]
+type = custom/text
+content = 
+click-left = kitty --class weechat -e weechat
+
+;[module/docker]
+;type = custom/text
+;content = 
+;click-left = ~/.config/rofi/scripts/docker
+
+[module/editor]
+type = custom/text
+content = 
+click-left = code &
+
+[module/mpcrebuild]
+type = custom/text
+content = 
+click-left = mpc ls | mpc add &
+
+[module/mpcdel]
+type = custom/text
+content = 
+click-left = mpc del 0 &
+
+[module/fechar]
+type = custom/text
+content = 
+content-foreground = ${colors.white}
+click-middle = $RICE_WINDOW_TITLEIZER -c &
+
+[module/sep]
+type = custom/text
+content = |
+
+;-----------------------------------------------------------------
+; EXTRAS
+; ----------------------------------------------------------------
+[module/pub-ip]
+type = custom/script
+exec = ~/.bin/$CURRENT_RICE/polybar/pub-ip.sh
+interval = 60
+tail = true
+
+[module/bitcoin]
+type = custom/script
+interval = 60
+tail = true
+exec = . ~/.zshenv && ~/.bin/$CURRENT_RICE/polybar/bitcoin.py
+
+[module/uptime]
+type = custom/script
+format-prefix = " "
+exec = ~/.bin/$CURRENT_RICE/polybar/uptime.sh
+interval = 60
+
+[module/refresh]
+type = custom/text
+content = " "
+click-left = ~/.config/polybar/launch.sh
+
+[module/cron2m]
+type = custom/script
+exec = ~/.bin/$CURRENT_RICE/polybar/battery.sh
+interval = 120
+
+; -------------- FINALIZE ----------------------------------------
+
+[settings]
+screenchange-reload = true
+
+;[global/wm]
+;margin-top = 5
+;margin-bottom = 5
+
+; vim:ft=dosini

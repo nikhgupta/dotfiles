@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ---
 # summary: |
-#   decrypts ~/.dotfiles/.encrypted/security.asc to provide some
+#   decrypts $DOTCASTLE/.encrypted/security.asc to provide some
 #   super secret functions written in ruby.
 
-_file=$HOME/.dotfiles/.encrypted/security.asc
+_file=$DOTCASTLE/.encrypted/security.asc
 _destin=$HOME/.decrypted/security.rb
 
 mkdir -p $(dirname $_destin)

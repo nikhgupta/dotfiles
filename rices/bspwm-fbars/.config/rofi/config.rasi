@@ -1,0 +1,67 @@
+configuration {
+    icon-theme:        "Papirus";
+    font:              "Fira Code Regular 11";
+    modi:              "window,run,drun";
+    terminal:          "kitty";
+    run-shell-command: "{terminal} -e bash -c \"{cmd}; read -n 1 -s\"";
+    hide-scrollbar:    true;
+    click-to-exit:     true;
+}
+
+* {
+    background-color:               transparent;
+    background:                     #282a3699;
+    background-alt:                 #eff0eb99;
+    text-color:                     #eff0eb;
+    selected-text-color:            #000000;
+    primary:                        #57c7ff;
+    urgent:                         #5af78e;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+}
+
+prompt {
+    enabled:                        false;
+}
+
+entry {
+    padding:                        10px 10px 10px 10px;
+    background-color:               transparent;
+    border:                         0px 0px solid 2px 0px;
+    border-color:                   @background-alt;
+    font:                           "Fira Code 11";
+}
+
+mainbox {
+    padding:                        10px 40px 10px 40px;
+}
+
+element {
+    padding:                        8px;
+}
+
+element normal.urgent, element alternate.urgent {
+    background-color:               @urgent;
+}
+
+element normal.active, element alternate.active {
+    background-color:               @background-alt;
+    color:                          @selected-text-color;
+}
+
+element selected {
+    background-color:               @background-alt;
+    color:                          @selected-text-color;
+}
+
+element selected.urgent {
+    background-color:               @urgent;
+}
+
+element selected.active {
+    background-color:               @background-alt;
+    color:                          @selected-text-color;
+}

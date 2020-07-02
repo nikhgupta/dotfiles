@@ -23,10 +23,10 @@ is_installed() { type $1 &>/dev/null; }
 
 # Use consistent debug logs in scripts that we create
 ok() { echo -ne "\e[32m✓\e[0m $@\n"; }
-warn() { echo -ne "\n\e[4;33mWarning: $@\e[m\n"; }
-info() { echo -ne "\n\e[4;32mInfo: $@\e[0m\n"; }
-action() { echo -ne "\n\e[0;35mACTION: $@\e[0m\n"; }
-highlight() { echo -ne "\n👉 \e[0;34m$@\e[0m\n"; }
+warn() { echo -ne "\e[4;33mWarning: $@\e[m\n\n"; }
+info() { echo -ne "\e[4;32mInfo: $@\e[0m\n\n"; }
+action() { echo -ne "\e[0;35mACTION: $@\e[0m\n\n"; }
+highlight() { echo -ne "👉 \e[0;34m$@\e[0m\n\n"; }
 error() {
   echo -ne "\e[4;31mError\e[0m: \e[31m$@\e[0m\n"
   exit 1

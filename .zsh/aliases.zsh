@@ -16,7 +16,7 @@ alias reload=" source $HOME/.zshrc"
 alias edit_housekeeping=" vim ~/.bin/housekeep.sh"
 edit_secrets() {
   mkdir -p $HOME/.decrypted
-  src=$HOME/.dotfiles/.encrypted/zshenv.asc
+  src=$DOTCASTLE/.encrypted/zshenv.asc
   destin=$HOME/.decrypted/zshenv.decrypted-cache
 
   vim $src

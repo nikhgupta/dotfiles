@@ -6,3 +6,6 @@
 .config/configstore
 .config/pulse
 .config/windows/shortcuts/*.lnk
+
+# symlinks from rices
+.bin/bspwm-fbars

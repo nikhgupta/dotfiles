@@ -18,7 +18,7 @@ highlight "Checking if I can access git@github.com with newly set GPG key"
 ssh -T git@github.com 2>&1 | grep $(whoami) || error "SSH from GPG did not work!"
 
 highlight "Checking if I can source secret files.."
-source_secret ~/.dotfiles/.encrypted/zshenv.asc
+source_secret $DOTCASTLE/.encrypted/zshenv.asc
 source ~/.zsh/aliases.zsh 2>/dev/null
 
 highlight "Setting up global gitconfig"

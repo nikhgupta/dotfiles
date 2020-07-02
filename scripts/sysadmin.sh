@@ -27,7 +27,8 @@ pac_install libva-intel-driver libva-utils
 highlight "Installing utilities and essential tools"
 pac_install curl wget make zsh gvim tmux aria2 rclone ripgrep fd \
     jq inotify-tools ncdu xclip ntfs-3g ttf-fira-code timeshift \
-    kitty pkgfile
+    pkgfile kitty alacritty xorg-xsetroot noto-fonts powerline-fonts \
+    feh rofi procps-ng
 pkgfile --update
 
 highlight "Installing dependencies for web dev setup"
@@ -42,8 +43,10 @@ sudo su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
 enable_services redis postgresql
 
 highlight "Installing other useful system apps"
-pac_install vlc neofetch
-yay_install google-chrome visual-studio-code-bin skypeforlinux-stable-bin
+pac_install vlc neofetch extra/pamac-gtk pavucontrol maim weechat qutebrowser \
+    telegram-desktop viewnior
+yay_install google-chrome visual-studio-code-bin skypeforlinux-stable-bin \
+    mailspring slack-desktop
 
 highlight "Installing Youtube-DL"
 sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl

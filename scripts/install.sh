@@ -31,3 +31,4 @@ done
 highlight "Remaining tasks.."
 bash $_scripts/mounts.sh
 action "You should follow this link to speed up Boot: https://wiki.archlinux.org/index.php/Silent_boot"
+action "You should install a rice with: $_root/rices/<name>/install.sh"
