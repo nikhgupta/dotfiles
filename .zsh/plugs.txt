@@ -5,5 +5,6 @@ ohmyzsh/ohmyzsh path:lib/history.zsh
 djui/alias-tips
 Aloxaf/fzf-tab
 # bobsoppe/zsh-ssh-agent
+zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting

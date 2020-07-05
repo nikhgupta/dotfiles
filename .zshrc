@@ -46,6 +46,12 @@ zle -N history-beginning-search-backward-end history-search-end
 bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward-end
 
+# autosuggest
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+bindkey '^ ' autosuggest-execute
+
 # asdf (only needed till upstream changes in ohmyzsh are fixedo)
 . $HOME/.asdf/asdf.sh
 fpath=(${HOME}/.asdf/completions $fpath)
