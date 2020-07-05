@@ -11,7 +11,7 @@ fi
 _font=Fira\ Code
 
 lock() {
-  i3lock --ignore-empty-password --blur 20 --indicator --clock \
+  i3lock --ignore-empty-password --blur 10 --indicator --clock \
     --pass-media-keys --pass-power-keys \
     --radius 110 \
     --color 666666 \

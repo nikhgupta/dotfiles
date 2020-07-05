@@ -57,6 +57,7 @@ elif [ "$1" == "dd" ]; then
   rm $(cat ~/.wall)
   notify-send "Success" "Image <b>$(basename $(cat ~/.wall))</b> deleted."
   fetch_images
+  $0 d && exit 0
   img=${images[$RANDOM % ${#images[@]}]}
 elif [ "$1" == "rr" ]; then
   if [ ! -f $HOME/.wall ] || [ ! -f $(cat $HOME/.wall) ]; then
@@ -90,3 +91,4 @@ elif [ "$1" != "d" ]; then
 fi
 
 adjust "$img"
+exit 0
