@@ -156,10 +156,13 @@ xsetroot -cursor_name left_ptr
 light -S 45 # https://github.com/haikarainen/light
 libinput-gestures-setup start
 $TERMINAL --class ScratchTerm &
-# redshift &
 # /home/gamehelp16/allfloat.sh &
 # syndaemon -dkK -i 0.8 &
 # panel &
+
+# start redshift
+is_installed redshift-gtk && redshift-gtk &
+! is_installed redshift-gtk && is_installed redshift && redshift &
 
 # System Tray
 pamac-tray &
