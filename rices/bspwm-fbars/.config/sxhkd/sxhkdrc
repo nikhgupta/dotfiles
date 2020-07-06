@@ -225,7 +225,7 @@ super + @Print
 
 # VOLUME
 
-### Mute
+# Toggle Mute
 XF86AudioMute
   ~/.bin/volume.sh toggle
 
@@ -252,3 +252,7 @@ XF86MonBrightnessUp
 
 XF86MonBrightnessDown
   light -U 5
+
+# Toggle redshift
+F9
+  pkill -USR1 '^redshift$'
