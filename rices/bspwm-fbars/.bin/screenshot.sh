@@ -29,7 +29,7 @@ command -v $app >/dev/null 2>&1 || {
   exit 1
 }
 
-if [ "$1" == "-a" ]; then
+if [ "$1" == "open" ]; then
   xdg-open $dir &
 elif [ "$1" == "cache" ]; then
   icon="tools-wizard"

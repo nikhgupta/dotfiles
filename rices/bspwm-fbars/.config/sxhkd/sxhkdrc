@@ -168,7 +168,8 @@ alt + t
 
 # quick editing of dotfiles
 alt + d
-  named_terminal fzfmenu -e zsh -c "vim \$(fd -Hast f . -E .git -E .bin/__old \$DOTCASTLE | ~/.fzf/bin/fzf -1)"
+  named_terminal fzfmenu -e zsh -c \
+    "vim \$(fd -Hast f . -E .git -E .bin/__old \$DOTCASTLE | ~/.fzf/bin/fzf -1)"
 
 # GNOME System Monitor
 alt + ctrl + Delete
@@ -176,10 +177,10 @@ alt + ctrl + Delete
 
 # program launcher
 super + space
-  rofi -show drun -theme drun
+  ~/.bin/launcher.sh
 
 alt + space
-  rofi -show run -theme run
+  rofi -combi-modi run,drun,window -show run -theme run
 
 shift + alt + space
   rofi -show keys

@@ -48,7 +48,9 @@ else
   exit 1
 fi
 
-if [ "$1" == "d" ]; then
+if [ "$1" == "open" ]; then
+  xdg-open $dir
+elif [ "$1" == "d" ]; then
   mkdir -p $unsplash_dir
   img="$unsplash_dir/unsplash-$$.jpg"
   curl -L -s "https://unsplash.it/${x}/${y}?random" >$img

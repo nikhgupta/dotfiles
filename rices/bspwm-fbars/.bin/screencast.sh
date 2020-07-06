@@ -9,6 +9,11 @@ fi
 cache="$dir/OLD/"
 _status=/tmp/scripts/screencasts.status
 
+if [ "$1" == "open" ]; then
+  xdg-open $dir
+  exit 0
+fi
+
 if [ "$1" == "status" ]; then
     mkdir -p $(dirname $_status)
     truncate -s0 $_status

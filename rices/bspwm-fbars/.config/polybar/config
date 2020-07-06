@@ -218,8 +218,8 @@ type = custom/text
 content = 
 format-padding = 2
 content-foreground = ${colors.blue}
-click-left = rofi -theme drun -show drun &
-;click-middle = rofi -theme drun -show drun &
+click-left = ~/.bin/launcher.sh &
+click-middle = rofi -theme drun -show drun &
 click-right = rofi -theme run -show run &
 
 ;----------------------------------------------------------

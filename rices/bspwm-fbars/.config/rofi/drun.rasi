@@ -4,7 +4,7 @@ configuration {
 }
 
 listview {
-    columns:                        5;
+    columns:                        4;
     margin:                         20px 40px 20px 40px;
 }
 
