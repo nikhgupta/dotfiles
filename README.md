@@ -1,7 +1,6 @@
 # My Dot Castle
 
-<img src="http://cdn.obsidianportal.com/assets/38992/AldredsCastle.jpg"
-alt='DotCastle' style="float: right; margin-left: 40px"/>
+![DotCastle](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/dotcastle.png)
 
 **castle for my dotfiles** - the cornetstone of _dev-kind_ ! :)
 
@@ -32,3 +31,43 @@ due to automatic hardware detection and drivers setup.
 These dotfiles expect a minimal Gnome setup with either Archlinux or
 Manjaro, but do allow setting up a tiling window manager - which I use
 primarily. The Gnome session is serves as a backup, if needed.
+
+## Screenshots
+
+### This system is currently busy
+
+![Busy](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/busy-sys.png)
+
+### a nice app launcher
+
+![launcher](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/rofi-drun.png)
+
+### my favorite alfred alternative
+
+![run menu](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/rofi-run.png)
+
+### a scratch terminal
+
+![scratch terminal](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/scratch-terminal.png)
+
+### more directory colors
+
+![dircolors](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/dircolors.png)
+
+### and notifications
+
+![notifications](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/notifications.png)
+
+### and a nice screen lock
+
+![screen lock](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/screen-lock.png)
+
+### Other goodies
+
+#### icons hardcoded and also, autoguessed via font-awesome
+
+![window icons](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/window-icons.png)
+
+#### screencasts, screenshots, wallpaper changer and a real tray
+
+![notifications](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/notification-area.png)

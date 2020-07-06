@@ -57,9 +57,6 @@ fpath=(${HOME}/.asdf/completions $fpath)
 [[ -r ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
 [[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
 
-# brew
-[[ -f /home/linuxbrew/.linuxbrew/bin/brew ]] && init_cache brew "/home/linuxbrew/.linuxbrew/bin/brew shellenv"
-
 # ssh setup using GnuPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf &>/dev/null
