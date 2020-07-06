@@ -5,7 +5,7 @@
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "workbench.iconTheme": "vscode-icons",
-  "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Free', 'Font Awesome 5 Brands','FontAwesome'",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "vim.useCtrlKeys": false
