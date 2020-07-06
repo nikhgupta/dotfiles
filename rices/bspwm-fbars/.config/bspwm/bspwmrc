@@ -17,11 +17,11 @@ bspc desktop ^5 -l monocle
 bspc desktop ^6 -l monocle
 bspc desktop ^7 -l tiled
 
+bspc config single_monocle true
+bspc config gapless_monocle true
 bspc config borderless_monocle true
 # bspc config click_to_focus        true
 # bspc config focus_follows_pointer true
-bspc config gapless_monocle true
-# bspc config paddingless_monocle   true
 bspc config pointer_action1 move
 bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
