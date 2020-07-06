@@ -8,7 +8,7 @@ if [[ "${TRASH_DIRECTORY}" = "" ]]; then
   TRASH_DIRECTORY=${XDG_DATA_HOME:-"${HOME}/.local/share/Trash"}
 fi
 
-if [[ "${1}" == "-x" ]]; then
+if [[ "${1}" == "empty" ]]; then
   if [ ! -d $TRASH_TEMP ]; then
     mkdir -p $TRASH_TEMP/{files,info}
   fi
@@ -20,7 +20,7 @@ if [[ "${1}" == "-x" ]]; then
   mkdir ${TRASH_DIRECTORY}/info
 
   export DISPLAY=:0 ; canberra-gtk-play -i trash-empty 2>&1
-elif [[ "${1}" == "-o" ]]; then
+elif [[ "${1}" == "open" ]]; then
   xdg-open $TRASH_DIRECTORY/files/
 fi
 

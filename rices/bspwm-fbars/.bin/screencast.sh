@@ -40,7 +40,7 @@ else
         notify-send -i $icon "Screencast" "Video started..."
         echo "%{F#${color}}%{F-}" >>$_status
         ffmpeg -f x11grab -s $resolution -i $DISPLAY -f pulse -ac 2 -i default -c:v libx264 -crf 23 -profile:v baseline -level 3.0 -pix_fmt yuv420p -c:a aac -ac 2 -strict experimental -b:a 128k -movflags faststart $archive
-    elif [ "$1" == "-a" ]; then
+    elif [ "$1" == "open" ]; then
       xdg-open $dir &
     elif [ "$1" == "cache" ]; then
         icon="tools-wizard"

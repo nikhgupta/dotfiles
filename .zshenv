@@ -7,11 +7,15 @@ export KEYTIMEOUT=1
 export EDITOR=vim
 export GPG_TTY=$(tty)
 
+# terminal related variables
+export TERMINAL=kitty
+export TERMINAL_CLASS=kitty
+alias named_terminal="$TERMINAL --name"
+
 # variables used through out dotfiles
 export DOTCASTLE=~/.dotfiles
 export CURRENT_RICE=$(cat $HOME/.cache/rice.lock)
-source $DOTCASTLE/rices/$CURRENT_RICE/aliases.sh
-path_prepend ~/.bin/$CURRENT_RICE/
+source $DOTCASTLE/rices/$CURRENT_RICE/source.sh
 
 # setup data home for WSL
 export WIN_HOME=$HOME

@@ -2,10 +2,12 @@ configuration {
     icon-theme:        "Papirus";
     font:              "Fira Code Regular 11";
     modi:              "window,run,drun";
-    terminal:          "kitty";
-    run-shell-command: "{terminal} -e bash -c \"{cmd}; read -n 1 -s\"";
+    run-list-command:  "alias | awk -F'[ =]' '{print $1}'; print -l \${(ok)functions} | grep -v ^_";
+    run-command:       "zsh -i -c \"{cmd}\"";
+    run-shell-command: "{terminal} -e zsh -i -c \"{cmd}; read -n 1 -s\"";
     hide-scrollbar:    true;
     click-to-exit:     true;
+    matching:          "fuzzy";
 }
 
 * {
@@ -21,6 +23,17 @@ configuration {
 window {
     transparency:                   "real";
     background-color:               @background;
+    height:                         1080px;
+    width:                          1920px;
+    x-offset:                       0;
+    y-offset:                       0;
+    location:                       center;
+    anchor:                         center;
+    border-radius:                  0;
+}
+
+mainbox {
+    padding:                        10px 40px 10px 40px;
 }
 
 prompt {
@@ -28,6 +41,9 @@ prompt {
 }
 
 entry {
+    expand:                         false;
+    width:                          30em;
+    margin:                         20px 40px 20px 0px;
     padding:                        10px 10px 10px 10px;
     background-color:               transparent;
     border:                         0px 0px solid 2px 0px;
@@ -35,12 +51,12 @@ entry {
     font:                           "Fira Code 11";
 }
 
-mainbox {
-    padding:                        10px 40px 10px 40px;
-}
-
 element {
     padding:                        8px;
+}
+
+element-text {
+    expand:                         true;
 }
 
 element normal.urgent, element alternate.urgent {

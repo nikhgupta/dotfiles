@@ -246,9 +246,9 @@ label-maxlen = 50
 interval = 2
 type = custom/script
 label = %output:0:60:...%  %{B- -o -u}
-click-left = $RICE_WINDOW_TITLEIZER -i
-click-middle = $RICE_WINDOW_TITLEIZER -c
-click-right = $RICE_WINDOW_TITLEIZER -w
+click-left = $RICE_WINDOW_TITLEIZER copy
+click-middle = $RICE_WINDOW_TITLEIZER close
+click-right = $RICE_WINDOW_TITLEIZER jump
 exec = $RICE_WINDOW_TITLEIZER
 tail = true
 exec-if = true
@@ -280,10 +280,10 @@ tail = true
 [module/screenshot]
 type = custom/text
 content = 
-click-left = $RICE_SCREENSHOTTER -s &
-click-middle = $RICE_SCREENSHOTTER -w &
+click-left = $RICE_SCREENSHOTTER sel &
+click-middle = $RICE_SCREENSHOTTER window &
 click-right = $RICE_SCREENSHOTTER &
-scroll-down = $RICE_SCREENSHOTTER -e &
+scroll-down = $RICE_SCREENSHOTTER edit &
 
 ;----------------------------------------------------------
 ; FILESYSTEM
@@ -565,8 +565,8 @@ label-song-ellipsis = true
 type = custom/script
 ;interval = 1
 tail = true
-click-left = $RICE_TRASHER -x &
-click-right = $RICE_TRASHER -o &
+click-left = $RICE_TRASHER empty &
+click-right = $RICE_TRASHER open &
 exec = $RICE_TRASHER
 
 ;----------------------------------------------------------
@@ -592,7 +592,7 @@ click-left = nautilus &
 [module/terminal]
 type = custom/text
 content = 
-click-left = kitty &
+click-left = $TERMINAL &
 
 [module/social]
 type = custom/text
@@ -604,7 +604,7 @@ click-right = skypeforlinux &
 [module/weechat]
 type = custom/text
 content = 
-click-left = kitty --class weechat -e weechat
+click-left = named_terminal weechat -e weechat
 
 ;[module/docker]
 ;type = custom/text
@@ -630,7 +630,7 @@ click-left = mpc del 0 &
 type = custom/text
 content = 
 content-foreground = ${colors.white}
-click-middle = $RICE_WINDOW_TITLEIZER -c &
+click-middle = $RICE_WINDOW_TITLEIZER close &
 
 [module/sep]
 type = custom/text

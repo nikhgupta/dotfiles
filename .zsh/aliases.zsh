@@ -84,9 +84,6 @@ function md5() { echo $@ | md5sum | cut -d ' ' -f1; }
 function whois() { dig +nocmd $1 any +multiline +noall +answer; }
 function update-antibody-config() { antibody bundle <~/.zsh/plugs.txt >~/.zshplugs; }
 
-## hardware accelerated programs using nvidia
-alias mpv="prime-run mpv"
-
 check_xdg_dirs() {
   for _var in $(typeset -p | grep -E "export XDG_.*_(DIR|HOME)=" | cut -d ' ' -f2 | cut -d '=' -f1); do
     _dir="$(realpath ${(P)_var} 2>/dev/null)"
@@ -102,3 +99,7 @@ onedrivesync() {
   rclone sync $orig $dest -P --delete-excluded --fast-list --log-level=INFO --no-check-certificate --no-update-modtime $@
 }
 alias onedrivesync_photos="onedrivesync /media/nikhgupta/Gallery onedrive:Photography"
+
+## run programs with pre-determined settings
+alias mpv="prime-run mpv"
+alias ranger="named_terminal ranger -e ranger"

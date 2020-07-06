@@ -3,30 +3,13 @@ configuration {
     show-icons:                     true;
 }
 
-window {
-    height:                         1200px;
-    width:                          1920px;
-    location:                       center;
-    anchor:                         center;
-    x-offset:                       0;
-    y-offset:                       14;
-    border-radius:                  3px;
-    border-color:                   #22252B;
-}
-
-prompt {
-    enabled:                        false;
-}
-
-entry  {
-    expand:                         false;
-    width:                          30em;
-    margin:                         20px 40px 20px 100px;
-}
-
 listview {
     columns:                        5;
     margin:                         20px 40px 20px 40px;
+}
+
+entry  {
+    margin:                         20px 40px 20px 100px;
 }
 
 element {
@@ -35,32 +18,11 @@ element {
     margin:                         20px 60px;
 }
 
-element normal.urgent, element alternate.urgent {
-    background-color:               @urgent;
-}
-
-element normal.active, element alternate.active {
-    background-color:               @background-alt;
-}
-
-element selected {
-    background-color:               @background-alt;
-}
-
-element selected.urgent {
-    background-color:               @urgent;
-}
-
-element selected.active {
-    background-color:               @background-alt;
+element-text {
+    horizontal-align:               0.5;
 }
 
 element-icon {
     size:                           96;
     border:                         0px;
-}
-
-element-text {
-    expand:                         true;
-    horizontal-align:               0.5;
 }

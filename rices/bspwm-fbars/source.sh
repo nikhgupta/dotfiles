@@ -13,3 +13,6 @@ export RICE_WALLPAPERIZER=~/.bin/$CURRENT_RICE/polybar/wallpaper.sh
 export RICE_SCREENLOCKER=~/.bin/$CURRENT_RICE/screenlock.sh
 export RICE_SCREENSHOTTER=~/.bin/$CURRENT_RICE/screenshot.sh
 export RICE_SCREENCASTER=~/.bin/$CURRENT_RICE/screencast.sh
+
+export PATH="$HOME/.bin/$CURRENT_RICE/polybar:$HOME/.bin/$CURRENT_RICE:$PATH"
+

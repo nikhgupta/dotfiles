@@ -129,19 +129,26 @@ super + {equal,minus}
 super + ctrl + {Left,Right,Up,Down}
     bspc node @focused:/ --rotate {270,90,180,180}
 
-## CUSTOM SCREENSHOTS ###
+## CUSTOM KEYBINDINGS ###
+
 
 # terminal emulator
-super + Return
-  kitty
+{ alt, super } + Return
+  $TERMINAL
 
-# terminal emulator
-alt + Return
-  kitty
-
-# override kitty panes shortcut with new kitty windows
+# override kitty panes shortcut with new terminal windows
 ctrl + shift + Return
-  kitty
+  $TERMINAL
+
+# scratch terminal
+{ super + d, alt + semicolon, alt + grave }
+  pids=$(xdotool search --class ScratchTerm ); \
+  if [ -z $pids ]; then ; \
+    $TERMINAL --class ScratchTerm & ; \
+    sleep 0.25; \
+    pids=$(xdotool search --class ScratchTerm ); \
+  fi; \
+  for pid in $pids; do bspc node $pid --flag hidden -f; done
 
 alt + w
   google-chrome-stable
@@ -153,13 +160,15 @@ alt + r
   nautilus
 
 # alt + l
-#   kitty --class lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".txt"
+#   named_terminal lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".txt"
 
+# music player
 alt + t
-  killall ncmpcpp; kitty --class ncmpcpp -e ncmpcpp
+  killall ncmpcpp; named_terminal ncmpcpp --title ncmpcpp -e ncmpcpp
 
+# quick editing of dotfiles
 alt + d
-  kitty --class fzfmenu -d 80x10 -e zsh -c "vim \$(fd -Hast f . -E .git -E .bin/__old \$DOTCASTLE | ~/.fzf/bin/fzf -1)"
+  named_terminal fzfmenu -e zsh -c "vim \$(fd -Hast f . -E .git -E .bin/__old \$DOTCASTLE | ~/.fzf/bin/fzf -1)"
 
 # GNOME System Monitor
 alt + ctrl + Delete
@@ -170,7 +179,10 @@ super + space
   rofi -show drun -theme drun
 
 alt + space
-  rofi -show run -theme run -run-shell-command="{terminal} -e \"{cmd}; read -n 1 -s\""
+  rofi -show run -theme run
+
+shift + alt + space
+  rofi -show keys
 
 alt + Tab
   rofi -show window
@@ -179,11 +191,11 @@ alt + Tab
 super + x
   $RICE_SCREENLOCKER
 
-ctrl + alt + l
+{ctrl + alt, shift + alt, ctrl + shift} + l
   $RICE_SCREENLOCKER
 
 # quit bspwm normally
-super + alt + l
+ctrl + shift + alt + l
   $RICE_SESSION_QUITTER
 
 # Screenshots
@@ -191,19 +203,19 @@ super + alt + l
   $RICE_SCREENSHOTTER
 
 alt + @Print
-  $RICE_SCREENSHOTTER -s
+  $RICE_SCREENSHOTTER sel
 
 ctrl + @Print
-  $RICE_SCREENSHOTTER -w
+  $RICE_SCREENSHOTTER window
 
 super + @Print
-  $RICE_SCREENSHOTTER -a
+  $RICE_SCREENSHOTTER open
 
 # Shift_L
 #   $RICE_SCREENCASTER
 
 # super + Shift_L
-#   RICE_SCREENCASTER -a
+#   RICE_SCREENCASTER open
 
 # VOLUME
 

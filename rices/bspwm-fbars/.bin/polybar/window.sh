@@ -8,9 +8,9 @@ mkdir -p $(dirname $pidfile)
 loop_status() {
   while :; do
     title=$(xdotool getactivewindow getwindowname 2>/dev/null || echo "ArchLinux")
-    [ "$title" == "Alacritty" ] && title='Terminal'
-    icon=$(icon_search "${title}")
-    [[ $(tail -1 $_status) == "$icon ${title}" ]] || echo "$icon $title" >>$_status
+    if [[ "$title" == "kitty" ]] || [[ "$title" == "Alacritty" ]]; then title='Terminal'; fi
+    _icon=$(icon_search "${title}")
+    [[ $(tail -1 $_status) == "$_icon ${title}" ]] || echo "$_icon $title" >>$_status
     sleep 1
   done
 }
@@ -40,6 +40,7 @@ assign_icon() {
 icon_search() {
   assign_icon f120 "zsh" "$@"
   assign_icon f120 "bash" "$@"
+  assign_icon f120 "Terminal" "$@"
   assign_icon f27d "VIM" "$@"
   assign_icon f1be "ncmpcpp" "$@"
   assign_icon f121 "Visual Studio Code" "$@"
@@ -66,14 +67,14 @@ icon_search() {
   fi
 }
 
-if [ "$1" == "-i" ]; then
+if [ "$1" == "copy" ]; then
   xdotool getactivewindow getwindowname 2>/dev/null | xclip -rmlastnl -selection c
-elif [ "$1" == "-c" ]; then
+elif [ "$1" == "close" ]; then
   focused_window_id=$(xdotool getwindowfocus)
   active_window_id=$(xdotool getactivewindow)
   active_window_pid=$(xdotool getwindowpid "$active_window_id")
   kill -9 $active_window_pid
-elif [ "$1" == "-w" ]; then
+elif [ "$1" == "jump" ]; then
   rofi -show window
 elif [[ ! -f $pidfile ]]; then
   trap "rm -f -- '$pidfile'" EXIT

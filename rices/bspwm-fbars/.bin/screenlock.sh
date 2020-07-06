@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-ON_AC_TIMEOUT=5
-ON_BAT_TIMEOUT=5
+ON_AC_TIMEOUT=60
+ON_BAT_TIMEOUT=60
 
 source ~/.zsh/utils.sh
 if ! is_installed i3lock || ! is_installed ffmpeg || ! is_installed xrandr; then
@@ -15,9 +15,9 @@ _font_path=/usr/share/fonts/TTF/FiraCode-Bold.ttf
 _lock=$DOTCASTLE/rices/$CURRENT_RICE/assets/lock.png
 _resolution=$(xrandr --current | grep '*' | uniq | awk '{print $1}')
 _boxsize=$(expr $(echo $_resolution | cut -d 'x' -f1) / 2)
-_boxblur=5
+_boxblur=10
 _gblur_steps=1
-_gblur_sigma=5
+_gblur_sigma=10
 
 _filter="boxblur=$_boxblur"
 _filter="$_filter,gblur=sigma=${_gblur_sigma}:steps=${_gblur_steps},drawtext=fontfile=$_font_path"

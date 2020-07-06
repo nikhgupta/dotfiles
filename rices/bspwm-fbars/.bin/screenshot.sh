@@ -31,7 +31,7 @@ command -v $app >/dev/null 2>&1 || {
 
 if [ "$1" == "-a" ]; then
   xdg-open $dir &
-elif [ "$1" == "-c" ]; then
+elif [ "$1" == "cache" ]; then
   icon="tools-wizard"
   listing=(${dir}*.{jpg,jpeg,bmp,gif,png})
   if [ ${#listing[@]} -gt 0 ]; then
@@ -45,22 +45,22 @@ elif [ "$1" == "-c" ]; then
 
   exit 0
 
-elif [ "$1" == "-w" ]; then
+elif [ "$1" == "window" ]; then
   params="$params -i $(xdotool getactivewindow)"
   archive="${name}-window${extension}"
   $app $params ${archive}
   msg=$archive
-elif [ "$1" == "-s" ]; then
+elif [ "$1" == "sel" ]; then
   params="$params -s"
   archive="${name}-area${extension}"
   $app -d 2 $params ${archive}
   msg=$archive
-elif [ "$1" == "-d" ]; then
+elif [ "$1" == "delay" ]; then
   params="$params -d $delay"
   archive="${name}-delayed${extension}"
   $app $params ${archive}
   msg=$archive
-elif [ "$1" == "-e" ]; then
+elif [ "$1" == "edit" ]; then
   archive="${name}-edited${extension}"
   $app $params ${dir}${archive}
   msg=$archive

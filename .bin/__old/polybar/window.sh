@@ -11,6 +11,6 @@ elif [ "$1" == "-w" ]; then
   rofi -show window
 else
     title=$(xdotool getactivewindow getwindowname 2>/dev/null || echo "ArchLinux")
-    [ "$title" == "Alacritty" ] && title='Terminal'
+    { [ "$title" == "Alacritty" ] || [ "$title" == "kitty" ]] } && title='Terminal'
     echo "$title"
 fi
