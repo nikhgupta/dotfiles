@@ -40,8 +40,10 @@ bindkey "^?" backward-delete-char
 bindkey "^W" backward-kill-word
 bindkey "^H" backward-delete-char # Control-h also deletes the previous char
 bindkey "^U" backward-kill-line
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
+
+# history
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
 
 # autosuggest
 bindkey '^ ' autosuggest-execute
