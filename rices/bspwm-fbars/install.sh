@@ -14,6 +14,7 @@ if [[ -n "$_current" ]] && [[ $_current != "$_name" ]]; then
 fi
 
 dotlink_all() {
+  mkdir -p $2
   for fd in $(find $1/ -maxdepth 1 -mindepth 1); do
     safelink.rb -v $fd $2/$(basename $fd)
   done

@@ -23,6 +23,10 @@ if is_wsl; then
   export PULSE_SERVER=tcp:$(grep nameserver /etc/resolv.conf | awk '{print $2}')
 fi
 
-# change path and source credentials
+# add custom scripts from dotcastle and rice to $PATH
 path_prepend ~/.bin
+path_prepend ~/.bin/rofi
+path_prepend ~/.bin/polybar
+
+# source secret credentials
 source_secret $DOTCASTLE/.encrypted/zshenv.asc
