@@ -40,17 +40,14 @@ bindkey "^?" backward-delete-char
 bindkey "^W" backward-kill-word
 bindkey "^H" backward-delete-char # Control-h also deletes the previous char
 bindkey "^U" backward-kill-line
-autoload -U history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-bindkey "^[[A" history-beginning-search-backward-end
-bindkey "^[[B" history-beginning-search-forward-end
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
 # autosuggest
+bindkey '^ ' autosuggest-execute
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
-bindkey '^ ' autosuggest-execute
 
 # asdf (only needed till upstream changes in ohmyzsh are fixedo)
 . $HOME/.asdf/asdf.sh
