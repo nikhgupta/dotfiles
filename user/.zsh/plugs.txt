@@ -1,6 +1,7 @@
 # ohmyzsh/ohmyzsh path:plugins/asdf
 ohmyzsh/ohmyzsh path:plugins/z
 ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/last-working-dir
 ohmyzsh/ohmyzsh path:lib/history.zsh
 djui/alias-tips
 Aloxaf/fzf-tab

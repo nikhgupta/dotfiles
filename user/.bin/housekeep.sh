@@ -67,7 +67,8 @@ highlight "Clearing journalctl logs on Ubuntu.."
 $_home/.bin/clearlogs.sh
 
 if [[ -f $_home/.cache/rice.lock ]]; then
-  as_user "$_home/.bin/$(cat $_home/.cache/rice.lock)/launcher.sh cache"
+  _path=$_home/.bin/$(cat $_home/.cache/rice.lock)/launcher.sh
+  [[ -f $_path ]] && as_user "$_path cache"
 fi
 
 # tput bel

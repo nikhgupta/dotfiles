@@ -37,6 +37,10 @@ super + y
 super + g
   bspc node -s biggest.local
 
+# Rotate tree
+super + {b,n}
+    bspc node @/ -C {forward,backward}
+
 #
 # state/flags
 #
@@ -81,7 +85,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-  bspc {desktop -f,node -d} '^{1-9,10}'
+  bspc {desktop,node -d} '^{1-9,10}' -f
 
 # focus the next/previous node in the same window
 super + {comma,period}
@@ -182,8 +186,9 @@ super + space
 alt + space
   rofi -combi-modi run,drun,window -show run -theme run
 
+# show all sxhkd keys
 shift + alt + space
-  rofi -show keys
+  ~/.bin/rofi/sxhkd-help.sh
 
 alt + Tab
   rofi -show window

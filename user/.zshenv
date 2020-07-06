@@ -6,6 +6,7 @@ source ~/.zsh/utils.sh
 export KEYTIMEOUT=1
 export EDITOR=vim
 export GPG_TTY=$(tty)
+export ZSH_CACHE_DIR=~/.zcache
 
 # terminal related variables
 export TERMINAL=kitty

@@ -7,10 +7,14 @@ mkdir -p $(dirname $pidfile)
 
 loop_status() {
   while :; do
-    title=$(xdotool getactivewindow getwindowname 2>/dev/null || echo "ArchLinux")
+    title=$(xdotool getactivewindow getwindowname 2>/dev/null || echo "")
     if [[ "$title" == "kitty" ]] || [[ "$title" == "Alacritty" ]]; then title='Terminal'; fi
-    _icon=$(icon_search "${title}")
-    [[ $(tail -1 $_status) == "$_icon ${title}" ]] || echo "$_icon $title" >>$_status
+    if [[ -n "${title}" ]]; then
+      _icon=$(icon_search "${title}")
+      [[ $(tail -1 $_status) == "$_icon ${title}" ]] || echo "$_icon $title" >>$_status
+    else
+      echo "" >> $_status
+    fi
     sleep 1
   done
 }

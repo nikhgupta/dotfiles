@@ -7,10 +7,11 @@
 .config/pulse
 
 # symlinks from rices
+user/.bin/rofi
+user/.bin/polybar
 user/.bin/icon-search.rb
 user/.bin/launcher.sh
 user/.bin/microphone.sh
-user/.bin/polybar
 user/.bin/screencast.sh
 user/.bin/screenlock.sh
 user/.bin/screenshot.sh

@@ -137,39 +137,46 @@ bspc rule -a io.elementary.switchboard desktop=^8 state=floating center=on follo
 # desktop 9 - miscelleneous
 bspc rule -a Steam desktop=^9 follow=on
 
-# === Change wallpaper on login ===
-#feh --bg-fill "/home/gamehelp16/Pictures/unsplashwall.jpg"
-#feh --bg-fill ~/Pictures/zF1V6EE.jpg
-#feh --randomize --bg-fill /media/JukeBox/Wallpapers
-#feh --bg-fill $XDG_WALLPAPER_DIR/_default.jpg
-# ~/.bin/chwall.sh
-#gnome-wallpaper-changer &
-feh --bg-fill ~/Pictures/Wallpapers/default.jpg
+# === Startup Environment =========
+# Scripts to set a familiar environment when we login
+feh --bg-fill ~/Pictures/Wallpapers/default.png
+numlockx off # turn off num lock on login
+light -S 45 # set a specific screen backlight
+pactl set-source-mute @DEFAULT_SOURCE@ 1 # mute microphone on login
+pgrep mpd && mpc stop # turn off music in the rare case that it is running
 
-# === Other scripts ===============
+# === Startup Items ===============
+
+# start Polkit for authenticating user session and use sudo in GUI
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# lets start with our polybar first of all..
+~/.config/polybar/launch.sh &
+
+# useful daemons and processes
 mpd
 dunst &
 picom -b
 xrdb -merge ~/.Xdefaults
 xsetroot -cursor_name left_ptr
-~/.config/polybar/launch.sh &
-light -S 45 # https://github.com/haikarainen/light
+
+# System Tray processes
+pamac-tray &
+nm-applet &
+blueman-applet &
+
+# start libinput gestures for touchpad
 libinput-gestures-setup start
+
+# start hidden scratch terminal window
 $TERMINAL --class ScratchTerm &
-# /home/gamehelp16/allfloat.sh &
-# syndaemon -dkK -i 0.8 &
-# panel &
 
 # start redshift
 is_installed redshift-gtk && redshift-gtk &
 ! is_installed redshift-gtk && is_installed redshift && redshift &
 
-# System Tray
-pamac-tray &
-nm-applet &
-blueman-applet &
+# Auto-lock after suspend. https://wiki.archlinux.org/index.php/Power_management#xss-lock
+xss-lock -- ~/.bin/screenlock.sh &
 
 # Auto-lock after some time but not when cursor is parked at bottom right.
 xautolock -locker ~/.bin/screenlock.sh -time 5 -detectsleep -corners '00+-' &
-# Auto-lock after suspend. https://wiki.archlinux.org/index.php/Power_management#xss-lock
-xss-lock -- ~/.bin/screenlock.sh &

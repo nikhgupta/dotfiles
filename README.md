@@ -34,13 +34,17 @@ primarily. The Gnome session is serves as a backup, if needed.
 
 ## Screenshots
 
+### Home (with default wallpaper)
+
+![desktop](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/desktop.png)
+
 ### This system is currently busy
 
 ![Busy](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/busy-sys.png)
 
 ### a nice app launcher
 
-![launcher](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/rofi-drun.png)
+![launcher](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/launcher.png)
 
 ### my favorite alfred alternative
 
@@ -48,7 +52,12 @@ primarily. The Gnome session is serves as a backup, if needed.
 
 ### a scratch terminal
 
-![scratch terminal](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/scratch-terminal.png)
+![scratch 
+terminal](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/scratch-term.png)
+
+### rofi menu for all configured keybindings
+
+![keybindings](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/rofi-custom.png)
 
 ### more directory colors
 

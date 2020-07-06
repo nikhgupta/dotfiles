@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 dir="${XDG_WALLPAPER_DIR:-$HOME/Pictures/Wallpapers}"
-default="${dir}/default.jpg"
+default="${dir}/default.png"
 unsplash_dir="${dir}/unsplash"
-default_url="https://unsplash.com/photos/p3OzJuT_Dks/download?force=true&w=1920"
-lastused="/home/nikhgupta/Pictures/Wallpapers/default.jpg"
+default_url="https://wallpapercave.com/wp/NOFQh9F.png"
+lastused=$(cat ~/.wall)
 mode="--bg-fill"
 indice=0
 i=0
@@ -13,7 +13,6 @@ y=$(xdpyinfo | grep dimensions | awk '{print $2}' | awk -F'x' '{print $2}')
 
 adjust() {
   if [ -f "$1" ]; then
-    sed -i "s|^lastused=.*|lastused=\"${1}\"|g" $0
     # PyWal
     #wal -n -g -i "${1}"
     feh --bg-fill ${1}

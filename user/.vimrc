@@ -66,7 +66,6 @@
 "   - Use `setl key=` to disable this encryption
 "   - Use `gf` to open file under cursor using default file handler
 "   - Use `gx` to open the current url using default url handler
-"   - Use `g:netrw_browserx_viewer` to set the binary for above command
 "   - Use `''` to jump to location of the last jump
 "   - Use `'.` to jump to location of your last edit
 " }}}
@@ -143,26 +142,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
   elseif exists("$COLORTERM")   | let g:ui_type = "CTERM"
   elseif exists("$TERM")        | let g:ui_type = "TERM"
   else | let g:ui_type = "????" | endif
-" }}}
-" Internal:    developer-defined custom functions for this config {{{
-  " Function: Open a url/file with the default browser {{{
-    function! s:open_with_browser(url, ...)
-      let l:prog = "open"
-      let l:prog = empty("$BROWSER") ? l:prog : expand("$BROWSER")
-      let l:comm = l:prog . " '" . expand(a:url) . "'"
-
-      if empty(l:prog)
-        echoerr "Could not find a valid browser. Set one via $BROWSER variable."
-      elseif a:0 > 0 && a:1 == 0
-        return l:comm
-      else
-        silent! execute('!' . l:comm)
-      endif
-    endfunction
-    command! -bar -nargs=1 OpenURL :call s:open_with_browser("<args>")
-    command! -bar -nargs=1 OpenWithBrowser :call s:open_with_browser("<args>")
-  " }}}
-" }}}
 " }}}
 " Preferences:                                                       {{{
 " General:     has configurable leader keys {{{
@@ -1109,11 +1088,7 @@ endif
     au!
     au filetype php set makeprg=php\ -l\ %    " linting
     au filetype rst set makeprg=rst2html.py\ %\ /tmp/%:r.html\ &&\ open\ /tmp/%:r.html
-
-    " Note: for markdown, simply, open the file in Chrome, which uses an
-    " extension to render this markdown file. Sweet and simple.
-    " au filetype ghmarkdown setl makeprg=rdiscount\ %\ >\ /tmp/%:r.html\ &&\ open\ /tmp/%:r.html
-    au filetype ghmarkdown let &l:makeprg = s:open_with_browser("%:p", 0)
+    au filetype ghmarkdown setl makeprg=rdiscount\ %\ >\ /tmp/%:r.html\ &&\ open\ /tmp/%:r.html
 
     " allow the following files to run themselves when <F6> is pressed.
     au filetype sh set makeprg=chmod\ +x\ %:p\ &&\ %:p
@@ -1261,6 +1236,11 @@ endif
   " Test it here:   ' ''' ' \"''" \" '' \"' Plug 'nikhgupta/dotfiles' ''''''"
   " or, here: callPlugFunction 'some/asd'
   " FIXME: use regex and should also be able to open vim-scripts repos
+  Plug 'tyru/open-browser.vim'
+  let g:netrw_nogx = 1 " disable netrw's gx mapping.
+  nmap gx <Plug>(openbrowser-smart-search)
+  vmap gx <Plug>(openbrowser-smart-search)
+
   " Function: parses line containing a plugin, and opens it in browser {{{
   function! VimFindPlugName(line, delimiter)
     let segments = split(a:line, a:delimiter)
@@ -1278,7 +1258,7 @@ endif
     if empty(plugin)
       echom 'Could not find a plugin definition on this line.'
     else
-      execute(":OpenURL https://github.com/" . plugin)
+      execute(":OpenBrowser https://github.com/" . plugin)
     endif
   endfunction
   " }}}
@@ -1518,8 +1498,8 @@ endif
   " Stop fucking netrw
   let g:netrw_silent = 1
   let g:netrw_quiet  = 1
-  " let g:loaded_netrw = 1          " prevents loading of netrw, but messes 'gx'
-  " let g:loaded_netrwPlug = 1    " ^ ..same.. and therefore, commented
+  let g:loaded_netrw = 1          " prevents loading of netrw, but messes 'gx'
+  let g:loaded_netrwPlug = 1    " ^ ..same.. and therefore, commented
 
   Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeFind',
         \ 'NERDTreeFocus', 'NERDTreeToggle']}
