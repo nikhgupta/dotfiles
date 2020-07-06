@@ -218,9 +218,9 @@ type = custom/text
 content = 
 format-padding = 2
 content-foreground = ${colors.blue}
-click-left = $RICE_LAUNCHER &
-click-middle = $RICE_LAUNCHER &
-click-right = $RICE_LAUNCHER &
+click-left = rofi -theme drun -show drun &
+;click-middle = rofi -theme drun -show drun &
+click-right = rofi -theme run -show run &
 
 ;----------------------------------------------------------
 ; TITLE

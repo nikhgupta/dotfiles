@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-export RICE_LAUNCHER=~/.bin/$CURRENT_RICE/rofi/drun
 export RICE_TRASHER=~/.bin/$CURRENT_RICE/polybar/trash.sh
 export RICE_WINDOW_TITLEIZER=~/.bin/$CURRENT_RICE/polybar/window.sh
 export RICE_SESSION_QUITTER=~/.bin/$CURRENT_RICE/polybar/bspcquit.sh
