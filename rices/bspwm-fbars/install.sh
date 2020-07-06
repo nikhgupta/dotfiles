@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-_name=$(basename $(dirname $0))
-_root=$(dirname $(dirname $0))
+_rice=$(dirname $(realpath $0))
+_name=$(basename $_rice)
+_root=$(dirname $(dirname $_rice))
 
 source ~/.zsh/utils.sh
 _lock=~/.cache/rice.lock
@@ -9,7 +10,7 @@ touch $_lock
 _current=$(cat $_lock)
 
 if [[ -n "$_current" ]] && [[ $_current != "$_name" ]]; then
-  error "Please, run '$_root/$_current/uninstall.sh' to uninstall currently installed rice, first."
+  error "Please, run '$_root/rices/$_current/uninstall.sh' to uninstall currently installed rice, first."
 fi
 
 dotlink_all() {
@@ -25,11 +26,10 @@ pac_install bspwm sxhkd redshift polybar \
 yay_install rofi-git dunst-git picom-ibhagwan-git light-git \
   ttf-font-awesome-4 ttf-material-design-icons
 
-mkdir -p ~/.bin/$_name
-dotlink_all $_root/.bin ~/.bin/$_name
-dotlink_all $_root/.config ~/.config
-safelink.rb -v $_root/.Xdefaults
-safelink.rb -v $_root/.Xresources.d
+dotlink_all $_rice/.bin ~/.bin
+dotlink_all $_rice/.config ~/.config
+safelink.rb -v $_rice/.Xdefaults
+safelink.rb -v $_rice/.Xresources.d
 
 echo $_name >$_lock
 exit 0

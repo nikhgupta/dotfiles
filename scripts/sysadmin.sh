@@ -29,7 +29,7 @@ highlight "Installing utilities and essential tools"
 pac_install curl wget make zsh gvim tmux aria2 rclone ripgrep fd \
     jq inotify-tools ncdu xclip ntfs-3g ttf-fira-code timeshift \
     pkgfile kitty alacritty xorg-xsetroot noto-fonts powerline-fonts \
-    feh rofi procps-ng blueman
+    feh procps-ng blueman
 yay_install libinput-gestures
 pkgfile --update
 gpasswd -a $SUDO_USER input

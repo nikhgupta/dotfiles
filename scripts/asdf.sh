@@ -32,6 +32,6 @@ asdf install python 3.8.3
 asdf global python 3.8.3 2.7.18
 
 highlight "Installing useful gems and pips"
-gpip3 install pywal
-asdf rehash python
-asdf rehash ruby
+PIP_REQUIRE_VIRTUALENV="" pip3 install pywal
+asdf reshim python
+asdf reshim ruby

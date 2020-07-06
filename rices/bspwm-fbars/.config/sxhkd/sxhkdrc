@@ -4,7 +4,7 @@
 
 # quit bspwm normally
 super + alt + Escape
-  $RICE_SESSION_QUITTER
+  ~/.bin/sessionquit.sh
 
 # # reload bspwm configuration
 # super + Escape
@@ -189,49 +189,49 @@ alt + Tab
 
 # screen lock
 super + x
-  $RICE_SCREENLOCKER
+  ~/.bin/screenlock.sh
 
 {ctrl + alt, shift + alt, ctrl + shift} + l
-  $RICE_SCREENLOCKER
+  ~/.bin/screenlock.sh
 
 # quit bspwm normally
 ctrl + shift + alt + l
-  $RICE_SESSION_QUITTER
+  ~/.bin/sessionquit.sh
 
 # Screenshots
 @Print
-  $RICE_SCREENSHOTTER
+  ~/.bin/screenshot.sh
 
 alt + @Print
-  $RICE_SCREENSHOTTER sel
+  ~/.bin/screenshot.sh sel
 
 ctrl + @Print
-  $RICE_SCREENSHOTTER window
+  ~/.bin/screenshot.sh window
 
 super + @Print
-  $RICE_SCREENSHOTTER open
+  ~/.bin/screenshot.sh open
 
 # Shift_L
-#   $RICE_SCREENCASTER
+#   ~/.bin/screencast.sh
 
 # super + Shift_L
-#   RICE_SCREENCASTER open
+# ~/.bin/screencast.sh open
 
 # VOLUME
 
 ### Mute
 XF86AudioMute
-  $RICE_VOLUME_NOTIFIER toggle
+  ~/.bin/volume.sh toggle
 
 XF86AudioMicMute
-  $RICE_VOLUME_NOTIFIER toggle-mic
+  ~/.bin/volume.sh toggle-mic
 
 ### Master Volume
 XF86AudioRaiseVolume
-  $RICE_VOLUME_NOTIFIER raise
+  ~/.bin/volume.sh raise
 
 XF86AudioLowerVolume
-  $RICE_VOLUME_NOTIFIER lower
+  ~/.bin/volume.sh lower
 
 ### Media Keys
 XF86Audio{Play,Stop,Prev,Next}

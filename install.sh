@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-_scripts=$(realpath $(dirname $0))
-_root=$(dirname $_scripts)
+_root=$(dirname $(realpath $0))
+_scripts=$_root/scripts
 source ~/.zsh/utils.sh
 is_archlinux || error "v4 of these dotfiles are targetted at Archlinux. Please, use earlier versions on this system."
 
@@ -29,6 +29,4 @@ for ext in $(cat $_root/mackup/.config/Code/User/extensions.txt); do
 done
 
 highlight "Remaining tasks.."
-bash $_scripts/mounts.sh
-action "You should follow this link to speed up Boot: https://wiki.archlinux.org/index.php/Silent_boot"
-action "You should install a rice with: $_root/rices/<name>/install.sh"
+bash $_scripts/remaining.sh

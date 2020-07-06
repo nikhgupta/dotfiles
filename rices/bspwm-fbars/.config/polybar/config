@@ -246,10 +246,10 @@ label-maxlen = 50
 interval = 2
 type = custom/script
 label = %output:0:60:...%  %{B- -o -u}
-click-left = $RICE_WINDOW_TITLEIZER copy
-click-middle = $RICE_WINDOW_TITLEIZER close
-click-right = $RICE_WINDOW_TITLEIZER jump
-exec = $RICE_WINDOW_TITLEIZER
+click-left = ~/.bin/polybar/window.sh copy
+click-middle = ~/.bin/polybar/window.sh close
+click-right = ~/.bin/polybar/window.sh jump
+exec = ~/.bin/polybar/window.sh
 tail = true
 exec-if = true
 
@@ -263,9 +263,9 @@ exec-if = true
 [module/screencast]
 type = custom/script
 label = %output%
-click-left = $RICE_SCREENCASTER &
-click-right = $RICE_SCREENCASTER cache &
-exec = $RICE_SCREENCASTER status
+click-left = ~/.bin/screencast.sh &
+click-right = ~/.bin/screencast.sh cache &
+exec = ~/.bin/screencast.sh status
 exec-if = true
 tail = true
 
@@ -280,10 +280,10 @@ tail = true
 [module/screenshot]
 type = custom/text
 content = 
-click-left = $RICE_SCREENSHOTTER sel &
-click-middle = $RICE_SCREENSHOTTER window &
-click-right = $RICE_SCREENSHOTTER &
-scroll-down = $RICE_SCREENSHOTTER edit &
+click-left = ~/.bin/screenshot.sh sel &
+click-middle = ~/.bin/screenshot.sh window &
+click-right = ~/.bin/screenshot.sh &
+scroll-down = ~/.bin/screenshot.sh edit &
 
 ;----------------------------------------------------------
 ; FILESYSTEM
@@ -405,7 +405,7 @@ ramp-volume-2 = 
 
 [module/microphone]
 type = custom/script
-exec = $RICE_MIC_NOTIFIER
+exec = ~/.bin/microphone.sh
 tail = true
 format = <label>
 format-foreground = ${colors.green}
@@ -485,11 +485,11 @@ label = %date% %time%
 [module/wallpaper]
 type = custom/text
 content = 
-click-left = $RICE_WALLPAPERIZER d &
-click-middle = $RICE_WALLPAPERIZER dd &
-click-right = $RICE_WALLPAPERIZER x &
-scroll-up = $RICE_WALLPAPERIZER p &
-scroll-down = $RICE_WALLPAPERIZER a &
+click-left = ~/.bin/wallpaper.sh d &
+click-middle = ~/.bin/wallpaper.sh dd &
+click-right = ~/.bin/wallpaper.sh x &
+scroll-up = ~/.bin/wallpaper.sh p &
+scroll-down = ~/.bin/wallpaper.sh a &
 
 ;----------------------------------------------------------
 ; POWER
@@ -510,7 +510,7 @@ label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = " "
-menu-0-0-exec = $RICE_SCREENLOCKER
+menu-0-0-exec = ~/.bin/screenlock.sh
 
 menu-0-1 = ""
 menu-0-1-exec = menu-open-1
@@ -522,7 +522,7 @@ menu-0-3 = ""
 menu-0-3-exec = menu-open-3
 
 menu-1-0 = "LOGOUT!? "
-menu-1-0-exec = $RICE_SESSION_QUITTER
+menu-1-0-exec = ~/.bin/sessionquit.sh
 
 menu-2-0 = "RESTART!? "
 menu-2-0-exec = systemctl reboot
@@ -536,7 +536,7 @@ menu-3-0-exec = systemctl poweroff
 [module/weather]
 type = custom/script
 interval = 60
-exec = $RICE_WEATHER_NOTIFIER
+exec = ~/.bin/polybar/weather.py
 
 ;----------------------------------------------------------
 ; MPD
@@ -565,9 +565,9 @@ label-song-ellipsis = true
 type = custom/script
 ;interval = 1
 tail = true
-click-left = $RICE_TRASHER empty &
-click-right = $RICE_TRASHER open &
-exec = $RICE_TRASHER
+click-left = ~/.bin/polybar/trash.sh empty &
+click-right = ~/.bin/polybar/trash.sh open &
+exec = ~/.bin/polybar/trash.sh
 
 ;----------------------------------------------------------
 ; APPS
@@ -630,7 +630,7 @@ click-left = mpc del 0 &
 type = custom/text
 content = 
 content-foreground = ${colors.white}
-click-middle = $RICE_WINDOW_TITLEIZER close &
+click-middle = ~/.bin/polybar/window.sh close &
 
 [module/sep]
 type = custom/text
@@ -641,7 +641,7 @@ content = |
 ; ----------------------------------------------------------------
 [module/pub-ip]
 type = custom/script
-exec = ~/.bin/$CURRENT_RICE/polybar/pub-ip.sh
+exec = ~/.bin/polybar/pub-ip.sh
 interval = 60
 tail = true
 
@@ -649,12 +649,12 @@ tail = true
 type = custom/script
 interval = 60
 tail = true
-exec = . ~/.zshenv && ~/.bin/$CURRENT_RICE/polybar/bitcoin.py
+exec = . ~/.zshenv && ~/.bin/polybar/bitcoin.py
 
 [module/uptime]
 type = custom/script
 format-prefix = " "
-exec = ~/.bin/$CURRENT_RICE/polybar/uptime.sh
+exec = ~/.bin/polybar/uptime.sh
 interval = 60
 
 [module/refresh]
@@ -664,7 +664,7 @@ click-left = ~/.config/polybar/launch.sh
 
 [module/cron2m]
 type = custom/script
-exec = ~/.bin/$CURRENT_RICE/polybar/battery.sh
+exec = ~/.bin/polybar/battery.sh
 interval = 120
 
 ; -------------- FINALIZE ----------------------------------------

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source ~/.zsh/utils.sh
-_root=$(realpath $(dirname $(dirname $0)))
+_root=$(dirname $(dirname $(realpath $0)))
 
 highlight "Obtaining your GPG keys from OneDrive"
 mkdir $_root/gpg-backup
@@ -34,5 +34,5 @@ git config --global commit.gpgsign true
 
 highlight "Updating dotfiles repo origin URL"
 pushd $_root
-git remote set-url origin "git@github.com:nikhgupta/dotcastle.git"
+git remote set-url origin "git@github.com:nikhgupta/dotfiles.git"
 popd

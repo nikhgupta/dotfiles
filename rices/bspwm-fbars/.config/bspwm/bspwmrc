@@ -167,6 +167,6 @@ nm-applet &
 blueman-applet &
 
 # Auto-lock after some time but not when cursor is parked at bottom right.
-xautolock -locker $RICE_SCREENLOCKER -time 5 -detectsleep -corners '00+-' &
+xautolock -locker ~/.bin/screenlock.sh -time 5 -detectsleep -corners '00+-' &
 # Auto-lock after suspend. https://wiki.archlinux.org/index.php/Power_management#xss-lock
-xss-lock -- $RICE_SCREENLOCKER &
+xss-lock -- ~/.bin/screenlock.sh &

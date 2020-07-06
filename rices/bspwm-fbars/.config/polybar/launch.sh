@@ -7,12 +7,17 @@ killall -q polybar
 while pgrep -U $UID -x polybar >/dev/null; do sleep 1; done
 
 # kill all processes matching the current rice
-ps -eo pid,command \
-  | grep ~/.bin/$CURRENT_RICE \
-  | grep "sh " \
-  | grep -v grep \
-  | awk '{print $1}' \
-  | xargs -I {} kill -9 {}
+kill_matching_bin() {
+  ps -eo pid,command |
+    grep ~/.bin/$@ |
+    grep -v grep |
+    awk '{print $1}' |
+    xargs -I {} kill -9 {}
+}
+
+kill_matching_bin microphone.sh
+kill_matching_bin polybar/window.sh
+kill_matching_bin screencast.sh status
 
 polybar -q top &
 polybar -q bottom &
