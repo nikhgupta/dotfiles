@@ -53,7 +53,7 @@ elif [[ "$1" == "cache" ]]; then
       _try_exec=$(cat $1 | grep '^TryExec=' | head -n 1 | cut -d '=' -f 2)
       _term=$(cat $1 | grep '^Terminal=' | head -n 1 | cut -d '=' -f 2)
       _cats=$(cat $1 | grep '^Categories=' | head -n 1 | cut -d '=' -f 2)
-      echo "0,$_name,$_exec,$_icon,$_try_exec,$_name2,$_term,$_cats,$1"
+      echo "1,$_name,$_exec,$_icon,$_try_exec,$_name2,$_term,$_cats,$1" | tee -a $MAP
     fi
   }
 

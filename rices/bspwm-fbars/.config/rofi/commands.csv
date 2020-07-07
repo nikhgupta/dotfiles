@@ -1,29 +1,3 @@
-0,Advanced Network Configuration,nm-connection-editor,preferences-system-network,,,false,GNOME;GTK;Settings;X-GNOME-NetworkSettings;X-GNOME-Utilities;,/usr/share/applications/nm-connection-editor.desktop
-0,Archive Manager,file-roller %U,org.gnome.ArchiveManager,file-roller,,false,GTK;GNOME;Utility;Archiving;Compression;X-GNOME-Utilities;,/usr/share/applications/org.gnome.FileRoller.desktop
-0,Avahi SSH Server Browser,/usr/bin/bssh,network-wired,,,false,GNOME;Network;,/usr/share/applications/bssh.desktop
-0,Avahi VNC Server Browser,/usr/bin/bvnc,network-wired,,,false,GNOME;Network;,/usr/share/applications/bvnc.desktop
-0,Avahi Zeroconf Browser,/usr/bin/avahi-discover,network-wired,,,false,GNOME;System;,/usr/share/applications/avahi-discover.desktop
-0,Bluetooth Adapters,blueman-adapters,blueman-device,,,false,X-XFCE;Settings;HardwareSettings;X-XFCE-SettingsDialog;GTK;,/usr/share/applications/blueman-adapters.desktop
-0,CMake,cmake-gui %f,CMakeSetup,,,false,Development;,/usr/share/applications/cmake-gui.desktop
-0,Color Profile Viewer,gcm-viewer,gnome-color-manager,,,false,GNOME;GTK;System;,/usr/share/applications/org.gnome.ColorProfileViewer.desktop
-0,Extensions,/usr/bin/gnome-extensions-app,org.gnome.Extensions,,,,GNOME;GTK;Utility;,/usr/share/applications/org.gnome.Extensions.desktop
-0,Hardware Locality lstopo,lstopo,,,,false,System;,/usr/share/applications/lstopo.desktop
-0,IBus Preferences,ibus-setup,ibus-setup,,,false,Settings;,/usr/share/applications/org.freedesktop.IBus.Setup.desktop
-0,Kvantum Manager,kvantummanager,kvantum,,,false,Qt;Utility;Settings;DesktopSettings;LXQt;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;X-GNOME-PersonalSettings;,/usr/share/applications/kvantummanager.desktop
-0,LSHW,/usr/sbin/gtk-lshw,/usr/share/lshw/artwork/logo.svg,,,false,Application;System;X-Red-Hat-Base;X-Fedora;,/usr/share/applications/gtk-lshw.desktop
-0,Manjaro Hello,/usr/bin/manjaro-hello,manjaro,,,false,GNOME;GTK;System;,/usr/share/applications/manjaro-hello.desktop
-0,Manjaro Notifier Settings,msm_notifier --settings,preferences-desktop,,,false,Settings;DesktopSettings;X-LXDE-Settings;X-XFCE-SettingsDialog;X-KDE-Settings;X-XFCE-SystemSettings;,/usr/share/applications/msm_notifier_settings.desktop
-0,OpenJDK Java 14 Console,/usr/lib/jvm/java-14-openjdk/bin/jconsole,java14-openjdk,,,false,Application;System;,/usr/share/applications/jconsole-java-openjdk.desktop
-0,OpenJDK Java 14 Shell,/usr/lib/jvm/java-14-openjdk/bin/jshell,java14-openjdk,,,true,Application;System;,/usr/share/applications/jshell-java-openjdk.desktop
-0,Qt V4L2 test Utility,qv4l2,qv4l2,,,false,AudioVideo;,/usr/share/applications/qv4l2.desktop
-0,Qt V4L2 video capture utility,qvidcap,qvidcap,,,false,AudioVideo;,/usr/share/applications/qvidcap.desktop
-0,Screenshot,gnome-screenshot --interactive,org.gnome.Screenshot,,,false,GTK;GNOME;Utility;X-GNOME-Utilities;,/usr/share/applications/org.gnome.Screenshot.desktop
-0,Software Token (small),stoken-gui --small,stoken-gui,,Software Token,false,Security;GTK;Utility;,/usr/share/applications/stoken-gui-small.desktop
-0,Software Token,stoken-gui,stoken-gui,,Software Token,false,Security;GTK;Utility;,/usr/share/applications/stoken-gui.desktop
-0,System Monitor,gnome-system-monitor,org.gnome.SystemMonitor,gnome-system-monitor,,false,GNOME;GTK;System;Monitor;,/usr/share/applications/gnome-system-monitor.desktop
-0,Videos,adwaita-maia-override totem %U,org.gnome.Totem,,,false,GTK;GNOME;AudioVideo;Player;Video;,/usr/share/applications/org.gnome.Totem.desktop
-0,compton,compton,compton,compton,X compositor,,Utility;,/usr/share/applications/compton.desktop
-0,picom,picom,,picom,X compositor,,Utility;,/usr/share/applications/picom.desktop
 1,Add/Remove Software,pamac-manager %U,system-software-install,,,false,GNOME;GTK;System;PackageManager;Settings;X-XFCE-SettingsDialog;X-XFCE-SystemSettings;,/usr/share/applications/org.manjaro.pamac.manager.desktop
 1,Alacritty,alacritty,Alacritty,alacritty,Terminal,false,System;TerminalEmulator;,/usr/share/applications/Alacritty.desktop
 1,Bluetooth Manager,blueman-manager,blueman,,,false,GTK;GNOME;Settings;HardwareSettings;,/usr/share/applications/blueman-manager.desktop
@@ -71,3 +45,34 @@
 1,ncmpcpp,ncmpcpp,lxmusic,,Music Player,true,,custom
 1,qutebrowser,qutebrowser %u,qutebrowser,,Web Browser,false,Network;WebBrowser;,/usr/share/applications/org.qutebrowser.qutebrowser.desktop
 1,ranger,ranger,utilities-terminal,,File Manager,true,ConsoleOnly;System;FileTools;FileManager,/usr/share/applications/ranger.desktop
+1,Emacs,emacs %F,emacs,,Text Editor,false,Development;TextEditor;,/usr/share/applications/emacs.desktop
+0,mpv Media Player,prime-run mpv --player-operation-mode,mpv,mpv,Multimedia player,false,AudioVideo;Audio;Video;Player;TV;,/home/nikhgupta/.local/share/applications/mpv.desktop
+0,kitty,kitty,kitty,kitty,Terminal emulator,,System;TerminalEmulator;,/home/nikhgupta/.local/share/applications/kitty.desktop
+0,VLC media player,/usr/bin/vlc --started-from-file %U,vlc,/usr/bin/vlc,Media player,false,AudioVideo;Player;Recorder;,/home/nikhgupta/.local/share/applications/vlc.desktop
+0,Authy,/opt/google/chrome/google-chrome --profile-directory,chrome-gaedmjdfmmahhbjefcbgaolhhanlaolb-Default,,,false,,/home/nikhgupta/.local/share/applications/chrome-gaedmjdfmmahhbjefcbgaolhhanlaolb-Default.desktop
+0,Advanced Network Configuration,nm-connection-editor,preferences-system-network,,,false,GNOME;GTK;Settings;X-GNOME-NetworkSettings;X-GNOME-Utilities;,/usr/share/applications/nm-connection-editor.desktop
+0,Archive Manager,file-roller %U,org.gnome.ArchiveManager,file-roller,,false,GTK;GNOME;Utility;Archiving;Compression;X-GNOME-Utilities;,/usr/share/applications/org.gnome.FileRoller.desktop
+0,Avahi SSH Server Browser,/usr/bin/bssh,network-wired,,,false,GNOME;Network;,/usr/share/applications/bssh.desktop
+0,Avahi VNC Server Browser,/usr/bin/bvnc,network-wired,,,false,GNOME;Network;,/usr/share/applications/bvnc.desktop
+0,Avahi Zeroconf Browser,/usr/bin/avahi-discover,network-wired,,,false,GNOME;System;,/usr/share/applications/avahi-discover.desktop
+0,Bluetooth Adapters,blueman-adapters,blueman-device,,,false,X-XFCE;Settings;HardwareSettings;X-XFCE-SettingsDialog;GTK;,/usr/share/applications/blueman-adapters.desktop
+0,CMake,cmake-gui %f,CMakeSetup,,,false,Development;,/usr/share/applications/cmake-gui.desktop
+0,Color Profile Viewer,gcm-viewer,gnome-color-manager,,,false,GNOME;GTK;System;,/usr/share/applications/org.gnome.ColorProfileViewer.desktop
+0,Extensions,/usr/bin/gnome-extensions-app,org.gnome.Extensions,,,,GNOME;GTK;Utility;,/usr/share/applications/org.gnome.Extensions.desktop
+0,Hardware Locality lstopo,lstopo,,,,false,System;,/usr/share/applications/lstopo.desktop
+0,IBus Preferences,ibus-setup,ibus-setup,,,false,Settings;,/usr/share/applications/org.freedesktop.IBus.Setup.desktop
+0,Kvantum Manager,kvantummanager,kvantum,,,false,Qt;Utility;Settings;DesktopSettings;LXQt;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;X-GNOME-PersonalSettings;,/usr/share/applications/kvantummanager.desktop
+0,LSHW,/usr/sbin/gtk-lshw,/usr/share/lshw/artwork/logo.svg,,,false,Application;System;X-Red-Hat-Base;X-Fedora;,/usr/share/applications/gtk-lshw.desktop
+0,Manjaro Hello,/usr/bin/manjaro-hello,manjaro,,,false,GNOME;GTK;System;,/usr/share/applications/manjaro-hello.desktop
+0,Manjaro Notifier Settings,msm_notifier --settings,preferences-desktop,,,false,Settings;DesktopSettings;X-LXDE-Settings;X-XFCE-SettingsDialog;X-KDE-Settings;X-XFCE-SystemSettings;,/usr/share/applications/msm_notifier_settings.desktop
+0,OpenJDK Java 14 Console,/usr/lib/jvm/java-14-openjdk/bin/jconsole,java14-openjdk,,,false,Application;System;,/usr/share/applications/jconsole-java-openjdk.desktop
+0,OpenJDK Java 14 Shell,/usr/lib/jvm/java-14-openjdk/bin/jshell,java14-openjdk,,,true,Application;System;,/usr/share/applications/jshell-java-openjdk.desktop
+0,Qt V4L2 test Utility,qv4l2,qv4l2,,,false,AudioVideo;,/usr/share/applications/qv4l2.desktop
+0,Qt V4L2 video capture utility,qvidcap,qvidcap,,,false,AudioVideo;,/usr/share/applications/qvidcap.desktop
+0,Screenshot,gnome-screenshot --interactive,org.gnome.Screenshot,,,false,GTK;GNOME;Utility;X-GNOME-Utilities;,/usr/share/applications/org.gnome.Screenshot.desktop
+0,Software Token (small),stoken-gui --small,stoken-gui,,Software Token,false,Security;GTK;Utility;,/usr/share/applications/stoken-gui-small.desktop
+0,Software Token,stoken-gui,stoken-gui,,Software Token,false,Security;GTK;Utility;,/usr/share/applications/stoken-gui.desktop
+0,System Monitor,gnome-system-monitor,org.gnome.SystemMonitor,gnome-system-monitor,,false,GNOME;GTK;System;Monitor;,/usr/share/applications/gnome-system-monitor.desktop
+0,Videos,adwaita-maia-override totem %U,org.gnome.Totem,,,false,GTK;GNOME;AudioVideo;Player;Video;,/usr/share/applications/org.gnome.Totem.desktop
+0,compton,compton,compton,compton,X compositor,,Utility;,/usr/share/applications/compton.desktop
+0,picom,picom,,picom,X compositor,,Utility;,/usr/share/applications/picom.desktop

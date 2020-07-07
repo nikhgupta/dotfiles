@@ -62,3 +62,6 @@ systemctl disable --now mpd
 su - $SUDO_USER -c "mkdir ~/.mpd"
 # su - $SUDO_USER -c "mkdir -p ~/Music/Playlists"
 su - $SUDO_USER -c "touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpd.state}"
+
+highlight "Adding housekeeping to cron daily"
+ln -s $DOTCASTLE/user/.bin/housekeep.sh /etc/cron.daily/

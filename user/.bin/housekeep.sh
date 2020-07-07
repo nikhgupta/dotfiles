@@ -16,7 +16,7 @@ _home=$(su - $_user -c "echo \$HOME")
 _dotcastle=$(su - $_user -c "echo \$DOTCASTLE")
 _backup=$_home/OneDrive/Backup/workstation/
 
-echo -ne "\n\n\n=> Running housekeeping at $(date)"
+echo -ne "\n\n\n=> Running housekeeping at $(date)\n"
 source $_home/.zsh/utils.sh
 
 (($UID)) && error "You must run $0 with sudo priviledges."
@@ -61,13 +61,18 @@ as_user "gpg --refresh-keys"
 
 # backup various app configs and vscode extensions list
 as_user "mackup backup"
-as_user "code --list-extensions" >$_dotcastle/.mackup/.config/Code/User/extensions.txt
+as_user "code --list-extensions" >$_dotcastle/mackup/.config/Code/User/extensions.txt
 
 highlight "Clearing journalctl logs on Ubuntu.."
-$_home/.bin/clearlogs.sh
+if is_installed journalctl; then
+  journalctl --flush --rotate
+  journalctl --vacuum-size=10M
+  journalctl --verify
+fi
 
 if [[ -f $_home/.cache/rice.lock ]]; then
-  _path=$_home/.bin/$(cat $_home/.cache/rice.lock)/launcher.sh
+  highlight "Updating launcher cache"
+  _path=$_home/.bin/launcher.sh
   [[ -f $_path ]] && as_user "$_path cache"
 fi
 
