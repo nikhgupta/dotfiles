@@ -1,11 +1,9 @@
 #! /bin/sh
 
-# Kill all running applications before starting
-killall -9 sxhkd picom dunst mpd polybar
+# === Setup environment vars =====
+. ~/.zshenv
 
-source ~/.zshenv
-sxhkd &
-
+# === Setup BSPWM ================
 bspc monitor -d web term code music files mail chat settings automation 9
 # bspc monitor -d I II III IV V VI VII VIII IX X
 
@@ -137,34 +135,46 @@ bspc rule -a io.elementary.switchboard desktop=^8 state=floating center=on follo
 # desktop 9 - miscelleneous
 bspc rule -a Steam desktop=^9 follow=on
 
+# === Kill running process ========
+
+# stop music if currently being played
+is_installed mpc && mpc stop
+
+# Kill all running applications before starting
+killall -9 sxhkd picom dunst mpd polybar redshift redshift-gtk
+
+# kill our scratch term
+for wid in $(xdotool search --class "ScratchTerm"); do
+  xdotool windowkill $wid
+done
+
 # === Startup Environment =========
 # Scripts to set a familiar environment when we login
 _wall=$(cat ~/.wall)
 feh --bg-fill "${_wall:-~/Pictures/Wallpapers/default.png}"
-numlockx off # turn off num lock on login
-light -S 45 # set a specific screen backlight
+numlockx off                             # turn off num lock on login
+light -S 45                              # set a specific screen backlight
 pactl set-source-mute @DEFAULT_SOURCE@ 1 # mute microphone on login
-pgrep mpd && mpc stop # turn off music in the rare case that it is running
+xrdb -merge ~/.Xdefaults
+xsetroot -cursor_name left_ptr
 
 # === Startup Items ===============
-
 # start Polkit for authenticating user session and use sudo in GUI
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# lets start with our polybar first of all..
-~/.config/polybar/launch.sh &
-
-# useful daemons and processes
-mpd
+# bspwm siblings
+sxhkd &
 dunst &
 picom -b
-xrdb -merge ~/.Xdefaults
-xsetroot -cursor_name left_ptr
+~/.config/polybar/launch.sh &
 
 # System Tray processes
 pamac-tray &
 nm-applet &
 blueman-applet &
+
+# useful daemons and processes
+mpd
 
 # start libinput gestures for touchpad
 libinput-gestures-setup start
