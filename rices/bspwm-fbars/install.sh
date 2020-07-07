@@ -22,7 +22,8 @@ dotlink_all() {
 
 pac_install bspwm sxhkd redshift polybar \
   ttf-font-awesome noto-fonts powerline-fonts i3lock-color \
-  network-manager-applet xdotool extra/xorg-xev xautolock xss-lock
+  network-manager-applet xdotool extra/xorg-xev xautolock xss-lock \
+  papirus-icon-theme
 
 yay_install rofi-git dunst-git picom-ibhagwan-git light-git \
   ttf-font-awesome-4 ttf-material-design-icons

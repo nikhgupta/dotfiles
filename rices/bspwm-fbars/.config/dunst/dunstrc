@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "360x20-17+37"
+    geometry = "400x30-10+37"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -57,7 +57,7 @@
     padding = 8
 
     # Horizontal padding.
-    horizontal_padding = 10
+    horizontal_padding = 20
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
@@ -72,7 +72,7 @@
     #  * foreground: use the same color as the foreground;
     #  * frame: use the same color as the frame;
     #  * anything else will be interpreted as a X color.
-    separator_color = frame
+    separator_color = "#eff0eb88"
 
     # Sort messages by urgency.
     sort = yes
@@ -160,13 +160,13 @@
     ### Icons ###
 
     # Align icons left/right/off
-    icon_position = left
+    icon_position = off
 
     # Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Papirus/16x16/status/:/usr/share/icons/Papirus/16x16/actions/:/usr/share/icons/Papirus/16x16/panel/:/usr/share/icons/Papirus/16x16/devices/:/usr/share/icons/Papirus/16x16/apps/:/usr/share/icons/ubuntu-mono-dark/status/16/:/usr/share/icons/gnome/16x16/status/:/usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/apps/:/usr/share/icons/Humanity/status/16/:/usr/share/icons/HighContrast/16x16/status/
+    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/apps/:/usr/share/icons/HighContrast/16x16/status/
 
     ### History ###
 
@@ -246,21 +246,21 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#5FAD56bb"
-    frame_color = "#2C7A23bb"
-    foreground = "#333333ff"
+    background = "#f3f99d99"
+    frame_color = "#f3f99dcc"
+    foreground = "#282a36ff"
     timeout = 3
 
 [urgency_normal]
-    background = "#ffb52abb"
-    frame_color = "#cc8307bb"
-    foreground = "#333333ff"
+    background = "#eff0eb99"
+    frame_color = "#eff0ebff"
+    foreground = "#282a36ff"
     timeout = 10
 
 [urgency_critical]
-    background = "#e60053bb"
-    frame_color = "#b30020bb"
-    foreground = "#eeeeeeFF"
+    background = "#ff5c5799"
+    frame_color = "#ff5c57ff"
+    foreground = "#eff0ebff"
     timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules to

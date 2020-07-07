@@ -65,7 +65,7 @@ terminal](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/scratch-t
 
 ### and notifications
 
-![notifications](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/notifications.png)
+![notifications](https://github.com/nikhgupta/dotfiles/raw/master/screenshots/notifications-v2-1.png)
 
 ### and a nice screen lock
 
