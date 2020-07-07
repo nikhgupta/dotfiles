@@ -84,6 +84,7 @@ bspc rule -a io.elementary.terminal desktop=^2 follow=on focus=on
 bspc rule -a Atom desktop=^3 follow=on
 bspc rule -a Subl3 desktop=^3 follow=on
 bspc rule -a Code desktop=^3 follow=on
+bspc rule -a Emacs desktop=^3 follow=on
 bspc rule -a Genymotion desktop=^3
 bspc rule -a Notepadqq desktop=^3 follow=on
 bspc rule -a Mousepad desktop=^3 follow=on

@@ -1,5 +1,6 @@
 0,Advanced Network Configuration,nm-connection-editor,preferences-system-network,,,false,GNOME;GTK;Settings;X-GNOME-NetworkSettings;X-GNOME-Utilities;,/usr/share/applications/nm-connection-editor.desktop
 0,Archive Manager,file-roller %U,org.gnome.ArchiveManager,file-roller,,false,GTK;GNOME;Utility;Archiving;Compression;X-GNOME-Utilities;,/usr/share/applications/org.gnome.FileRoller.desktop
+0,Authy,/opt/google/chrome/google-chrome --profile-directory,chrome-gaedmjdfmmahhbjefcbgaolhhanlaolb-Default,,,false,,/home/nikhgupta/.local/share/applications/chrome-gaedmjdfmmahhbjefcbgaolhhanlaolb-Default.desktop
 0,Avahi SSH Server Browser,/usr/bin/bssh,network-wired,,,false,GNOME;Network;,/usr/share/applications/bssh.desktop
 0,Avahi VNC Server Browser,/usr/bin/bvnc,network-wired,,,false,GNOME;Network;,/usr/share/applications/bvnc.desktop
 0,Avahi Zeroconf Browser,/usr/bin/avahi-discover,network-wired,,,false,GNOME;System;,/usr/share/applications/avahi-discover.desktop
@@ -21,8 +22,11 @@
 0,Software Token (small),stoken-gui --small,stoken-gui,,Software Token,false,Security;GTK;Utility;,/usr/share/applications/stoken-gui-small.desktop
 0,Software Token,stoken-gui,stoken-gui,,Software Token,false,Security;GTK;Utility;,/usr/share/applications/stoken-gui.desktop
 0,System Monitor,gnome-system-monitor,org.gnome.SystemMonitor,gnome-system-monitor,,false,GNOME;GTK;System;Monitor;,/usr/share/applications/gnome-system-monitor.desktop
+0,VLC media player,/usr/bin/vlc --started-from-file %U,vlc,/usr/bin/vlc,Media player,false,AudioVideo;Player;Recorder;,/home/nikhgupta/.local/share/applications/vlc.desktop
 0,Videos,adwaita-maia-override totem %U,org.gnome.Totem,,,false,GTK;GNOME;AudioVideo;Player;Video;,/usr/share/applications/org.gnome.Totem.desktop
 0,compton,compton,compton,compton,X compositor,,Utility;,/usr/share/applications/compton.desktop
+0,kitty,kitty,kitty,kitty,Terminal emulator,,System;TerminalEmulator;,/home/nikhgupta/.local/share/applications/kitty.desktop
+0,mpv Media Player,prime-run mpv --player-operation-mode,mpv,mpv,Multimedia player,false,AudioVideo;Audio;Video;Player;TV;,/home/nikhgupta/.local/share/applications/mpv.desktop
 0,picom,picom,,picom,X compositor,,Utility;,/usr/share/applications/picom.desktop
 1,Add/Remove Software,pamac-manager %U,system-software-install,,,false,GNOME;GTK;System;PackageManager;Settings;X-XFCE-SettingsDialog;X-XFCE-SystemSettings;,/usr/share/applications/org.manjaro.pamac.manager.desktop
 1,Alacritty,alacritty,Alacritty,alacritty,Terminal,false,System;TerminalEmulator;,/usr/share/applications/Alacritty.desktop
@@ -32,6 +36,7 @@
 1,Cheese,cheese,org.gnome.Cheese,,Webcam Booth,false,GNOME;AudioVideo;Video;Recorder;,/usr/share/applications/org.gnome.Cheese.desktop
 1,Disks,gnome-disks,org.gnome.DiskUtility,,,false,GNOME;GTK;Utility;X-GNOME-Utilities;,/usr/share/applications/org.gnome.DiskUtility.desktop
 1,Document Viewer,evince %U,org.gnome.Evince,evince,,false,GNOME;GTK;Office;Viewer;Graphics;2DGraphics;VectorGraphics;,/usr/share/applications/org.gnome.Evince.desktop
+1,Emacs,emacs %F,emacs,,Text Editor,false,Development;TextEditor;,/usr/share/applications/emacs.desktop
 1,Epiphany,epiphany %U,org.gnome.Epiphany,,Web Browser,false,Network;GNOME;GTK;WebBrowser;,/usr/share/applications/org.gnome.Epiphany.desktop
 1,File Manager,nautilus --new-window %U,org.gnome.Nautilus,,,false,GNOME;GTK;Utility;Core;FileManager;,/usr/share/applications/org.gnome.Nautilus.desktop
 1,Firewall Configuration,gufw,gufw,,,false,GNOME;GTK;Settings;Security;X-GNOME-Settings-Panel;X-GNOME-SystemSettings;X-Unity-Settings-Panel;X-XFCE-SettingsDialog;X-XFCE-SystemSettings;,/usr/share/applications/gufw.desktop

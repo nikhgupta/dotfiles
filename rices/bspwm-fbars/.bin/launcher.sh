@@ -59,7 +59,7 @@ elif [[ "$1" == "cache" ]]; then
 
   for _dir in /usr/share/applications $HOME/.local/share/applications; do
     for _entry in $(find $_dir -type f -iname '*.desktop'); do
-      parse_desktop_entry $_entry
+      parse_desktop_entry $_entry | tee -a $MAP
     done
   done
 fi
