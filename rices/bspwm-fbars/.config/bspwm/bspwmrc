@@ -139,7 +139,8 @@ bspc rule -a Steam desktop=^9 follow=on
 
 # === Startup Environment =========
 # Scripts to set a familiar environment when we login
-feh --bg-fill ~/Pictures/Wallpapers/default.png
+_wall=$(cat ~/.wall)
+feh --bg-fill "${_wall:-~/Pictures/Wallpapers/default.png}"
 numlockx off # turn off num lock on login
 light -S 45 # set a specific screen backlight
 pactl set-source-mute @DEFAULT_SOURCE@ 1 # mute microphone on login
