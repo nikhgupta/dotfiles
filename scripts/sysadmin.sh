@@ -65,3 +65,6 @@ su - $SUDO_USER -c "touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpd.state}"
 
 highlight "Adding housekeeping to cron daily"
 ln -s $DOTCASTLE/user/.bin/housekeep.sh /etc/cron.daily/
+
+highlight "Adding archlinux logos"
+cp $_root/assets/logo* /usr/share/
