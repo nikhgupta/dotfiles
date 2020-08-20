@@ -17,7 +17,7 @@ kill_matching_bin() {
 
 kill_matching_bin microphone.sh
 kill_matching_bin polybar/window.sh
-kill_matching_bin screencast.sh status
+kill_matching_bin screencast.sh
 
 polybar -q top &
 polybar -q bottom &

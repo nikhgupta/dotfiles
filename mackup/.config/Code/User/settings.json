@@ -8,5 +8,42 @@
   "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Free', 'Font Awesome 5 Brands','FontAwesome'",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
-  "vim.useCtrlKeys": false
+  "vim.useCtrlKeys": true,
+  "editor.tabSize": 2,
+  "ruby.format": "rubocop",
+  "ruby.codeCompletion": "rcodetools",
+  "[ruby]": {
+    "editor.tabSize": 2
+  },
+  "beautify.language": {
+    "css": ["css", "scss"],
+    "html": ["htm", "html", "erb"],
+    "js": {
+      "type": ["javascript", "json"],
+      "filename": [".jshintrc", ".jsbeautifyrc"]
+    }
+  },
+  "beautify.config": {
+    "js": {
+      "unindent_chained_methods": false,
+      "jslint_happy": true,
+      "brace_style": "collapse,preserve-inline"
+    }
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "prettier.printWidth": 120,
+  "vsicons.dontShowNewVersionMessage": true,
+  "javascript.format.semicolons": "insert",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "javascript.preferences.quoteStyle": "double",
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "javascript.suggest.paths": true,
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }

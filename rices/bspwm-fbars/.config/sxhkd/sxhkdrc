@@ -28,6 +28,12 @@ super + {_,shift + }w
 # alternate between the tiled and monocle layout
 super + m
   bspc desktop -l next
+#   LAYOUT=$(bspc query -T -d | jq -r .layout); \
+#   if [[ "$LAYOUT" == "tiled" ]]; then; \
+#     polybar-msg cmd hide && bspc config top_padding 0 && bspc config bottom_padding 0; \
+#   else; \
+#     polybar-msg cmd show && bspc config top_padding 27 && bspc config bottom_padding 27; \
+#   fi; bspc desktop -l next
 
 # if the current node is automatic, send it to the last manual, otherwise pull the last leaf
 super + y

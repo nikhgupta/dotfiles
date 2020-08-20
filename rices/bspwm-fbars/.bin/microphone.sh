@@ -5,9 +5,9 @@ mkdir -p $(dirname $pidfile)
 
 get_status_icon() {
     if pactl list sources | grep -qi 'mute: yes'; then
-        echo "%{F#85888f}%{F-}"
-    else
         echo ""
+    else
+        echo "%{F#85888f}%{F-}"
     fi
 }
 

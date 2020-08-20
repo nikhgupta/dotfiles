@@ -76,3 +76,6 @@
 0,Videos,adwaita-maia-override totem %U,org.gnome.Totem,,,false,GTK;GNOME;AudioVideo;Player;Video;,/usr/share/applications/org.gnome.Totem.desktop
 0,compton,compton,compton,compton,X compositor,,Utility;,/usr/share/applications/compton.desktop
 0,picom,picom,,picom,X compositor,,Utility;,/usr/share/applications/picom.desktop
+1,Processing,processing,processing,,,false,Application;Development;,/usr/share/applications/processing.desktop
+0,Login screen settings,gdm3setup,preferences-desktop-theme,,,false,GNOME;GTK;Settings;X-GNOME-SystemSettings;,/usr/share/applications/gdm3setup.desktop
+1,Typora,typora,typora,,Markdown Editor,,Office;WordProcessor;,/usr/share/applications/typora.desktop

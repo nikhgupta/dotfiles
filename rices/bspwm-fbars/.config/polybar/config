@@ -61,6 +61,9 @@ modules-right = filesystem cpu ram temp battery microphone vol-pulse date screen
 ;cursor-scroll = ns-resize
 
 wm-restack=bspwm
+override-redirect = true
+enable-ipc = true
+
 tray-position = right
 tray-padding = 2
 ; tray-detached = true
@@ -97,7 +100,10 @@ font-4 = Material Design Icons:style=Regular:pixelsize=18:5
 modules-left = launcher mpd
 modules-center = browser mail file terminal editor social weechat
 modules-right = pub-ip networkspeed cron2m trash power
+
 wm-restack=bspwm
+override-redirect = true
+enable-ipc = true
 
 ;----------------------------------------------------------
 ; BAR/DEEPIN

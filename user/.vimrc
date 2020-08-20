@@ -481,14 +481,42 @@ set nocompatible     " No to the total compatibility with the ancient vi
   Plug 'junegunn/goyo.vim'
 
   function! GoyoEnter()
+    if g:is_gui
+      # colorscheme onehalfdark
+      set guifont=Fira\ Code\ 18
+    elseif exists('$TMUX')
+      silent !tmux set status off
+    endif
+    call airline#extensions#whitespace#disable()
     hi! CursorLine guibg=bg ctermbg=bg
+    let b:quitting = 0
+    let b:quitting_bang = 0
+    autocmd QuitPre <buffer> let b:quitting = 1
+    cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+    start
   endfunction
   function! GoyoLeave()
+    if g:is_gui
+      # colorscheme snazzy
+      set guifont=Fira\ Code\ 12
+    elseif exists('$TMUX')
+      silent !tmux set status on
+    endif
+    call airline#extensions#whitespace#init()
     hi! CursorLine term=underline ctermbg=236 guibg=#3a3d4d guisp=#3a3d4d
+    " Quit Vim if this is the only remaining buffer
+    if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+      if b:quitting_bang | qa! | else | qa | endif
+    endif
   endfunction
 
-  autocmd! User GoyoEnter nested call GoyoEnter()
-  autocmd! User GoyoLeave nested call GoyoLeave()
+  augroup GoyoFix
+    autocmd!
+    autocmd User GoyoEnter nested set eventignore=FocusGained
+    autocmd User GoyoLeave nested set eventignore=
+    autocmd User GoyoEnter nested call GoyoEnter()
+    autocmd User GoyoLeave nested call GoyoLeave()
+  augroup END
 " }}}
 " Recommend:   minimal set of sensible configuration for the editor {{{
   set virtualedit=onemore         " allow cursor 1 char beyond end of current line
@@ -841,6 +869,10 @@ endif
   " Plug 'tpope/vim-markdown'             " mardown | #TODO: required?
   Plug 'jtratner/vim-flavored-markdown' " Github flavored markdown syntax
   Plug 'timcharper/textile.vim'         " textile markup
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+  let g:mkdp_auto_start = 0
+  let g:mkdp_auto_close = 1
+  let g:mkdp_preview_options = { 'hide_yaml_meta': 1, 'content_editable': v:true }
 
   " html & css family:
   Plug 'othree/html5.vim'               " html 5

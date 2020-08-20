@@ -48,7 +48,7 @@ alias history="fc -il 1"                          # show timestamps in history
 alias grep="grep -i --color"
 
 # killers
-alias k9="kill -9"
+alias ki9="kill -9"
 alias ka9="killall -9"
 
 # directories
@@ -103,3 +103,15 @@ alias onedrivesync_photos="onedrivesync /media/nikhgupta/Gallery onedrive:Photog
 ## run programs with pre-determined settings
 alias mpv="prime-run mpv"
 alias ranger="named_terminal ranger -e ranger"
+
+## run k9 helper to run JRubyArt while using bspwm to manage the spawned window
+alias k9="bspc rule -r java-lang-Thread; bspc rule -a java-lang-Thread desktop=^9 follow=off; bspc rule -r org-jruby-Main; bspc rule -a org-jruby-Main desktop=^5 follow=off; k9"
+
+# write markdown in distraction free GVIM editor
+function marked() {
+  if [[ -f "$@" ]]; then; _path="$@"; else; _path="$HOME/Writings/$@.md"; fi
+  gvim +"Goyo 80%x80%" "$_path";
+}
+
+# download youtube videos
+alias ydlyt="youtube-dl --verbose --cookies ~/.cookies-google.txt --user-agent \"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\""

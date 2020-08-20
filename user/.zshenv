@@ -30,4 +30,4 @@ path_prepend ~/.bin/rofi
 path_prepend ~/.bin/polybar
 
 # source secret credentials
-source_secret $DOTCASTLE/.encrypted/zshenv.asc
+source_secret $DOTCASTLE/user/.encrypted/zshenv.asc

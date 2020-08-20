@@ -2,6 +2,8 @@
 
 # === Setup environment vars =====
 . ~/.zshenv
+PADDING=3
+PANEL_HEIGHT=27
 
 # === Setup BSPWM ================
 bspc monitor -d web term code music files mail chat settings automation 9
@@ -25,14 +27,20 @@ bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
 # bspc config pointer_modifier      mod4
 bspc config presel_feedback_color "#aaaaaa"
-bspc config normal_border_color "#393b47"
-bspc config focused_border_color "#5af78e"
+bspc config normal_border_color "#4a4c58"
+bspc config focused_border_color "#9aedfe"
 
 bspc config split_ratio 0.52
-bspc config window_gap 10
+bspc config window_gap $(( 2*$PADDING ))
 bspc config border_width 2
-
-# bspc config super                 mod4
+bspc config top_padding $(( $PADDING + $PANEL_HEIGHT ))
+bspc config bottom_padding $(( $PADDING + $PANEL_HEIGHT ))
+bspc config left_padding $PADDING
+bspc config right_padding $PADDING
+bspc config top_monocle_padding $(( -$PADDING - $PANEL_HEIGHT ))
+bspc config bottom_monocle_padding $(( -$PADDING - $PANEL_HEIGHT ))
+bspc config left_monocle_padding -$PADDING
+bspc config right_monocle_padding -$PADDING
 
 # remove all rules first
 bspc rule -r *:*
@@ -82,6 +90,8 @@ bspc rule -a io.elementary.terminal desktop=^2 follow=on focus=on
 bspc rule -a Atom desktop=^3 follow=on
 bspc rule -a Subl3 desktop=^3 follow=on
 bspc rule -a Code desktop=^3 follow=on
+bspc rule -a Gvim desktop=^3 follow=on
+bspc rule -a Processing desktop=^3 follow=on state=floating focus=on
 bspc rule -a Genymotion desktop=^3
 bspc rule -a Notepadqq desktop=^3 follow=on
 bspc rule -a Mousepad desktop=^3 follow=on
@@ -191,3 +201,6 @@ xss-lock -- ~/.bin/screenlock.sh &
 
 # Auto-lock after some time but not when cursor is parked at bottom right.
 xautolock -locker ~/.bin/screenlock.sh -time 5 -detectsleep -corners '00+-' &
+
+# Prevent menus disappearing
+export _JAVA_AWT_WM_NONREPARENTING=1
