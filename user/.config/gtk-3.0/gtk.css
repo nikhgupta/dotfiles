@@ -8,3 +8,4 @@ VteTerminal, vte-terminal {
   background-color: #282a36; /*: theme background color */
 }
 .window-frame {box-shadow: none; }
+@import 'colors.css';

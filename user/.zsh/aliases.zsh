@@ -115,3 +115,9 @@ function marked() {
 
 # download youtube videos
 alias ydlyt="youtube-dl --verbose --cookies ~/.cookies-google.txt --user-agent \"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\""
+
+# run rails server with SSL support
+alias railsssl="rails server -b 'ssl://localhost:3000?key=/usr/local/ssl/localhost.key&cert=/usr/local/ssl/localhost.crt'"
+# for cmd in rails rspec sidekiq; do alias $cmd="bundle exec $cmd"; done
+
+alias x-www-browser=google-chrome-stable
