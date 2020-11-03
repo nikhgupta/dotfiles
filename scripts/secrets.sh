@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-source ~/.zsh/utils.sh
 _root=$(dirname $(dirname $(realpath $0)))
+source $_root/user/.zsh/utils.sh
 
 highlight "Obtaining your GPG keys from OneDrive"
 mkdir $_root/gpg-backup
@@ -19,7 +19,7 @@ ssh -T git@github.com 2>&1 | grep $(whoami) || error "SSH from GPG did not work!
 
 highlight "Checking if I can source secret files.."
 source_secret $DOTCASTLE/.encrypted/zshenv.asc
-source ~/.zsh/aliases.zsh 2>/dev/null
+source $_root/user/.zsh/aliases.zsh 2>/dev/null
 
 highlight "Setting up global gitconfig"
 git config --global core.editor $EDITOR

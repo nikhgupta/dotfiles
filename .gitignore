@@ -3,18 +3,3 @@
 .vim/bundle
 .vim/tmp
 *.decrypted-cache
-.config/configstore
-.config/pulse
-
-# symlinks from rices
-user/.bin/rofi
-user/.bin/polybar
-user/.bin/icon-search.rb
-user/.bin/launcher.sh
-user/.bin/microphone.sh
-user/.bin/screencast.sh
-user/.bin/screenlock.sh
-user/.bin/screenshot.sh
-user/.bin/sessionquit.sh
-user/.bin/volume.sh
-user/.bin/wallpaper.sh

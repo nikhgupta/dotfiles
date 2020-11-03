@@ -104,24 +104,24 @@ Murti.configure do
   # Another named group. I can ask Murti to focus on this group by passing the
   # cli option: `--group=external`
   group :external do
-    source_directory '/run/media/nikhgupta/PICTURES/DUMP'
-    source_directory '/run/media/nikhgupta/PICTURES/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/RAW/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/Videos/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/Pictures/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/Documents/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/Wallpapers/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/Screenshots/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/Live Photos/UNMATCHED'
-    source_directory '/run/media/nikhgupta/PICTURES/RAW', on: :refresh
-    source_directory '/run/media/nikhgupta/PICTURES/Videos', on: :refresh
-    source_directory '/run/media/nikhgupta/PICTURES/Pictures', on: :refresh
-    source_directory '/run/media/nikhgupta/PICTURES/Documents', on: :refresh
-    source_directory '/run/media/nikhgupta/PICTURES/Wallpapers', on: :refresh
-    source_directory '/run/media/nikhgupta/PICTURES/Screenshots', on: :refresh
-    source_directory '/run/media/nikhgupta/PICTURES/Live Photos', on: :refresh
+    source_directory '/Volumes/PICTURES/DUMP'
+    source_directory '/Volumes/PICTURES/UNMATCHED'
+    source_directory '/Volumes/PICTURES/RAW/UNMATCHED'
+    source_directory '/Volumes/PICTURES/Videos/UNMATCHED'
+    source_directory '/Volumes/PICTURES/Pictures/UNMATCHED'
+    source_directory '/Volumes/PICTURES/Documents/UNMATCHED'
+    source_directory '/Volumes/PICTURES/Wallpapers/UNMATCHED'
+    source_directory '/Volumes/PICTURES/Screenshots/UNMATCHED'
+    source_directory '/Volumes/PICTURES/Live Photos/UNMATCHED'
+    source_directory '/Volumes/PICTURES/RAW', on: :refresh
+    source_directory '/Volumes/PICTURES/Videos', on: :refresh
+    source_directory '/Volumes/PICTURES/Pictures', on: :refresh
+    source_directory '/Volumes/PICTURES/Documents', on: :refresh
+    source_directory '/Volumes/PICTURES/Wallpapers', on: :refresh
+    source_directory '/Volumes/PICTURES/Screenshots', on: :refresh
+    source_directory '/Volumes/PICTURES/Live Photos', on: :refresh
 
-    target_directory '/run/media/nikhgupta/PICTURES'
+    target_directory '/Volumes/PICTURES'
   end
 
   # Murti comes bundled with 3 strategies: test, move and copy.

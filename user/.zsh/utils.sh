@@ -33,8 +33,9 @@ error() {
 }
 
 # useful snippets for zsh related config
-path_append() { [[ -d "$1" ]] && export PATH="$PATH:$1"; }
-path_prepend() { [[ -d "$1" ]] && export PATH="$1:$PATH"; }
+setenv() { export $1=$2 && [[ -z $ZSH_NAME ]] && is_macosx && [[ -z "${TMUX}" ]] && launchctl setenv $1 "$2"; }
+path_append() { [[ -d "$1" ]] && setenv PATH "$PATH:$1"; }
+path_prepend() { [[ -d "$1" ]] && setenv PATH "$1:$PATH"; }
 source_if_exists() { [[ -s "$1" ]] && source "$1"; }
 init_cache() {
   file_name=$HOME/.init-cache/$1
@@ -63,18 +64,5 @@ source_secret() {
     source $destin
   else
     echo "No such secret file found: $1"
-  fi
-}
-
-# on archlinux, use the following to install packages in scripts
-# NOTE: not meant for general usage.
-pac_install() { sudo pacman -S --needed --noconfirm $@; }
-yay_install() {
-  if is_installed yay; then
-    for package in $@; do
-      yay -aS --nocleanmenu --noeditmenu --nodiffmenu $package
-    done
-  else
-    action "Install AUR packages: $@"
   fi
 }

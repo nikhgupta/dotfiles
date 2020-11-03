@@ -156,7 +156,10 @@ set nocompatible     " No to the total compatibility with the ancient vi
     "set guifont=Fira\ Code\ Regular\ Nerd\ Font\ Complete\ Windows\ Compatible:h16
     "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
 
-    if g:is_mac | set macligatures | endif
+    if g:is_mac
+      set guifont=FiraCode-Regular:h15
+      set macligatures
+    endif
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
@@ -484,6 +487,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
     if g:is_gui
       # colorscheme onehalfdark
       set guifont=Fira\ Code\ 18
+      if g:is_mac | set guifont=FiraCode-Regular:h22 | endif
     elseif exists('$TMUX')
       silent !tmux set status off
     endif
@@ -499,6 +503,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
     if g:is_gui
       # colorscheme snazzy
       set guifont=Fira\ Code\ 12
+      if g:is_mac | set guifont=FiraCode-Regular:h15 | endif
     elseif exists('$TMUX')
       silent !tmux set status on
     endif
@@ -1004,6 +1009,9 @@ endif
   " Plug 'sheerun/vim-polyglot'
   augroup detect_filetypes
     au!
+    " secure gopass files
+    au BufNewFile,BufRead ~/.password-store/* setlocal noswapfile nobackup noundofile
+
     " html & css family:
     au BufNewFile,BufRead *.less setl ft=less
     au BufNewFile,BufRead *.scss setl ft=scss
@@ -1408,7 +1416,7 @@ endif
 " " }}}
 " Specialize:  enables support to manage Github Gists from the editor {{{
   Plug 'mattn/webapi-vim'
-  Plug 'mattn/gist-vim'
+  Plug 'nattn/gist-vim'
   let g:gist_clip_command = 'pbcopy'
   let g:gist_detect_filetype = 1
   let g:gist_open_browser_after_post = 1
@@ -1458,8 +1466,7 @@ endif
 " }}}
 " Component:   provides a fuzzy finder for files, buffers, tags, etc. {{{
   if executable('fzf')
-    set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    set rtp+=/usr/local/opt/fzf
     Plug 'junegunn/fzf.vim'
 
     " <C-p> or <C-t> to search files
@@ -2006,17 +2013,24 @@ endif
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   endif
-  colorscheme snazzy
+  let g:nord_bold = 0
+  let g:nord_italics = 0
+  let g:nord_underline = 0
+  let g:nord_italic_comment = 0
+  let g:nord_uniform_status_lines = 1
+  let g:nord_uniform_diff_background = 1
+  let g:cursor_line_number_background = 1
+  colorscheme nord
+  hi! link rubySymbol SpecialChar
   " let base16colorspace=256
   " let g:airline_theme='nova'
   " hi! ColorColumn guibg=#556873 guifg=#F2C38F
-  hi! ErrorMsg guifg=#D18EC2 guibg=#3C4C55
-  hi link rubySymbol String
+  " hi! ErrorMsg guifg=#D18EC2 guibg=#3C4C55
   " let g:gruvbox_contrast_dark = "soft"
   " colorscheme gruvbox
   " set bg=dark
   " colors dracula
-  let g:airline_theme='cool'
+  let g:airline_theme='nord'
   " colorscheme onehalflight
   " set bg=light
   " if g:is_gui

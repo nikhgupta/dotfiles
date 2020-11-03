@@ -1,4 +1,7 @@
-## completion stuff
+# Add tab completion for many zsh commands
+is_installed brew && FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+## zsh completion stuff
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':compinstall' filename '$HOME/.zshrc'
 
@@ -14,7 +17,7 @@ _update_zcomp() {
     # always need to modify the compdump
     local zcompf_a="${zcompf}.augur"
 
-    if [[ -e "$zcompf_a" && -f "$zcompf_a"(#qN.md-1) ]]; then
+    if [[ -e "$zcompf_a" && -f "$zcompf_a(#qN.md-1)" ]]; then
         compinit -C -d "$zcompf"
     else
         compinit -d "$zcompf"

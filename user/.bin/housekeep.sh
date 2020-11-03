@@ -6,75 +6,69 @@
 #   Author:      Nikhil Gupta
 #   Description: Get macOS Software Updates, and update installed Rubygems,
 #                Homebrew, npm, and their installed packages.
-#   Usage:       upgrade
+#   Usage:       housekeep.sh
 #
 # ---------------------------------------------------------------------
 
 _user=nikhgupta
-_home=/home/$_user
-_home=$(su - $_user -c "echo \$HOME")
-_dotcastle=$(su - $_user -c "echo \$DOTCASTLE")
-_backup=$_home/OneDrive/Backup/workstation/
+_backup=$XDG_BACKUP_DIR/macbookpro
 
 echo -ne "\n\n\n=> Running housekeeping at $(date)\n"
-source $_home/.zsh/utils.sh
+source $HOME/.zsh/utils.sh
 
-(($UID)) && error "You must run $0 with sudo priviledges."
-
-as_user() { su - $_user -c "source ~/.zshrc > /dev/null; $@"; }
+is_macosx || error "This housekeep.sh is intended for MacOSX."
 
 highlight "Upgrading system packages using package manager.."
-if is_ubuntu || is_wsl_ubuntu; then
-  apt update
-  apt upgrade -y
-  apt autoremove
-elif is_macosx; then
-  softwareupdate -i -a
-  as_user "brew update"
-  as_user "brew upgrade"
-  as_user "brew cleanup"
-fi
+sudo softwareupdate -i -a
+brew update
+brew upgrade
+brew cleanup
 
-highlight "Upgrading NPM for user: $_user .."
-as_user "npm install npm -g"
-as_user "npm update -g"
+highlight "Upgrading NPM.."
+npm install npm -g
+npm update -g
 
 highlight "Upgrading system ruby gems.."
-gem update --system
 gem update
 gem cleanup
+sudo gem update --system
+sudo gem update
+sudo gem cleanup
 
-if is_macosx; then
-  highlight "Emptying trash and space consuming files on MacOSX.."
-  rm -rfv $_home/.Trash
-  rm -rfv /Volumes/*/.Trashes
-  rm -rfv /private/var/log/asl/*.asl
-  sqlite3 $_home/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
-fi
+highlight "update antibody scripts"
+antibody bundle <~/.zsh/plugs.txt >~/.zshplugs
+antibody update
+
+highlight "Emptying trash and space consuming files on MacOSX.."
+rm -rfv $HOME/.Trash
+rm -rfv /Volumes/*/.Trashes
+rm -rfv /private/var/log/asl/*.asl
+sqlite3 $HOME/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
+
+highlight "Cleanup caches"
+dscacheutil -flushcache && killall -HUP mDNSResponder # Flush Directory Service cache
+
+highlight "Clearing journalctl logs on Ubuntu.."
+sudo journalctl --flush --rotate
+sudo journalctl --vacuum-size=10M
+sudo journalctl --verify
+
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder
+
+# Recursively delete `.DS_Store` files
+find $HOME -type f -name '*.DS_Store' -ls -delete
 
 # gpg, ssh related
 highlight "Backing up SSH and GPG configuration.."
 mkdir -p $_backup/{ssh,gpg}
-cp -r $_home/.ssh/{config,known_hosts} $_backup/ssh/
-as_user "gpg --export-ownertrust >$_backup/gpg/trustdb.txt"
-as_user "gpg --refresh-keys"
+cp -r $HOME/.ssh/{config,known_hosts} $_backup/ssh/
+gpg --export-ownertrust >$_backup/gpg/trustdb.txt
+gpg --refresh-keys
 
-# backup various app configs and vscode extensions list
-as_user "mackup backup"
-as_user "code --list-extensions" >$_dotcastle/mackup/.config/Code/User/extensions.txt
-
-highlight "Clearing journalctl logs on Ubuntu.."
-if is_installed journalctl; then
-  journalctl --flush --rotate
-  journalctl --vacuum-size=10M
-  journalctl --verify
-fi
-
-if [[ -f $_home/.cache/rice.lock ]]; then
-  highlight "Updating launcher cache"
-  _path=$_home/.bin/launcher.sh
-  [[ -f $_path ]] && as_user "$_path cache"
-fi
+highlight "Backing app configurations and VS Code extensions"
+mackup backup
+code --list-extensions >$_backup/mackup/Library/Application\ Support/Code/User/extensions.txt
 
 # tput bel
 highlight "Finished."

@@ -3,11 +3,7 @@
 source ~/.zsh/utils.sh
 
 highlight "Installing asdf"
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-pushd ~/.asdf
-git checkout "$(git describe --abbrev=0 --tags)"
-popd
-. $HOME/.asdf/asdf.sh # source now
+brew install asdf
 asdfin() { asdf install $@ && asdf global $@; }
 
 highlight "Installing node.js"
@@ -18,12 +14,17 @@ asdfin nodejs 14.4.0
 highlight "Installing erlang/elixir"
 asdf plugin add erlang
 asdf plugin add elixir
+brew install autoconf wxmac
+export KERL_CONFIGURE_OPTIONS="--without-javac --with-ssl=$(brew --prefix openssl)"
 asdfin erlang 23.0.2
 asdfin elixir 1.10.3-otp-23
+unset KERL_CONFIGURE_OPTIONS
 
 highlight "Installing ruby"
 asdf plugin add ruby
-asdfin ruby 2.7.1
+asdfin ruby 2.7.2
+gem install neovim maid
+asdf reshim ruby
 
 highlight "Installing python"
 asdf plugin add python

@@ -2,31 +2,31 @@
 
 _root=$(dirname $(realpath $0))
 _scripts=$_root/scripts
-source ~/.zsh/utils.sh
-is_archlinux || error "v4 of these dotfiles are targetted at Archlinux. Please, use earlier versions on this system."
+source $_root/user/.zsh/utils.sh
+is_macosx || error "v5 of these dotfiles target Mac OSX. Please, use earlier versions on this system."
 
+bash $_scripts/brew.sh
 bash $_scripts/symlinks.sh
-sudo bash $_scripts/sysadmin.sh
 bash $_scripts/secrets.sh
 bash $_scripts/asdf.sh
+bash $_scripts/macos.sh
 
 highlight "Installing VIM plugins"
 vim +PlugInstall +qall
 
 highlight "Installing AntiBody for ZSH"
-curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
+brew install antibody
 antibody bundle <~/.zsh/plugs.txt >~/.zshplugs
 
 highlight "Restoring mackup backups"
-. $HOME/.asdf/asdf.sh # source asdf
-gpip3 install mackup
-asdf reshim python 3.8.3
-mackup restore
+mackup restore -f
 
-highlight "Restoring VSCode extensions"
-for ext in $(cat $_root/mackup/.config/Code/User/extensions.txt); do
-    code --install-extension $ext
-done
+highlight "Create directories needed by some utilities"
+mkdir -p ~/.mpd ~/.cache
+touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpd.state}
+
+# highlight "Adding housekeeping to cron daily"
+# ln -s $DOTCASTLE/user/.bin/housekeep.sh /etc/cron.daily/
 
 highlight "Remaining tasks.."
 bash $_scripts/remaining.sh

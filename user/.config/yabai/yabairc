@@ -1,0 +1,191 @@
+#!/usr/bin/env sh
+
+# the scripting-addition must be loaded manually if
+# you are running yabai on macOS Big Sur. Uncomment
+# the following line to have the injection performed
+# when the config is executed during startup.
+#
+# for this to work you must configure sudo such that
+# it will be able to run the command without password
+sudo yabai --load-sa
+
+# create debug logs
+yabai -m config debug_output on
+
+#########################################################################
+# LAYOUT                                                                #
+#########################################################################
+
+# Use bspwm like binary splits
+yabai -m config layout float
+
+# do not equalize size of children and parents
+yabai -m config auto_balance off
+
+# make the new split slightly smaller than the parent
+yabai -m config split_ratio 0.5
+
+# split to right and down
+yabai -m config window_placement second_child
+
+# floating windows are always on top
+yabai -m config window_topmost off
+
+# no padding between screen edges and windows
+yabai -m config top_padding 0
+yabai -m config bottom_padding 0
+yabai -m config left_padding 0
+yabai -m config right_padding 0
+
+# padding of 20 pixels between different windows
+yabai -m config window_gap 6
+
+#########################################################################
+# MOUSE SUPPORT                                                         #
+#########################################################################
+
+# set mouse interaction modifier key (default: fn)
+yabai -m config mouse_modifier fn
+
+# make focus and mouse follow each other
+yabai -m config mouse_follows_focus off
+yabai -m config focus_follows_mouse off
+
+# move and resize windows using mouse
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+yabai -m config mouse_drop_action swap
+
+#########################################################################
+# WINDOWS APPEARANCE                                                    #
+#########################################################################
+
+# show shadows for floating windows only
+yabai -m config window_shadow float
+
+# render all unfocus windows with 90% opacity
+yabai -m config window_opacity off
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.98
+
+# borders
+yabai -m config window_border on
+yabai -m config window_border_width 0
+yabai -m config active_window_border_color 0x00444444
+yabai -m config normal_window_border_color 0x00444444
+yabai -m config insert_feedback_color 0xb2ebdbb2
+
+#########################################################################
+# SPACE LABELS                                                          #
+#########################################################################
+yabai -m space 1 --label web
+yabai -m space 2 --label term
+yabai -m space 3 --label code
+yabai -m space 4 --label media
+yabai -m space 5 --label files
+yabai -m space 6 --label mail
+yabai -m space 7 --label social
+yabai -m space 8 --label office
+yabai -m space 9 --label settings
+yabai -m space 10 --label tools
+
+# yabai -m config --space 1 layout stack
+yabai -m config --space 3 layout stack
+yabai -m config --space 2 layout bsp
+yabai -m config --space 5 layout bsp
+yabai -m config --space 7 layout bsp
+yabai -m config --space 2 padding 10
+yabai -m config --space 5 padding 10
+yabai -m config --space 7 padding 10
+
+#########################################################################
+# WINDOW DEDICATED SPACE RULES                                          #
+#########################################################################
+
+# no dedicated space
+yabai -m rule --add app="Preview" manage=off border=off sticky=on
+yabai -m rule --add app="Calculator" manage=off border=off sticky=on
+yabai -m rule --add app="^System Preferences$" manage=off border=off
+
+# web
+yabai -m rule --add app="Safari" space=^1
+yabai -m rule --add app="Firefox" space=^1
+yabai -m rule --add app="Google Chrome" space=^1
+
+# term
+yabai -m rule --add app="kitty" space=^2
+yabai -m rule --add app="Alacritty" space=^2
+yabai -m rule --add app="iTerm2" space=^2
+yabai -m rule --add app="Terminal" space=^2
+
+# code
+yabai -m rule --add app="Atom" space=^3
+yabai -m rule --add app="VimR" space=^3
+yabai -m rule --add app="MacVim" space=^3
+yabai -m rule --add app="^Code$" space=^3
+yabai -m rule --add app="Visual Studio Code" space=^3
+yabai -m rule --add app="TextEdit" space=^3
+yabai -m rule --add app="Notes" space=^3
+yabai -m rule --add app="nvALT" space=^3
+
+# music
+yabai -m rule --add app="TV" space=4
+yabai -m rule --add app="Music" space=4
+yabai -m rule --add app="QuickTime Player" space=4
+yabai -m rule --add app="Spotify" space=4
+yabai -m rule --add app="VLC" space=^4
+
+# files
+yabai -m rule --add app="Photos" space=^5
+yabai -m rule --add app="Finder" space=^5
+yabai -m rule --add app="Dropbox" space=^5
+yabai -m rule --add app="OneDrive" space=^5
+yabai -m rule --add app="WebTorrent" space=5
+yabai -m rule --add app="Android File Transfer" space=^5
+
+# mail
+yabai -m rule --add app="Mail" space=^6
+yabai -m rule --add app="Reminders" space=^6
+
+# chat
+yabai -m rule --add app="Skype" space=^7
+yabai -m rule --add app="Slack" space=^7
+yabai -m rule --add app="Messages" space=7
+yabai -m rule --add app="Discord" space=7
+yabai -m rule --add app="WhatsApp" space=^7
+yabai -m rule --add app="FaceTime" space=^7
+
+# office
+yabai -m rule --add app="Microsoft Word" space=^8
+yabai -m rule --add app="iMovie" space=^8
+yabai -m rule --add app="Keynote" space=^8
+yabai -m rule --add app="Pages" space=^8
+yabai -m rule --add app="Numbers" space=^8
+
+# settings
+yabai -m rule --add app="Home" space=^9
+yabai -m rule --add app="Find My" space=^9
+yabai -m rule --add app="App Store" space=^9
+yabai -m rule --add app="Time Machine" space=^9
+yabai -m rule --add app="BetterTouchTool" space=^9
+yabai -m rule --add app="Activity Monitor" space=^9
+yabai -m rule --add app="Contacts" space=^9 manage=off border=off
+yabai -m rule --add app="Calendar" space=^9 manage=off border=off
+yabai -m rule --add app="App Store" space=^9
+
+# tools
+yabai -m rule --add app="Maps" space=^10
+yabai -m rule --add app="Upwork" space=^10
+yabai -m rule --add app="^1Password \d+$" space=^10
+yabai -m rule --add app="Automator" space=^10
+yabai -m rule --add app="LastPass" space=^10
+yabai -m rule --add app="Sequel Pro" space=^10
+yabai -m rule --add app="Postman" space=^10
+yabai -m rule --add app="Sourcetree" space=^10
+yabai -m rule --add app="Simulator" space=^10
+
+# yabai signals
+yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+
+echo "yabai configuration loaded.."

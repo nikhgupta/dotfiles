@@ -1,13 +1,11 @@
 # Configuration values for Youtube-DL.
 #
-# FIXME: mix this up with `aria2c` for faster downloads
-#
 --ignore-errors
 --mark-watched
 --no-playlist
 --min-filesize 50k
 --retries 5
---download-archive ~/.cache/youtube-dl/archive.txt
+--download-archive $XDG_CACHE_HOME/youtube-dl/archive.txt
 # --restrict-filenames
 --continue
 --console-title
@@ -16,4 +14,4 @@
 --prefer-ffmpeg
 --output "%(title)s.%(ext)s"
 # -f bestvideo[width>=1920]+bestaudio[ext!=webm]/bestvideo[ext!=webm]+bestaudio[ext!=webm]/best[ext!=webm]
-# --external-downloader aria2c --external-downloader-args "-j 8 -s 8 -x 8 -k 5M --file-allocation=none"
+--external-downloader aria2c --external-downloader-args "-j 8 -s 8 -x 8 -k 5M --file-allocation=none"

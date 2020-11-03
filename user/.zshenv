@@ -4,30 +4,23 @@ source ~/.zsh/utils.sh
 
 # dont wait for long timeouts when switching vi modes
 export KEYTIMEOUT=1
-export EDITOR=vim
+setenv EDITOR vim
 export GPG_TTY=$(tty)
-export ZSH_CACHE_DIR=~/.zcache
-
-# terminal related variables
-export TERMINAL=kitty
-export TERMINAL_CLASS=kitty
-alias named_terminal="$TERMINAL --name"
+setenv ZSH_CACHE_DIR $HOME/.zcache
 
 # variables used through out dotfiles
-export DOTCASTLE=~/.dotfiles
-export CURRENT_RICE=$(cat $HOME/.cache/rice.lock)
+setenv DOTCASTLE $HOME/.dotfiles
 
-# setup data home for WSL
-export WIN_HOME=$HOME
-if is_wsl; then
-  export WIN_HOME=/mnt/c/Users/nikhgupta
-  export PULSE_SERVER=tcp:$(grep nameserver /etc/resolv.conf | awk '{print $2}')
-fi
+# brew
+export HOMEBREW_NO_AUTO_UPDATE=1
+setenv BREW_PREFIX /usr/local
+path_prepend "${BREW_PREFIX}/bin"
+path_prepend "${BREW_PREFIX}/sbin"
 
-# add custom scripts from dotcastle and rice to $PATH
+# add custom scripts from dotcastle to $PATH
 path_prepend ~/.bin
-path_prepend ~/.bin/rofi
-path_prepend ~/.bin/polybar
 
 # source secret credentials
+source ~/.config/user-dirs.dirs
+source ~/.zsh/fzf.zsh # allow source here so that macvim can read these
 source_secret $DOTCASTLE/user/.encrypted/zshenv.asc

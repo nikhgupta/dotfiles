@@ -34,6 +34,14 @@ export TERM=xterm-256color
 export GREP_COLORS=31          # grep should use red for highlighting matches
 export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside editors
 
+# editor
+setenv VISUAL $EDITOR
+setenv GUIEDITOR $EDITOR
+echo $EDITOR | grep vim &>/dev/null || alias vim=$CURRENT_EDITOR
+setenv BROWSER "open -a 'Google Chrome'"
+browser() { eval "$BROWSER '$1'"; }
+alias browse=browser
+
 # set vim bindings for zsh
 bindkey -v
 bindkey "^?" backward-delete-char
@@ -51,13 +59,26 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 
-# asdf (only needed till upstream changes in ohmyzsh are fixedo)
-. $HOME/.asdf/asdf.sh
-fpath=(${HOME}/.asdf/completions $fpath)
+# miscelleneous
+unalias run-help &>/dev/null
+autoload run-help
+HELPDIR=$BREW_PREFIX/share/zsh/help
+
+# make sure we use gnu version of commands like ls, etc.
+# rehash -f     # gnu-utils OMZ plugin
+for package in coreutils gnu-sed gnu-tar findutils moreutils; do
+  if [[ -d $BREW_PREFIX/opt/$package/libexec/gnubin ]]; then
+    PATH="$BREW_PREFIX/opt/$package/libexec/gnubin:$PATH"
+    MANPATH="$BREW_PREFIX/opt/$package/libexec/gnuman:$MANPATH"
+  fi
+done
 
 # dircolors
-[[ -r ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
-[[ -f ~/.dircolors ]] && init_cache dircolors "dircolors -b ~/.dircolors"
+[[ -r $XDG_CONFIG_DIR/user-dirs.dirs ]] && source $XDG_CONFIG_DIR/user-dirs.dirs
+# [[ -f ~/.dir_colors ]] && init_cache dircolors "gdircolors -b ~/.dir_colors"
+
+# asdf
+. $BREW_PREFIX/opt/asdf/asdf.sh
 
 # ssh setup using GnuPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -65,15 +86,11 @@ gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf &>/dev/null
 
 # source other zsh scripts
 source ~/.zshplugs
-source ~/.zsh/platform.zsh
-source ~/.zsh/topics.zsh
 source ~/.zsh/aliases.zsh
-source ~/.zsh/fuzzy.zsh
+source ~/.zsh/topics.zsh
+source ~/.zsh/fzf.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
 [[ -f ~/.localrc ]] && source ~/.localrc
-
-# Java
-export JAVA_HOME=/usr/lib/jvm/java-14-openjdk
 
 # echo "\e[32mWelcome, Nick!\e[0m"

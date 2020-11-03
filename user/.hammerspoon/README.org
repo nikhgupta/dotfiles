@@ -1,0 +1,32 @@
+#+TITLE: spaceHammer
+
+leader keys in hammerspoon
+
+This config brings spacemacs experience to macOS.
+
+*Features:*
+
+- (=M-x=) Run commands from a chooser. Powered by Commander.
+- Alfred like fuzzy search, powered by Seal.
+- window manipulation, powered by (modified) WinWin.
+- Sequential keybindings powered by RecursiveBinder.
+
+
+* Install
+#+BEGIN_SRC shell
+git clone https://github.com/casouri/spaceHammer.git ~/.hammerspoon
+cp init.lua.example init.lua
+#+END_SRC
+
+* Dependencies
+** Spoons
+- [[https://github.com/Hammerspoon/Spoons/raw/master/Spoons/Emojis.spoon.zip][Emojis]]
+- [[http://www.hammerspoon.org/Spoons/Seal.html#loadPlugins][Seal]]
+- RecursiveBinder
+- [[http://www.hammerspoon.org/Spoons/Commander.html][Commander]]
+
+* Screenshot
+
+[[./screenshot/screenshot0.png][./screenshot/screenshot0.png]]
+
+[[./screenshot/screenshot1.png][./screenshot/screenshot1.png]]
