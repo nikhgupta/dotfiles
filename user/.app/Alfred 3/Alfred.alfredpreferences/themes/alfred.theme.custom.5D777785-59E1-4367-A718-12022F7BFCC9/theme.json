@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 4,
+      "subtext" : {
+        "size" : 11,
+        "colorSelected" : "#FEFFFFFF",
+        "font" : "Helvetica",
+        "color" : "#A5A5A5FF"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#FEFFFFFF",
+        "font" : "Helvetica",
+        "color" : "#797979FF"
+      },
+      "backgroundSelected" : "#797979FF",
+      "text" : {
+        "size" : 13,
+        "colorSelected" : "#FEFFFFFF",
+        "font" : "Futura",
+        "color" : "#797979FF"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 2,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 2,
+      "background" : "#FEFFFF00",
+      "spacing" : 10,
+      "text" : {
+        "size" : 24,
+        "colorSelected" : "#000000FF",
+        "font" : "Futura",
+        "color" : "#797979FF"
+      },
+      "backgroundSelected" : "#B2D7FFFF"
+    },
+    "window" : {
+      "color" : "#FEFFFFDB",
+      "paddingHorizontal" : 10,
+      "width" : 620,
+      "borderPadding" : 10,
+      "borderColor" : "#FEFFFF33",
+      "blur" : 0,
+      "roundness" : 3,
+      "paddingVertical" : 10
+    },
+    "credit" : "David Ferguson",
+    "separator" : {
+      "color" : "#D4D4D4FF",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#D4D4D4FF",
+      "thickness" : 2
+    },
+    "name" : "Smooth (v2)"
+  }
+}

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.nikhgupta.play-youtube</string>
+	<key>category</key>
+	<string>Internet</string>
+	<key>connections</key>
+	<dict>
+		<key>1F99D625-EA9D-4FD9-9987-0C1388F0E12F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FBCA8343-55EC-4574-B52D-4DA8538191C1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F4869BB5-5552-4464-BF55-BADD3EB910DE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FBCA8343-55EC-4574-B52D-4DA8538191C1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>FBCA8343-55EC-4574-B52D-4DA8538191C1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>35EC4880-A178-4A15-AFAD-E9C33560ED6C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>89BC6762-D512-4177-AF16-B299AB9B4DB7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>30D5BA54-7C8D-4029-AA02-310CEF1F889B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Nikhil Gupta</string>
+	<key>description</key>
+	<string>Play Youtube videos in VLC</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Play Youtube</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/Applications/VLC.app/Contents/MacOS/VLC $1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>35EC4880-A178-4A15-AFAD-E9C33560ED6C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>watch</string>
+				<key>subtext</key>
+				<string>Watch Youtube Video in VLC</string>
+				<key>text</key>
+				<string>Watch Youtube</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>1F99D625-EA9D-4FD9-9987-0C1388F0E12F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>if ARGV[0].to_s.empty?
+  require 'uri'
+
+  script = 'tell application "Google Chrome"
+    activate
+    tell application "System Events"
+      tell application process "Google Chrome" 
+        get value of text field 1 of tool bar 1 of window 1
+      end tell
+    end tell
+  end tell'
+
+  url = `osascript -e '#{script}'`
+  url =~ /^http/ ? url : "http://#{url}"
+else
+  url = ARGV[0]
+end
+
+print url</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>2</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>FBCA8343-55EC-4574-B52D-4DA8538191C1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<true/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>89BC6762-D512-4177-AF16-B299AB9B4DB7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>100</integer>
+				<key>hotmod</key>
+				<integer>9568256</integer>
+				<key>hotstring</key>
+				<string>F8</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>F4869BB5-5552-4464-BF55-BADD3EB910DE</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Playing: #{query}</string>
+				<key>title</key>
+				<string>Youtube Video</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>30D5BA54-7C8D-4029-AA02-310CEF1F889B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>1F99D625-EA9D-4FD9-9987-0C1388F0E12F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
+		<key>30D5BA54-7C8D-4029-AA02-310CEF1F889B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>560</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+		<key>35EC4880-A178-4A15-AFAD-E9C33560ED6C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>40</integer>
+		</dict>
+		<key>89BC6762-D512-4177-AF16-B299AB9B4DB7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>660</integer>
+			<key>ypos</key>
+			<integer>210</integer>
+		</dict>
+		<key>F4869BB5-5552-4464-BF55-BADD3EB910DE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>330</integer>
+		</dict>
+		<key>FBCA8343-55EC-4574-B52D-4DA8538191C1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>nikhgupta.com</string>
+</dict>
+</plist>

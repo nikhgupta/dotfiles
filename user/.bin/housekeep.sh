@@ -66,9 +66,9 @@ cp -r $HOME/.ssh/{config,known_hosts} $_backup/ssh/
 gpg --export-ownertrust >$_backup/gpg/trustdb.txt
 gpg --refresh-keys
 
-highlight "Backing app configurations and VS Code extensions"
-mackup backup
-code --list-extensions >$_backup/mackup/Library/Application\ Support/Code/User/extensions.txt
+# highlight "Backing app configurations and VS Code extensions"
+# mackup backup
+# code --list-extensions >$_backup/mackup/Library/Application\ Support/Code/User/extensions.txt
 
 # tput bel
 highlight "Finished."

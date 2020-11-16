@@ -18,8 +18,8 @@ highlight "Installing AntiBody for ZSH"
 brew install antibody
 antibody bundle <~/.zsh/plugs.txt >~/.zshplugs
 
-highlight "Restoring mackup backups"
-mackup restore -f
+# highlight "Restoring mackup backups"
+# mackup restore -f
 
 highlight "Create directories needed by some utilities"
 mkdir -p ~/.mpd ~/.cache

@@ -513,8 +513,10 @@ launch_script < d : skhd -k 'escape'; osascript -e 'tell application "System Eve
 launch_script < h : skhd -k 'escape'; osascript -e 'tell application "System Events" to keystroke "." using {command down, shift down}'
 # toggle dark mode
 launch_script < n : skhd -k 'escape'; osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to not dark mode'
-# toggle do not disturb mode!
+# # toggle do not disturb mode!
 # launch_script < m : shkd -k 'escape'; osascript -e "ignoring application responses\ntell application \"System Events\" to keystroke \"D\" using {command down, shift down, option down, control down}\nend ignoring"
+# restart MTMR app for touch bar
+launch_script < m : skhd -k 'escape'; killall -9 MTMR; open -a MTMR
 # TODO: toggle night shift, true tone? maybe via Shifty?
 
 # launch finder windows

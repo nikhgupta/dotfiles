@@ -1,0 +1,9 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "I have listed my technical strengths below, however, I feel that my real strength lies in understanding the requirements of a particular user story, and why it was implemented in the first place. This understanding helps me to suggest you better alternatives, if available, and in turn, helps you attain better business decisions from a developer's perspective of your business.\n\n## Relevant Strengths\n\nI am really strong at Ruby itself (incl. RoR), and I am able to follow user stories to convert them to Cucumber\/RSpec stories (if required), and implement these stories in the application.\n\nI am, also, really efficient with ActiveRecord (MySQL and PG) adapters, as well as Mongoid, and have integrated several email services (and\/or the core ActionMailer) in various apps.",
+    "dontautoexpand" : true,
+    "uid" : "D65AA142-AEE1-4DB1-B996-C00B8292763F",
+    "name" : "oDesk - Ruby - Strengths",
+    "keyword" : "odesk-ruby-strengths"
+  }
+}

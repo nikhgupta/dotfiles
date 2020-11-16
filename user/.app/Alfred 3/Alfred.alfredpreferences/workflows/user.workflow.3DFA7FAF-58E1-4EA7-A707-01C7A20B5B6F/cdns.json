@@ -1,0 +1,30 @@
+{
+	"google": {
+		"id":"google",
+		"name":"Google - googleapis.com",
+		"site":"https://developers.google.com/speed/libraries/#Libraries",
+		"url":"//ajax.googleapis.com/ajax/libs/{name}/{version}/{filename}",
+		"db_url":false
+	},
+	"msn": {
+		"id":"msn",
+		"name":"Microsoft - aspnetcdn.com",
+		"site":"http://www.asp.net/ajax/cdn",
+		"url":"//ajax.aspnetcdn.com/ajax/{name}/{filename}",
+		"db_url":false
+	},
+	"cloudflare": {
+		"id":"cloudflare",
+		"name":"CloudFlare - cdnjs.com",
+		"site":"http://cdnjs.com",
+		"url":"//cdnjs.cloudflare.com/ajax/libs/{name}/{version}/{filename}",
+		"db_url":"http://cdnjs.com/packages.json"
+	},
+	"jsdelivr": {
+		"id":"jsdelivr",
+		"name":"JsDelivr - jsdelivr.com",
+		"site":"http://www.jsdelivr.com",
+		"url":"//cdn.jsdelivr.net/{name}/{version}/{filename}",
+		"db_url":"http://api.jsdelivr.com/v1/jsdelivr/libraries?fields=name,lastversion,versions,description,mainfile"
+	}
+}

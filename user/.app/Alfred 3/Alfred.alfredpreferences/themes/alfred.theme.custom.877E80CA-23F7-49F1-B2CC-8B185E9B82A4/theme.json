@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 4,
+      "subtext" : {
+        "size" : 11,
+        "colorSelected" : "#85990CFF",
+        "font" : "Geneva",
+        "color" : "#657B83FF"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#CB4B15FF",
+        "font" : "Helvetica",
+        "color" : "#93A1A1FF"
+      },
+      "backgroundSelected" : "#062B36F2",
+      "text" : {
+        "size" : 20,
+        "colorSelected" : "#FF74F7FF",
+        "font" : "Geneva",
+        "color" : "#93A1A1FF"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 4,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 2,
+      "background" : "#062B36F2",
+      "spacing" : 10,
+      "text" : {
+        "size" : 32,
+        "colorSelected" : "#000000FF",
+        "font" : "Geneva",
+        "color" : "#2AA198FF"
+      },
+      "backgroundSelected" : "#B2D7FFFF"
+    },
+    "window" : {
+      "color" : "#093642F9",
+      "paddingHorizontal" : 10,
+      "width" : 560,
+      "borderPadding" : 10,
+      "borderColor" : "#09364200",
+      "blur" : 0,
+      "roundness" : 0,
+      "paddingVertical" : 10
+    },
+    "credit" : "Dean Jackson",
+    "separator" : {
+      "color" : "#062B36FF",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#586E75FF",
+      "thickness" : 2
+    },
+    "name" : "Solarized Dark (v2)"
+  }
+}

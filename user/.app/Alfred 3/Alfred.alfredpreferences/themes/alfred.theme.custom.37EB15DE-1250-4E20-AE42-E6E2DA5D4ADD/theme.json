@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 4,
+      "subtext" : {
+        "size" : 11,
+        "colorSelected" : "#FFFFFF33",
+        "font" : "Lucida Grande",
+        "color" : "#FFFFFF33"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#FFFFFF33",
+        "font" : "Lucida Grande",
+        "color" : "#FFFFFF33"
+      },
+      "backgroundSelected" : "#00000016",
+      "text" : {
+        "size" : 16,
+        "colorSelected" : "#FEFFFFFF",
+        "font" : "Lucida Grande",
+        "color" : "#FEFFFFFF"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 0,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 2,
+      "background" : "#353535FF",
+      "spacing" : 10,
+      "text" : {
+        "size" : 24,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "Lucida Grande",
+        "color" : "#FFFFFFFF"
+      },
+      "backgroundSelected" : "#0000007F"
+    },
+    "window" : {
+      "color" : "#00000000",
+      "paddingHorizontal" : 10,
+      "width" : 680,
+      "borderPadding" : 10,
+      "borderColor" : "#5E9301FF",
+      "blur" : 0,
+      "roundness" : 0,
+      "paddingVertical" : 10
+    },
+    "credit" : "freshfish",
+    "separator" : {
+      "color" : "#F0F0F000",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#FFFFFF33",
+      "thickness" : 2
+    },
+    "name" : "Lime (v2)"
+  }
+}

@@ -1,0 +1,55 @@
++-o AppleSmartBattery  <class AppleSmartBattery, id 0x1000003be, registered, matched, active, busy 0 (0 ms), retain 6>
+    {
+      "TimeRemaining" = 117
+      "AvgTimeToEmpty" = 117
+      "AdapterDetails" = {"FamilyCode"=0}
+      "AppleRawCurrentCapacity" = 1758
+      "InstantTimeToEmpty" = 244
+      "AppleRawMaxCapacity" = 8527
+      "ExternalChargeCapable" = Yes
+      "FullPathUpdated" = 1605182722
+      "CellVoltage" = (3725,3724,3726,0)
+      "Voltage" = 11066
+      "BatteryInvalidWakeSeconds" = 30
+      "AdapterInfo" = 0
+      "MaxCapacity" = 8527
+      "DesignCycleCount70" = 0
+      "PermanentFailureStatus" = 0
+      "Manufacturer" = "DSY"
+      "AppleRawAdapterDetails" = ()
+      "Location" = 0
+      "CurrentCapacity" = 1758
+      "BatteryFCCData" = {"DOD2"=6384,"DOD0"=6400,"PassedCharge"=3306,"DOD1"=6400,"ResScale"=244}
+      "LegacyBatteryInfo" = {"Amperage"=18446744073709550718,"Flags"=4,"Capacity"=8527,"Current"=1758,"Voltage"=11066,"Cycle Count"=15}
+      "BatteryInstalled" = Yes
+      "FirmwareSerialNumber" = 1
+      "CycleCount" = 15
+      "PackReserve" = 244
+      "DesignCapacity" = 8790
+      "OperationStatus" = 58563
+      "ManufactureDate" = 20742
+      "AvgTimeToFull" = 65535
+      "ChargerData" = {"ChargingCurrent"=0,"NotChargingReason"=1,"ChargingVoltage"=12900,"VacVoltageLimit"=4300}
+      "BatterySerialNumber" = "F5D031388VCK7LQC7"
+      "BootPathUpdated" = 1605093234
+      "BatteryData" = {"StateOfCharge"=21,"PMUConfigured"=0,"Voltage"=11163,"QmaxCell1"=9104,"AdapterPower"=840323437,"SystemPower"=1098212942,"ResScale"=244,"QmaxCell2"=9102,"QmaxCell0"=9053,"CycleCount"=15,"DesignCapacity"=8790}
+      "PostDischargeWaitSeconds" = 120
+      "Temperature" = 3077
+      "BestAdapterIndex" = 254
+      "UserVisiblePathUpdated" = 1605183262
+      "IOReportLegendPublic" = Yes
+      "InstantAmperage" = 18446744073709550230
+      "FullyCharged" = No
+      "ManufacturerData" = <000000000b000300080900000431333737033030420341544c0001>
+      "DeviceName" = "bq40z651"
+      "MaxErr" = 1
+      "IOGeneralInterest" = "IOCommand is not serializable"
+      "IOReportLegend" = ({"IOReportChannels"=((7167869599145487988,6460407809,"BatteryCycleCount")),"IOReportGroupName"="Battery","IOReportChannelInfo"={"IOReportChannelUnit"=0}})
+      "Amperage" = 18446744073709550718
+      "IsCharging" = No
+      "DesignCycleCount9C" = 1000
+      "PostChargeWaitSeconds" = 120
+      "ExternalConnected" = No
+    }
+    
+

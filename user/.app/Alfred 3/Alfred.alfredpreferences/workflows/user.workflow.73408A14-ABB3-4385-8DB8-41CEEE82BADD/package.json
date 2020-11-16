@@ -1,0 +1,13 @@
+{
+  "name": "example-alfred-workflow-nodejs",
+  "main": "main.js",
+  "dependencies": {
+    "alfred-workflow-nodejs": "^2.0.0",
+    "async": "^2.0.1",
+    "http": "0.0.0",
+    "omdb": "^0.6.1",
+    "opensubtitles-api": "^3.2.0",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  }
+}

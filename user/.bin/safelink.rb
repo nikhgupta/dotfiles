@@ -59,6 +59,8 @@ now = Time.now.utc.strftime("%Y%m%d%H%M%S")
 destin = File.join(ENV['HOME'], File.basename(source)) if destin.to_s.strip.empty?
 backup = File.join(File.dirname(destin), "#{File.basename(destin)}.#{now}")
 
+puts [source, now, destin, backup, ARGV].inspect
+
 options[:verbose] = true if options[:dry_run]
 err "Source and destination are same." if source == destin
 

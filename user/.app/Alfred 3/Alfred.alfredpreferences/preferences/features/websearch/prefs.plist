@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>356B3E7C-949C-44D9-AC58-7D716B2B0C35</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>appstorm</string>
+			<key>plusSpaces</key>
+			<false/>
+			<key>text</key>
+			<string>Search for '{query}' on AppStorm (Mac)</string>
+			<key>url</key>
+			<string>http://mac.appstorm.net/?s={query}&amp;sort=most-recent</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

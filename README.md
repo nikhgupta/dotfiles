@@ -19,40 +19,36 @@ To install, run:
 
 ### Pre Setup
 
-I had to buy a Macbook Pro due to work requirements. Although, I loved using my Legion Y530
-running ArchLinux OS with `bspwm` as tiling window manager, Macbooks have their own USPs.
-Primarily, ease of development and longer battery backup over the Legion Y530.
+I had to buy a Macbook Pro due to work requirements. Although, I loved using
+my Legion Y530 running ArchLinux OS with `bspwm` as tiling window manager,
+Macbooks have their own USPs. Primarily, ease of development and longer
+battery backup over the Legion Y530.
 
-I am using the Macbook Pro as a primary machine now (as mentioned - due to work requirements).
-These dotfiles target setup of my Macbook Pro along with (upcoming) `BetterTouchTool` automation
-and TouchBar customizations.
+I am using the Macbook Pro as a primary machine now (as mentioned - due to
+work requirements). These dotfiles target setup of my Macbook Pro along with
+(upcoming) `BetterTouchTool` automation and TouchBar customizations.
 
-My Macbook has a physical Escape key unlike the most unfortunate previous generation Macbooks with 
-an Escape key on the TouchBar!!!
+My Macbook has a physical Escape key unlike the most unfortunate previous
+generation Macbooks with an Escape key on the TouchBar!!!
 
-I have further remapped by CapsLock key to function as a Hyper key which I know I use sparingly. 
-Hyper key only functions really well when it is used to open a keyboard shortcuts modal (aka 
-hammerspoon). However, I am not using hammerspoon at the moment - as I wanted to minimize 
-dependencies on multiple tools - which brings me to BetterTouchTool.
+I have tried my best to use apps that allow me to backup their settings /
+config in my dotfiles repo. Primarily, I use `yabai` for window management
+(like `bspwm` on arch), `skhd` for key-bindings (with SIP disabled), and
+`MTMR` for touch bar customization.
 
-I use BetterTouchTool for almost everything - from keyboard shortcuts to hyper chords to touch bar 
-customization, etc. If hammerspoon ever allows touchbar customization, and keyboard shortcuts with 
-`fn` key (a better Hyper key), I would instantly switch to it.
+I would like to switch to `hammerspoon` app as that would provide additional
+features over `skhd`, but `hammerspoon` at the moment has problems
+interfacing with `yabai` (it seems), and hence, I will revisit it at a later
+time.
 
-Most of my global shortcuts are triggerd via `fn` key, while some system-level global toggles use 
-Hyper key (Caps Lock). Most shortcuts follow vim style `hjkl` movements.
+I have remapped by `Caps Lock` key to send `F19` key code instead. I use
+vim-like modal key-bindings, which use this `F19` key code as leader, and vim
+like movements, e.g. I can move a window to next space using `F19 m w ]` or
+`F19 m w r` (move window next or right).
 
-### Remaining
-
-> Choice of tools is influenced by whether the rules/config can be setup using a simple text file.
-> If so, we can add that config to version control for easier setups later.
-
-- [ ] Setup Alfred?
-- [ ] `maid` rules setup (hazel)
-- [ ] TouchBar customizations - Setup BetterTouchTool rules or MTMR rules
-- [ ] Tiling features? Archlinux like Terminals? Maybe yabai?
-- [ ] all passwords use TouchBar Fingerprint sensor incl. sudo, ssh, gpg, chrome, safari, etc.
-- [ ] Setup: hammerspoon/mjolnir, maid, alfred, bettertouchtool/mtmr, yabai/amethyst, etc.
+> Choice of tools is influenced by whether the rules/config can be setup using
+> a simple text file. If so, we can add that config to version control for
+> easier setups later.
 
 ## Version 4 - Archlinux/Manjaro
 

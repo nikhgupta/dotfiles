@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 4,
+      "subtext" : {
+        "size" : 9,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "Helvetica Neue Light",
+        "color" : "#62545EFF"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#F57867FF",
+        "font" : "Helvetica Neue Light",
+        "color" : "#FCAB17FF"
+      },
+      "backgroundSelected" : "#534250FF",
+      "text" : {
+        "size" : 20,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "Helvetica Neue Light",
+        "color" : "#8A8184FF"
+      },
+      "iconPaddingHorizontal" : 5,
+      "paddingVertical" : 0,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 2,
+      "background" : "#62545EFF",
+      "spacing" : 10,
+      "text" : {
+        "size" : 36,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "Helvetica Neue Light",
+        "color" : "#FFFFFFFF"
+      },
+      "backgroundSelected" : "#8C7A89FF"
+    },
+    "window" : {
+      "color" : "#3E293CFF",
+      "paddingHorizontal" : 10,
+      "width" : 500,
+      "borderPadding" : 10,
+      "borderColor" : "#53425000",
+      "blur" : 0,
+      "roundness" : 3,
+      "paddingVertical" : 10
+    },
+    "credit" : "Angelo Simeoni",
+    "separator" : {
+      "color" : "#00000000",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#534250FF",
+      "thickness" : 2
+    },
+    "name" : "Paraiso Dark (v2)"
+  }
+}
