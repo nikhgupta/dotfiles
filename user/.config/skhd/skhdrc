@@ -499,24 +499,29 @@ launch, launch_app, launch_script < return : skhd -k 'escape'; ~/.bin/macos/new-
 # launch apps
 launch, launch_app < c                     : skhd -k 'escape'; open -a 'Safari'
 launch, launch_app < m                     : skhd -k 'escape'; open -a 'Mail'
+launch, launch_app < a                     : skhd -k 'escape'; open -a 'Script Editor'
 
 # # launch quick commands/scripts - cant use: t return
 # restart skhd alone
-launch_script < k : skhd -k 'escape'; terminal-notifier -message 'restarting skhd' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd
+launch_script < k         : skhd -k 'escape'; terminal-notifier -message 'restarting skhd' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd
 # restart yabai and skhd
-launch_script < r : skhd -k 'escape'; terminal-notifier -message 'restarting skhd and yabai' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd; brew services restart yabai
+launch_script < r         : skhd -k 'escape'; terminal-notifier -message 'restarting skhd and yabai' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd; brew services restart yabai
 # open visual studio code in current finder window
-launch_script < e : skhd -k 'escape'; open -a "Visual Studio Code" "$(~/.bin/macos/current-finder.applescript)"
+launch_script < e         : skhd -k 'escape'; open -a "Visual Studio Code" "$(~/.bin/macos/current-finder.applescript)"
+# open visual studio code in current finder window
+launch_script < shift - k : skhd -k 'escape'; open -a "Visual Studio Code" ~/.config/skhd/skhdrc
 # toggle dock auto-hide
-launch_script < d : skhd -k 'escape'; osascript -e 'tell application "System Events" to set autohide of dock preferences to not (get autohide of dock preferences)'
+launch_script < d         : skhd -k 'escape'; osascript -e 'tell application "System Events" to set autohide of dock preferences to not (get autohide of dock preferences)'
 # toggle finder hidden files
-launch_script < h : skhd -k 'escape'; osascript -e 'tell application "System Events" to keystroke "." using {command down, shift down}'
+launch_script < h         : skhd -k 'escape'; osascript -e 'tell application "System Events" to keystroke "." using {command down, shift down}'
 # toggle dark mode
-launch_script < n : skhd -k 'escape'; osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to not dark mode'
+launch_script < n         : skhd -k 'escape'; osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to not dark mode'
+# restart MTMR app for touch bar
+launch_script < m         : skhd -k 'escape'; killall -9 MTMR; open -a MTMR
+# append current browser url to a file
+launch_script < u         : skhd -k 'escape'; ~/.bin/macos/browser-url.applescript >> ~/.saved_urls
 # # toggle do not disturb mode!
 # launch_script < m : shkd -k 'escape'; osascript -e "ignoring application responses\ntell application \"System Events\" to keystroke \"D\" using {command down, shift down, option down, control down}\nend ignoring"
-# restart MTMR app for touch bar
-launch_script < m : skhd -k 'escape'; killall -9 MTMR; open -a MTMR
 # TODO: toggle night shift, true tone? maybe via Shifty?
 
 # launch finder windows
@@ -530,6 +535,7 @@ launch_finder < p : skhd -k 'escape'; open ~/Pictures
 launch_finder < s : skhd -k 'escape'; open ~/Pictures/Screenshots
 launch_finder < w : skhd -k 'escape'; open ~/Code/work
 launch_finder < x : skhd -k 'escape'; open ~/Dropbox
+launch_finder < shift - a : skhd -k 'escape'; open /Applications
 # ################################################################ #
 
 # # GLOBAL COMMANDS

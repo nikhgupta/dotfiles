@@ -27,6 +27,7 @@ sudo nvram SystemAudioVolume=" "
 
 # # Disable transparency in the menu bar and elsewhere on Yosemite
 # defaults write com.apple.universalaccess reduceTransparency -bool true
+defaults write com.apple.universalaccess reduceTransparency -bool false
 
 # # Menu bar: hide the Time Machine, Volume, and User icons
 # for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
@@ -40,6 +41,9 @@ sudo nvram SystemAudioVolume=" "
 #   "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
 #   "/System/Library/CoreServices/Menu Extras/Battery.menu" \
 #   "/System/Library/CoreServices/Menu Extras/Clock.menu"
+
+# menu bar date
+sudo defaults write com.apple.menuextra.clock DateFormat -string "d MMM HH:mm"
 
 # # Set highlight color to green
 defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
@@ -159,7 +163,6 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # # Trackpad: map bottom right corner to right-click
@@ -188,8 +191,8 @@ defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 18
 
 # # Set language and text formats
 # # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
@@ -269,6 +272,8 @@ defaults write com.apple.screencapture disable-shadow -bool true
 # Enable subpixel font rendering on non-Apple LCDs
 # Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
 defaults write NSGlobalDomain AppleFontSmoothing -int 1
+# Subpixel Anti-Aliasing (Font Smoothing)
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool true
 
 # Enable HiDPI display modes (requires restart)
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
@@ -580,10 +585,6 @@ defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 # Update extensions automatically
 defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
 
-###############################################################################
-# Mail                                                                        #
-###############################################################################
-
 # Disable send and reply animations in Mail.app
 defaults write com.apple.mail DisableReplyAnimations -bool true
 defaults write com.apple.mail DisableSendAnimations -bool true
@@ -683,7 +684,7 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine backups
-hash tmutil &> /dev/null && sudo tmutil disablelocal
+hash tmutil &> /dev/null # && sudo tmutil disablelocal
 
 ###############################################################################
 # Activity Monitor                                                            #
@@ -764,7 +765,7 @@ defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
 ###############################################################################
 
 # Prevent Photos from opening automatically when devices are plugged in
-defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+defaults write com.apple.ImageCapture disableHotPlug -bool true
 
 ###############################################################################
 # Messages                                                                    #

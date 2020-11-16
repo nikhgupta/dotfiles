@@ -41,10 +41,11 @@ for fd in $(find $_root/user -maxdepth 1 -mindepth 1); do
 done
 
 # application backup restore
-applink "Übersicht"
 applink "MTMR" items.json
-applink "Code/User" snippets settings.json
-applink "Alfred 3" Alfred.alfredpreferences
+applink "Code/User" settings.json
+rm -rf "$HOME/Library/Application Support/Code/User/snippets" && applink "Code/User" snippets
+rm -rf "$HOME/Library/Application Support/Übersicht/widgets" && applink "Übersicht" widgets
+rm -rf "$HOME/Library/Application Support/Alfred 3/Alfred.alfredpreferences" && applink "Alfred 3" Alfred.alfredpreferences
 
 # fix permissions
 find ~/.ssh -type f -exec chmod 600 {} \;

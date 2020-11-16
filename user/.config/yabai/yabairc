@@ -8,6 +8,7 @@
 # for this to work you must configure sudo such that
 # it will be able to run the command without password
 sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # create debug logs
 yabai -m config debug_output on

@@ -10,6 +10,9 @@ set colored-stats On
 # This line sets auto completion to ignore cases.
 set completion-ignore-case On
 
+# Treat hyphens and underscores as equivalent
+set completion-map-case on
+
 # This line sets 3 to be the maximum number of characters to be the common
 # prefix to display for completions. If the common prefix has more than
 # 3 characters, they are replaced by ellipsis

@@ -10,6 +10,7 @@ is_installed brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.co
 brew upgrade
 
 highlight "Installing utilities using brew"
+brew install antibody
 brew install aria2
 brew install automake
 brew install cmake
@@ -28,7 +29,11 @@ brew install gnupg
 brew install htop
 brew install imagemagick
 brew install ispell
+brew install jq
+brew install koekeishiya/formulae/skhd
+brew install koekeishiya/formulae/yabai
 brew install libtool
+brew install lunchy
 brew install media-info
 brew install moreutils
 brew install mpc
@@ -39,6 +44,7 @@ brew install ncmpcpp
 brew install ntfs-3g
 brew install openssh
 brew install openssl
+brew install pinentry-mac
 brew install postgresql
 brew install pv
 brew install rclone
@@ -99,8 +105,11 @@ brew cask install font-noto-mono-for-powerline
 brew cask install font-powerline-symbols
 brew cask install font-source-code-pro-for-powerline
 
+# cleanup
+brew cleanup
+
 highlight 'Switch to using brew-installed zsh as default shell'
 if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
-  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells;
-  chsh -s "${BREW_PREFIX}/bin/zsh";
-fi;
+  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells
+  chsh -s "${BREW_PREFIX}/bin/zsh"
+fi

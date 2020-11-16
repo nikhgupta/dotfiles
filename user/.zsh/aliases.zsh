@@ -10,7 +10,8 @@ alias -g NOERR='2> /dev/null'
 alias -g NOOUT='1> /dev/null'
 alias -g QUIET='&> /dev/null'
 alias -g G='| grep'
-alias -g CWDF=$(~/.bin/macos/current-finder.applescript)
+# alias -g CWDF=$(~/.bin/macos/current-finder.applescript)
+# alias -g BURL=$(~/.bin/macos/browser-url.applescript)
 
 # Decolorize command output - useful in scripts
 alias -g NOCOLOR="| perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b"
@@ -164,6 +165,9 @@ function getproxy() {
   curl -s "${url}" | json_pp
 }
 
+# Copy w/ progress
+cp_p () { rsync -WavP --human-readable --progress $1 $2; }
+
 # Get missing vim features (works with v8.0)
 function vim_missing_features() {
   for feature in $(vim --version | tail -43|head -31); do echo $feature; done | grep --color=never '-'
@@ -199,10 +203,6 @@ alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
-# Show/hide hidden files in Finder
-alias showfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hidefiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-
 # Airport CLI alias
 alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 
@@ -210,6 +210,9 @@ alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/C
 # For example, to list all directories that contain a certain file:
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1 -I {}"
+
+# cd into whatever is the forefront Finder window.
+cdf() {  cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"; }
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
@@ -219,3 +222,6 @@ function cdf() { cd "$(osascript -e 'tell app "Finder" to POSIX path of (inserti
 
 # `o` with no arguments opens the current directory, otherwise opens the given location
 function o() { [ $# -eq 0 ] && open . || open "$@"; }
+
+# battery percentage
+function battery_percent() { pmset -g batt | egrep "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';' | tr -d '%'; }

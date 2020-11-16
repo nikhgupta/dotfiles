@@ -47,10 +47,11 @@ highlight_mode_launch) # blue
   yabai -m config active_window_border_color 0xb29999ff
   ;;
 highlight_mode_window)
+  yabai -m config window_border_width 192
   yabai -m config normal_window_border_color 0xb2444444
   ;;
 highlight_mode_space)
-  yabai -m config window_border_width 256
+  yabai -m config window_border_width 320
   ;;
 highlight_mode_display)
   yabai -m config window_border_width 2048
