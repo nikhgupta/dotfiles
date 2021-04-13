@@ -256,11 +256,11 @@
     "align": "right",
     "width": 38
   },
-  {
-    "type": "nightShift",
-    "align": "right",
-    "width": 38
-  },
+  // {
+  //   "type": "nightShift",
+  //   "align": "right",
+  //   "width": 38
+  // },
   // {
   //   "type": "network",
   //   "flip": true,

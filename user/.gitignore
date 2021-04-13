@@ -75,6 +75,8 @@ custom_plan.rb
 .sass-cache
 
 # Tags: Ignore tags created by ctags, etags, etc.
+.tags
+!.tags/
 TAGS
 !TAGS/
 tags
@@ -92,3 +94,6 @@ cscope.po.out
 !.notempty
 !.gitkeep
 !.keep
+
+# emacs per directory configuration
+.dir-locals.el

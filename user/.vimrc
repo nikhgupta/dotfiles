@@ -121,7 +121,6 @@ set nocompatible     " No to the total compatibility with the ancient vi
 "
 " }}}
 " Internal:                                                          {{{
-" Internal:    developer-defined custom variables for this config {{{
   " os specific variables
   let g:is_gui     = has('gui_running')
   let g:is_mac     = has('mac') || has('macunix') || has('gui_macvim')
@@ -151,19 +150,23 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " }}}
 " Appearance:  uses distinct GUI fonts {{{
   if g:is_gui
-    set guifont=Fira\ Code\ 12
     "set guifont=FuraCode\ Nerd\ Font\ Mono\ Regular:h16
     "set guifont=Fira\ Code\ Regular\ Nerd\ Font\ Complete\ Windows\ Compatible:h16
     "set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16
 
     if g:is_mac
-      set guifont=FiraCode-Regular:h15
+      set guifont=FiraCode-Regular:h16
       set macligatures
+    else
+      set guifont=Fira\ Code\ 12
     endif
   endif
 " }}}
 " Upgrade:     provides a way to customize the startup screen {{{
-  let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', $DOTCASTLE ]
+let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv',
+    \ $DOTCASTLE,
+    \ expand("$ITSACHECKMATE/Web/Gemfile"),
+    \ expand("$ITSACHECKMATE/pos-backend/Gemfile") ]
 " }}}
 " }}}
 
@@ -290,7 +293,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
 " feature.
 " NOTE: This option is only present in Macvim.
   if g:is_macvim
-    set fullscreen
+    " set fullscreen
     set fuoptions="maxvert,maxhorz,background:Normal"
   endif
 " }}}
@@ -326,7 +329,7 @@ set nocompatible     " No to the total compatibility with the ancient vi
   " use the given session directory
   let g:startify_session_dir = expand("~/.vim") . "/tmp/sessions/"
   " first four shortcuts should be available from home row
-  let g:startify_custom_indices = [ 'a', 'd', 'f', 'l' ]
+  let g:startify_custom_indices = [ 'a', 'd', 'f', 'l', 'w', 'p' ]
   " skip these files from the recent files list
   let g:startify_skiplist = [ 'COMMIT_EDITMSG', $VIMRUNTIME .'/doc', 'bundle/.*/doc', '/tmp' ]
   " display shortcuts in the given order
@@ -830,6 +833,7 @@ endif
 " }}}
 " Advanced:    loads tag file when found, and adds some convenient mappings {{{
   set tags+=./tags,tags;/         " find and load tags file up until root
+  set tags+=./.tags,.tags;/         " find and load tags file up until root
   " Plug 'ludovicchabant/vim-gutentags'
   " let g:gutentags_cache_dir = '~/.tags_cache'
 
@@ -1061,7 +1065,7 @@ endif
     au filetype css,less,sass,scss      set ts=2 sw=2 sts=2 tw=80 et
     au filetype json,javascript,coffee  set ts=2 sw=2 sts=2 tw=80 et
     au filetype python                  set ts=4 sw=4 sts=4 tw=80  et
-    au filetype ruby,eruby              set ts=2 sw=2 sts=2 tw=80 et
+    au filetype ruby,eruby              set ts=2 sw=2 sts=2 tw=120 et
     au filetype php,ctp                 set ts=4 sw=4 sts=4 tw=80  et
     au filetype sh,vim                  set ts=2 sw=2 sts=2 tw=72  et
     au filetype ghmarkdown,textile      set ts=4 sw=4 sts=4 tw=100 et
@@ -1112,7 +1116,8 @@ endif
   augroup exceeded_text_width
     au!
     au filetype rst match ErrorMsg '\%>74v.\+'
-    au filetype ruby,python match ErrorMsg '\%>80v.\+'
+    au filetype ruby match ErrorMsg '\%>120v.\+'
+    au filetype python match ErrorMsg '\%>80v.\+'
   augroup end
 " }}}
 " Essential:   has make programs defined for certain languages that does the heavy work {{{
@@ -1164,57 +1169,68 @@ endif
           \ :let g:investigate_use_url_for_vim = 0<CR>
   augroup end
 " }}}
-" " Essential:   supports CODE LINTING (error-checking) for many languages {{{
+" Essential:   supports CODE LINTING (error-checking) for many languages {{{
+
+  Plug 'Chiel92/vim-autoformat'
+  noremap <F4> :Autoformat<CR>:w<CR>
+
+  Plug 'dense-analysis/ale'
+  let g:ale_fix_on_save = 1
+  let g:ale_fixers = {
+        \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+        \ 'javascript': ['prettier', 'eslint'],
+        \ 'ruby': ['prettier', 'rubocop', 'rufo', 'sortbet', 'standardrb'],
+        \ }
+
   " Plug 'neomake/neomake'
   " autocmd! BufWritePost * Neomake
   " let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
   " let g:neomake_python_enabled_makers = ['pep8', 'pylint']
 
-  Plug 'Chiel92/vim-autoformat'
-  noremap <F4> :Autoformat<CR>:w<CR>
-"   Plug 'scrooloose/syntastic'
-"   let g:syntastic_check_on_open            = 1
-"   let g:syntastic_aggregate_errors         = 0
-"   let g:syntastic_auto_jump                = 2
-"   let g:syntastic_enable_signs             = 1
-"   let g:syntastic_auto_loc_list            = 2
-"   let g:syntastic_error_symbol             = '✗'
-"   let g:syntastic_warning_symbol           = '⚠'
-"   let g:syntastic_style_error_symbol       = '☢'
-"   let g:syntastic_style_warning_symbol     = '☢'
-"   let g:syntastic_always_populate_loc_list = 1
-"   let g:syntastic_enable_balloons          = 1
-"   let g:syntastic_enable_highlighting      = 1
-"   let g:syntastic_id_checkers              = 1
-"   " list of available checkers:
-"   " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
-"   " let g:syntastic_python_checkers  = ['flake8']
-"   " let g:syntastic_ruby_checkers  = ['mri', 'rubocop']
-"   " let g:syntastic_ruby_rubocop_exec = expand("$RBENV_ROOT/shims/rubocop-no-warning")
-"   let g:syntastic_mode_map = { "mode": "passive",
-"                               \ "active_filetypes": ["ruby", "php", "python"],
-"                               \ "passive_filetypes": ["html"] }
-"   function! ToggleErrors()
-"       let old_last_winnr = winnr('$')
-"       lclose
-"       if old_last_winnr == winnr('$')
-"           " Nothing was closed, open syntastic error location panel
-"           Errors
-"       endif
-"   endfunction
-"   nnoremap <silent> <leader>tl :<C-u>call ToggleErrors()<CR>
-"   " enable integration with airline
-"   let g:airline#extensions#syntastic#enabled = 1
+  " Plug 'scrooloose/syntastic'
+  " let g:syntastic_check_on_open            = 1
+  " let g:syntastic_aggregate_errors         = 0
+  " let g:syntastic_auto_jump                = 2
+  " let g:syntastic_enable_signs             = 1
+  " let g:syntastic_auto_loc_list            = 2
+  " let g:syntastic_error_symbol             = '✗'
+  " let g:syntastic_warning_symbol           = '⚠'
+  " let g:syntastic_style_error_symbol       = '☢'
+  " let g:syntastic_style_warning_symbol     = '☢'
+  " let g:syntastic_always_populate_loc_list = 1
+  " let g:syntastic_enable_balloons          = 1
+  " let g:syntastic_enable_highlighting      = 1
+  " let g:syntastic_id_checkers              = 1
+  "
+  " " list of available checkers:
+  " " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
+  " let g:syntastic_python_checkers  = ['flake8']
+  " let g:syntastic_ruby_checkers  = ['mri', 'rubocop']
+  " let g:syntastic_ruby_rubocop_exec = expand("$RBENV_ROOT/shims/rubocop-no-warning")
+  " let g:syntastic_mode_map = { "mode": "passive",
+  "                             \ "active_filetypes": ["ruby", "php", "python"],
+  "                             \ "passive_filetypes": ["html"] }
+  " function! ToggleErrors()
+  "     let old_last_winnr = winnr('$')
+  "     lclose
+  "     if old_last_winnr == winnr('$')
+  "         " Nothing was closed, open syntastic error location panel
+  "         Errors
+  "     endif
+  " endfunction
+  " nnoremap <silent> <leader>tl :<C-u>call ToggleErrors()<CR>
+  " " enable integration with airline
+  " let g:airline#extensions#syntastic#enabled = 1
 
-"   " " haskell
-"   " FIXME: move this into Syntastic itself?
-"   " " Haskell post write lint and check with ghcmod
-"   " " $ `cabal install ghcmod` if missing and ensure
-"   " " ~/.cabal/bin is in your $PATH.
-"   " if !executable("ghcmod")
-"   "   autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-"   " endif
-" " }}}
+  " " haskell
+  " FIXME: move this into Syntastic itself?
+  " " Haskell post write lint and check with ghcmod
+  " " $ `cabal install ghcmod` if missing and ensure
+  " " ~/.cabal/bin is in your $PATH.
+  " if !executable("ghcmod")
+  "   autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+  " endif
+" }}}
 " }}}
 " Language Specific:                                                 {{{
 " Mappings:    HTML:               creates folds using tags {{{
@@ -1230,7 +1246,7 @@ endif
     au filetype ruby,eruby setl tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
   augroup END
 " }}}
-" Personlize: Ruby: Rails:         has command to quickly run specs {{{
+" Personlize:  Ruby: Rails:        has command to quickly run specs {{{
 " NOTE: this depends on vim-rspec plugin
   function! RunSpecs(...)
     let l:inside_app   = expand("%:h") =~ "app"
@@ -1324,7 +1340,7 @@ endif
     au filetype help nnoremap <buffer>q :q<CR>
   augroup end
 " }}}
-" Specialize: Elixir {{{
+" Specialize:  Elixir {{{
   Plug 'elixir-lang/vim-elixir'
   Plug 'slashmili/alchemist.vim'
   Plug 'c-brenn/phoenix.vim'
@@ -1381,7 +1397,6 @@ endif
   " endif
 " }}}
 " }}}
-
 " Git Workflow:                                                      {{{
 " Specialize:  adds support for running git commands from within the editor {{{
   Plug 'tpope/vim-fugitive'
@@ -1416,7 +1431,7 @@ endif
 " " }}}
 " Specialize:  enables support to manage Github Gists from the editor {{{
   Plug 'mattn/webapi-vim'
-  Plug 'nattn/gist-vim'
+  Plug 'mattn/vim-gist'
   let g:gist_clip_command = 'pbcopy'
   let g:gist_detect_filetype = 1
   let g:gist_open_browser_after_post = 1
@@ -1466,11 +1481,17 @@ endif
 " }}}
 " Component:   provides a fuzzy finder for files, buffers, tags, etc. {{{
   if executable('fzf')
+    " This is the default option:
+    "   - Preview window on the right with 50% width
+    "   - CTRL-/ will toggle preview window.
+    " - Note that this array is passed as arguments to fzf#vim#with_preview function.
+    " - To learn more about preview window options, see `--preview-window` section of `man fzf`.
+    let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+
     set rtp+=/usr/local/opt/fzf
     Plug 'junegunn/fzf.vim'
 
-    " <C-p> or <C-t> to search files
-    nnoremap <silent> <C-t> :FZF -m<cr>
+    " <C-p> or <D-p> to search files
     nnoremap <silent> <C-p> :FZF -m<cr>
     nnoremap <silent> <C-b> :Buffers<cr>
     nnoremap <silent> <C-o> :Buffers<cr>
@@ -1499,6 +1520,11 @@ endif
     nnoremap q/ :QHist<CR>
 
     command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'down': '40%', 'options': --no-color'})
+
+    command! -bang -nargs=* GGrep
+      \ call fzf#vim#grep(
+      \   'git grep --line-number -- '.shellescape(<q-args>), 0,
+      \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
   else
     Plug 'ctrlpvim/ctrlp.vim'
     " notes:
@@ -1799,10 +1825,6 @@ endif
 " Expedite:    Mappings: open a new buffer with previous file & switch to it {{{
   nnoremap <leader>ph :execute 'rightbelow split' bufname('#')<cr>
   nnoremap <leader>pv :execute 'leftabove vsplit' bufname('#')<cr>
-" }}}
-" Expected:    speeds up scrolling of the viewport slightly {{{
-  nnoremap <C-e> 2<C-e>
-  nnoremap <C-y> 2<C-y>
 " }}}
 " }}}
 " Sessions:                                                          {{{

@@ -76,6 +76,12 @@ yabai -m config active_window_border_color 0x00444444
 yabai -m config normal_window_border_color 0x00444444
 yabai -m config insert_feedback_color 0xb2ebdbb2
 
+# external bar
+if which spacebar >/dev/null; then
+  SPACEBAR_HEIGHT=$(spacebar -m config height)
+  yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
+fi
+
 #########################################################################
 # SPACE LABELS                                                          #
 #########################################################################
@@ -123,6 +129,7 @@ yabai -m rule --add app="Terminal" space=^2
 yabai -m rule --add app="Atom" space=^3
 yabai -m rule --add app="VimR" space=^3
 yabai -m rule --add app="MacVim" space=^3
+yabai -m rule --add app="Emacs" space=^3
 yabai -m rule --add app="^Code$" space=^3
 yabai -m rule --add app="Visual Studio Code" space=^3
 yabai -m rule --add app="TextEdit" space=^3

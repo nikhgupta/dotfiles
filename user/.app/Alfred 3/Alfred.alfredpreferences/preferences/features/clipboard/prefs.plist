@@ -4,6 +4,8 @@
 <dict>
 	<key>fastAppend</key>
 	<true/>
+	<key>fastAppendBackToClipboard</key>
+	<true/>
 	<key>fastAppendPlaySound</key>
 	<false/>
 	<key>fastAppendSeparator</key>
@@ -11,11 +13,11 @@
 	<key>hotkey</key>
 	<dict>
 		<key>key</key>
-		<integer>8</integer>
+		<integer>44</integer>
 		<key>mod</key>
-		<integer>1310720</integer>
+		<integer>1703936</integer>
 		<key>string</key>
-		<string>C</string>
+		<string>?</string>
 	</dict>
 	<key>limit</key>
 	<integer>4</integer>

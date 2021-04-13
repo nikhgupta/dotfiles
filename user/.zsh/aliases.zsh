@@ -49,7 +49,7 @@ alias x+="sudo chmod +x" # quickly make a file executable
 alias x-="sudo chmod -x" # quickly make a file un-executable
 
 # ls
-alias ls='ls -F --color=always --group-directories-first'
+alias ls='gls -F --color=always --group-directories-first'
 alias la="ls -alh"
 alias lS='ls -1FSsh | sort -r' # sort by size
 alias lx='ls -lAFhXB'          # sort by extension - GNU only
@@ -142,6 +142,13 @@ alias notifier='terminal-notifier -sound default'
 # Find MB eating directories
 alias dush="du -sm {*,.*} 2>/dev/null | sort -n|tail"
 
+# random string
+function passrand() {
+  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w "${1:-96}" | head -n 1
+}
+function md5rand() { passrand 1028 | md5sum | cut -d' ' -f1; }
+function sha2rand() { passrand 1028 | sha256sum | cut -d' ' -f1; }
+
 # Search commands on CLF and open in Vim
 function cmdfu() {
   local url="http://www.commandlinefu.com/commands/matching/"
@@ -225,3 +232,13 @@ function o() { [ $# -eq 0 ] && open . || open "$@"; }
 
 # battery percentage
 function battery_percent() { pmset -g batt | egrep "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';' | tr -d '%'; }
+
+# start office work
+function iac() {
+  # yabai -m window --space 5 &>/dev/null
+  # yabai -m window --toggle zoom-fullscreen &>/dev/null
+  # ~/.bin/macos/new-terminal.applescript &>/dev/null
+
+  cd ~/Code/ItsaCheckmate
+  tmuxinator start itsacheckmate
+}

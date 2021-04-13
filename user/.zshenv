@@ -10,6 +10,7 @@ setenv ZSH_CACHE_DIR $HOME/.zcache
 
 # variables used through out dotfiles
 setenv DOTCASTLE $HOME/.dotfiles
+setenv ITSACHECKMATE $HOME/Code/ItsaCheckmate
 
 # brew
 export HOMEBREW_NO_AUTO_UPDATE=1

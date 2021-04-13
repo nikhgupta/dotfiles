@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "window.menuBarVisibility": "toggle",
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
@@ -11,8 +10,12 @@
   "editor.tabSize": 2,
   "ruby.format": "rubocop",
   "ruby.codeCompletion": "rcodetools",
+  "window.titleBarStyle": "native",
+  "customizeUI.titleBar": "inline",
+  "customizeUI.activityBar": "wide",
   "[ruby]": {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "rebornix.ruby"
   },
   "beautify.language": {
     "css": ["css", "scss"],
@@ -62,5 +65,24 @@
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  },
+  "python.languageServer": "Pylance",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "python.venvFolders": [
+    ".venv"
+  ],
+  "python.venvPath": "~/.venv",
+  "python.globalModuleInstallation": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.showStartPage": false,
+  "workbench.editorAssociations": [
+    {
+      "viewType": "jupyter.notebook.ipynb",
+      "filenamePattern": "*.ipynb"
+    }
+  ],
+  "customizeUI.moveStatusbar": true,
+  "solargraph.useBundler": true
 }

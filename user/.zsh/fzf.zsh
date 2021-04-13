@@ -25,6 +25,7 @@ _fzf_compgen_dir() { fd --type d . "$1"; }
 alias rgf='rg -Sl --color=never --no-messages --hidden'
 
 vf() { vim $(fzf); }
+mvf() { mvim $(fzf); }
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)

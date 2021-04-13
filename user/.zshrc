@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
 # => basic locales and ZSH options
-LANG=en_US.UTF-8
-LC_ALL=en_US.UTF-8
-LC_CTYPE=en_US.UTF-8
-LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
 # Reference: http://zsh.sourceforge.net/Doc/Release/Options.html
 unsetopt rm_star_silent # Query the user on such a removal
@@ -64,21 +64,24 @@ unalias run-help &>/dev/null
 autoload run-help
 HELPDIR=$BREW_PREFIX/share/zsh/help
 
-# make sure we use gnu version of commands like ls, etc.
-# rehash -f     # gnu-utils OMZ plugin
-for package in coreutils gnu-sed gnu-tar findutils moreutils; do
-  if [[ -d $BREW_PREFIX/opt/$package/libexec/gnubin ]]; then
-    PATH="$BREW_PREFIX/opt/$package/libexec/gnubin:$PATH"
-    MANPATH="$BREW_PREFIX/opt/$package/libexec/gnuman:$MANPATH"
-  fi
-done
+# NOTE: brew doctor complaints about putting coreutils/findutils in path
+# # make sure we use gnu version of commands like ls, etc.
+# # rehash -f     # gnu-utils OMZ plugin
+# for package in coreutils gnu-sed gnu-tar findutils moreutils; do
+#   if [[ -d $BREW_PREFIX/opt/$package/libexec/gnubin ]]; then
+#     PATH="$BREW_PREFIX/opt/$package/libexec/gnubin:$PATH"
+#     MANPATH="$BREW_PREFIX/opt/$package/libexec/gnuman:$MANPATH"
+#   fi
+# done
 
-# dircolors
+# dircolorsj
 [[ -r $XDG_CONFIG_DIR/user-dirs.dirs ]] && source $XDG_CONFIG_DIR/user-dirs.dirs
 # [[ -f ~/.dir_colors ]] && init_cache dircolors "gdircolors -b ~/.dir_colors"
 
-# asdf
-. $BREW_PREFIX/opt/asdf/asdf.sh
+# # asdf, rbenv, pyenv, etc.
+# . $BREW_PREFIX/opt/asdf/asdf.sh
+is_installed rbenv && init_cache rbenv "rbenv init -"
+is_installed pyenv && init_cache pyenv "pyenv init -"
 
 # ssh setup using GnuPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -94,3 +97,5 @@ source ~/.zsh/completion.zsh
 [[ -f ~/.localrc ]] && source ~/.localrc
 
 # echo "\e[32mWelcome, Nick!\e[0m"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@12/bin:$PATH"

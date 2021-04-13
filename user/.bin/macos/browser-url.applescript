@@ -3,6 +3,8 @@
 on run argv
   if (count of argv) >= 1 then
     set inp to item 1 of argv
+  else if application "Google Chrome" is running then
+    set inp to "Google Chrome"
   else
     set inp to "Safari"
   end if

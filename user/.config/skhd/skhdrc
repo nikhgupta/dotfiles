@@ -132,33 +132,33 @@
 # hjkl keys targets windows/space/display like vim, while m targets largest windows and
 # \ targets recent, [ targets previous and ] targets next window for all commands.
 
-:: default  : ~/.bin/macos/skhd_yabai.sh highlight_mode_default
-:: active  @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_active  # listening for hotkeys - white color
+:: default  : ~/.bin/macos/skhd_yabai.sh highlight_default
+:: active  @ : ~/.bin/macos/skhd_yabai.sh highlight_active  # listening for hotkeys - white color
 
-:: focus  @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_focus    # focus window, spaces or displays - green color
-:: swap   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_swap     # swap windows, spaces or displays - red color
-:: move   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_move     # move (warp) windows, spaces or displays - yellow color
-:: grid   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_grid     # layout windows in grid - orange color
-:: resize @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_resize   # resize windows - cyan color
-:: toggle @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_toggle   # toggle window, space or display attributes - purple color
-:: launch @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_launch   # launch applications or scripts - blue color
-# :: warpnf @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_warpnf   # Same, but don't follow focus
+:: focus  @ : ~/.bin/macos/skhd_yabai.sh highlight_focus    # focus window, spaces or displays - green color
+:: swap   @ : ~/.bin/macos/skhd_yabai.sh highlight_swap     # swap windows, spaces or displays - red color
+:: move   @ : ~/.bin/macos/skhd_yabai.sh highlight_move     # move (warp) windows, spaces or displays - yellow color
+:: grid   @ : ~/.bin/macos/skhd_yabai.sh highlight_grid     # layout windows in grid - orange color
+:: resize @ : ~/.bin/macos/skhd_yabai.sh highlight_resize   # resize windows - cyan color
+:: toggle @ : ~/.bin/macos/skhd_yabai.sh highlight_toggle   # toggle window, space or display attributes - purple color
+:: launch @ : ~/.bin/macos/skhd_yabai.sh highlight_launch   # launch applications or scripts - blue color
+# :: warpnf @ : ~/.bin/macos/skhd_yabai.sh highlight_warpnf   # Same, but don't follow focus
 
-:: focus_window    @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_window
-:: focus_space     @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_space
-:: focus_display   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_display
-:: swap_window     @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_window
-:: swap_space      @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_space
-:: swap_display    @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_display
-:: move_window     @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_window
-:: move_space      @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_space
-:: move_display    @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_display
-:: toggle_window   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_window
-:: toggle_space    @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_space
-:: toggle_display  @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_display
-:: launch_finder   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_window
-:: launch_script   @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_space
-:: launch_app      @ : ~/.bin/macos/skhd_yabai.sh highlight_mode_display
+:: focus_window    @ : ~/.bin/macos/skhd_yabai.sh highlight_window
+:: focus_space     @ : ~/.bin/macos/skhd_yabai.sh highlight_space
+:: focus_display   @ : ~/.bin/macos/skhd_yabai.sh highlight_display
+:: swap_window     @ : ~/.bin/macos/skhd_yabai.sh highlight_window
+:: swap_space      @ : ~/.bin/macos/skhd_yabai.sh highlight_space
+:: swap_display    @ : ~/.bin/macos/skhd_yabai.sh highlight_display
+:: move_window     @ : ~/.bin/macos/skhd_yabai.sh highlight_window
+:: move_space      @ : ~/.bin/macos/skhd_yabai.sh highlight_space
+:: move_display    @ : ~/.bin/macos/skhd_yabai.sh highlight_display
+:: toggle_window   @ : ~/.bin/macos/skhd_yabai.sh highlight_window
+:: toggle_space    @ : ~/.bin/macos/skhd_yabai.sh highlight_space
+:: toggle_display  @ : ~/.bin/macos/skhd_yabai.sh highlight_display
+:: launch_finder   @ : ~/.bin/macos/skhd_yabai.sh highlight_window
+:: launch_script   @ : ~/.bin/macos/skhd_yabai.sh highlight_space
+:: launch_app      @ : ~/.bin/macos/skhd_yabai.sh highlight_display
 
 # Caps Lock sends F19, which is used to activate shortcuts.
 # Afterwards, tapping it again or Esc key anywhere will get us back to default shortcuts.
