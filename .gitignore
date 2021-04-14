@@ -1,5 +1,6 @@
 *.lnk
 .localrc
-.vim/bundle
-.vim/tmp
+user/.vim/autoload
+user/.vim/bundle
+user/.vim/tmp
 *.decrypted-cache
