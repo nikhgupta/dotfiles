@@ -46,6 +46,10 @@
     set clipboard+=unnamed                 " On mac and Windows, use * register for copy-paste
   endif
 " }}}
+" expected: highlight yanked text {{{
+  Plug 'machakann/vim-highlightedyank'
+  let g:highlightedyank_highlight_duration = 240
+" }}}
 " Specialize:  store and cycle through yanked text strings {{{
   Plug 'maxbrunsfeld/vim-yankstack'
 
@@ -65,4 +69,3 @@
 " Expected:    pasting in visual mode replaces the selected text {{{
   vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 " }}}
-

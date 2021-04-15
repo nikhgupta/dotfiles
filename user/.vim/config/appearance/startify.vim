@@ -1,9 +1,6 @@
 Plug 'mhinz/vim-startify'
 
-let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv',
-      \ $DOTCASTLE,
-      \ expand("$ITSACHECKMATE/Web/Gemfile"),
-      \ expand("$ITSACHECKMATE/pos-backend/Gemfile") ]
+let g:startify_bookmarks = [ '~/.vimrc', '~/.zshrc', '~/.zshenv', $DOTCASTLE ]
 
 set shortmess+=I         " do not display intro message on Vim startup
 

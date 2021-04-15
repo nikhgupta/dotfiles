@@ -494,6 +494,8 @@ toggle_window < c       : yabai -m window --toggle float; yabai -m window --grid
 
 # launch new terminal window
 launch, launch_app, launch_script < t      : skhd -k 'escape'; ~/.bin/macos/new-terminal.applescript
+launch < n      : skhd -k 'escape'; ~/.bin/macos/new-terminal.applescript nick
+launch < i      : skhd -k 'escape'; ~/.bin/macos/new-terminal.applescript iacm
 # open current finder window in terminal
 launch, launch_app, launch_script < return : skhd -k 'escape'; ~/.bin/macos/new-terminal.applescript finder
 # launch apps

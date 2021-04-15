@@ -37,7 +37,7 @@ export DISABLE_AUTO_TITLE=true # otherwise, causes issues with terminal inside e
 # editor
 setenv VISUAL $EDITOR
 setenv GUIEDITOR $EDITOR
-echo $EDITOR | grep vim &>/dev/null || alias vim=$CURRENT_EDITOR
+echo $EDITOR | grep vim &>/dev/null && alias vim=$EDITOR
 setenv BROWSER "open -a 'Google Chrome'"
 browser() { eval "$BROWSER '$1'"; }
 alias browse=browser
@@ -99,3 +99,11 @@ source ~/.zsh/completion.zsh
 # echo "\e[32mWelcome, Nick!\e[0m"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="/usr/local/opt/postgresql@12/bin:$PATH"
+
+# spit out a warning if startup script failed
+[[ $(gstat -c "%U" "$(brew --prefix)/Cellar") != $(whoami) ]] && \
+  [[ -z "${SSH_CONNECTION}" ]] && \
+  echo "WARNING: Startup script failed. Wrong brew permissions."
+
+# FIX: use ncurses pinentry when inside SSH connection
+[[ -n "$SSH_CONNECTION" || -n "$TMUX" ]] && export PINENTRY_USER_DATA="USE_CURSES=1"

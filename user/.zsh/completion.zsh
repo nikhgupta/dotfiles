@@ -11,16 +11,16 @@ zcachedir="$HOME/.zcache"
 _update_zcomp() {
     setopt local_options
     setopt extendedglob
-    autoload -Uz compinit
+    autoload -Uz compinit -u
     local zcompf="$1/zcompdump"
     # use a separate file to determine when to regenerate, as compinit doesn't
     # always need to modify the compdump
     local zcompf_a="${zcompf}.augur"
 
     if [[ -e "$zcompf_a" && -f "$zcompf_a(#qN.md-1)" ]]; then
-        compinit -C -d "$zcompf"
+        compinit -u -C -d "$zcompf"
     else
-        compinit -d "$zcompf"
+        compinit -u -d "$zcompf"
         touch "$zcompf_a"
     fi
     # if zcompdump exists (and is non-zero), and is older than the .zwc file,

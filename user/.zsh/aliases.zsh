@@ -233,12 +233,9 @@ function o() { [ $# -eq 0 ] && open . || open "$@"; }
 # battery percentage
 function battery_percent() { pmset -g batt | egrep "([0-9]+\%).*" -o --colour=auto | cut -f1 -d';' | tr -d '%'; }
 
-# start office work
-function iac() {
-  # yabai -m window --space 5 &>/dev/null
-  # yabai -m window --toggle zoom-fullscreen &>/dev/null
-  # ~/.bin/macos/new-terminal.applescript &>/dev/null
+# retake brew permissions
+function reset_brew_perms() {
+  [[ $(gstat -c "%U" "$(brew --prefix)/Cellar") == $(whoami) ]] && return
 
-  cd ~/Code/ItsaCheckmate
-  tmuxinator start itsacheckmate
+  sudo chown -R "$(whoami)":staff "$(brew --prefix)/*"
 }

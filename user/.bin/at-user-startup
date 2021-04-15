@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+local __fpath=/tmp/user-startup
+[[ -f $__fpath ]] || { touch $__fpath && chmod 777 $__fpath; }
+
+# return if we have already ran this script
+[[ "$(head -1 $__fpath)" == "$(whoami)" ]] && return
+
+# set state for checking on next run
+echo "$(whoami)\n\n\n" > $__fpath
+echo "`date`: User logged in." >> $__fpath
+
+# make sure yabai has scripting additions installed
+yabai --check-sa || sudo yabai --install-sa
+sudo yabai --load-sa
+echo "`date`: Loaded scripting additions for Yabai" >> $__fpath
+
+# restart yabai skhd and spacebar
+for service in skhd spacebar yabai; do
+  kill -9 $(pidof $service)
+done
+echo "`date`: Killed gui brew services" >> $__fpath
+
+# get permissions fixed for brew
+[[ $(gstat -c "%U" "$(brew --prefix)/Cellar") == $(whoami) ]] || \
+  sudo chown -R $(whoami):staff $(brew --prefix)/*
+echo "`date`: Resetting permissions for brew directories" >> $__fpath
+
+# restart yabai skhd and spacebar
+for service in skhd spacebar yabai; do
+  brew services restart $service
+done
+echo "`date`: Restarted gui brew services" >> $__fpath

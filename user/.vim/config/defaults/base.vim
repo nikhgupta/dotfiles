@@ -19,7 +19,7 @@
   set nobackup                      " do not keep backup files - it's 70's style cluttering
   set nowritebackup                 " do not make a write backup
   set noswapfile                    " do not write annoying intermediate swap files
-  set directory=~/.vim/tmp/swaps,/tmp    " store swap files in one of these directories (in case swapfile is ever turned on)
+  set directory=~/.tmp/vim/swaps,/tmp/vim/swaps  " store swap files in one of these directories (in case swapfile is ever turned on)
 " }}}
 " Modernize:   doesn't beep - "that's rude, O' Odin!" {{{
   set noerrorbells                  " don't beep

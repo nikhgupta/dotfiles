@@ -13,6 +13,10 @@ on run argv
         set pathList to (quoted form of POSIX path of (folder of the front window as alias))
         set textToType to "clear; cd " & pathList
       end tell
+    else if item 1 of argv is "nick"
+      set textToType to "clear; ssh nick; exit"
+    else if item 1 of argv is "iacm"
+      set textToType to "clear; ssh iacm; exit"
     else
       set textToType to "clear; cd " & (quoted form of item 1 of argv)
     end if

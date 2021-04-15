@@ -5,7 +5,7 @@
     set undofile                  " have a long persisting undo data
     set undolevels=1000           " Maximum number of changes that can be undone
     set undoreload=10000          " Maximum number lines to save for undo on a buffer reload
-    set undodir=~/.vim/tmp/undo,/tmp
+    set undodir=~/.tmp/vim/undo,/tmp/vim/undo
   endif
 " }}}
 " Specialize:  allows traversing the undo/redo history as a graphical tree {{{
@@ -25,4 +25,3 @@
   " see: http://stackoverflow.com/a/8064607/127816
   vnoremap . :normal .<CR>
 " }}}
-

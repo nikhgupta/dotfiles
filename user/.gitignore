@@ -97,3 +97,6 @@ cscope.po.out
 
 # emacs per directory configuration
 .dir-locals.el
+
+# other directories
+vendor/bundle
