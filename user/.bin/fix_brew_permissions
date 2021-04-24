@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+__perms=$(gfind /usr/local/* -printf '%u:%g\n' | sort -t: -u)
+__message="permissions for brew directory."
+
+if [[ "$__perms" != "$(whoami):staff" ]]; then
+  sudo chown -R "$(whoami):staff" "$(brew --prefix)/*"
+
+  [[ "$__perms" == "$(whoami):staff" ]] && \
+    terminal-notifier -message "Fixed ${__message}" -title 'brew' -sender com.koekeishiya.skhd || \
+    terminal-notifier -message "Could not fix ${__message}" -title 'brew' -sender com.koekeishiya.skhd
+else
+    terminal-notifier -message "Fixed ${__message}" -title 'brew' -sender com.koekeishiya.skhd
+fi

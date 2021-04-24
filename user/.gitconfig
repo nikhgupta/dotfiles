@@ -173,9 +173,9 @@
 
   # logs
   l            = log --graph --date=short
-  short        = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+  short        = log --pretty=format:\"%h %cr %Cgreen%s%Creset %cn\"
   simple       = log --pretty=format:\" * %s\"
-  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+  shortnocolor = log --pretty=format:\"%h %cr %s %cn\"
   recent       = log --pretty=oneline --abbrev-commit --max-count=15
   changes      = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\" --abbrev-commit --date=relative
 

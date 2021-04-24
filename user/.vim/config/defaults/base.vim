@@ -37,8 +37,10 @@
 " }}}
 " Tweak:       ignores whitespace changes in the diff mode {{{
   if has("diff")
-    set diffopt+=iwhite     " Ignore whitespace changes (focus on code changes)
+    set diffopt-=internal
+    set diffopt+=iwhiteall  " Ignore whitespace changes (focus on code changes)
     set diffopt+=vertical   " use vertical splits for diff
+    set diffopt+=hiddenoff
   endif
 " }}}
 " Personalize: show relative line numbers where they make sense, otherwise absolute ones {{{

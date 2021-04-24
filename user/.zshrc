@@ -41,6 +41,7 @@ echo $EDITOR | grep vim &>/dev/null && alias vim=$EDITOR
 setenv BROWSER "open -a 'Google Chrome'"
 browser() { eval "$BROWSER '$1'"; }
 alias browse=browser
+alias -g vim='nvim'
 
 # set vim bindings for zsh
 bindkey -v
@@ -94,7 +95,7 @@ source ~/.zsh/topics.zsh
 source ~/.zsh/fzf.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
-[[ -f ~/.localrc ]] && source ~/.localrc
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # echo "\e[32mWelcome, Nick!\e[0m"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"

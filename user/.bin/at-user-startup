@@ -1,14 +1,39 @@
 #!/usr/bin/env zsh
 
-local __fpath=/tmp/user-startup
-[[ -f $__fpath ]] || { touch $__fpath && chmod 777 $__fpath; }
+local __fpath="/tmp/user-startup"
+local __procs_to_restart=("Bitwarden" "MTMR")
+
+on_failure() {
+  message="${1:-Failed when running user-startup script.}"
+
+  # send a notification that something failed
+  terminal-notifier -message "${message}" -title 'at-user-startup' -sender com.koekeishiya.skhd
+
+  # add the failure to our log
+  echo "`date`: ERROR: ${message}" >> $__fpath
+
+  exit 127
+}
+
+# sleep for a few seconds to make sure we have focus for fingerprint touch on sudo
+sleep 5
+
+# remove the tempfile if exists
+[[ -f $__fpath ]] && sudo rm -f $__fpath && touch $__fpath
 
 # return if we have already ran this script
+[[ -f "$__fpath" ]] || return
 [[ "$(head -1 $__fpath)" == "$(whoami)" ]] && return
 
 # set state for checking on next run
 echo "$(whoami)\n\n\n" > $__fpath
 echo "`date`: User logged in." >> $__fpath
+
+if [[ "$(whoami)" == "root" ]]; then
+  echo "Error: Script must run with sudo priledges but not with root account."
+  echo "Try executing the script as normal and then provide your password when asked for."
+  exit 127
+fi
 
 # make sure yabai has scripting additions installed
 yabai --check-sa || sudo yabai --install-sa
@@ -16,18 +41,64 @@ sudo yabai --load-sa
 echo "`date`: Loaded scripting additions for Yabai" >> $__fpath
 
 # restart yabai skhd and spacebar
-for service in skhd spacebar yabai; do
-  kill -9 $(pidof $service)
-done
+sudo killall skhd spacebar yabai
 echo "`date`: Killed gui brew services" >> $__fpath
 
 # get permissions fixed for brew
 [[ $(gstat -c "%U" "$(brew --prefix)/Cellar") == $(whoami) ]] || \
-  sudo chown -R $(whoami):staff $(brew --prefix)/*
+  sudo chown -R "$(whoami)":staff $(brew --prefix)/*
 echo "`date`: Resetting permissions for brew directories" >> $__fpath
 
+# stop bitwarden because it interfares with skhd (secure keyboard entry)
+for proc in $__procs_to_restart; do sudo killall $proc; done
+
 # restart yabai skhd and spacebar
-for service in skhd spacebar yabai; do
+for service in spacebar skhd yabai; do
   brew services restart $service
 done
 echo "`date`: Restarted gui brew services" >> $__fpath
+
+# restart some other useful scripts
+for app in $__procs_to_restart; do open -a $app; done
+echo "`date`: Restarted apps and services" >> $__fpath
+
+# if user has a startup script - run it now with no priviledges by default
+[[ -x ~/.startx ]] && ~/.startx
+echo "`date`: Ran ~/.startx for the user" >> $__fpath
+
+# check if everything worked smoothly or else raise an error
+sleep 20
+[[ $(gstat -c "%U" "$(brew --prefix)/Cellar") == $(whoami) ]] || on_failure "brew permissions incorrect"
+[[ -n "$(pidof skhd)" ]] || on_failure "skhd failed to start"
+[[ -n "$(pidof yabai)" ]] || on_failure "yabai failed to start"
+[[ -n "$(pidof spacebar)" ]] || on_failure "spacebar failed to start"
+echo "`date`: Primary check complete." >> $__fpath
+for proc in $__procs_to_restart; do [[ -n "$(pidof $proc)" ]] || on_failure "\"$proc\" failed to start"; done
+echo "`date`: Secondary check for apps done." >> $__fpath
+timeout 2 skhd -k "fn - 1" || on_failure "could not switch to Desktop 1 with skhd"
+echo "`date`: Secondary check for skhd done." >> $__fpath
+timeout 2 spacebar -m config height || { brew service restart spacebar && sleep 2; }
+echo "`date`: Secondary check for spacebar done." >> $__fpath
+timeout 2 spacebar -m config height on_failure "could not get height from spacebar"
+echo "`date`: Tertiary check for spacebar done." >> $__fpath
+timeout 2 yabai -m query --displays || on_failure "could not query windows data from yabai"
+echo "`date`: Secondary check for yabai done." >> $__fpath
+
+# restart yabai, skhd and spacebar - one more time for the effect - should be auto started
+killall spacebar
+killall skhd
+sleep 1 && killall yabai
+echo "`date`: Restarted skhd, yabai and spacebar once more." >> $__fpath
+sleep 20
+timeout 2 skhd -k "fn - 1" || on_failure "could not switch to Desktop 1 with skhd"
+echo "`date`: Tertiary check for skhd done." >> $__fpath
+timeout 2 spacebar -m config height || { brew service restart spacebar && sleep 2; }
+echo "`date`: Fourth check for spacebar done." >> $__fpath
+timeout 2 spacebar -m config height on_failure "could not get height from spacebar"
+echo "`date`: Fifth check for spacebar done." >> $__fpath
+timeout 2 yabai -m query --displays || on_failure "could not query windows data from yabai"
+echo "`date`: Tertiary check for yabai done." >> $__fpath
+
+# send a notification that everything worked.
+terminal-notifier -message 'Ready to go!!' -title 'at-user-startup' -sender com.koekeishiya.skhd
+echo "`date`: Finished." >> $__fpath

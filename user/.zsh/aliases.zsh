@@ -239,3 +239,11 @@ function reset_brew_perms() {
 
   sudo chown -R "$(whoami)":staff "$(brew --prefix)/*"
 }
+
+# who is using secure keyboard entry?
+function who_is_using_secure_keyboard_entry() {
+  ioreg -l -w 0 \
+    | perl -nle 'print $1 if /"kCGSSessionSecureInputPID"=(\d+)/' \
+    | uniq \
+    | xargs -I{} ps -p {} -o comm=
+}

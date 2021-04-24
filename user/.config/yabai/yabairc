@@ -152,6 +152,8 @@ yabai -m rule --add app="Android File Transfer" space=^5
 
 # mail
 yabai -m rule --add app="Mail" space=^6
+yabai -m rule --add app="Flotato" title="^\s*Gmail\s*$" space=^6
+yabai -m rule --add app="Flotato" title="^\s*Asana\s*$" space=^6
 yabai -m rule --add app="Reminders" space=^6
 
 # chat
@@ -159,15 +161,17 @@ yabai -m rule --add app="Skype" space=^7
 yabai -m rule --add app="Slack" space=^7
 yabai -m rule --add app="Messages" space=7
 yabai -m rule --add app="Discord" space=7
-yabai -m rule --add app="WhatsApp" space=^7
+yabai -m rule --add app="Flotato" title="^\s*WhatsApp\s*$" space=^8
 yabai -m rule --add app="FaceTime" space=^7
 
 # office
+yabai -m rule --add app="Flotato" title="^\s*Notion\s*$" space=^8
 yabai -m rule --add app="Microsoft Word" space=^8
 yabai -m rule --add app="iMovie" space=^8
 yabai -m rule --add app="Keynote" space=^8
 yabai -m rule --add app="Pages" space=^8
 yabai -m rule --add app="Numbers" space=^8
+yabai -m rule --add app="Calendar" space=^8
 
 # settings
 yabai -m rule --add app="Home" space=^9
@@ -177,22 +181,23 @@ yabai -m rule --add app="Time Machine" space=^9
 yabai -m rule --add app="BetterTouchTool" space=^9
 yabai -m rule --add app="Activity Monitor" space=^9
 yabai -m rule --add app="Contacts" space=^9 manage=off border=off
-yabai -m rule --add app="Calendar" space=^9 manage=off border=off
 yabai -m rule --add app="App Store" space=^9
 
 # tools
 yabai -m rule --add app="Maps" space=^10
 yabai -m rule --add app="Upwork" space=^10
-yabai -m rule --add app="^1Password \d+$" space=^10
+yabai -m rule --add app="1Password 7" space=^10
 yabai -m rule --add app="Automator" space=^10
 yabai -m rule --add app="LastPass" space=^10
 yabai -m rule --add app="Sequel Pro" space=^10
 yabai -m rule --add app="Postman" space=^10
 yabai -m rule --add app="Sourcetree" space=^10
 yabai -m rule --add app="Simulator" space=^10
+yabai -m rule --add app="TablePlus" space=^10
 
 # yabai signals
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
+test -f ~/.yabairc.local && source ~/.yabairc.local
 echo "yabai configuration loaded.."

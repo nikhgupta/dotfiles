@@ -158,6 +158,7 @@
 :: toggle_display  @ : ~/.bin/macos/skhd_yabai.sh highlight_display
 :: launch_finder   @ : ~/.bin/macos/skhd_yabai.sh highlight_window
 :: launch_script   @ : ~/.bin/macos/skhd_yabai.sh highlight_space
+:: launch_restart  @ : ~/.bin/macos/skhd_yabai.sh highlight_space
 :: launch_app      @ : ~/.bin/macos/skhd_yabai.sh highlight_display
 
 # Caps Lock sends F19, which is used to activate shortcuts.
@@ -173,8 +174,8 @@ move_window, move_space, move_display < f19 ; default
 move_window, move_space, move_display < escape ; default
 toggle_window, toggle_space, toggle_display < f19 ; default
 toggle_window, toggle_space, toggle_display < escape ; default
-launch_app, launch_finder, launch_script < f19 ; default
-launch_app, launch_finder, launch_script < escape ; default
+launch_app, launch_finder, launch_script, launch_restart < f19 ; default
+launch_app, launch_finder, launch_script, launch_restart < escape ; default
 
 # Caps Lock and then KEY takes us to respective action mode.
 active < f ; focus             # green
@@ -205,6 +206,7 @@ resize < d ; default
 launch < a ; launch_app
 launch < f ; launch_finder
 launch < s ; launch_script
+launch < r ; launch_restart
 launch < w ; default
 launch < d ; default
 
@@ -503,11 +505,19 @@ launch, launch_app < c                     : skhd -k 'escape'; open -a 'Safari'
 launch, launch_app < m                     : skhd -k 'escape'; open -a 'Mail'
 launch, launch_app < a                     : skhd -k 'escape'; open -a 'Script Editor'
 
-# # launch quick commands/scripts - cant use: t return
+# restart some services
+# restart spacebar alone
+launch_restart < s         : skhd -k 'escape'; terminal-notifier -message 'restarting spacebar' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart spacebar
 # restart skhd alone
-launch_script < k         : skhd -k 'escape'; terminal-notifier -message 'restarting skhd' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd
+launch_restart < k         : skhd -k 'escape'; terminal-notifier -message 'restarting skhd' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd
 # restart yabai and skhd
-launch_script < r         : skhd -k 'escape'; terminal-notifier -message 'restarting skhd and yabai' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd; brew services restart yabai
+launch_restart < y         : skhd -k 'escape'; terminal-notifier -message 'restarting yabai' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart yabai
+# restart yabai and skhd
+launch_restart < r         : skhd -k 'escape'; terminal-notifier -message 'restarting skhd and yabai' -title 'skhd' -sender com.koekeishiya.skhd; brew services restart skhd; brew services restart yabai
+# fix brew permissions
+launch_restart < b         : skhd -k 'escape'; terminal-notifier -message 'fixing brew permissions' -title 'skhd' -sender com.koekeishiya.skhd; ~/.bin/fix_brew_permissions
+
+# # launch quick commands/scripts - cant use: t return
 # open visual studio code in current finder window
 launch_script < e         : skhd -k 'escape'; open -a "Visual Studio Code" "$(~/.bin/macos/current-finder.applescript)"
 # open visual studio code in current finder window
@@ -538,10 +548,28 @@ launch_finder < s : skhd -k 'escape'; open ~/Pictures/Screenshots
 launch_finder < w : skhd -k 'escape'; open ~/Code/work
 launch_finder < x : skhd -k 'escape'; open ~/Dropbox
 launch_finder < shift - a : skhd -k 'escape'; open /Applications
+
+# launch custom commands - to set define an appropriate script
+#
+# NOTE: This allows to copy this config for other users, while overriding
+#       scripts for the following hotkeys for custom behaviour.
+#
+# NOTE: You should make scripts executable for them to run.
+#
+launch_script < 1 : skhd -k 'escape'; ~/.runners/hotkey-1
+launch_script < 2 : skhd -k 'escape'; ~/.runners/hotkey-2
+launch_script < 3 : skhd -k 'escape'; ~/.runners/hotkey-3
+launch_script < 4 : skhd -k 'escape'; ~/.runners/hotkey-4
+launch_script < 5 : skhd -k 'escape'; ~/.runners/hotkey-5
+launch_script < 6 : skhd -k 'escape'; ~/.runners/hotkey-6
+launch_script < 7 : skhd -k 'escape'; ~/.runners/hotkey-7
+launch_script < 8 : skhd -k 'escape'; ~/.runners/hotkey-8
+launch_script < 9 : skhd -k 'escape'; ~/.runners/hotkey-9
+launch_script < 0 : skhd -k 'escape'; ~/.runners/hotkey-0
 # ################################################################ #
 
 # # GLOBAL COMMANDS
-fn - c : open -a 'Safari'
+fn - c : open -a 'Google Chrome'
 fn - e : open -a 'Visual Studio Code'
 fn - f : open ~/Downloads
 fn - t : ~/.bin/macos/new-terminal.applescript
@@ -564,6 +592,8 @@ fn + shift - h : yabai -m window --swap west
 fn + shift - j : yabai -m window --swap south
 fn + shift - k : yabai -m window --swap north
 fn + shift - l : yabai -m window --swap east
+fn - 0x2B : yabai -m space --rotate 90
+fn - 0x2F : yabai -m space --rotate 270
 
 # fast focus desktop
 fn - 1 : yabai -m space --focus 1
