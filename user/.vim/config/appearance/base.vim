@@ -31,7 +31,7 @@ let g:airline_theme='nord'
 " let base16colorspace=256
 " let g:airline_theme='nova'
 " hi! ColorColumn guibg=#556873 guifg=#F2C38F
-" hi! ErrorMsg guifg=#D18EC2 guibg=#3C4C55
+" hi! ErrorMsg guifg=#c89899 guibg=bg
 " let g:gruvbox_contrast_dark = "soft"
 " colorscheme gruvbox
 " set bg=dark

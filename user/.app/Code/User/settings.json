@@ -7,7 +7,8 @@
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "vim.useCtrlKeys": true,
-  "editor.tabSize": 2,
+  "editor.tabSize": 8,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "ruby.format": "rubocop",
   "ruby.codeCompletion": "rcodetools",
   "window.titleBarStyle": "native",
@@ -15,7 +16,7 @@
   "customizeUI.activityBar": "wide",
   "[ruby]": {
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "rebornix.ruby"
+    "editor.defaultFormatter": "misogi.ruby-rubocop"
   },
   "beautify.language": {
     "css": ["css", "scss"],
@@ -26,9 +27,13 @@
     }
   },
   "beautify.config": {
+    "html": {
+      "wrap_attributes": "force-expand-multiline",
+      "wrap_attributes_indent_size": 2
+    },
     "js": {
-      "unindent_chained_methods": false,
       "jslint_happy": true,
+      "unindent_chained_methods": false,
       "brace_style": "collapse,preserve-inline"
     }
   },
@@ -36,7 +41,6 @@
     "editor.tabSize": 2,
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "prettier.printWidth": 120,
   "vsicons.dontShowNewVersionMessage": true,
   "javascript.format.semicolons": "insert",
   "javascript.preferences.importModuleSpecifier": "relative",
@@ -44,21 +48,16 @@
   "javascript.preferences.quoteStyle": "double",
   "javascript.referencesCodeLens.showOnAllFunctions": true,
   "javascript.suggest.paths": true,
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "never",
   "window.zoomLevel": 0,
   "workbench.editor.enablePreview": false,
   "workbench.startupEditor": "newUntitledFile",
-  "[erb]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
-  },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  "workbench.colorTheme": "Nord",
   "files.associations": {
-    "skhdrc": "editorconfig"
+    "skhdrc": "editorconfig",
+    "*.html.erb": "erb",
+    "*.erb": "erb"
   },
   "[lua]": {
     "editor.defaultFormatter": "appguru.luafmt"
@@ -70,19 +69,55 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
-  "python.venvFolders": [
-    ".venv"
-  ],
+  "python.venvFolders": [".venv"],
   "python.venvPath": "~/.venv",
   "python.globalModuleInstallation": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.showStartPage": false,
-  "workbench.editorAssociations": [
-    {
-      "viewType": "jupyter.notebook.ipynb",
-      "filenamePattern": "*.ipynb"
-    }
-  ],
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+  },
   "customizeUI.moveStatusbar": true,
-  "solargraph.useBundler": true
+  "solargraph.useBundler": true,
+  "editor.formatOnSave": true,
+  "[gemfile]": {
+    "editor.defaultFormatter": "misogi.ruby-rubocop"
+  },
+  "tabnine.experimentalAutoImports": true,
+  "[html-eex]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.trimAutoWhitespace": false,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
+  },
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.includeLanguages": {
+    "html.erb": "html",
+    "erb": "html"
+  },
+  "[html]": {
+    "editor.suggest.insertMode": "replace",
+    "gitlens.codeLens.scopes": ["document"]
+  },
+  "[erb]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[svelte]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "[typescript]": {
+    "editor.tabSize": 4
+  },
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrap": "off",
+  "workbench.colorTheme": "Nord",
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "svelte.enable-ts-plugin": true,
+  "redhat.telemetry.enabled": false
 }

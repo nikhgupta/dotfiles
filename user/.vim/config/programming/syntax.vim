@@ -13,4 +13,5 @@ if g:is_gui || &t_Co > 2 | syntax on | endif
     au filetype ruby match ErrorMsg '\%>120v.\+'
     au filetype python match ErrorMsg '\%>80v.\+'
   augroup end
+  hi! ErrorMsg guifg=#c89899 guibg=bg
 " }}}

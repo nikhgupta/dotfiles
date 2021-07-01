@@ -14,7 +14,6 @@ spacebar -m config text_font            "Fira Code:Bold:12.0"
 spacebar -m config icon_font            "FiraCode Nerd Font:Regular:14.0"
 spacebar -m config background_color     0x88282a36
 spacebar -m config foreground_color     0x88eff0eb
-spacebar -m config space_icon_color     0xff5AF78E
 spacebar -m config power_icon_color     0xffF3F99D
 spacebar -m config battery_icon_color   0xffFF5C57
 spacebar -m config dnd_icon_color       0xff57C7FF
@@ -24,8 +23,10 @@ spacebar -m config space_icon_strip             﫯    �
 spacebar -m config clock_icon           
 spacebar -m config dnd_icon             
 spacebar -m config clock_format         "%d/%m/%y %R"
-spacebar -m config right_shell          on
-spacebar -m config right_shell_icon     
-spacebar -m config right_shell_command  "whoami"
+spacebar -m config right_shell          off
+# spacebar -m config right_shell_icon     x
+# spacebar -m config right_shell_command  "whoami"
+spacebar -m config space_icon_color     0xff5AF78E
+spacebar -m config space_icon_color_secondary 0xffE87FA5
 
 echo "spacebar configuration loaded.."

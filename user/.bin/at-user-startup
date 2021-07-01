@@ -19,7 +19,7 @@ on_failure() {
 sleep 5
 
 # remove the tempfile if exists
-[[ -f $__fpath ]] && sudo rm -f $__fpath && touch $__fpath
+[[ -f $__fpath ]] && sudo rm -f $__fpath; touch $__fpath
 
 # return if we have already ran this script
 [[ -f "$__fpath" ]] || return
@@ -34,6 +34,8 @@ if [[ "$(whoami)" == "root" ]]; then
   echo "Try executing the script as normal and then provide your password when asked for."
   exit 127
 fi
+
+sudo true || exit 1
 
 # make sure yabai has scripting additions installed
 yabai --check-sa || sudo yabai --install-sa
@@ -77,7 +79,7 @@ for proc in $__procs_to_restart; do [[ -n "$(pidof $proc)" ]] || on_failure "\"$
 echo "`date`: Secondary check for apps done." >> $__fpath
 timeout 2 skhd -k "fn - 1" || on_failure "could not switch to Desktop 1 with skhd"
 echo "`date`: Secondary check for skhd done." >> $__fpath
-timeout 2 spacebar -m config height || { brew service restart spacebar && sleep 2; }
+timeout 2 spacebar -m config height || { brew services restart spacebar && sleep 2; }
 echo "`date`: Secondary check for spacebar done." >> $__fpath
 timeout 2 spacebar -m config height on_failure "could not get height from spacebar"
 echo "`date`: Tertiary check for spacebar done." >> $__fpath

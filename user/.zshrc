@@ -83,6 +83,7 @@ HELPDIR=$BREW_PREFIX/share/zsh/help
 . $BREW_PREFIX/opt/asdf/asdf.sh
 # is_installed rbenv && init_cache rbenv "rbenv init -"
 # is_installed pyenv && init_cache pyenv "pyenv init -"
+[[ -f "~/.cargo/env" ]] && source "~/.cargo/env"
 
 # ssh setup using GnuPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)

@@ -18,3 +18,5 @@ nnoremap <leader>ft Vatzf
 " Specialize:  easily escape or unescape HTML
 Plug 'skwp/vim-html-escape'
 " plugin mappings: <leader>he => escape | <leader>hu => unescape
+
+Plug 'Chiel92/vim-autoformat'
