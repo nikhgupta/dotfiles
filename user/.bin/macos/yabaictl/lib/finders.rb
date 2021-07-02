@@ -41,10 +41,10 @@ module Yabai
     def find_monitor_setup
       found = nil
       @monitors_setup.each_value do |setup|
-        next if display_uuids.sort != setup.sort
+        next if display_uuids.sort != setup.values.sort
 
         found = setup
-        setup.each.with_index do |uuid, idx|
+        setup.values.each.with_index do |uuid, idx|
           display = find_display(uuid: uuid)
           display['location'] = idx
         end

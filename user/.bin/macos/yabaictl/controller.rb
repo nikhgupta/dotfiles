@@ -14,14 +14,6 @@ module Yabai
     include Yabai::Finders
     include Yabai::Commands
 
-    IGNORED_ERRORS = [
-      'acting space is already located on the given display.',
-      'cannot focus an already focused space.'
-    ].freeze
-    # # TODO: need to handle following errors:
-    # "acting space is the last user-space on the source display and cannot be destroyed."
-    # "acting space is the last user-space on the source display and cannot be moved."
-
     def initialize(monitors:, spaces_count: 10)
       @num_spaces = spaces_count
       @cache_path = "#{ENV['HOME']}/.cache/yabaictl"

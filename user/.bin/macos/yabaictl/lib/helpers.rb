@@ -1,5 +1,12 @@
 module Yabai
-	module Helpers
+  module Helpers
+    IGNORED_ERRORS = [
+      'acting space is already located on the given display.',
+      'cannot focus an already focused space.'
+    ].freeze
+    # # TODO: need to handle following errors:
+    # "acting space is the last user-space on the source display and cannot be destroyed."
+    # "acting space is the last user-space on the source display and cannot be moved."
 
     # internal: refresh internal state of windows, spaces and displays
     def refresh
@@ -41,5 +48,5 @@ module Yabai
 
       space != 's1' ? "s#{space}" : 's1'
     end
-	end
+  end
 end
