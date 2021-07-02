@@ -81,6 +81,9 @@ alias download="aria2c --file-allocation=none -s 16 -x 16"
 alias showspace='sudo ncdu / --exclude=/media/* --exclude=/mnt/* --exclude=/Volumes/*'
 alias benchmark="$HOME/.bin/benchmark_zsh.zsh"
 
+# yabai
+alias yabaictl=~/.bin/macos/yabaictl/yabaictl
+
 # READ THE FUCKING MANUAL!!
 rtfm() {
   help $@ 2 &>/dev/null ||

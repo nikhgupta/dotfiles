@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require_relative './controller'
+
+MONITOR_SETUPS = {
+  mac: %w[
+    5C2E8D42-8D34-1841-9F5B-DC325C6DB2E9
+  ],
+  work: %w[
+    5C2E8D42-8D34-1841-9F5B-DC325C6DB2E9
+    5F07D30E-33D6-66B5-B6EA-343FF18B7CB3
+  ]
+}
+
+yabaictl = Yabai::Controller.new(spaces_count: 10, monitors: MONITOR_SETUPS)
+
+command = ARGV.shift
+yabaictl.send(command, *ARGV) if yabaictl.respond_to?(command)
