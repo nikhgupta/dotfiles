@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+
+source ~/.zsh/aliases.zsh
+
+local _resolutions=$(displays Resolution)
+
+yabai --check-sa || sudo yabai --load-sa
+
+# if $(yabai -m query --displays | jq .[].frame.h | grep 1080); then
+if echo $_resolutions | grep "1080p FHD"; then
+  spacebar -m config space_icon_strip             﫯    
+  yabai -m space term     --display 1
+  yabai -m space code     --display 1
+  yabai -m space media    --display 1
+  yabai -m space files    --display 1
+  yabai -m space settings --display 1
+  yabai -m space web      --display 2
+  yabai -m space mail     --display 2
+  yabai -m space social   --display 2
+  yabai -m space office   --display 2
+  yabai -m space tools    --display 2
+else
+  spacebar -m config space_icon_strip           﫯      
+  yabai -m space term     --display 1
+  yabai -m space code     --display 1
+  yabai -m space media    --display 1
+  yabai -m space files    --display 1
+  yabai -m space settings --display 1
+  yabai -m space web      --display 1
+  yabai -m space mail     --display 1
+  yabai -m space social   --display 1
+  yabai -m space office   --display 1
+  yabai -m space tools    --display 1
+fi

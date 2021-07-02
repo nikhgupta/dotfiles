@@ -1,32 +1,43 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 
-spacebar -m config position             top
-spacebar -m config height               26
-spacebar -m config title                on
-spacebar -m config spaces               on
-spacebar -m config clock                on
-spacebar -m config power                on
-spacebar -m config padding_left         20
-spacebar -m config padding_right        20
-spacebar -m config spacing_left         25
-spacebar -m config spacing_right        15
-spacebar -m config text_font            "Fira Code:Bold:12.0"
-spacebar -m config icon_font            "FiraCode Nerd Font:Regular:14.0"
-spacebar -m config background_color     0x88282a36
-spacebar -m config foreground_color     0x88eff0eb
-spacebar -m config power_icon_color     0xffF3F99D
-spacebar -m config battery_icon_color   0xffFF5C57
-spacebar -m config dnd_icon_color       0xff57C7FF
-spacebar -m config clock_icon_color     0xff97979B
-spacebar -m config power_icon_strip       
-spacebar -m config space_icon_strip             﫯      
-spacebar -m config clock_icon           
-spacebar -m config dnd_icon             
-spacebar -m config clock_format         "%d/%m/%y %R"
-spacebar -m config right_shell          off
-# spacebar -m config right_shell_icon     x
-# spacebar -m config right_shell_command  "whoami"
-spacebar -m config space_icon_color     0xff5AF78E
-spacebar -m config space_icon_color_secondary 0xffE87FA5
+spacebar -m config position                         top
+spacebar -m config height                           26
+spacebar -m config title                            on
+spacebar -m config spaces                           on
+spacebar -m config dnd                              on
+spacebar -m config clock                            on
+spacebar -m config power                            on
+spacebar -m config padding_left                     20
+spacebar -m config padding_right                    20
+spacebar -m config spacing_left                     25
+spacebar -m config spacing_right                    15
+spacebar -m config text_font                        "Fira Code:Bold:12.0"
+spacebar -m config icon_font                        "FiraCode Nerd Font:Regular:14.0"
+spacebar -m config background_color                 0x88282a36
+spacebar -m config foreground_color                 0x88eff0eb
+spacebar -m config power_icon_color                 0xffF3F99D
+spacebar -m config battery_icon_color               0xffFF5C57
+spacebar -m config dnd_icon_color                   0xff57C7FF
+spacebar -m config clock_icon_color                 0xff97979B
+spacebar -m config power_icon_strip                   
+spacebar -m config clock_icon                       
+spacebar -m config dnd_icon                         
+spacebar -m config clock_format                     "%d/%m/%y %R"
 
+spacebar -m config display                          all
+spacebar -m config display_separator                on
+spacebar -m config display_separator_icon           
+spacebar -m config display_separator_icon_color     0xffffffff
+spacebar -m config spaces_for_all_displays          on
+spacebar -m config space_icon_color                 0xff5AF78E
+spacebar -m config space_icon_color_secondary       0xff5AF78E
+spacebar -m config space_icon_color_tertiary        0xff5AF78E
+spacebar -m config space_icon                       
+spacebar -m config space_icon_strip                         﫯      
+
+spacebar -m config right_shell                      off
+# spacebar -m config right_shell_icon                 x
+# spacebar -m config right_shell_command              "whoami"
+
+~/.bin/macos/skhd_yabai.sh highlight_default
 echo "spacebar configuration loaded.."

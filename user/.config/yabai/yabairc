@@ -199,5 +199,36 @@ yabai -m rule --add app="TablePlus" space=^10
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
+# move spaces when connected to external display
+function yabai_rearrange_spaces_on_displays() {
+  # external monitor connected (which has 1920x1080 resolution)
+  if $(yabai -m query --displays | jq .[].frame.h | grep 1080); then
+    yabai -m space 1  --display 2 # --label web
+    yabai -m space 2  --display 1 # --label term
+    yabai -m space 3  --display 1 # --label code
+    yabai -m space 4  --display 1 # --label media
+    yabai -m space 5  --display 1 # --label files
+    yabai -m space 6  --display 2 # --label mail
+    yabai -m space 7  --display 2 # --label social
+    yabai -m space 8  --display 2 # --label office
+    yabai -m space 9  --display 1 # --label settings
+    yabai -m space 10 --display 2 # --label tools
+  else                            #
+    yabai -m space 1  --display 1 # --label web
+    yabai -m space 2  --display 1 # --label term
+    yabai -m space 3  --display 1 # --label code
+    yabai -m space 4  --display 1 # --label media
+    yabai -m space 5  --display 1 # --label files
+    yabai -m space 6  --display 1 # --label mail
+    yabai -m space 7  --display 1 # --label social
+    yabai -m space 8  --display 1 # --label office
+    yabai -m space 9  --display 1 # --label settings
+    yabai -m space 10 --display 1 # --label tools
+  fi
+}
+# yabai -m signal --add event=system_woke action="~/.bin/monitors"
+# yabai -m signal --add event=display_added action="~/.bin/monitors"
+# yabai -m signal --add event=display_removed action="~/.bin/monitors"
+
 test -f ~/.yabairc.local && source ~/.yabairc.local
 echo "yabai configuration loaded.."

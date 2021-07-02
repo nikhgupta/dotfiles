@@ -247,3 +247,18 @@ function who_is_using_secure_keyboard_entry() {
     | uniq \
     | xargs -I{} ps -p {} -o comm=
 }
+
+function displays() {
+  if [[ -z "$1" ]]; then
+    system_profiler SPDisplaysDataType | ruby -e "
+      require 'yaml';
+      data=YAML.load(STDIN);
+      puts data['Graphics/Displays'].map{ _2['Displays'] }.compact.map(&:keys)
+    "
+  else
+    system_profiler SPDisplaysDataType | ruby -e "
+      require 'yaml';
+      data=YAML.load(STDIN);
+      puts data['Graphics/Displays'].map{ _2['Displays'] }.compact.map{ |a| a.map{_2['$1']}}"
+  fi
+}
