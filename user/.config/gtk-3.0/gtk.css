@@ -1,5 +1,3 @@
-@import url('/home/nikhgupta/.local/share/gnome-shell/extensions/no-title-bar@jonaspoehler.de/stylesheet.css');
-@import url('/home/nikhgupta/.local/share/gnome-shell/extensions/no-title-bar@jonaspoehler.de/stylesheet-tiled.css');
 
 VteTerminal, vte-terminal {
   padding: 20px;

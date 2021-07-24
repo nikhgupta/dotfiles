@@ -74,6 +74,6 @@ source ~/.zsh/completion.zsh
 [[ -f ~/.localrc ]] && source ~/.localrc
 
 # Java
-export JAVA_HOME=/usr/lib/jvm/java-14-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-16-openjdk
 
 # echo "\e[32mWelcome, Nick!\e[0m"

@@ -5,10 +5,19 @@
 PADDING=3
 PANEL_HEIGHT=27
 
-# === Setup BSPWM ================
-bspc monitor -d web term code music files mail chat settings automation 9
-# bspc monitor -d I II III IV V VI VII VIII IX X
+# === Setup Monitors =============
 
+export MONITOR0="eDP-1"
+export MONITOR1="HDMI-1-0"
+
+# create desktops without considering monitors for now
+bspc monitor -d web term code music files chat mail settings automation 0
+
+# update configuration for external monitors, and keyboards if connected
+~/.bin/on-display-change.sh
+~/.bin/on-keyboard-change.sh
+
+# === Setup BSPWM ================
 bspc desktop ^1 -l monocle
 bspc desktop ^2 -l tiled
 bspc desktop ^3 -l monocle
@@ -157,6 +166,8 @@ is_installed mpc && mpc stop
 
 # Kill all running applications before starting
 killall -9 sxhkd picom dunst mpd polybar redshift redshift-gtk
+killall -9 thunderbird pamac-tray nm-applet blueman-applet
+killall -9 xss-lock xautolock
 
 # kill our scratch term
 for wid in $(xdotool search --class "ScratchTerm"); do
@@ -190,7 +201,7 @@ blueman-applet &
 
 # useful daemons and processes
 mpd
-thunderbird &
+# thunderbird &
 # io.elementary.mail &
 
 # start libinput gestures for touchpad

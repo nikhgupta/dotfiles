@@ -13,7 +13,7 @@ mkdir -p /tmp/scripts
 [[ -z "$ONLY_FOR_DEFAULT_WALLPAPER" ]] && _change_wall=1
 [[ "$(cat ~/.wall)" == $DEFAULT_WALL ]] && _change_wall=1
 
-battery_level=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+battery_level=$(acpi -b | grep -P -o '[0-9]+(?=%)' | grep -vE '^0$')
 echo $battery_level >> /tmp/scripts/battery.status
 
 on_ac_power() {
