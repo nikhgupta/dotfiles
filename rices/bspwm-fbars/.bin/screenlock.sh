@@ -31,25 +31,25 @@ lock() {
     --pass-media-keys --pass-power-keys \
     --radius 110 \
     --color 666666 \
-    --insidecolor 00000000 \
-    --insidevercolor ffffff33 \
-    --insidewrongcolor aa333333 \
-    --separatorcolor ffffffff \
-    --linecolor ffffff99 \
-    --ringcolor ffffff33 \
-    --ringvercolor ffffff66 \
-    --ringwrongcolor aa333366 \
-    --bshlcolor ff8888cc \
-    --keyhlcolor ffffffcc \
-    --verifcolor ffffffff \
-    --wrongcolor ccccccff \
+    --inside-color 00000000 \
+    --insidever-color ffffff33 \
+    --insidewrong-color aa333333 \
+    --separator-color ffffffff \
+    --line-color ffffff99 \
+    --ring-color ffffff33 \
+    --ringver-color ffffff66 \
+    --ringwrong-color aa333366 \
+    --bshl-color ff8888cc \
+    --keyhl-color ffffffcc \
+    --verif-color ffffffff \
+    --wrong-color ccccccff \
     --verif-font $_font \
     --wrong-font $_font \
-    --veriftext "..." \
-    --wrongtext "" \
-    --noinputtext "" \
-    --locktext "" \
-    --lockfailedtext "" \
+    --verif-text "..." \
+    --wrong-text "" \
+    --noinput-text "" \
+    --lock-text "" \
+    --lockfailed-text "" \
     -i $_image
     rm -f $image
   }
