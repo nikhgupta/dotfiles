@@ -22,7 +22,7 @@ kill_matching_bin screencast.sh
 polybar -q top &
 polybar -q bottom &
 
-if [[ -n "$MONITOR1" ]]; then
+if xrandr -q | grep "$MONITOR1 connected"; then
   polybar -q top_external &
   polybar -q bottom_external &
 fi

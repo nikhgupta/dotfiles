@@ -3,16 +3,16 @@
 #
 
 # quit bspwm normally
-super + alt + Escape
+super + q; b
   ~/.bin/sessionquit.sh
 
-# # reload bspwm configuration
-# super + Escape
-#   ~/.config/bspwm/bspwmrc && \
-#   notify-send "bspwm config reloaded"
+# reload bspwm configuration
+super + r; b
+  ~/.config/bspwm/bspwmrc && \
+  notify-send "bspwm config reloaded"
 
 # make sxhkd reload its configuration files:
-super + Escape
+super + r; s
   pkill -USR1 -x sxhkd; \
   ~/.config/polybar/launch.sh; \
   notify-send "polybar and sxhkd config reloaded" -i reload
@@ -22,11 +22,11 @@ super + Escape
 #
 
 # close and kill
-super + {_,shift + }w
+super + q; {_,shift + }w
   bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
-super + m
+super + l
   bspc desktop -l next
 #   LAYOUT=$(bspc query -T -d | jq -r .layout); \
 #   if [[ "$LAYOUT" == "tiled" ]]; then; \
@@ -48,15 +48,15 @@ super + g
 #
 
 # set the window state
-super + {t,shift + t,s,f}
-  bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + s; {t,shift + t, f, shift+f}
+  bspc node -t {tiled,pseudo_tiled,fullscreen,floating}
 
 # set the node flags
-super + ctrl + {x,y,z}
+super + s; {l,s,p}
   bspc node -g {locked,sticky,private}
 
 # rotate tree in given direction
-super + shift + {b,n}
+super + m; {b,n}
     bspc node @/ -C {forward,backward}
 
 #
@@ -72,8 +72,8 @@ super + {_,shift + }{h,j,k,l}
 #   bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node
-super + {b, n}
-  bspc node -f {next,prev}
+super + {_,shift +}{b, n}
+  bspc node -{f,s} {next,prev}
 
 # focus the next/previous desktop
 super + bracket{left,right}
@@ -84,14 +84,23 @@ super + {grave,Tab}
   bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
+super + f; {o,i}
   bspc wm -h off; \
   bspc node {older,newer} -f; \
   bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-  bspc {desktop,node -d} '^{1-9,10}' -f
+super + {_,shift + } {1-9,0}
+  verb="{desktop, node -d}"; \
+  space="{1-9,0}"; \
+  [[ $(echo "$space <= 3" | bc) == "1" ]] && bspc $verb ^$space -f || \{ \
+  xrandr -q | grep "$MONITOR1 connected" || \{ [[ $space == "0" ]] && bspc $verb ^10 -f || bspc $verb ^$space -f; \} ; \
+  xrandr -q | grep "$MONITOR1 connected" && [[ $space == "0" ]] && bspc $verb ^4 -f; \
+  xrandr -q | grep "$MONITOR1 connected" && [[ $space != "0" ]] && bspc $verb ^$(echo "$space + 4" | bc) -f; \
+  \}
+
+super + {_, shift + } f; {1,2,3} ; {1-9,0}
+  bspc {desktop, node -d} "^{1,2,3}:^{1-9,10}" -f
 
 # focus the next/previous node in the same window
 super + {comma,period}
@@ -160,28 +169,31 @@ ctrl + shift + Return
   fi; \
   for pid in $pids; do bspc node $pid --flag hidden -f; done
 
-alt + w
+super + o; {w, c}
   google-chrome-stable
 
-alt + e
+super + o; {e, v}
   code
 
-alt + r
+super + o; {f, n}
   nautilus
 
 # alt + l
 #   named_terminal lyricist -e bash -c "less ~/Music/Lyrics/\"\$(mpc | grep -m1 \"\")\".txt"
 
 # music player
-alt + t
+super + o; m
   killall ncmpcpp; named_terminal ncmpcpp --title ncmpcpp -e ncmpcpp
 
 # quick editing of dotfiles
-alt + d
+super + o; d
   named_terminal fzfmenu -e zsh -c \
     "vim \$(fd -Hast f . -E .git -E .bin/__old \$DOTCASTLE | ~/.fzf/bin/fzf -1)"
 
 # GNOME System Monitor
+super + o; s
+  gnome-system-monitor
+
 alt + ctrl + Delete
   gnome-system-monitor
 

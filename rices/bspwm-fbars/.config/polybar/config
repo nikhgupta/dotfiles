@@ -37,7 +37,7 @@ background-highlighted = ${colors.darkgray}
 width = 100%
 height = 27
 fixed-center = true
-monitor=$MONITOR0
+monitor = ${env:MONITOR0:eDP-1}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -75,7 +75,7 @@ underline-color = ${colors.primary}
 width = 100%
 height = 27
 fixed-center = true
-monitor=$MONITOR1
+monitor = ${env:MONITOR1:HDMI-1-0}
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -258,8 +258,7 @@ ws-icon-4 = files;
 ws-icon-5 = mail;
 ws-icon-6 = chat;
 ws-icon-7 = settings;
-ws-icon-8 = automation;
-ws-icon-9 = 9;
+ws-icon-8 = misc;
 ws-icon-default = 
 
 label-monitor = %name%

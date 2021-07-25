@@ -8,6 +8,9 @@ export EDITOR=vim
 export GPG_TTY=$(tty)
 export ZSH_CACHE_DIR=~/.zcache
 
+export MONITOR0="eDP-1"
+export MONITOR1="HDMI-1-0"
+
 # terminal related variables
 export TERMINAL=kitty
 export TERMINAL_CLASS=kitty

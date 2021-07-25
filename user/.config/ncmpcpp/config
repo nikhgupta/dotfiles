@@ -49,7 +49,7 @@ mpd_music_dir = ~/Music
 ## }
 ##
 #
-visualizer_fifo_path = /tmp/mpd.fifo
+visualizer_data_source = /tmp/mpd.fifo
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp to determine which output
@@ -72,6 +72,7 @@ visualizer_in_stereo = yes
 ##
 #
 visualizer_sync_interval = 30
+# buffer_time = 30000000
 #
 ##
 ## Note: To enable spectrum frequency visualization you need to compile ncmpcpp
@@ -582,7 +583,7 @@ lines_scrolled = 1
 follow_now_playing_lyrics = yes
 fetch_lyrics_for_current_song_in_background = yes
 store_lyrics_in_song_dir = no
-lyrics_fetchers = lyricwiki, azlyrics, genius, sing365, lyricsmania, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet
+# lyrics_fetchers = azlyrics, genius, sing365, lyricsmania, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet
 
 screen_switcher_mode = previous
 

@@ -7,24 +7,24 @@ PANEL_HEIGHT=27
 
 # === Setup Monitors =============
 
-export MONITOR0="eDP-1"
-export MONITOR1="HDMI-1-0"
-
 # create desktops without considering monitors for now
-bspc monitor -d web term code music files chat mail settings automation 0
+bspc monitor -d web term code music files mail chat settings misc 0
 
 # update configuration for external monitors, and keyboards if connected
 ~/.bin/on-display-change.sh
 ~/.bin/on-keyboard-change.sh
 
+_inc=0
+[[ -n "$MONITOR1" ]] && _inc=4
+
 # === Setup BSPWM ================
 bspc desktop ^1 -l monocle
 bspc desktop ^2 -l tiled
 bspc desktop ^3 -l monocle
-bspc desktop ^4 -l tiled
-bspc desktop ^5 -l monocle
-bspc desktop ^6 -l monocle
-bspc desktop ^7 -l tiled
+bspc desktop ^$(echo "4+$_inc"|bc) -l tiled
+bspc desktop ^$(echo "5+$_inc"|bc) -l monocle
+bspc desktop ^$(echo "6+$_inc"|bc) -l monocle
+bspc desktop ^$(echo "7+$_inc"|bc) -l tiled
 
 bspc config single_monocle true
 bspc config gapless_monocle true
@@ -108,66 +108,65 @@ bspc rule -a Gedit desktop=^3 state=floating
 bspc rule -a io.elementary.code desktop=^3 state=floating
 
 # desktop 4 - music/videos
-bspc rule -a mpv desktop=^4 follow=on state=floating center=on focus=on
-bspc rule -a vlc desktop=^4 follow=on state=floating center=on focus=on
-bspc rule -a Spotify desktop=^4
-bspc rule -a Spacefm desktop=^4 follow=on
-bspc rule -a $TERMINAL_CLASS:ncmpcpp desktop=^4 follow=on
-bspc rule -a mplayer2 desktop=^4 state=floating
-bspc rule -a $TERMINAL_CLASS:lyricist desktop=^4 follow=on
-bspc rule -a io.elementary.music desktop=^4 follow=on
-bspc rule -a io.elementary.videos desktop=^4 follow=on
-bspc rule -a io.elementary.photos desktop=^4 follow=on
-bspc rule -a io.elementary.camera desktop=^4 follow=on
+bspc rule -a mpv desktop=^$(echo "4+$_inc"|bc) follow=on state=floating center=on focus=on
+bspc rule -a vlc desktop=^$(echo "4+$_inc"|bc) follow=on state=floating center=on focus=on
+bspc rule -a Spotify desktop=^$(echo "4+$_inc"|bc)
+bspc rule -a Spacefm desktop=^$(echo "4+$_inc"|bc) follow=on
+bspc rule -a $TERMINAL_CLASS:ncmpcpp desktop=^$(echo "4+$_inc"|bc) follow=on
+bspc rule -a mplayer2 desktop=^$(echo "4+$_inc"|bc) state=floating
+bspc rule -a $TERMINAL_CLASS:lyricist desktop=^$(echo "4+$_inc"|bc) follow=on
+bspc rule -a io.elementary.music desktop=^$(echo "4+$_inc"|bc) follow=on
+bspc rule -a io.elementary.videos desktop=^$(echo "4+$_inc"|bc) follow=on
+bspc rule -a io.elementary.photos desktop=^$(echo "4+$_inc"|bc) follow=on
+bspc rule -a io.elementary.camera desktop=^$(echo "4+$_inc"|bc) follow=on
 
 # desktop 5 - files, torrents, etc.
-bspc rule -a $TERMINAL_CLASS:ranger desktop=^5 follow=on focus=on
-bspc rule -a Org.gnome.Nautilus desktop=^5 follow=on focus=on
-bspc rule -a TagSpaces desktop=^5 follow=on focus=on
-bspc rule -a Thunar desktop=^5 follow=on focus=on
-bspc rule -a Deluge desktop=^5 follow=on
-bspc rule -a Transmission-gtk desktop=^5 follow=on
-bspc rule -a qBittorrent desktop=^5 follow=on
-bspc rule -a Zathura desktop=^5 follow=on state=tiled
-bspc rule -a Gimp desktop=^5 state=floating follow=on
-bspc rule -a Darktable desktop=^5 state=floating follow=on
-bspc rule -a Caja desktop=^5 follow=on
-bspc rule -a File-roller desktop=^5 state=floating center=on
-bspc rule -a nitrogen desktop=^5 state=floating focus=on
-bspc rule -a dde-file-manager desktop=^5 follow=on focus=on
-bspc rule -a Io.elementary.files desktop=^5 follow=on focus=on
+bspc rule -a $TERMINAL_CLASS:ranger desktop=^$(echo "5+$_inc"|bc) follow=on focus=on
+bspc rule -a Org.gnome.Nautilus desktop=^$(echo "5+$_inc"|bc) follow=on focus=on
+bspc rule -a TagSpaces desktop=^$(echo "5+$_inc"|bc) follow=on focus=on
+bspc rule -a Thunar desktop=^$(echo "5+$_inc"|bc) follow=on focus=on
+bspc rule -a Deluge desktop=^$(echo "5+$_inc"|bc) follow=on
+bspc rule -a Transmission-gtk desktop=^$(echo "5+$_inc"|bc) follow=on
+bspc rule -a qBittorrent desktop=^$(echo "5+$_inc"|bc) follow=on
+bspc rule -a Zathura desktop=^$(echo "5+$_inc"|bc) follow=on state=tiled
+bspc rule -a Gimp desktop=^$(echo "5+$_inc"|bc) state=floating follow=on
+bspc rule -a Darktable desktop=^$(echo "5+$_inc"|bc) state=floating follow=on
+bspc rule -a Caja desktop=^$(echo "5+$_inc"|bc) follow=on
+bspc rule -a File-roller desktop=^$(echo "5+$_inc"|bc) state=floating center=on
+bspc rule -a nitrogen desktop=^$(echo "5+$_inc"|bc) state=floating focus=on
+bspc rule -a dde-file-manager desktop=^$(echo "5+$_inc"|bc) follow=on focus=on
+bspc rule -a Io.elementary.files desktop=^$(echo "5+$_inc"|bc) follow=on focus=on
 
 # desktop 6 - mail and messages
-bspc rule -a Mailspring desktop=^6 follow=on focus=on
-bspc rule -a Thunderbird desktop=^6 follow=on focus=on
-bspc rule -a Io.elementary.mail desktop=^6 follow=on focus=on
+bspc rule -a Mailspring desktop=^$(echo "6+$_inc"|bc) follow=on focus=on
+bspc rule -a Thunderbird desktop=^$(echo "6+$_inc"|bc) follow=on focus=on
+bspc rule -a Io.elementary.mail desktop=^$(echo "6+$_inc"|bc) follow=on focus=on
 
 # desktop 7 - chats
-bspc rule -a weechat desktop=^7 follow=on
-bspc rule -a Slack desktop=^7 follow=on
-bspc rule -a Skype desktop=^7 follow=on
-bspc rule -a TelegramDesktop desktop=^7 follow=on
+bspc rule -a weechat desktop=^$(echo "7+$_inc"|bc) follow=on
+bspc rule -a Slack desktop=^$(echo "7+$_inc"|bc) follow=on
+bspc rule -a Skype desktop=^$(echo "7+$_inc"|bc) follow=on
+bspc rule -a TelegramDesktop desktop=^$(echo "7+$_inc"|bc) follow=on
 
 # desktop 8 - tools, utils
-bspc rule -a GParted desktop=^8 follow=on focus=on
-bspc rule -a Upwork desktop=^8 state=floating center=on follow=on focus=on
-bspc rule -a Gnome-system-monitor desktop=^8 state=floating center=on follow=on focus=on
-bspc rule -a deepin-system-monitor desktop=^8 state=floating center=on follow=on focus=on
-bspc rule -a io.elementary.switchboard desktop=^8 state=floating center=on follow=on focus=on
+bspc rule -a GParted desktop=^$(echo "8+$_inc"|bc) follow=on focus=on
+bspc rule -a Upwork desktop=^$(echo "8+$_inc"|bc) state=floating center=on follow=on focus=on
+bspc rule -a Gnome-system-monitor desktop=^$(echo "8+$_inc"|bc) state=floating center=on follow=on focus=on
+bspc rule -a deepin-system-monitor desktop=^$(echo "8+$_inc"|bc) state=floating center=on follow=on focus=on
+bspc rule -a io.elementary.switchboard desktop=^$(echo "8+$_inc"|bc) state=floating center=on follow=on focus=on
 
 # desktop 9 - miscelleneous
-bspc rule -a Steam desktop=^9 follow=on
-bspc rule -a "Hydrus Client" desktop=^9 follow=on
+bspc rule -a Steam desktop=^$(echo "9+$_inc"|bc) follow=on
+bspc rule -a "Hydrus Client" desktop=^$(echo "9+$_inc"|bc) follow=on
 
 # === Kill running process ========
+[[ -n "$BSPWM_INITIALIZED" ]] && exit
 
 # stop music if currently being played
 is_installed mpc && mpc stop
 
 # Kill all running applications before starting
-killall -9 sxhkd picom dunst mpd polybar redshift redshift-gtk
-killall -9 thunderbird pamac-tray nm-applet blueman-applet
-killall -9 xss-lock xautolock
+killall -9 sxhkd picom dunst mpd polybar redshift redshift-gtk thunderbird
 
 # kill our scratch term
 for wid in $(xdotool search --class "ScratchTerm"); do
@@ -222,3 +221,4 @@ xautolock -locker ~/.bin/screenlock.sh -time 5 -detectsleep -corners '00+-' &
 
 # Prevent menus disappearing
 export _JAVA_AWT_WM_NONREPARENTING=1
+export BSPWM_INITIALIZED=1
