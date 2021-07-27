@@ -51,7 +51,7 @@ elif [ "$1" == "window" ]; then
   $app $params ${archive}
   msg=$archive
 elif [ "$1" == "sel" ]; then
-  params="$params -s"
+  params="$params -slc 1,1,1,0.2"
   archive="${name}-area${extension}"
   $app -d 2 $params ${archive}
   msg=$archive

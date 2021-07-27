@@ -156,6 +156,7 @@ bspc rule -a deepin-system-monitor desktop=^$(echo "8+$_inc"|bc) state=floating 
 bspc rule -a io.elementary.switchboard desktop=^$(echo "8+$_inc"|bc) state=floating center=on follow=on focus=on
 
 # desktop 9 - miscelleneous
+bspc rule -a Zoom desktop=^$(echo "9+$_inc"|bc) follow=on
 bspc rule -a Steam desktop=^$(echo "9+$_inc"|bc) follow=on
 bspc rule -a "Hydrus Client" desktop=^$(echo "9+$_inc"|bc) follow=on
 

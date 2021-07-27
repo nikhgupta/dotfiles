@@ -14,5 +14,6 @@ else
   export MONITOR=$MONITOR0
 
   xrandr --output $MONITOR0 --primary --mode 1920x1080
+  xrandr --output $MONITOR1 --off
   bspc monitor -d web term code music files mail chat settings misc 0
 fi

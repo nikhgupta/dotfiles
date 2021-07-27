@@ -10,6 +10,8 @@ export ZSH_CACHE_DIR=~/.zcache
 
 export MONITOR0="eDP-1"
 export MONITOR1="HDMI-1-0"
+export MAX_RES_WIDTH=2560
+export MAX_RES_HEIGHT=1440
 
 # terminal related variables
 export TERMINAL=kitty

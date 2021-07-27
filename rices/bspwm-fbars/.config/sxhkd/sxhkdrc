@@ -89,14 +89,21 @@ super + f; {o,i}
   bspc node {older,newer} -f; \
   bspc wm -h on
 
-# focus or send to the given desktop
-super + {_,shift + } {1-9,0}
-  verb="{desktop, node -d}"; \
+# focus to the given desktop
+super + {1-9,0}
   space="{1-9,0}"; \
-  [[ $(echo "$space <= 3" | bc) == "1" ]] && bspc $verb ^$space -f || \{ \
-  xrandr -q | grep "$MONITOR1 connected" || \{ [[ $space == "0" ]] && bspc $verb ^10 -f || bspc $verb ^$space -f; \} ; \
-  xrandr -q | grep "$MONITOR1 connected" && [[ $space == "0" ]] && bspc $verb ^4 -f; \
-  xrandr -q | grep "$MONITOR1 connected" && [[ $space != "0" ]] && bspc $verb ^$(echo "$space + 4" | bc) -f; \
+  [[ $(echo "$space <= 3" | bc) == "1" ]] && bspc desktop ^$space -f || \{ \
+  xrandr -q | grep "$MONITOR1 connected" || \{ [[ $space == "0" ]] && bspc desktop ^10 -f || bspc desktop ^$space -f; \} ; \
+  xrandr -q | grep "$MONITOR1 connected" && [[ $space == "0" ]] && bspc desktop ^4 -f; \
+  xrandr -q | grep "$MONITOR1 connected" && [[ $space != "0" ]] && bspc desktop ^$(echo "$space + 4" | bc) -f; \
+  \}
+# send to the given desktop
+super + shift + {1-9,0}
+  space="{1-9,0}"; \
+  [[ $(echo "$space <= 3" | bc) == "1" ]] && bspc node -d ^$space -f || \{ \
+  xrandr -q | grep "$MONITOR1 connected" || \{ [[ $space == "0" ]] && bspc node -d ^10 -f || bspc node -d ^$space -f; \} ; \
+  xrandr -q | grep "$MONITOR1 connected" && [[ $space == "0" ]] && bspc node -d ^4 -f; \
+  xrandr -q | grep "$MONITOR1 connected" && [[ $space != "0" ]] && bspc node -d ^$(echo "$space + 4" | bc) -f; \
   \}
 
 super + {_, shift + } f; {1,2,3} ; {1-9,0}
@@ -224,7 +231,7 @@ ctrl + shift + alt + l
 
 # Screenshots
 @Print
-  ~/.bin/screenshot.sh
+  ~/.bin/screenshot.sh sel
 
 alt + @Print
   ~/.bin/screenshot.sh sel
