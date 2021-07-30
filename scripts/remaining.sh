@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_root=$(dirname $(dirname $(realpath $0)))
+root=$(dirname $(dirname $0))
 source $_root/user/.zsh/utils.sh
 
 action "Enable ntfs-3g support by overriding CSF and replace mount_ntfs script"

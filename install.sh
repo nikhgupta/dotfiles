@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-_root=$(dirname $(realpath $0))
+_root=$(dirname $0)
 _scripts=$_root/scripts
 source $_root/user/.zsh/utils.sh
 is_macosx || error "v5 of these dotfiles target Mac OSX. Please, use earlier versions on this system."
 
-bash $_scripts/brew.sh
-bash $_scripts/symlinks.sh
+# bash $_scripts/brew.sh
+# bash $_scripts/symlinks.sh
 bash $_scripts/secrets.sh
-bash $_scripts/asdf.sh
-bash $_scripts/macos.sh
+# bash $_scripts/asdf.sh
+# bash $_scripts/macos.sh
 
 highlight "Installing VIM plugins"
 vim +PlugInstall +qall

@@ -12,7 +12,7 @@ spacebar -m config padding_right                    20
 spacebar -m config spacing_left                     25
 spacebar -m config spacing_right                    15
 spacebar -m config text_font                        "Fira Code:Bold:12.0"
-spacebar -m config icon_font                        "FiraCode Nerd Font:Regular:14.0"
+spacebar -m config icon_font                        "FiraCode Regular Nerd Font Complete:Regular:14.0"
 spacebar -m config background_color                 0x88282a36
 spacebar -m config foreground_color                 0x88eff0eb
 spacebar -m config power_icon_color                 0xffF3F99D

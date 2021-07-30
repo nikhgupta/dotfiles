@@ -22,7 +22,7 @@ unset KERL_CONFIGURE_OPTIONS
 
 highlight "Installing ruby"
 asdf plugin add ruby
-asdfin ruby 2.7.2
+asdfin ruby 2.7.2 2.4.6 2.4.10
 gem install neovim maid
 asdf reshim ruby
 

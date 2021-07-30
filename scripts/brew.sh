@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_root=$(realpath $(dirname $(dirname $0)))
+_root=$(dirname $(dirname $0))
 source $_root/user/.zsh/utils.sh
 
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -22,7 +22,7 @@ brew install ffmpeg
 brew install findutils
 brew install fzf
 brew install git
-brew install git-lfs
+brew install svn
 brew install gnu-sed
 brew install gnu-tar
 brew install gnupg
@@ -32,13 +32,13 @@ brew install ispell
 brew install jq
 brew install koekeishiya/formulae/skhd
 brew install koekeishiya/formulae/yabai
-brew install libtool
+# brew install libtool
 brew install lunchy
-brew install media-info
-brew install moreutils
+# brew install media-info
+# brew install moreutils
 brew install mpc
 brew install mpd
-brew install mysql
+# brew install mysql
 brew install ncdu
 brew install ncmpcpp
 brew install ntfs-3g
@@ -55,8 +55,8 @@ brew install rename
 brew install ripgrep
 brew install rsync
 brew install sqlite
-brew install sshfs
-brew install svn
+# brew install sshfs
+# brew install svn
 brew install terminal-notifier
 brew install tmux
 brew install tmuxinator
@@ -71,39 +71,38 @@ brew install zsh
 brew tap heroku/brew && brew install heroku
 
 highlight "Installing apps/casks using brew"
-brew tap homebrew/cask
-brew tap homebrew/cask-fonts
-brew cask install alacritty
-brew cask install alfred
-brew cask install atom
-brew cask install dropbox
-brew cask install google-chrome
-brew cask install iterm2
-brew cask install kitty
-brew cask install nvalt
-brew cask install osxfuse
-brew cask install skype
-brew cask install slack
-brew cask install ubersicht
-brew cask install upwork
-brew cask install vlc
-brew cask install whatsapp
-brew cask install qlimagesize qlmarkdown qlvideo quicklook-csv quicklook-json
+# brew install alacritty
+brew install alfred
+# brew install atom
+# brew install dropbox
+brew install google-chrome
+# brew install iterm2
+brew install kitty
+brew install nvalt
+# brew install osxfuse
+brew install skype
+brew install slack
+# brew install ubersicht
+brew install upwork
+brew install vlc
+brew install whatsapp
+brew install qlimagesize qlmarkdown qlvideo quicklook-csv quicklook-json
 
 highlight "Enable brew managed services"
 brew tap homebrew/services
-brew services restart mysql
+# brew services restart mysql
 brew services restart postgresql
 brew services restart redis
 
 highlight "Install some fonts"
-brew cask install font-fira-code
-brew cask install font-fira-code-nerd-font
-brew cask install font-droid-sans-mono-for-powerline
-brew cask install font-fira-mono-for-powerline
-brew cask install font-noto-mono-for-powerline
-brew cask install font-powerline-symbols
-brew cask install font-source-code-pro-for-powerline
+brew tap homebrew/cask-fonts
+brew install font-fira-code
+brew install font-fira-code-nerd-eont
+brew install font-droid-sans-mono-for-powerline
+brew install font-fira-mono-for-powerline
+brew install font-noto-mono-for-powerline
+brew install font-powerline-symbols
+brew install font-source-code-pro-for-powerline
 
 # cleanup
 brew cleanup
