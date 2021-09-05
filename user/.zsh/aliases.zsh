@@ -265,3 +265,12 @@ function displays() {
       puts data['Graphics/Displays'].map{ _2['Displays'] }.compact.map{ |a| a.map{_2['$1']}}"
   fi
 }
+
+tmuxkill() {
+  tmux list-panes -s -F "#{pane_pid} #{pane_current_command}" | grep -v tmux | awk '{print $1}' | xargs kill
+}
+
+killport() {
+  for port in "$@"; do; sudo lsof -i tcp:$port | awk 'NR!=1 {print $2}' | xargs kill; done
+  sudo lsof -i tcp:$port
+}

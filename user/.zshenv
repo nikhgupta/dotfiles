@@ -4,7 +4,7 @@ source ~/.zsh/utils.sh
 
 # dont wait for long timeouts when switching vi modes
 export KEYTIMEOUT=1
-setenv EDITOR nvim
+setenv EDITOR vim
 export GPG_TTY=$(tty)
 setenv ZSH_CACHE_DIR $HOME/.zcache
 
