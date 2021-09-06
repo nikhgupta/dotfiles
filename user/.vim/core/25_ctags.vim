@@ -6,6 +6,6 @@ Plug 'ludovicchabant/vim-gutentags'
 " let g:gutentags_cache_dir = '/tmp/vim/tags_cache'
 let g:gutentags_ctags_extra_args = ['--fields=+ainKz']
 " let g:gutentags_ctags_executable_ruby = 'ripper-tags'
-" let g:gutentags_trace = 1
+let g:gutentags_trace = 1
 
 nnoremap <C-]> g<C-]>

@@ -1,0 +1,54 @@
+# Configuration inside `~/.ctags` is used by `ctags` command, and
+# defines the regexes for matching tag names.
+
+# Basic options
+--recurse=yes
+--tag-relative=yes
+
+--exclude=.git
+--exclude=*.min.*
+--exclude=*.spec.*
+--exclude=*.test.*
+--exclude=*.stories.*
+--exclude=*.tar.*
+--exclude=.*bundle.*
+--exclude=.Master
+--exclude=.bak
+--exclude=.cache
+--exclude=.class
+--exclude=.csproj
+--exclude=.csproj.user
+--exclude=.dll
+--exclude=.map
+--exclude=.pdb
+--exclude=.pyc
+--exclude=.sln
+--exclude=.swp
+--exclude=.tmp
+--exclude=bower_components
+--exclude=coverage
+--exclude=cscope.*
+--exclude=dist
+--exclude=min
+--exclude=node_modules
+--exclude=tags
+--exclude=test
+--exclude=tests
+
+# PHP
+--langmap=php:.engine.inc.module.theme.install.php --PHP-kinds=+cf-v--langdef=Elixir
+
+--langdef=less
+--langmap=less:.less
+--regex-less=/^[ \t&]*#([A-Za-z0-9_-]+)/\1/i,id,ids/
+--regex-less=/^[ \t&]*\.([A-Za-z0-9_-]+)/\1/c,class,classes/
+--regex-less=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-less=/^[ \t]*@media\s+([A-Za-z0-9_-]+)/\1/m,media,medias/
+--regex-less=/^[ \t]*(@[A-Za-z0-9_-]+):/\1/v,variable,variables/
+--regex-less=/\/\/[ \t]*(FIXME|TODO)[ \t]*\:*(.*)/\1/T,Tag,Tags/
+
+--langmap=vim:+(vimrc).vim
+
+--langdef=dockerfile
+--langmap=dockerfile:+(Dockerfile)
+--regex-dockerfile=/^(FROM|MAINTAINER|RUN|CMD|LABEL|EXPOSE|ENV|ADD|COPY|ENTRYPOINT|VOLUME|USER|WORKDIR|ARG|ONBUILD|STOPSIGNAL|HEALTHCHECK|SHELL)/\1/d,dockerfile,dockerfiles/
