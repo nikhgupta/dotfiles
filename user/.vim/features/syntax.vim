@@ -1,4 +1,4 @@
-Plug 'vim-scripts/SyntaxRange'
+" Plug 'vim-scripts/SyntaxRange'
 
 " don't try to highlight lines longer than 800 characters
 set synmaxcol=200
@@ -19,4 +19,3 @@ augroup exceeded_text_width
   au filetype python match ErrorMsg '\%>80v.\+'
 augroup end
 hi! ErrorMsg guifg=#c89899 guibg=bg
-

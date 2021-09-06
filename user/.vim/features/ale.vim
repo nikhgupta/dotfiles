@@ -12,3 +12,5 @@ let g:ale_fixers = {
 
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all'
 
+let g:which_key_map.d.s = 'ALE Symbols'
+nnoremap <leader>ds :ALESymbolSearch<space>

@@ -1,16 +1,17 @@
 # source fzf keybindings
-export FZF_DEFAULT_COMMAND="fd --hidden --follow"
+export BAT_THEME=Nord
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+export FZF_PREVIEW_COMMAND="$HOME/.bin/fzf-preview.zsh {}"
 export FZF_DEFAULT_OPTS="
 --sort 100000
 --ansi
 --layout=reverse
 --info=inline
---height=80%
+--height=60%
 --multi
 --preview-window='right:60%'
---preview '([[ -f {} ]] && (bat --theme=Nord --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
 --color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
 --prompt='$ ' --pointer='▶' --marker='✓'
 --bind 'ctrl-\\:toggle-preview'
@@ -20,20 +21,23 @@ export FZF_DEFAULT_OPTS="
 --bind 'ctrl-x:execute(code {+})'
 "
 
-_fzf_compgen_path() { fd . "$1"; }
-_fzf_compgen_dir() { fd --type d . "$1"; }
+# fzf with previews
+alias fzfpr="fzf --preview='$FZF_PREVIEW_COMMAND'"
 
 # search for a needle in all files
 alias rgf='rg -Sl --color=never --no-messages --hidden --smart-case -g "!{.git,node_modules,vendor}/*"'
 
+_fzf_compgen_path() { fd . "$1"; }
+_fzf_compgen_dir() { fd --type d . "$1"; }
+
 vf() { vim $(fzf); }
-mvf() { mvim $(fzf); }
+gvf() { vimr $(fzf); }
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
 fe() {
-  IFS=$'\n' _files=($(rgf --files | fzf --query "$1" --multi --select-1 --exit-0))
+  IFS=$'\n' _files=($(rgf --files | fzfpr --query "$1" --multi --select-1 --exit-0))
   [[ -n "$_files" ]] && ${EDITOR:-vim} "${_files[@]}"
 }
 
@@ -54,7 +58,7 @@ kp() {
 git-search() {
   git log --graph --color=always \
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+    fzfpr --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
       --bind "ctrl-m:execute:
                 (grep -o '[a-f0-9]\{7\}' | head -1 |
                 xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'

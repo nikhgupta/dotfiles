@@ -5,33 +5,37 @@ Plug 'junegunn/fzf.vim'
 let g:which_key_map['<C-p>'] = 'Find File'
 let g:which_key_map['<C-b>'] = 'Find Buffer'
 let g:which_key_map['<C-o>'] = 'Find Buffer'
-nnoremap <silent> <C-p> :Files <C-r>=FindRootDirectory()<cr><cr>
+nnoremap <silent> <C-p> :ModdedFiles <C-r>=FindRootDirectory()<cr><cr>
 nnoremap <silent> <C-b> :Buffers<cr>
 nnoremap <silent> <C-o> :Buffers<cr>
 
 let g:which_key_map.d.b = 'Buffers'
 let g:which_key_map.d.f = 'Files'
-let g:which_key_map.d.t = 'Tags with current word'
-let g:which_key_map.d.u = 'Find Tag'
-let g:which_key_map.d.T = 'All Tags'
 let g:which_key_map.d.l = 'Lines'
+let g:which_key_map.d.m = 'Marks'
+let g:which_key_map.d.t = 'Tags with current word'
+let g:which_key_map.d.T = 'All Tags'
+let g:which_key_map.d.u = 'Find Tag'
+let g:which_key_map.d.x = 'Colorschemes'
 let g:which_key_map.d.y = 'FileTypes'
-let g:which_key_map.d.c = 'Colorschemes'
-let g:which_key_map.d.g.s = 'GitFileStatus'
-let g:which_key_map.d.g.f = 'GitFiles'
-let g:which_key_map.d.g.c = 'Commits'
+let g:which_key_map.d.z = 'Snippets'
 let g:which_key_map.d.g.b = 'BufferCommits'
+let g:which_key_map.d.g.c = 'Commits'
+let g:which_key_map.d.g.f = 'GitFiles'
+let g:which_key_map.d.g.s = 'GitFileStatus'
 let g:which_key_map.d.h.h = 'History'
 let g:which_key_map.d.h[':'] = 'CommandHistory'
 let g:which_key_map.d.h["/"] = 'SearchHistory'
 nnoremap <silent> <leader>db :Buffers<cr>
-nnoremap <silent> <leader>df :Files <C-r>=FindRootDirectory()<cr><cr>
-nnoremap <silent> <leader>dT :Tags<cr>
-nnoremap <silent> <leader>dt :FZFTags<cr>
-nnoremap <silent> <leader>du :FZFTselect<space>
+nnoremap <silent> <leader>df :ModdedFiles <C-r>=FindRootDirectory()<cr><cr>
 nnoremap <silent> <leader>dl :Lines<cr>
+nnoremap <silent> <leader>dm :Marks<cr>
+nnoremap <silent> <leader>dz :Snippets<cr>
+nnoremap <silent> <leader>dt :FZFTags<cr>
+nnoremap <silent> <leader>dT :Tags<cr>
+nnoremap          <leader>du :FZFTselect<space>
+nnoremap <silent> <leader>dx :Colors<cr>
 nnoremap <silent> <leader>dy :Filetypes<cr>
-nnoremap <silent> <leader>dc :Colors<cr>
 nnoremap <silent> <leader>dhh :History<cr>
 nnoremap <silent> <leader>dh: :CmdHist<cr>
 nnoremap <silent> <leader>dh/ :SearchHist<CR>
@@ -66,9 +70,13 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <expr> <c-x><c-g> fzf#vim#complete#path('git ls-files $(git rev-parse --show-toplevel)')
 
+" better files command with previews
+command! -bang -nargs=? -complete=dir ModdedFiles call fzf#vim#files(<q-args>, {'options':
+      \ '--prompt "'. FindRootDirectory(). '/" --preview "~/.bin/fzf-preview.zsh {}"'}, <bang>0)
+
 " Better command and search history
-command! CmdHist call fzf#vim#command_history()
-command! SearchHist call fzf#vim#search_history()
+command! CmdHist call fzf#vim#command_history({'options': '--prompt "Search Command History: "'})
+command! SearchHist call fzf#vim#search_history({'options': '--prompt "Search Search History: "'})
 
 " better searches
 command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'options': '--no-color'})
@@ -76,12 +84,19 @@ command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'options': '--no-color'})
 command! -bang -nargs=* GGrep
       \ call fzf#vim#grep(
       \   'git grep --line-number -- '.shellescape(<q-args>), 0,
-      \   fzf#vim#with_preview({'dir': FindRootDirectory()}), <bang>0)
+      \   fzf#vim#with_preview({'options': '--prompt "Search GitFiles: "', 'dir': FindRootDirectory()}), <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "!{.git,node_modules,vendor}/*" -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview({'options': '--prompt "Search for ['.shellescape(<q-args>).'] in '.FindRootDirectory().': "',
+  \    'dir': FindRootDirectory()}), <bang>0)
 
 command! -bang -nargs=* RG
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --hidden --multiline --color=always --smart-case -g "!{.git,node_modules,vendor}/*" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({'dir': FindRootDirectory()}), <bang>0)
+  \   fzf#vim#with_preview({'options': '--prompt "Search for ['.shellescape(<q-args>).'] in '.FindRootDirectory().' --hidden: "',
+  \    'dir': FindRootDirectory() }), <bang>0)
 
 " open FZF in a bottom split
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
@@ -94,7 +109,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <bu
 "   - CTRL-/ will toggle preview window.
 " - Note that this array is passed as arguments to fzf#vim#with_preview function.
 " - To learn more about preview window options, see `--preview-window` section of `man fzf`.
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+let g:fzf_preview_window = ['right:60%', 'ctrl-\']
 let g:fzf_history_dir = '~/.vim/tmp/fzf-history'
 
 let g:fzf_action =

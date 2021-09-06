@@ -118,23 +118,23 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Mappings for CoCList
-let g:which_key_map.c.o.a = 'COC Actions'
-let g:which_key_map.c.o.d = 'COC Diagnostics'
-let g:which_key_map.c.o.D = 'COC All Diagnostics'
-let g:which_key_map.c.o.e = 'COC Extensions'
-let g:which_key_map.c.o.c = 'COC Commands'
-let g:which_key_map.c.o.o = 'COC Document Symbols'
-let g:which_key_map.c.o.s = 'COC Project Symbols'
-let g:which_key_map.c.o.r = 'COC Resume List'
-let g:which_key_map.c.o.j = 'COC Next Action'
-let g:which_key_map.c.o.k = 'COC Previous Action'
-nnoremap <silent><nowait> <leader>coa  :<C-u>CocList actions<cr>
-nnoremap <silent><nowait> <leader>cod  :<C-u>CocList diagnostics --current-buf<cr>
-nnoremap <silent><nowait> <leader>coD  :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> <leader>coe  :<C-u>CocList extensions<cr>
-nnoremap <silent><nowait> <leader>coc  :<C-u>CocList commands<cr>
-nnoremap <silent><nowait> <leader>coo  :<C-u>CocList outline<cr>
-nnoremap <silent><nowait> <leader>cos  :<C-u>CocList symbols<cr>
-nnoremap <silent><nowait> <leader>coj  :<C-u>CocNext<CR>
-nnoremap <silent><nowait> <leader>cok  :<C-u>CocPrev<CR>
-nnoremap <silent><nowait> <leader>cor  :<C-u>CocListResume<CR>
+let g:which_key_map.d.a = 'COC Actions'
+let g:which_key_map.d.d = 'COC Diagnostics'
+let g:which_key_map.d.D = 'COC All Diagnostics'
+let g:which_key_map.d.e = 'COC Extensions'
+let g:which_key_map.d.c = 'COC Commands'
+let g:which_key_map.d.o = 'COC Document Symbols'
+let g:which_key_map.d.S = 'COC Project Symbols'
+let g:which_key_map.d.r = 'COC Resume List'
+let g:which_key_map.d.j = 'COC Next Action'
+let g:which_key_map.d.k = 'COC Previous Action'
+nnoremap <silent><nowait> <leader>da  :<C-u>CocList actions<cr>
+nnoremap <silent><nowait> <leader>dd  :<C-u>CocList diagnostics --current-buf<cr>
+nnoremap <silent><nowait> <leader>dD  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>de  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <leader>dc  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <leader>do  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>dS  :<C-u>CocList symbols<cr>
+nnoremap <silent><nowait> <leader>dj  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <leader>dk  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <leader>dr  :<C-u>CocListResume<CR>

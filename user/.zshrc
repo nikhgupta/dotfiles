@@ -79,9 +79,6 @@ HELPDIR=$BREW_PREFIX/share/zsh/help
 [[ -r $XDG_CONFIG_DIR/user-dirs.dirs ]] && source $XDG_CONFIG_DIR/user-dirs.dirs
 # [[ -f ~/.dir_colors ]] && init_cache dircolors "gdircolors -b ~/.dir_colors"
 
-# asdf, rbenv, pyenv, etc.
-. $BREW_PREFIX/opt/asdf/asdf.sh
-
 # is_installed rbenv && init_cache rbenv "rbenv init -"
 # is_installed pyenv && init_cache pyenv "pyenv init -"
 [[ -f "~/.cargo/env" ]] && source "~/.cargo/env"

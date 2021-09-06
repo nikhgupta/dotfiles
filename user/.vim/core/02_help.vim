@@ -24,7 +24,6 @@ let g:which_key_map.e.f = { 'name' : '+ExecuteForFile' }
 
 let g:which_key_map.c = { 'name' : '+Code' }
 let g:which_key_map.c.e = { 'name' : '+CodeExecute' }
-let g:which_key_map.c.o = { 'name' : '+COC' }
 
 let g:which_key_map.t = { 'name' : '+Toggle' }
 let g:which_key_map.t.e = { 'name' : '+ToggleEditor' }

@@ -20,11 +20,24 @@ Plug 'ecomba/vim-ruby-refactoring'
 " ' system('ruby -rubygems -e "print Gem.path.join(%(;))"')
 " ' system('ruby -rrbconfig -e "print RbConfig::CONFIG[\"ruby_version\"]"')
 
-" persist ctags when we move inside gem directories
-augroup gem_ctags
+augroup detect_filetypes_ruby
   au!
-  au filetype ruby,eruby setl tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
-augroup END
+  au BufNewFile,BufRead Rakefile,Capfile,Gemfile,Guardfile,Vagrantfile
+        \,Thorfile,Do,dorc,Dofile,config.ru,.autotest,.irbrc,.pryrc
+        \,.simplecov,*.thor,*.rabl setl ft=ruby
+augroup end
+
+augroup ruby_specific
+  au!
+  au filetype ruby,eruby setl iskeyword+=?
+  au filetype ruby,eruby setl iskeyword+=!
+augroup end
+
+" " persist ctags when we move inside gem directories
+" augroup gem_ctags
+"   au!
+"   au filetype ruby,eruby setl tags+=$RBENV_ROOT/versions/*/lib/ruby/gems/*/gems/*/tags
+" augroup END
 
 " autocomplete ruby - required by rails.vim
 augroup omni_complete_ruby

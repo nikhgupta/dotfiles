@@ -2,7 +2,7 @@
 set iskeyword-=.
 set iskeyword-=:
 set iskeyword-=#
-set iskeyword+=-
+set iskeyword-=-
 
 " briefly blinks matching paranthesis for quick orientation
 set showmatch                   " set show matching parenthesis

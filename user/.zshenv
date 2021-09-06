@@ -4,7 +4,7 @@ source ~/.zsh/utils.sh
 
 # dont wait for long timeouts when switching vi modes
 export KEYTIMEOUT=1
-setenv EDITOR vim
+setenv EDITOR nvim
 export GPG_TTY=$(tty)
 setenv ZSH_CACHE_DIR $HOME/.zcache
 
@@ -24,3 +24,6 @@ path_prepend ~/.bin
 source ~/.config/user-dirs.dirs
 source ~/.zsh/fzf.zsh # allow source here so that macvim can read these
 source_secret $HOME/.encrypted/zshenv.asc
+
+# asdf, rbenv, pyenv, etc.
+. $BREW_PREFIX/opt/asdf/asdf.sh

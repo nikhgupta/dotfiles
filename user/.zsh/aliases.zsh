@@ -274,3 +274,7 @@ killport() {
   for port in "$@"; do; sudo lsof -i tcp:$port | awk 'NR!=1 {print $2}' | xargs kill; done
   sudo lsof -i tcp:$port
 }
+
+function play-in-iina() {
+  rgf --files | fzf --query "$1" --multi --select-1 --bind "ctrl-x:execute(iina {})" --preview-window=down,0% --print0 | xargs -0 -o iina
+}
