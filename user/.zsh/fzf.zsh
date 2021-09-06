@@ -30,8 +30,17 @@ alias rgf='rg -Sl --color=never --no-messages --hidden --smart-case -g "!{.git,n
 _fzf_compgen_path() { fd . "$1"; }
 _fzf_compgen_dir() { fd --type d . "$1"; }
 
-vf() { vim $(fzf); }
-gvf() { vimr $(fzf); }
+_vf() {
+  _exe=$1
+  _dir=$2
+  shift; shift;
+  _selected=$(fd . "${_dir:-.}" $@ | fzf)
+  [[ -n "${_selected}" ]] && ${_exe:-vim} "${_selected}"
+}
+alias vf="_vf vim"
+alias gvf="_vf vimr"
+alias vfd="vf ~/.dotfiles --exclude Alfred.alfredpreferences"
+alias gvfd="gvf ~/.dotfiles --exclude Alfred.alfredpreferences"
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)

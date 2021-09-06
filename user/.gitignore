@@ -82,7 +82,8 @@ TAGS
 !TAGS/
 tags
 tags.lock
-tags.te?mp
+tags.temp
+tags.tmp
 !tags/
 gtags.files
 GTAGS
