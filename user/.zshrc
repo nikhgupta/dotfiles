@@ -1,11 +1,5 @@
 #!/usr/bin/env zsh
 
-# => basic locales and ZSH options
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-
 # Reference: http://zsh.sourceforge.net/Doc/Release/Options.html
 unsetopt rm_star_silent # Query the user on such a removal
 unsetopt nomatch
@@ -79,9 +73,12 @@ HELPDIR=$BREW_PREFIX/share/zsh/help
 [[ -r $XDG_CONFIG_DIR/user-dirs.dirs ]] && source $XDG_CONFIG_DIR/user-dirs.dirs
 # [[ -f ~/.dir_colors ]] && init_cache dircolors "gdircolors -b ~/.dir_colors"
 
+# asdf, rbenv, pyenv, etc.
+. $BREW_PREFIX/opt/asdf/asdf.sh
+
 # is_installed rbenv && init_cache rbenv "rbenv init -"
 # is_installed pyenv && init_cache pyenv "pyenv init -"
-[[ -f "~/.cargo/env" ]] && source "~/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 # ssh setup using GnuPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)

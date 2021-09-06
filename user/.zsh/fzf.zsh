@@ -37,8 +37,8 @@ _vf() {
   _selected=$(fd . "${_dir:-.}" $@ | fzf)
   [[ -n "${_selected}" ]] && ${_exe:-vim} "${_selected}"
 }
-alias vf="_vf vim"
-alias gvf="_vf vimr"
+alias vf="_vf vim ."
+alias gvf="_vf vimr ."
 alias vfd="vf ~/.dotfiles --exclude Alfred.alfredpreferences"
 alias gvfd="gvf ~/.dotfiles --exclude Alfred.alfredpreferences"
 

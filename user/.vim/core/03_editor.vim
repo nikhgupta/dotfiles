@@ -15,7 +15,7 @@ set list                        " show invisible characters like spaces
 set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:·
 
 " wraps text automatically, when editing it
-set nowrap                      " don't wrap lines
+set wrap                        " don't wrap lines
 set linebreak                   " break long lines at words, when wrap is on
 set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
 " set showbreak=↪

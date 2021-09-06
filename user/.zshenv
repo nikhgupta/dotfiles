@@ -1,5 +1,11 @@
 #!/usr/bin/env zsh
 
+# => basic locales and ZSH options
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
 source ~/.zsh/utils.sh
 
 # dont wait for long timeouts when switching vi modes
@@ -24,6 +30,3 @@ path_prepend ~/.bin
 source ~/.config/user-dirs.dirs
 source ~/.zsh/fzf.zsh # allow source here so that macvim can read these
 source_secret $HOME/.encrypted/zshenv.asc
-
-# asdf, rbenv, pyenv, etc.
-. $BREW_PREFIX/opt/asdf/asdf.sh

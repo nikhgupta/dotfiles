@@ -18,7 +18,11 @@ let g:coc_global_extensions = [
             \'coc-solargraph',
             \'coc-tailwindcss',
             \'coc-vimlsp',
+            \'coc-yank',
             \]
+
+let g:which_key_map.y.l = 'list Yank stack'
+nmap <leader>yl :<C-u>CocList -A --normal yank<cr>
 
 " check if backspace was the last key pressed
 function! s:check_back_space() abort

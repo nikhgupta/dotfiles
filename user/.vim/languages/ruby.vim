@@ -11,6 +11,16 @@ let g:endwise_no_mappings = 1
 " has refactoring support for ruby code
 Plug 'ecomba/vim-ruby-refactoring'
 
+" " symbols: :
+" Plug 'bootleq/vim-textobj-rubysymbol'
+
+" " ruby blocks: r - works nearly same as indentobject
+" Plug 'nelstrom/vim-textobj-rubyblock'
+
+" ruby special text objects
+Plug 'tek/vim-textobj-ruby'
+Plug 'whatyouhide/vim-textobj-erb'
+
 " NOTE: `vim-bundler` uses 2 system commands that are expensive.
 "       Therefore, we replace it with autocmds instead. Look into:
 "       " Ruby: Rails: persist ctags when we move inside gem directories

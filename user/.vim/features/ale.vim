@@ -10,6 +10,9 @@ let g:ale_fixers = {
       \ 'eruby': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
       \ }
 
+" let g:ale_hover_to_floating_preview=1
+" let g:ale_cursor_detail=1
+" let g:ale_close_preview_on_insert=1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all'
 
 let g:which_key_map.d.s = 'ALE Symbols'

@@ -7,21 +7,23 @@ Plug 'kana/vim-textobj-user'
 " indentations: i
 Plug 'austintaylor/vim-indentobject'
 
-" " symbols: :
-" Plug 'bootleq/vim-textobj-rubysymbol'
-
-" vertical columns by word boundary: c
-Plug 'coderifous/textobj-word-column.vim'
+" comments: c
+Plug 'glts/vim-textobj-comment'
 
 " " functions: f - does not support ruby/python/php by default
 " Plug 'kana/vim-textobj-function'
 
-" " ruby blocks: r - works nearly same as indentobject
-" Plug 'nelstrom/vim-textobj-rubyblock'
+" folds: z
+Plug 'somini/vim-textobj-fold'
 
-" arguments: z
-Plug 'kana/vim-textobj-fold'
+" last search: /
+Plug 'kana/vim-textobj-lastpat'
 
 " " allows to easily and precisely jump to a location
 " Plug 'Lokaltog/vim-easymotion'
 
+Plug 'justinmk/vim-sneak'
+let g:sneak#label = 1
+let g:sneak#label = 1
+let g:sneak#use_ic_scs = 1 " case insensitive sneak
+let g:sneak#prompt = '🔎'

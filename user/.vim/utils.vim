@@ -8,10 +8,11 @@ let g:is_wsl     = g:is_nix && system("uname -a") =~ "microsoft"
 
 " which type of vim we are working with?
 let g:is_nvim    = has('nvim')
-let g:is_gui     = has('gui_running')
 let g:is_macvim  = has('gui_macvim')
 let g:is_vimr    = has('gui_vimr')
 let g:is_vv      = exists("g:vv")
+let g:is_neovide = exists("g:neovide")
+let g:is_gui     = has('gui_running') || g:is_vv || g:is_vimr || g:is_macvim || g:is_neovide
 
 " other relevant variables
 let g:is_posix   = 1 " enable better bash syntax highlighting
