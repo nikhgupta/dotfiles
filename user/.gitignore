@@ -81,6 +81,8 @@ custom_plan.rb
 TAGS
 !TAGS/
 tags
+tags.lock
+tags.te?mp
 !tags/
 gtags.files
 GTAGS
