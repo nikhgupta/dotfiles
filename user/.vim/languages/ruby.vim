@@ -1,3 +1,7 @@
+" NOTE: ctags support with ruby is a must.
+"       You should install your bundled gems in `vendor/bundle`,
+"       which should allow gutenberg ctags to look into them as well.
+"
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rbenv'
 Plug 'tpope/vim-rails'
