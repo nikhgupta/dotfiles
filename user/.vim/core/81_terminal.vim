@@ -14,6 +14,13 @@ vmap <leader>` :sp %<CR>:term<CR>A
 let g:which_key_map[':'] = 'Run a command in terminal'
 map <leader>: :sp %<CR>:term<space>
 
+" fun with shell commands
+nmap !o Yp!!
+nnoremap !! !!$SHELL<CR>
+
+" encrypted selected text with my EMAIL using GPG and paste below
+xnoremap !x y<esc>`<O<esc>P`[mx`]mygv!gpg -aer $EMAIL<CR>`xv`y
+
 " integrates with the user's login shell
 " NOTE: DO NOT ENABLE INTERACTIVE SHELL OR TERMINAL VIM WILL SUSPEND ITSELF.
 " NOTE: For this reason, important environment variables, rbenv initialization,
