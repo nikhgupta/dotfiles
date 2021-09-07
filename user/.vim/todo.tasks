@@ -1,11 +1,11 @@
 # Functionality
 ----------------
-☐ multiple cursors
-☐ search for strings in previous git commits using fzf (within and outside vim)
+ multiple cursors
+ search for strings in previous git commits using fzf (within and outside vim)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
-  ✔ better previews for fzf everywhere @done(2021-09-06 15:05) @project
-  ✔ linting for various languages @done(2021-09-06 13:01) @project
-  ✔ tagging works for ruby files? @done(2021-09-06 13:01) @project
-  ✔ autocomplete for various languages @done(2021-09-05 04:36) @project
+   better previews for fzf everywhere @done(2021-09-06 15:05) @project
+   linting for various languages @done(2021-09-06 13:01) @project
+   tagging works for ruby files? @done(2021-09-06 13:01) @project
+   autocomplete for various languages @done(2021-09-05 04:36) @project

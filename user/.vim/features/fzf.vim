@@ -72,11 +72,11 @@ imap <expr> <c-x><c-g> fzf#vim#complete#path('git ls-files $(git rev-parse --sho
 
 " better files command with previews
 command! -bang -nargs=? -complete=dir ModdedFiles call fzf#vim#files(<q-args>, {'options':
-      \ '--prompt "'. FindRootDirectory(). '/" --preview "~/.bin/fzf-preview.zsh {}"'}, <bang>0)
+      \ '--prompt " '.substitute(FindRootDirectory(), expand("$HOME"), "~", "").'/" --preview "~/.bin/fzf-preview.zsh {}"'}, <bang>0)
 
 " Better command and search history
-command! CmdHist call fzf#vim#command_history({'options': '--prompt "Search Command History: "'})
-command! SearchHist call fzf#vim#search_history({'options': '--prompt "Search Search History: "'})
+command! CmdHist call fzf#vim#command_history({'options': '--prompt " Command History: "'})
+command! SearchHist call fzf#vim#search_history({'options': '--prompt " Search History: "'})
 
 " better searches
 command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'options': '--no-color'})
@@ -84,18 +84,18 @@ command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'options': '--no-color'})
 command! -bang -nargs=* GGrep
       \ call fzf#vim#grep(
       \   'git grep --line-number -- '.shellescape(<q-args>), 0,
-      \   fzf#vim#with_preview({'options': '--prompt "Search GitFiles: "', 'dir': FindRootDirectory()}), <bang>0)
+      \   fzf#vim#with_preview({'options': '--prompt " GitFiles: "', 'dir': FindRootDirectory()}), <bang>0)
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "!{.git,node_modules,vendor}/*" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({'options': '--prompt "Search for ['.shellescape(<q-args>).'] in '.FindRootDirectory().': "',
+  \   fzf#vim#with_preview({'options': '--prompt " '.substitute(FindRootDirectory(), expand("$HOME"), "~", "").': "',
   \    'dir': FindRootDirectory()}), <bang>0)
 
 command! -bang -nargs=* RG
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --hidden --multiline --color=always --smart-case -g "!{.git,node_modules,vendor}/*" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({'options': '--prompt "Search for ['.shellescape(<q-args>).'] in '.FindRootDirectory().' --hidden: "',
+  \   fzf#vim#with_preview({'options': '--prompt " '.substitute(FindRootDirectory(), expand("$HOME"), "~", "").': "',
   \    'dir': FindRootDirectory() }), <bang>0)
 
 " open FZF in a bottom split

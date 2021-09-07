@@ -6,12 +6,15 @@ if !g:is_macvim
   if g:is_mac | let g:WebDevIconsOS = 'Darwin' | endif
 
   let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {
-        \ 'vue': '', 'yml': '', 'yaml': '', 'vim': '',
-        \ 'c': '∁', 'cc': '∁', 'c++': '∁', 'cp': '∁', 'cpp': '∁',
+        \ 'vue': '﵂', 'yml': '', 'yaml': '', 'vim': '',
+        \ 'c': '', 'cc': '', 'c++': '', 'cp': '', 'cpp': '',
         \ 'coffee': '♨', 'erb': '', 'rabl': '', 'tasks': '',
-        \ 'thor': '', 'ru': '' }
+        \ 'javascript': '', 'sh': '亮', 'zsh': '亮', 'asc': '', 'applescript': '',
+        \ 'thor': '', 'ru': '', 'ts': '', 'tsx': '', 'jsx': '',
+        \ 'png': '', 'gif': '', 'jpg': '', 'jpeg': '',
+        \ 'css': '', 'html': '', 'csv': '', 'svg': 'ﰟ' }
 
   let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {
         \ '.*README.*$': '', 'Gemfile': '', 'Rakefile': '',
-        \ '\..*zshenv.*$': '', '\..*zshrc.*$': '', '\..*vimrc.*$': '', }
+        \ '\..*zshenv.*$': '亮', '\..*zshrc.*$': '亮', '\..*vimrc.*$': '', }
 end
