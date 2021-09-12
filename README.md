@@ -13,7 +13,7 @@ from [dotfiles repository](http://github.com/skwp/dotfiles) by
 To install, run:
 
     git clone https://github.com/nikhgupta/dotfiles ~/.dotfiles
-    ~/.dotfiles/install.sh
+    ~/.dotfiles/install/run.sh
 
 ## Version 5 - Back to OSX
 
