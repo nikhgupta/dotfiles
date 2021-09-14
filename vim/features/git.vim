@@ -46,8 +46,8 @@ let g:snips_author = "$NAME <$EMAIL>"
 Plug 'airblade/vim-gitgutter'
 " enable gitgutter by default
 let g:gitgutter_enabled = 1
-" but do not display signs by default
-let g:gitgutter_signs = 0
+" display signs by default
+let g:gitgutter_signs = 1
 " ignore whitespace
 let g:gitgutter_diff_args = '-w'
 " use the raw grep command
@@ -55,12 +55,25 @@ let g:gitgutter_diff_args = '-w'
 " highlight hunks by default
 " let g:gitgutter_highlight_lines = 1
 " let vim be snappier - don't lag.
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
 let g:gitgutter_async = 1
+
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_modified_removed = ':'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_removed_above_and_below = '_'
 
 " remap mappings
 let g:gitgutter_map_keys = 0
+
+" highlight clear SignColumn
+" highlight GitGutterAdd ctermfg=1 ctermbg=0
+" highlight GitGutterChange ctermfg=2 ctermbg=0
+" highlight GitGutterDelete ctermfg=3 ctermbg=0
+" highlight GitGutterChangeDelete ctermfg=3 ctermbg=0
 
 let g:which_key_map.t.g.g = 'Toggle GitGutter'
 let g:which_key_map.t.g.s = 'Toggle GitGutter Signs'

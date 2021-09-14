@@ -4,10 +4,8 @@ Plug 'junegunn/fzf.vim'
 " <C-p> or <D-p> to search files
 let g:which_key_map['<C-p>'] = 'Find File'
 let g:which_key_map['<C-b>'] = 'Find Buffer'
-let g:which_key_map['<C-o>'] = 'Find Buffer'
 nnoremap <silent> <C-p> :ModdedFiles <C-r>=FindRootDirectory()<cr><cr>
 nnoremap <silent> <C-b> :Buffers<cr>
-nnoremap <silent> <C-o> :Buffers<cr>
 
 let g:which_key_map.d.b = 'Buffers'
 let g:which_key_map.d.f = 'Files'
@@ -46,8 +44,23 @@ nnoremap <silent> <leader>dgf :GFiles<cr>
 
 " use faster and better tags with fzf
 Plug 'zackhsi/fzf-tags'
-nmap <C-]> <Plug>(fzf_tags)
-noreabbrev <expr> ts getcmdtype() == ":" && getcmdline() == 'ts' ? 'FZFTselect' : 'ts'
+function! s:GoToDefinition()
+  silent! if exists("*CocAction") && coc#rpc#ready() && CocAction('jumpDefinition')
+    return v:true
+  endif
+  if execute(":FZFTags") =~ "Tag not found:" | :execute 'normal *' | endif
+endfunction
+
+nmap <silent> <C-]> <Esc>:call <SID>GoToDefinition()<CR>
+vmap <silent> <C-]> <Esc>:call <SID>GoToDefinition()<CR>
+imap <silent> <C-]> <Esc>:call <SID>GoToDefinition()<CR>
+nmap <silent> gd <Esc>:call <SID>GoToDefinition()<CR>
+vmap <silent> gd <Esc>:call <SID>GoToDefinition()<CR>
+imap <silent> gd <Esc>:call <SID>GoToDefinition()<CR>
+nnoremap <C-T> <C-O>
+vnoremap <C-T> <C-O>
+inoremap <C-O> <Esc><C-O>
+inoremap <C-T> <Esc><C-O>
 
 " quick search for words across project
 map ? :Rg<space>
@@ -55,7 +68,7 @@ map ?? :RG<space>
 
 " quick search for words under cursor
 map <silent> * :RG <C-r>=expand("<cword>")<CR><CR>
-xnoremap  * :<C-u>call VisualRipgrepSearch()<CR>:<C-u>RG <C-R>=@/<CR><CR>
+vnoremap  * :<C-u>call VisualRipgrepSearch()<CR>:<C-u>RG <C-R>=@/<CR><CR>
 
 " function to place selected text in search register
 function! VisualRipgrepSearch()

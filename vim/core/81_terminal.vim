@@ -2,24 +2,38 @@
 set title                         " change the terminal's title
 set ttyfast                       " always use a fast terminal
 
+" easily exit out of terminal mode
+tnoremap <C-w> <C-\><C-n><C-w>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
+autocmd BufWinEnter,WinEnter term://* startinsert
+if g:is_nvim
+  autocmd TermOpen * startinsert
+  autocmd TermOpen * setlocal nocursorline
+endif
+au FileType fzf tunmap <Esc>
+
 " mappings
 let g:which_key_map.t.u.t = 'Toggle Terminal window'
-nmap <leader>tut :sp %<CR>:term<CR>A
-vmap <leader>tut :sp %<CR>:term<CR>A
+nmap <silent> <leader>tut <Esc>:new<CR><Esc>:term<CR>
+vmap <silent> <leader>tut <Esc>:new<CR><Esc>:term<CR>
 
 let g:which_key_map['`'] = 'Open Terminal'
-nmap <leader>` :sp %<CR>:term<CR>A
-vmap <leader>` :sp %<CR>:term<CR>A
+nmap <silent> <leader>` <leader>tut
+vmap <silent> <leader>` <leader>tut
 
 let g:which_key_map[':'] = 'Run a command in terminal'
-map <leader>: :sp %<CR>:term<space>
+map <leader>: <Esc>:new<CR><Esc>:term<space>
 
 " fun with shell commands
 nmap !o Yp!!
 nnoremap !! !!$SHELL<CR>
 
 " encrypted selected text with my EMAIL using GPG and paste below
-xnoremap !x y<esc>`<O<esc>P`[mx`]mygv!gpg -aer $EMAIL<CR>`xv`y
+vnoremap !x y<esc>`<O<esc>P`[mx`]mygv!gpg -aer $EMAIL<CR>`xv`y
 
 " integrates with the user's login shell
 " NOTE: DO NOT ENABLE INTERACTIVE SHELL OR TERMINAL VIM WILL SUSPEND ITSELF.

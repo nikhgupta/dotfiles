@@ -55,8 +55,13 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 let g:which_key_map.t.u.m = 'toggle UI light/dark mode'
 nnoremap <silent> <leader>tum :call ApplyThemeSettings("")<CR>
 
-" hi! ColorColumn guibg=#556873 guifg=#F2C38F
-" hi! ErrorMsg guifg=#c89899 guibg=bg
-" hi Folded term=standout ctermfg=248 ctermbg=237 guifg=#999999 guibg=#d2d2d2
-" hi! default link NERDTreeDirSlash NonText
-hi! link rubySymbol SpecialChar
+" better ale themes
+augroup theme_fix_highlights
+  au!
+  autocmd ColorScheme * hi! link rubySymbol Float
+
+  " autocmd ColorScheme * hi! ColorColumn guibg=#556873 guifg=#F2C38F
+  " autocmd ColorScheme * hi! ErrorMsg guifg=#c89899 guibg=bg
+  " autocmd ColorScheme * hi Folded term=standout ctermfg=248 ctermbg=237 guifg=#999999 guibg=#d2d2d2
+  " autocmd ColorScheme * hi! default link NERDTreeDirSlash NonText
+augroup end

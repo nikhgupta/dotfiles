@@ -1,4 +1,14 @@
+" disable pattern not found or match 1 of 2 on autocomplete
+set shortmess+=c
+
+let g:coc_start_at_startup = 1
+let g:coc_config_home = expand("$HOME") . "/.vim"
 let g:coc_node_path = '/Users/nikhgupta/.asdf/installs/nodejs/16.6.0/bin/node'
+let g:coc_hover_allowlist = [
+      \ 'ruby', 'eruby', 'python',
+      \ 'typescript', 'javascript', 'typescriptreact', 'javascriptreact',
+      \ ]
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " list of the extensions to make sure are always installed
@@ -7,7 +17,6 @@ let g:coc_global_extensions = [
             \'coc-css',
             \'coc-html',
             \'coc-tsserver',
-            \'coc-eslint',
             \'coc-yaml',
             \'coc-snippets',
             \'coc-pyright',
@@ -68,37 +77,41 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
+  elseif (coc#rpc#ready() && index(g:coc_hover_allowlist, &ft) > 0)
     silent! call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    execute &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 
-" " Highlight the symbol and its references when holding the cursor.
-" function! ShowDocIfNoDiagnostic(timer_id)
-"   if (coc#float#has_float() == 0)
-"     silent! call CocActionAsync('doHover')
-"   endif
-" endfunction
+" Highlight the symbol and its references when holding the cursor.
+function! ShowDocIfNoDiagnostic(timer_id)
+  if (exists("g:coc_hover_doc_timer") && coc#float#has_float() == 0
+        \ && coc#rpc#ready() && index(g:coc_hover_allowlist, &ft) > 0)
+    silent! call CocActionAsync('doHover')
+  endif
+endfunction
 
-" function! s:show_hover_doc()
-"   call timer_start(500, 'ShowDocIfNoDiagnostic')
-" endfunction
+function! s:show_hover_doc()
+  let g:coc_hover_doc_timer = timer_start(1500, 'ShowDocIfNoDiagnostic')
+endfunction
 
-autocmd CursorHold * silent! call CocActionAsync('highlight')
-" autocmd CursorHold * silent! call <SID>show_hover_doc()
-" autocmd CursorHoldI * silent! call <SID>show_hover_doc()
+function! s:stop_hover_doc()
+  call timer_stop(g:coc_hover_doc_timer)
+  unlet g:coc_hover_doc_timer
+endfunction
 
-" Formatting selected code.
-let g:which_key_map['=']['c'] = 'format selected code'
-xmap <leader>=c  <Plug>(coc-format-selected)
-nmap <leader>=c  <Plug>(coc-format-selected)
+" autocmd CursorHold * silent! call CocActionAsync('highlight')
+autocmd CursorHold * silent! call <SID>show_hover_doc()
+autocmd CursorHoldI * silent! call <SID>show_hover_doc()
+autocmd CursorMoved * silent! call <SID>stop_hover_doc()
+autocmd CursorMovedI * silent! call <SID>stop_hover_doc()
 
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json,typescriptreact,javascript,javascriptreact
+        \ setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -114,12 +127,28 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
+" Formatting selected code.
+let g:which_key_map['=']['c'] = 'format selected code'
+xmap <leader>=c  <Plug>(coc-format-selected)
+nmap <leader>=c  <Plug>(coc-format-selected)
+
+" Format Entire Buffer
+function! FormatBufferWithLSP()
+  silent! if CocAction('format')
+    echom '  Formatted buffer with LSP!'
+  else
+    echom ' ✘ Could not format buffer with LSP!'
+  endif
+endfunction
+let g:which_key_map['=']['='] = 'format current buffer with LSP'
+vnoremap <silent> <leader>== :call FormatBufferWithLSP()<CR>
+nnoremap <silent> <leader>== :call FormatBufferWithLSP()<CR>
+
+command! -nargs=0 Format :call FormatBufferWithLSP()
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Mappings for CoCList
 let g:which_key_map.d.a = 'COC Actions'
