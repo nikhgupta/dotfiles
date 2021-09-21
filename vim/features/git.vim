@@ -5,8 +5,16 @@ Plug 'tpope/vim-fugitive'
 
 " browse Github repos with GBrowse
 Plug 'tpope/vim-rhubarb'
+
+" mappings
 let g:which_key_map.g.o = 'Open current file in Browser'
 nmap <silent> <leader>go :GBrowse<cr>
+
+let g:which_key_map.g.b = 'View Git Blame'
+nmap <leader>gb :Git blame<CR>
+
+let g:which_key_map.g.d = 'Git describe'
+nmap <leader>gd :Git describe<CR>
 
 " git branch viewer
 Plug 'rbong/vim-flog'
@@ -114,3 +122,28 @@ omap ih <Plug>(GitGutterTextObjectInnerPending)
 omap ah <Plug>(GitGutterTextObjectOuterPending)
 xmap ih <Plug>(GitGutterTextObjectInnerVisual)
 xmap ah <Plug>(GitGutterTextObjectOuterVisual)
+
+" uses the following alias:
+" git_web() {
+"   local tmpcache=/tmp/git-web-last.dir
+"   local curr=$(pwd)
+"   local last=$(cat $tmpcache)
+"   local query="a=summary"
+"   [[ -z "$@" ]] || query="a=history;f=$@";
+"   cd "${last}" && git instaweb stop && \
+"     cd "${curr}" && git instaweb -d webrick start && \
+"     open "http://127.0.0.1:1234/?p=.git;${query}" && \
+"     echo "${curr}" > $tmpcache
+" }
+let g:which_key_map.g.w = 'Git Instaweb - File History'
+let g:which_key_map.g.W = 'Git Instaweb - Repo Summary'
+nmap <silent> <leader>gw :call OpenGitInstaweb('%')<CR>
+nmap <silent> <leader>gW :call OpenGitInstaweb()<CR>
+function! OpenGitInstaweb(...)
+  echom 'open repo in web: ' . getcwd() . ' '
+  if a:0 > 0
+    execute(':Git web ' . fnamemodify(expand(a:1.':p'), ':.'))
+  else
+    execute(':Git web')
+  endif
+endfunction

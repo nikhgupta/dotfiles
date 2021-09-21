@@ -5,6 +5,7 @@ source ~/.zsh/topics/_unsorted.zsh
 source ~/.zsh/topics/cryptography.zsh
 source ~/.zsh/topics/dotfiles.zsh
 source ~/.zsh/topics/downloaders.zsh
+source ~/.zsh/topics/git.zsh
 source ~/.zsh/topics/fzf.zsh
 source ~/.zsh/topics/languages.zsh
 source ~/.zsh/topics/macos.zsh
