@@ -4,7 +4,7 @@ Plug 'junegunn/fzf.vim'
 " <C-p> or <D-p> to search files
 let g:which_key_map['<C-p>'] = 'Find File'
 let g:which_key_map['<C-b>'] = 'Find Buffer'
-nnoremap <silent> <C-p> :ModdedFiles <C-r>=FindRootDirectory()<cr><cr>
+nnoremap <silent> <C-p> :ModdedFiles <C-r>=FindRootDirectoryWithGit()<cr><cr>
 nnoremap <silent> <C-b> :Buffers<cr>
 
 let g:which_key_map.d.b = 'Buffers'
@@ -25,7 +25,7 @@ let g:which_key_map.d.h.h = 'History'
 let g:which_key_map.d.h[':'] = 'CommandHistory'
 let g:which_key_map.d.h["/"] = 'SearchHistory'
 nnoremap <silent> <leader>db :Buffers<cr>
-nnoremap <silent> <leader>df :ModdedFiles <C-r>=FindRootDirectory()<cr><cr>
+nnoremap <silent> <leader>df :ModdedFiles <C-r>=FindRootDirectoryWithGit()<cr><cr>
 nnoremap <silent> <leader>dl :Lines<cr>
 nnoremap <silent> <leader>dm :Marks<cr>
 nnoremap <silent> <leader>dz :Snippets<cr>
@@ -85,7 +85,7 @@ imap <expr> <c-x><c-g> fzf#vim#complete#path('git ls-files $(git rev-parse --sho
 
 " better files command with previews
 command! -bang -nargs=? -complete=dir ModdedFiles call fzf#vim#files(<q-args>, {'options':
-      \ '--prompt " '.substitute(FindRootDirectory(), expand("$HOME"), "~", "").'/" --preview "~/.bin/fzf-preview.zsh {}"'}, <bang>0)
+      \ '--prompt " '.substitute(FindRootDirectoryWithGit(), expand("$HOME"), "~", "").'/" --preview "~/.bin/fzf-preview.zsh {}"'}, <bang>0)
 
 " Better command and search history
 command! CmdHist call fzf#vim#command_history({'options': '--prompt " Command History: "'})
@@ -97,19 +97,19 @@ command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'options': '--no-color'})
 command! -bang -nargs=* GGrep
       \ call fzf#vim#grep(
       \   'git grep --line-number -- '.shellescape(<q-args>), 0,
-      \   fzf#vim#with_preview({'options': '--prompt " GitFiles: "', 'dir': FindRootDirectory()}), <bang>0)
+      \   fzf#vim#with_preview({'options': '--prompt " GitFiles: "', 'dir': FindRootDirectoryWithGit()}), <bang>0)
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -g "!{.git,node_modules,vendor}/*" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({'options': '--prompt " '.substitute(FindRootDirectory(), expand("$HOME"), "~", "").': "',
-  \    'dir': FindRootDirectory()}), <bang>0)
+  \   fzf#vim#with_preview({'options': '--prompt " '.substitute(FindRootDirectoryWithGit(), expand("$HOME"), "~", "").': "',
+  \    'dir': FindRootDirectoryWithGit()}), <bang>0)
 
 command! -bang -nargs=* RG
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --hidden --multiline --color=always --smart-case -g "!{.git,node_modules,vendor}/*" -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({'options': '--prompt " '.substitute(FindRootDirectory(), expand("$HOME"), "~", "").': "',
-  \    'dir': FindRootDirectory() }), <bang>0)
+  \   fzf#vim#with_preview({'options': '--prompt " '.substitute(FindRootDirectoryWithGit(), expand("$HOME"), "~", "").': "',
+  \    'dir': FindRootDirectoryWithGit() }), <bang>0)
 
 " open FZF in a bottom split
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }

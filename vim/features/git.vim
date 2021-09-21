@@ -29,6 +29,20 @@ augroup git_files
   autocmd FileType gitcommit setlocal spell textwidth=72
 augroup end
 
+
+augroup CdGitRootOrFileDir
+  au!
+  au BufEnter,BufRead * if !empty(bufname("%")) | execute "cd " . FindRootDirectoryWithGit() | endif
+augroup end
+
+function! FindRootDirectoryWithGit()
+  let s:path = FugitiveWorkTree()
+  " if (len(s:path) == 0) | let s:path = FindRootDirectory() | endif
+  if (len(s:path) == 0) | let s:path = fnamemodify(resolve(expand('%:p')), ":p:h") | end
+  return s:path
+endfunction
+
+
 " enables support to manage Github Gists from the editor
 Plug 'mattn/webapi-vim'
 Plug 'mattn/vim-gist'
@@ -90,6 +104,13 @@ nmap <leader>g[ <Plug>(GitGutterPrevHunk)
 let g:which_key_map.g.p = 'Preview hunk'
 let g:which_key_map.g.s = 'Stage hunk'
 let g:which_key_map.g.r = 'Revert hunk'
+let g:which_key_map.g.u = 'Undo hunk'
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap <leader>gs <Plug>(GitGutterStageHunk)
 nmap <leader>gr <Plug>(GitGutterRevertHunk)
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
+
+omap ih <Plug>(GitGutterTextObjectInnerPending)
+omap ah <Plug>(GitGutterTextObjectOuterPending)
+xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+xmap ah <Plug>(GitGutterTextObjectOuterVisual)
