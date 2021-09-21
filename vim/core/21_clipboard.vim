@@ -19,3 +19,4 @@ set pastetoggle=<F2>
 " reselects text that was just selected (or pasted)
 let g:which_key_map.v.p = 'reselect last pasted text'
 nnoremap <leader>vp `[v`]
+nnoremap gb `[v`]

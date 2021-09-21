@@ -30,7 +30,7 @@ _fuzzy_execute_command_on_files_containing_pattern() {
     return 1
   fi
   IFS=$'\n' _files=($(rgf --files-with-matches $@ | fzf $FZF_PREVIEW_WINDOW --preview "rg --ignore-case --pretty --context 10 '$1' {}"))
-  [[ -n "$_files" ]] && ${exe:-edit} "${_files[@]}"
+  [[ -n "$_files" ]] && ${_exe:-edit} "${_files[@]}"
 }
 
 # like normal z when used with arguments but displays an fzf prompt when used without.

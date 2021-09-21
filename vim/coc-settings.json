@@ -19,7 +19,7 @@
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
   "solargraph.hover": true,
-  "solargraph.useBundler": true,
+  "solargraph.useBundler": false,
   "suggest.detailField": "menu",
   "suggest.detailMaxLength": 100,
   "suggest.enablePreview": true,
@@ -32,10 +32,18 @@
   "typescript.autoClosingTags": false,
   "typescript.updateImportsOnFileMove.enable": false,
   "yank.enableCompletion": false,
-  "suggest.floatConfig": { "border": true },
-  "diagnostic.floatConfig": { "border": true },
-  "hover.floatConfig": { "border": true },
-  "signature.floatConfig": { "border": true },
+  "suggest.floatConfig": {
+    "border": true
+  },
+  "diagnostic.floatConfig": {
+    "border": true
+  },
+  "hover.floatConfig": {
+    "border": true
+  },
+  "signature.floatConfig": {
+    "border": true
+  },
   "suggest.completionItemKindLabels": {
     "method": " ƒ Method",
     "function": " ƒ Function",

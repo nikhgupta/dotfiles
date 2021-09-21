@@ -19,8 +19,14 @@ Plug 'somini/vim-textobj-fold'
 " SLOW: " last search: /
 " Plug 'kana/vim-textobj-lastpat'
 
+" better quotes and brackets
+Plug 'wellle/targets.vim'
+
 " " allows to easily and precisely jump to a location
 " Plug 'Lokaltog/vim-easymotion'
+
+" show marks in sign column
+Plug 'kshenoy/vim-signature'
 
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1

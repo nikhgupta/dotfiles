@@ -55,7 +55,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 let g:which_key_map.t.u.m = 'toggle UI light/dark mode'
 nnoremap <silent> <leader>tum :call ApplyThemeSettings("")<CR>
 
-" better ale themes
+" theme overrides
 augroup theme_fix_highlights
   au!
   autocmd ColorScheme * hi! link rubySymbol Float

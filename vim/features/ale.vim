@@ -1,10 +1,12 @@
+Plug 'dense-analysis/ale'
+
 let g:ale_sign_error = '◉'
 let g:ale_sign_warning = '◉'
 let g:ale_sign_info = '◉'
 let g:ale_echo_msg_format = '%linter%: %code: %%s [%severity%]'
 
 let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = "✘ "
+let g:ale_virtualtext_prefix = "●⬤  "
 
 let g:ale_lint_delay = 400
 let g:ale_lint_on_insert_leave = 0
@@ -54,17 +56,14 @@ let g:ale_fixers.ruby            = ['rubocop', 'rufo']
 let g:ale_fixers.eruby           = ['prettier']
 let g:ale_fixers.scss            = ['prettier']
 let g:ale_fixers.sh              = ['shfmt']
-let g:ale_fixers.typescript      = ['eslint', 'prettier']
-let g:ale_fixers.typescriptreact = ['eslint', 'prettier']
+let g:ale_fixers.typescript      = ['prettier']
+let g:ale_fixers.typescriptreact = ['prettier']
 let g:ale_fixers.yaml            = ['prettier']
 
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --print-width 120'
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_json_prettier_use_local_config = 1
-
-Plug 'dense-analysis/ale'
-
 
 let g:which_key_map.d.s = 'ALE Symbols'
 nnoremap <leader>ds :ALESymbolSearch<space>
