@@ -1,6 +1,7 @@
 let g:python_host_prog = expand("$HOME") . '/.asdf/shims/python2'
 let g:python3_host_prog = expand("$HOME") . '/.asdf/shims/python3'
 let g:ruby_host_prog = expand("$HOME") . '/.asdf/shims/neovim-ruby-host'
+let g:ruby_path = expand("$HOME") . '/.asdf/shims/ruby'
 
 source ~/.vimrc
 

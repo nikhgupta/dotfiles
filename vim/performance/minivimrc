@@ -1,0 +1,68 @@
+set autoread                      " watch for file changes
+set noautochdir                   " do not auto change the working directory
+set noautowrite                   " do not auto write file when moving away from it.
+scriptencoding utf-8
+set encoding=utf-8 nobomb " BOM often causes trouble
+set termencoding=utf-8
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+set nobackup                      " do not keep backup files - it's 70's style cluttering
+set nowritebackup                 " do not make a write backup
+set noswapfile                    " do not write annoying intermediate swap files
+set noerrorbells                  " don't beep
+set visualbell t_vb=              " don't beep, remove visual bell char
+set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set fileformats="unix,dos,mac"  " EOL that will be tried when reading buffers
+set tabstop=2                   " a tab is two spaces
+set softtabstop=2               " when <BS>, pretend tab is removed, even if spaces
+set expandtab                   " expand tabs, by default
+set list                        " show invisible characters like spaces
+set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:·
+set wrap                        " don't wrap lines
+set linebreak                   " break long lines at words, when wrap is on
+set whichwrap=b,s,h,l,<,>,[,]   " allow <BS> & cursor keys to move to prev/next line
+let &showbreak="\u21aa "        " string to put at the starting of wrapped lines
+set textwidth=120               " wrap after this many characters in a line
+set hidden   " means that current buffer can be put to background without being written; and that marks and undo history are preserved.
+set splitbelow                  " puts new split windows to the bottom of the current
+set splitright                  " puts new vsplit windows to the right of the current
+set equalalways                 " split windows are always of eqal size
+set switchbuf=useopen,split     " use existing buffer or else split current window
+set tabpagemax=15
+set autoindent                  " always set autoindenting on
+set shiftwidth=2                " number of spaces to use for autoindenting
+set copyindent                  " copy the previous indentation on autoindenting
+set shiftround                  " use multiple of 'sw' when indenting with '<' and '>'
+set smarttab                    " insert tabs on start of line acc to 'sw' not 'ts'
+set showmatch                   " set show matching parenthesis
+set nofoldenable                " do not enable folding, by default
+set foldlevel=0                 " folds with a higher level will be closed
+set foldlevelstart=10           " start out with everything open
+set foldmethod=indent           " create folds based on indentation
+set foldnestmax=7               " deepest fold is 7 levels
+set ttyfast                     " always use a fast terminal
+set number                      " always show line numbers
+set numberwidth=4               " number of culumns for line numbers
+set cursorline                  " highlight the current line for quick orientation
+set nocursorcolumn              " do not highlight the current column
+set synmaxcol=800               " don't try to highlight lines longer than 800 characters
+
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Stop fucking netrw
+let g:netrw_silent = 1
+let g:netrw_quiet  = 1
+let g:loaded_netrw = 1          " prevents loading of netrw, but messes 'gx'
+let g:loaded_netrwPlug = 1      " ^ ..same.. and therefore, commented
+
+let mapleader      = "<\Space>"    " change mapleader key from / to space
+let maplocalleader = ","           " used inside filetype settings
+
+" Enable syntax colors
+syntax on
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on

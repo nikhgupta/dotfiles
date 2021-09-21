@@ -1,0 +1,17 @@
+" set nobackup                      " do not keep backup files - it's 70's style cluttering
+" set nowritebackup                 " do not make a write backup
+" set noswapfile                    " do not write annoying intermediate swap files
+" set noerrorbells                  " don't beep
+" set visualbell t_vb=              " don't beep, remove visual bell char
+" set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set hidden   " means that current buffer can be put to background without being written; and that marks and undo history are preserved.
+set number                      " always show line numbers
+
+" let mapleader      = "<\Space>"    " change mapleader key from / to space
+" let maplocalleader = ","           " used inside filetype settings
+
+" Enable syntax colors
+syntax on
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on

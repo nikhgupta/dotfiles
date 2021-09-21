@@ -2,9 +2,12 @@
 "       You should install your bundled gems in `vendor/bundle`,
 "       which should allow gutenberg ctags to look into them as well.
 "
-Plug 'vim-ruby/vim-ruby'
+
+let g:ruby_path = expand("$HOME") . '/.asdf/shims/ruby'
+
+" Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rbenv'
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', {'for': ['ruby', 'eruby']}
 Plug 'tpope/vim-rake'
 Plug 'thoughtbot/vim-rspec'
 
@@ -13,7 +16,7 @@ Plug 'tpope/vim-endwise'
 let g:endwise_no_mappings = 1
 
 " has refactoring support for ruby code
-Plug 'ecomba/vim-ruby-refactoring'
+Plug 'ecomba/vim-ruby-refactoring', {'for': ['ruby', 'eruby']}
 
 " " symbols: :
 " Plug 'bootleq/vim-textobj-rubysymbol'
@@ -22,8 +25,8 @@ Plug 'ecomba/vim-ruby-refactoring'
 " Plug 'nelstrom/vim-textobj-rubyblock'
 
 " ruby special text objects
-Plug 'tek/vim-textobj-ruby'
-Plug 'whatyouhide/vim-textobj-erb'
+Plug 'tek/vim-textobj-ruby', {'for': ['ruby', 'eruby']}
+Plug 'whatyouhide/vim-textobj-erb', {'for': ['ruby', 'eruby']}
 
 " NOTE: `vim-bundler` uses 2 system commands that are expensive.
 "       Therefore, we replace it with autocmds instead. Look into:

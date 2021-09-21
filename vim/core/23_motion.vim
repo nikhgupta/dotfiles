@@ -16,8 +16,8 @@ Plug 'glts/vim-textobj-comment'
 " folds: z
 Plug 'somini/vim-textobj-fold'
 
-" last search: /
-Plug 'kana/vim-textobj-lastpat'
+" SLOW: " last search: /
+" Plug 'kana/vim-textobj-lastpat'
 
 " " allows to easily and precisely jump to a location
 " Plug 'Lokaltog/vim-easymotion'
