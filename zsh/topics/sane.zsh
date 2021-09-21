@@ -24,7 +24,7 @@ cp_p () { rsync -WavP --human-readable --progress $1 $2; } # Copy w/ progress
 is_installed git && function diff() { git diff --no-index --color-words "$@"; }
 
 # READ THE FUCKING MANUAL!!
-rtfm() { help $@ NOERR || man $@ NOERR || browse "http://www.google.com/search?q=$@"; }
+rtfm() { help $@ 2>/dev/null || man $@ 2>/dev/null || browse "http://www.google.com/search?q=$@"; }
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into

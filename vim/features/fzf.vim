@@ -20,10 +20,12 @@ let g:which_key_map.d.z = 'Snippets'
 let g:which_key_map.d.g.b = 'BufferCommits'
 let g:which_key_map.d.g.c = 'Commits'
 let g:which_key_map.d.g.f = 'GitFiles'
+let g:which_key_map.d.g.g = 'GitGrep'
 let g:which_key_map.d.g.s = 'GitFileStatus'
 let g:which_key_map.d.h.h = 'History'
 let g:which_key_map.d.h[':'] = 'CommandHistory'
 let g:which_key_map.d.h["/"] = 'SearchHistory'
+let g:which_key_map.g.g = 'GitGrep'
 nnoremap <silent> <leader>db :Buffers<cr>
 nnoremap <silent> <leader>df :ModdedFiles <C-r>=FindRootDirectoryWithGit()<cr><cr>
 nnoremap <silent> <leader>dl :Lines<cr>
@@ -39,8 +41,10 @@ nnoremap <silent> <leader>dh: :CmdHist<cr>
 nnoremap <silent> <leader>dh/ :SearchHist<CR>
 nnoremap <silent> <leader>dgc :Commits<cr>
 nnoremap <silent> <leader>dgb :BCommits<cr>
+nnoremap          <leader>dgg :GGrep<space>
 nnoremap <silent> <leader>dgs :GFiles?<cr>
 nnoremap <silent> <leader>dgf :GFiles<cr>
+nnoremap          <leader>gg  :GGrep<space>
 
 " use faster and better tags with fzf
 Plug 'zackhsi/fzf-tags'
