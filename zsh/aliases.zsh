@@ -10,6 +10,7 @@ source ~/.zsh/topics/fzf.zsh
 source ~/.zsh/topics/languages.zsh
 source ~/.zsh/topics/macos.zsh
 source ~/.zsh/topics/my_info.zsh
+source ~/.zsh/topics/rails.zsh
 source ~/.zsh/topics/sane.zsh
 source ~/.zsh/topics/sync.zsh
 source ~/.zsh/topics/system_info.zsh
