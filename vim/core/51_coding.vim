@@ -20,3 +20,5 @@ Plug 'honza/vim-snippets'
 
 " provides language support for various languages
 Plug 'sheerun/vim-polyglot'
+
+Plug 'pantharshit00/vim-prisma'

@@ -19,7 +19,7 @@ setenv ZSH_CACHE_DIR $HOME/.zcache
 
 # editor and browser
 setenv EDITOR nvim
-setenv VISUAL vimr
+setenv VISUAL neovide
 setenv GUIEDITOR $EDITOR
 setenv BROWSER "open -a 'Google Chrome'"
 
@@ -28,6 +28,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 setenv BREW_PREFIX /usr/local
 path_prepend "${BREW_PREFIX}/bin"
 path_prepend "${BREW_PREFIX}/sbin"
+path_prepend ~/.local/bin
 
 # add custom scripts from dotcastle to $PATH
 path_append ~/.bin
@@ -36,3 +37,4 @@ path_append ~/.bin
 source ~/.config/user-dirs.dirs
 source ~/.zsh/fzf.zsh # allow source here so that macvim can read these
 source_secret $HOME/.encrypted/zshenv.asc
+. "$HOME/.cargo/env"

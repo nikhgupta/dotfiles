@@ -30,7 +30,7 @@ alias show_files_consuming_disk="du -sm {*,.*} NOERR | sort -n|tail"
 alias show_network_active_interfaces="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
 kill_processes_on_port() {
-  for port in "$@"; do; sudo lsof -i tcp:$port | awk 'NR!=1 {print $2}' | xargs kill; done
+  for port in "$@"; do; sudo lsof -i tcp:$port | awk 'NR!=1 {print $2}' | xargs kill -9; done
   sudo lsof -i tcp:$port
 }
 

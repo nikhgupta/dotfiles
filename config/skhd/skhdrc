@@ -574,6 +574,7 @@ fn - e : open -a 'Visual Studio Code'
 fn - f : open ~/Downloads
 fn - t : ~/.bin/macos/new-terminal.applescript
 cmd - return : ~/.bin/macos/new-terminal.applescript
+fn - u : skhd -k 'escape'; ~/.bin/macos/browser-url.applescript >> ~/.chrome.crawljob
 
 # focus window
 fn - h : yabai -m window --focus west

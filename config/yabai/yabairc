@@ -131,6 +131,8 @@ yabai -m rule --add app="Google Chrome" space=^2
 # code
 yabai -m rule --add app="Atom" space=^3
 yabai -m rule --add app="VimR" space=^3
+yabai -m rule --add app="^NVIM$" space=^3
+yabai -m rule --add app="neovide" space=^3
 yabai -m rule --add app="MacVim" space=^3
 yabai -m rule --add app="Emacs" space=^3
 yabai -m rule --add app="^Code$" space=^3

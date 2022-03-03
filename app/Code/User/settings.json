@@ -21,7 +21,8 @@
   "explorer.confirmDragAndDrop": false,
   "redhat.telemetry.enabled": false,
   "files.associations": {
-    "skhdrc": "editorconfig"
+    "skhdrc": "editorconfig",
+    "*.toml": "toml"
   },
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -53,7 +54,6 @@
   "python.venvFolders": [".venv"],
   "python.languageServer": "Pylance",
   "python.venvPath": "~/.venv",
-  "python.globalModuleInstallation": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
   // "python.showStartPage": false,
   "workbench.editorAssociations": {
@@ -71,7 +71,7 @@
   "ruby.rubocop.onSave": true,
   "ruby.rubocop.useBundler": true,
   "solargraph.useBundler": true,
-  "ruby.rubocop.suppressRubocopWarnings": false,
+  "ruby.rubocop.suppressRubocopWarnings": true,
   "[erb]": {
     "editor.defaultFormatter": "aliariff.vscode-erb-beautify"
   },
@@ -82,5 +82,32 @@
   },
   "solargraph.diagnostics": true,
   "terminal.integrated.fontSize": 14,
-  "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim"
+  "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
+  "security.workspace.trust.untrustedFiles": "open",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.minimap.enabled": false,
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnknownArgumentType": "information",
+    "reportUnknownMemberType": "none",
+    "reportUnknownParameterType": "information",
+    "reportUnknownVariableType": "information",
+    "reportMissingTypeStubs": "none",
+    "reportUnusedImport": "information",
+    "reportImportCycles": "information"
+  },
+  "files.exclude": {
+    "**/__pycache__/": true,
+    "**/.vscode/": true
+  },
+  "search.exclude": {
+    "**/{tag,TAG,tags,TAGS}": true
+  },
+  "window.zoomLevel": 2
 }

@@ -69,6 +69,7 @@ HELPDIR=$BREW_PREFIX/share/zsh/help
 
 # asdf, rbenv, pyenv, etc.
 . $BREW_PREFIX/opt/asdf/asdf.sh
+path_prepend $(yarn global bin)
 # is_installed rbenv && init_cache rbenv "rbenv init -"
 # is_installed pyenv && init_cache pyenv "pyenv init -"
 # [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"

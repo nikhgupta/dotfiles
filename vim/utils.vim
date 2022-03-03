@@ -27,7 +27,7 @@ endfunction
 
 " source a file if it exists
 function! SourceIfExists(path)
-  if filereadable(a:path) | source a:path | endif
+  if filereadable(a:path) | exe 'source' a:path | endif
 endfunction
 
 " install our plugin manager if not available
