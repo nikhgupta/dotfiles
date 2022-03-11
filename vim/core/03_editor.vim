@@ -51,3 +51,6 @@ nnoremap J mjJ`j
 " visual shifting (does not exit Visual mode when shifting text)
 vnoremap < <gv
 vnoremap > >gv
+
+" yank full line
+nnoremap Y yy

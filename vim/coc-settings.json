@@ -1,6 +1,6 @@
 {
-  "coc.preferences.extensionUpdateCheck": "weekly",
-  "coc.preferences.formatOnSaveFiletypes": [],
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.formatOnSaveFiletypes": ["js", "jsx", "ts", "tsx", "rb", "css", "markdown"],
   "coc.preferences.formatOnType": false,
   "coc.preferences.messageLevel": "error",
   "codeLens.enable": true,
@@ -14,7 +14,6 @@
   "diagnostic.warningSign": "◉",
   "javascript.autoClosingTags": false,
   "javascript.updateImportsOnFileMove.enable": false,
-  "prettier.disableSuccessMessage": true,
   "snippets.priority": 80,
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,

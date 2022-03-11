@@ -221,6 +221,7 @@ _prompt_0(){
   before_prompt=""
   PROMPT=""
   PROMPT='$(proxy_info)'           # prompt icon for proxy
+  [[ "$(arch)" == "i386" ]] && PROMPT+="🌱 "
   PROMPT+="%{$fg[magenta]%}%c%{$reset_color%} " # cwd name
   PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
 
@@ -239,6 +240,7 @@ _prompt_0(){
 _prompt_60(){
   PROMPT='$(proxy_info)'           # prompt icon for proxy
   PROMPT+="$(_ssh_user_info)"
+  [[ "$(arch)" -eq "i386" ]] && PROMPT+="🌱 "
   PROMPT+="%{$fg_bold[cyan]%}"'${PWD/#$HOME/~}'"%{$reset_color%} "
   PROMPT+='$(git_prompt_info)$(_git_time_since_commit)'"%{$reset_color%}"
   PROMPT+='$(virtualenv_prompt_info)'"%{$reset_color%}"

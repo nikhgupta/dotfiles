@@ -30,6 +30,8 @@ function! s:CustomInitFern() abort
   nmap <buffer> i <Plug>(fern-action-open:split)
   nmap <buffer> s <Plug>(fern-action-open:vsplit)
   nmap <buffer> u <Plug>(fern-action-leave)
+  nmap <buffer> I <Plug>(fern-action-hidden-toggle)
+  nmap <buffer> C <Plug>(fern-action-tcd)<Plug>(fern-action-open-or-enter)
   nmap <buffer> q :<C-u>quit<CR>
   nmap <buffer> r qff
   nmap <buffer> 6 ^

@@ -44,7 +44,7 @@ end
 
 def symlink(src, dst, options)
   info "\e[35m#{src} => #{dst}\e[0m", options
-  unless_dry_run(options) { FileUtils.symlink src, dst }
+  unless_dry_run(options) { FileUtils.symlink File.realpath(src), dst }
 end
 
 def move(src, dst, options)

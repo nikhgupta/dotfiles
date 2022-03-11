@@ -51,15 +51,15 @@ export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 # miscelleneous
 unalias run-help &>/dev/null
 autoload run-help
-HELPDIR=$BREW_PREFIX/share/zsh/help
+HELPDIR=$HOMEBREW_PREFIX/share/zsh/help
 
 # NOTE: brew doctor complaints about putting coreutils/findutils in path
 # # make sure we use gnu version of commands like ls, etc.
 # # rehash -f     # gnu-utils OMZ plugin
 # for package in coreutils gnu-sed gnu-tar findutils moreutils; do
-#   if [[ -d $BREW_PREFIX/opt/$package/libexec/gnubin ]]; then
-#     PATH="$BREW_PREFIX/opt/$package/libexec/gnubin:$PATH"
-#     MANPATH="$BREW_PREFIX/opt/$package/libexec/gnuman:$MANPATH"
+#   if [[ -d $HOMEBREW_PREFIX/opt/$package/libexec/gnubin ]]; then
+#     PATH="$HOMEBREW_PREFIX/opt/$package/libexec/gnubin:$PATH"
+#     MANPATH="$HOMEBREW_PREFIX/opt/$package/libexec/gnuman:$MANPATH"
 #   fi
 # done
 
@@ -67,16 +67,9 @@ HELPDIR=$BREW_PREFIX/share/zsh/help
 [[ -r $XDG_CONFIG_DIR/user-dirs.dirs ]] && source $XDG_CONFIG_DIR/user-dirs.dirs
 # [[ -f ~/.dir_colors ]] && init_cache dircolors "gdircolors -b ~/.dir_colors"
 
-# asdf, rbenv, pyenv, etc.
-. $BREW_PREFIX/opt/asdf/asdf.sh
-path_prepend $(yarn global bin)
-# is_installed rbenv && init_cache rbenv "rbenv init -"
-# is_installed pyenv && init_cache pyenv "pyenv init -"
-# [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-
 # ssh setup using GnuPG
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf &>/dev/null
+gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf --pinentry-program $HOMEBREW_PREFIX/bin/pinentry-mac &>/dev/null
 
 # source other zsh scripts
 source ~/.zshplugs

@@ -4,16 +4,19 @@
 ZSH_UTILS_SOURCED=1
 
 # export dotcastle environment var
-export DOTCASTLE=$(dirname $(dirname $0))/.dotfiles
+export DOTCASTLE=$HOME/.dotfiles
+export _ARCH=$(arch)
 
 # Check OS for various features
 os_release() { lsb_release -i | cut -d: -f2 | tr '[:upper:]' '[:lower:]' | sed -e 's/[[:space:]]*//'; }
-is_macosx() { [[ "$OSTYPE" = darwin* ]]; }
 is_ubuntu() { [[ "$(uname -a)" = *Ubuntu* ]]; }
 is_debian() { [[ -f "/etc/debian" ]]; }
 is_archlinux() { [[ -f /etc/arch-release ]]; }
 is_wsl() { [[ "$(uname -a)" = *microsoft* ]]; }
 is_wsl_ubuntu() { is_wsl && os_release == "ubuntu" >/dev/null; }
+is_macosx() { [[ "$OSTYPE" = darwin* ]]; }
+is_arm_macos() { is_macosx && [[ "$_ARCH" = arm64* ]]; }
+is_intel_macos() { is_macosx && [[ "$_ARCH" == "i386" ]]; }
 
 # check repository features
 is_svn() { [[ -d '.svn' ]]; }

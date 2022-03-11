@@ -6,7 +6,7 @@ source $_root/zsh/utils.sh
 highlight "Obtaining your GPG keys from OneDrive"
 mkdir /tmp/gpg-backup
 rclone copy onedrive:Backup/workstation/gpg /tmp/gpg-backup
-import_gnupg.sh /tmp/gpg-backup
+$_root/bin/import_gnupg.sh /tmp/gpg-backup
 rm -rf /tmp/gpg-backup
 
 highlight "Using GPG for SSH authentications"

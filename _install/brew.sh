@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 _root=$(dirname $(dirname $0))
 source $_root/zsh/utils.sh
@@ -70,7 +70,7 @@ brew tap heroku/brew && brew install heroku
 
 highlight "Installing apps/casks using brew"
 # brew install alacritty
-brew install alfred
+# brew install alfred
 brew install atom
 # brew install dropbox
 brew install google-chrome

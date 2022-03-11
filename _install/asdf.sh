@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 _root=$(dirname $(dirname $0))
 source $_root/zsh/utils.sh
@@ -11,16 +11,17 @@ highlight "Installing node.js"
 asdf plugin add nodejs
 bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring'
 asdfin nodejs 16.9.1
+asdfin nodejs 16.6.0
 asdf install nodejs 12.9.1
 
-highlight "Installing erlang/elixir"
-asdf plugin add erlang
-asdf plugin add elixir
-brew install autoconf wxmac
-export KERL_CONFIGURE_OPTIONS="--without-javac --with-ssl=$(brew --prefix openssl)"
-asdfin erlang 24.0.6
-asdfin elixir 1.12.3-otp-24
-unset KERL_CONFIGURE_OPTIONS
+# highlight "Installing erlang/elixir"
+# asdf plugin add erlang
+# asdf plugin add elixir
+# brew install autoconf wxmac
+# export KERL_CONFIGURE_OPTIONS="--without-javac --with-ssl=$(brew --prefix openssl)"
+# asdfin erlang 24.0.6
+# asdfin elixir 1.12.3-otp-24
+# unset KERL_CONFIGURE_OPTIONS
 
 highlight "Installing ruby"
 asdf plugin add ruby
