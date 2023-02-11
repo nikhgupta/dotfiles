@@ -27,7 +27,9 @@ setenv GUIEDITOR $EDITOR
 setenv BROWSER "open -a 'Google Chrome'"
 
 # brew
-is_intel_macos && _PREFIX="/usr/local" || _PREFIX="/opt/homebrew"
+_PREFIX="/opt/homebrew"
+is_intel_macos && _PREFIX="/usr/local"
+is_ubuntu && _PREFIX="/home/linuxbrew/.linuxbrew"
 setenv HOMEBREW_PREFIX $_PREFIX
 setenv HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
 setenv HOMEBREW_REPOSITORY $HOMEBREW_PREFIX

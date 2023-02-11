@@ -3,7 +3,7 @@ set shortmess+=c
 
 let g:coc_start_at_startup = 1
 let g:coc_config_home = expand("$HOME") . "/.vim"
-let g:coc_node_path = '/Users/nikhgupta/.asdf/installs/nodejs/16.6.0/bin/node'
+let g:coc_node_path = expand("$HOME") . '/.asdf/installs/nodejs/16.6.0/bin/node'
 let g:coc_hover_allowlist = [
       \ 'ruby', 'eruby', 'python',
       \ 'typescript', 'javascript', 'typescriptreact', 'javascriptreact',

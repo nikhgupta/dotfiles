@@ -15,6 +15,7 @@ source ~/.zsh/topics/sane.zsh
 source ~/.zsh/topics/sync.zsh
 source ~/.zsh/topics/system_info.zsh
 source ~/.zsh/topics/tmux.zsh
+source ~/.zsh/topics/task.zsh
 
 # speed up parent directories
 alias -g ...='../..'

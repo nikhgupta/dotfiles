@@ -91,8 +91,5 @@ if [ -f '/Users/nikhgupta/.bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/
 if [ -f '/Users/nikhgupta/.bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nikhgupta/.bin/google-cloud-sdk/completion.zsh.inc'; fi
 
 path_append ~/Code/library/flutter/bin
-path_prepend ~/OneDrive/LifeOS/PlainTxt/bin
+path_prepend ~/Code/plaintxt/bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-alias t=task
-alias ta="task add"

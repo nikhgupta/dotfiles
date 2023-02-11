@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>UploadFile</name>
-  <version>1.1.1</version>
-  <bundle>com.vitorgalvao.alfred.uploadfile</bundle>
-  <updated>1423182434</updated>
-  <file>uploadfile.alfredworkflow</file>
-</workflow>

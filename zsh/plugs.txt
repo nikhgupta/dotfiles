@@ -4,6 +4,7 @@ ohmyzsh/ohmyzsh path:plugins/bundler
 ohmyzsh/ohmyzsh path:plugins/extract
 ohmyzsh/ohmyzsh path:plugins/last-working-dir
 ohmyzsh/ohmyzsh path:lib/history.zsh
+ohmyzsh/ohmyzsh path:plugins/taskwarrior
 djui/alias-tips
 Aloxaf/fzf-tab
 

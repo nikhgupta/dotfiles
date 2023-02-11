@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>TemporaryEmail</name>
-  <version>1.0.3</version>
-  <bundle>com.vitorgalvao.alfred.temporaryemail</bundle>
-  <updated>1486002556</updated>
-  <file>temporaryemail.alfredworkflow</file>
-</workflow>

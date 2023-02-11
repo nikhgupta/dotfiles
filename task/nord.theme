@@ -1,0 +1,97 @@
+# Originally adapted from  https://github.com/arcticicestudio/igloo
+# License:    MIT
+
+# References:
+#   https://taskwarrior.org/docs/themes.html
+#   task-color(5)
+#   taskrc(5)
+
+# rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
+
+#+---------+
+#+ General +
+#+---------+
+color.label=
+color.label.sort=
+color.alternate=
+color.header=bold magenta
+color.footnote=rgb542 # yellow
+color.warning=bold black on yellow
+color.error=bold white on red
+color.debug=magenta
+
+#+-------------+
+#+ Task States +
+#+-------------+
+color.completed=gray8
+color.deleted=bold gray6
+color.active=bold black on green
+color.recurring=bold green
+color.scheduled=cyan
+color.until=cyan
+color.blocking=magenta
+color.blocked=bold black on cyan
+
+#+----------+
+#+ Projects +
+#+----------+
+color.project.work=bold
+
+#+----------+
+#+ Priority +
+#+----------+
+color.uda.priority.H=bold yellow
+color.uda.priority.M=yellow
+color.uda.priority.L=gray18
+
+#+------+
+#+ Tags +
+#+------+
+color.tag.next=
+color.tag.none=
+color.tagged=
+
+#+-----+
+#+ Due +
+#+-----+
+color.due=red
+color.due.today=bold red
+color.overdue=bold red
+
+#+---------+
+#+ Reports +
+#+---------+
+color.burndown.done=inverse color0
+color.burndown.pending=inverse blue
+color.burndown.started=inverse color8
+
+color.history.add=inverse blue
+color.history.delete=inverse color0
+color.history.done=inverse color8
+
+color.summary.background=inverse color0
+color.summary.bar=inverse blue
+
+#+----------+
+#+ Calendar +
+#+----------+
+color.calendar.due=red
+color.calendar.due.today=bold red
+color.calendar.holiday=cyan
+color.calendar.overdue=bold red on color0
+color.calendar.today=bold yellow
+color.calendar.weekend=bold gray9
+color.calendar.weeknumber=color0
+
+#+-----------------+
+#+ Synchronization +
+#+-----------------+
+color.sync.added=green
+color.sync.changed=yellow
+color.sync.rejected=red
+
+#+------+
+#+ Undo +
+#+------+
+color.undo.after=green
+color.undo.before=red

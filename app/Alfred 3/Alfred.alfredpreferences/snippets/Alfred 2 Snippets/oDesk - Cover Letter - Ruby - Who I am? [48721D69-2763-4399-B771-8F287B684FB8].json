@@ -1,9 +1,0 @@
-{
-  "alfredsnippet" : {
-    "snippet" : "Hello, \n\nI am Nikhil Gupta, and I am a full-time ruby developer. I am intrigued by projects that involve integrating APIs together, or otherwise automate a particular business process.\n\nI stand amongst the top 10% Rails developer on oDesk, and score 4.75 out 5 possible points in the test. My Github profile is: https:\/\/github.com\/nikhgupta, and I am available on Skype at: nikh.gupta. :)\n\n## Code Samples\n\nI am an active contributor to many open-source projects, and have created many Rails applications and ruby gems in the past for several clients. I write clean and heavily documented code, which can be seen on the following URLs:\nhttps:\/\/gist.github.com\/nikhgupta\/03cf9104886e7ba894f1\nhttps:\/\/gist.github.com\/nikhgupta\/6dd641464590c3f08419\n\n## Technical Experience in RoR\n\nI am experienced in most RoR based concepts such as Single Table Inheritance (and even, Multi-table Inheritance), Polymorphism, Self-referential associations, multi-tenancy etc. I prefer test-driven development using RSpec\/Cucumber. I have worked with Rails for 4+ years.",
-    "dontautoexpand" : true,
-    "uid" : "48721D69-2763-4399-B771-8F287B684FB8",
-    "name" : "oDesk - Cover Letter - Ruby - Who I am?",
-    "keyword" : "odesk-ruby-cover-intro"
-  }
-}

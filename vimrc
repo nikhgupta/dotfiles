@@ -8,7 +8,7 @@ source ~/.vim/utils.vim
 call SourceIfExists(expand("$HOME")."/.vimrc.local.pre")
 
 call InstallPlugManager()
-call plug#begin(g:data_dir . "/bundle")
+call plug#begin(expand("$HOME") . "/.cache/vim/bundle")
 runtime macros/matchit.vim " require matchit
 
 " ==========================================

@@ -1,0 +1,118 @@
+# [Created by task 2.6.2 2/5/2023 15:52:32]
+# Taskwarrior program configuration file.
+# For more documentation, see https://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+#
+# read more: https://manpages.ubuntu.com/manpages/bionic/man5/taskrc.5.html
+
+include nord.theme
+news.version=2.6.0
+data.location=$HOME/Code/plaintxt/taskwarrior
+hooks.location=$HOME/Code/dotfiles/task/hooks
+
+# defaults
+next=4
+bulk=2
+due=7
+active.indicator=*
+tag.indicator=+
+recurrence.indicator=R
+recurrence.limit=1
+confirmation=yes
+
+# others
+exit.on.missing.db=yes
+allow.empty.filter=no
+
+regex=on
+search.case.sensitive=no
+
+list.all.tags=yes
+list.all.projects=yes
+complete.all.tags=yes
+
+dateformat=d/m/Y
+dateformat.annotation=d/m/Y
+dateformat.report=d/m/Y
+weekstart=Monday
+displayweeknumber=true
+calendar.legend=false
+# dateformat.holiday=DMY
+
+# default.command=long
+default.command=next +READY limit:page
+
+# priorities
+default.priority=L
+uda.priority.values = H,M,,L
+
+# urgencies
+urgency.inherit = on
+urgency.tags.coefficient = 0
+urgency.project.coefficient = 0
+urgency.blocked.coefficient = -0.4
+urgency.blocking.coefficient = 0.4
+urgency.user.tag.iacm.coefficient = 1.6
+urgency.user.tag.health.coefficient = 2.0
+urgency.user.tag.dotfiles.coefficient = 0.8
+urgency.user.project.work.coefficient = 1.8
+urgency.user.project.idea.coefficient = 1.2
+urgency.uda.priority.L.coefficient=0
+urgency.uda.priority..coefficient=1.0
+urgency.user.tag.next.coefficient=2.0
+
+# next report: don't show annotations
+report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency
+
+# Ready report: don't show annotations. Don't show depends.indicator
+report.ready.columns=id,start.age,entry.age,priority,project,tags,recur.indicator,scheduled.countdown,due.relative,until.remaining,description.count,urgency
+report.ready.labels=ID,Active,Age,P,Project,Tags,R,S,Due,Until,Description,Urg
+
+# OMG completed report, don't show me annotations.
+report.completed.columns=id,uuid.short,entry,end,entry.age,depends,priority,project,tags,recur.indicator,due,description.count
+report.completed.labels=ID,UUID,Created,Completed,Age,Deps,P,Project,Tags,R,Due,Description
+
+# No. Nothing should show annotations. No. Also relative dates please.
+report.waiting.labels=ID,A,Age,D,P,Project,Tags,R,Waiting,Sched,Due,Until,Description
+report.waiting.columns=id,start.active,entry.age,depends.indicator,priority,project,tags,recur.indicator,wait.remaining,scheduled,due.relative,until,description.count
+report.waiting.sort=wait+,due+,entry+
+
+# Let's make our own scheduled report.
+report.scheduled.description=Scheduled tasks
+report.scheduled.columns=id,start.age,entry.age,priority,project,tags,recur.indicator,scheduled.relative,due.relative,until.remaining,description.count,urgency
+report.scheduled.labels=ID,Active,Age,P,Project,Tags,R,S,Due,Until,Description,Urg
+report.scheduled.sort=scheduled
+report.scheduled.filter=+SCHEDULED -COMPLETED -DELETED
+
+# I never really got into the review system in `tasksh`, but here's the config from when I tried.
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-12h ) and (+PENDING and -WAITING)
+
+# gimme just one thing to do
+report.top.description=The Top Task - Do it now!
+report.top.columns=id,project,due,description
+report.top.labels=ID,Project,Due,Description
+report.top.sort=urgency-
+report.top.filter=limit:1 status:pending -BLOCKED
+
+report.work.description="Work tasks"
+report.work.labels=ID,A,Age,D,P,Project,Tags,R,Waiting,Sched,Due,Until,Description
+report.work.columns=id,start.active,entry.age,depends.indicator,priority,project,tags,recur.indicator,wait.remaining,scheduled,due.relative,until,description.count
+report.work.sort=urgency-
+report.work.filter=pro:work status:pending -BLOCKED
+
+report.iacm.description="IACM tasks"
+report.iacm.labels=ID,A,Age,D,P,Project,Tags,R,Waiting,Sched,Due,Until,Description
+report.iacm.columns=id,start.active,entry.age,depends.indicator,priority,project,tags,recur.indicator,wait.remaining,scheduled,due.relative,until,description.count
+report.iacm.sort=urgency-
+report.iacm.filter=pro:work +iacm status:pending -BLOCKED
+
+report.idea.description="Idea based tasks"
+report.idea.labels=ID,A,Age,D,P,Project,Tags,R,Waiting,Sched,Due,Until,Description
+report.idea.columns=id,start.active,entry.age,depends.indicator,priority,project,tags,recur.indicator,wait.remaining,scheduled,due.relative,until,description.count
+report.idea.sort=urgency-
+report.idea.filter=pro:idea status:pending -BLOCKED
