@@ -30,7 +30,7 @@ let g:ale_maximum_file_size = 500000  " Don't lint large files (> 500KB), it can
 let g:ale_linters                = {}
 let g:ale_linters['json']        = ['fixjson']
 let g:ale_linters['jsonc']       = ['fixjson']
-let g:ale_linters_ignore = {'typescriptreact': ['eslint'], 'typescript': ['eslint']}
+let g:ale_linters_ignore = {'typescriptreact': ['eslint'], 'typescript': ['eslint'], 'ruby': ['standardrb']}
 
 let g:ale_typescript_standard_use_global = 1
 let g:ale_typescript_tslint_use_global = 1
@@ -53,7 +53,7 @@ let g:ale_fixers.json            = ['prettier', 'fixjson']
 let g:ale_fixers.jsonc           = ['prettier', 'fixjson']
 let g:ale_fixers.markdown        = ['prettier']
 let g:ale_fixers.python          = ['autopep8']
-let g:ale_fixers.ruby            = ['rubocop']
+let g:ale_fixers.ruby            = ['rubocop', 'prettier', 'rufo']
 let g:ale_fixers.eruby           = ['prettier']
 let g:ale_fixers.scss            = ['prettier']
 let g:ale_fixers.sh              = ['shfmt']

@@ -9,6 +9,7 @@ Plug 'lambdalisue/fern-git-status.vim'
 
 let g:cursorhold_updatetime = 100
 let g:fern#renderer = "nerdfont"
+let g:fern#disable_drawer_hover_popup = 1
 
 " mappings
 let g:which_key_map.t.u.n = 'toggle file browser'
@@ -16,7 +17,7 @@ nnoremap <silent> <leader>tun :Fern . -drawer -wait -width=30 -keep<CR>
 
 
 let g:which_key_map.f.f.t = 'find file in file browser'
-nnoremap <silent> ff :Fern <C-r>=FindRootDirectoryWithGit()<CR> -drawer -wait -width=30 -keep -reveal=%<CR>
+nnoremap <silent> ff :Fern <C-r>=FindRootDirectoryWithGit()<CR> -drawer -toggle -wait -width=30 -keep -reveal=%<CR>
 nmap <silent> <leader>fft ff
 
 augroup my-glyph-palette

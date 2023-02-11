@@ -72,6 +72,7 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf --pinentry-program $HOMEBREW_PREFIX/bin/pinentry-mac &>/dev/null
 
 # source other zsh scripts
+source ~/.zshenv
 source ~/.zshplugs
 source ~/.zsh/aliases.zsh
 source ~/.zsh/fzf.zsh
@@ -85,3 +86,13 @@ source_if_exists ~/.zshrc.local
 
 # FIX: use ncurses pinentry when inside SSH connection
 [[ -n "$SSH_CONNECTION" || -n "$TMUX" ]] && export PINENTRY_USER_DATA="USE_CURSES=1" || true
+
+if [ -f '/Users/nikhgupta/.bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nikhgupta/.bin/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/nikhgupta/.bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nikhgupta/.bin/google-cloud-sdk/completion.zsh.inc'; fi
+
+path_append ~/Code/library/flutter/bin
+path_prepend ~/OneDrive/LifeOS/PlainTxt/bin
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+alias t=task
+alias ta="task add"

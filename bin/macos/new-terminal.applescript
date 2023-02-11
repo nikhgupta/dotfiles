@@ -1,10 +1,20 @@
 #!/usr/bin/env osascript
 
+on is_running(appName)
+  tell application "System Events" to (name of processes) contains appName
+end is_running
+
 on run argv
+  set kittyRunning to is_running("kitty")
+
   tell application "System Events"
-    tell application "kitty" to activate
-    keystroke "n" using {command down}
-    set visible of process "kitty" to true
+    if kittyRunning then
+      tell application "kitty" to activate
+      keystroke "n" using {command down}
+      set visible of process "kitty" to true
+    else
+      tell application "kitty" to activate
+    end if
   end tell
 
   if (count of argv) >= 1

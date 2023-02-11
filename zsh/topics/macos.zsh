@@ -9,15 +9,13 @@ function battery_percent() { pmset -g batt | egrep "([0-9]+\%).*" -o --colour=au
 
 # change architecture
 function xarch() {
-  if (( $# )); then
-    is_intel_macos && {
-      echo "running command in arm64 architecture"
-      arch -arm64 $@
-    } || {
-      echo "running command in i386 (x86_64) architecture"
-      arch -x86_64 $@
-    }
-  else
-    is_intel_macos && exec arch -arm64 zsh -li || exec arch -x86_64 zsh -li
-  fi
+  is_intel_macos && {
+    echo "=> running command in arm64 architecture.."
+    if (( $# )); then arch -arm64 $@; else exec arch -arm64 zsh -li; fi
+  }
+
+  is_arm_macos && {
+    echo "=> running command in i386 (x86_64) architecture.."
+    if (( $# )); then arch -x86_64 $@; else exec arch -x86_64 zsh -li; fi
+  }
 }

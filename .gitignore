@@ -4,3 +4,6 @@ vim/autoload
 vim/bundle
 vim/tmp
 *.decrypted-cache
+bin/JDownloader2.0
+bin/google-cloud-sdk
+config/phoenix

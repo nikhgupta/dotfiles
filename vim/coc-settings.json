@@ -1,6 +1,6 @@
 {
   "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.formatOnSaveFiletypes": ["js", "jsx", "ts", "tsx", "rb", "css", "markdown"],
+  "coc.preferences.formatOnSaveFiletypes": ["js", "jsx", "ts", "tsx", "rb", "css", "markdown", "html"],
   "coc.preferences.formatOnType": false,
   "coc.preferences.messageLevel": "error",
   "codeLens.enable": true,

@@ -16,7 +16,7 @@
                 },
                 "rules": [
                     {
-                        "description": "Change caps_lock key to command+control+option. (Post escape key when pressed alone)",
+                        "description": "Change caps_lock key to command+control+option+shift. (Post escape key when pressed alone)",
                         "manipulators": [
                             {
                                 "from": {
@@ -29,10 +29,11 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "left_alt",
+                                        "key_code": "left_shift",
                                         "modifiers": [
                                             "left_command",
-                                            "left_control"
+                                            "left_control",
+                                            "left_option"
                                         ]
                                     }
                                 ],

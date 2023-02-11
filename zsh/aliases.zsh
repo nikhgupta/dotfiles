@@ -55,3 +55,36 @@ alias gedit="${VISUAL}"
 
 # browse files easily
 function browse() { eval "${BROWSER} '$1'" }
+
+# backup/restore history
+function backup_history() {
+    mkdir -p ~/.history
+    mv ~/.*_history ~/.wget-hsts ~/.lesshst  ~/.history
+}
+
+function restore_history() {
+    mv ~/.history/.* ~/
+}
+
+function flushdns() {
+  sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;
+}
+
+function bwgen() {
+  if [[ "$1" == "-P" ]]; then
+    shift
+    bw generate -lun --length 25 $@ | pbcopy
+  else
+    bw generate -p --separator '/' --words 4 -c $@ | pbcopy
+  fi
+}
+
+function download_images() {
+  mkdir -p "$HOME/Pictures/Downloaded/$1"
+  bbid.py -o "$HOME/Pictures/Downloaded/$1" --filters +filterui:imagesize-wallpaper "$2"
+}
+
+alias pngrok="ngrok --config ~/.config/ngrok/personal.yml"
+function current_ngrok_tunnel() {
+  curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url
+}

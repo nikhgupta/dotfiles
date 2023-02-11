@@ -46,12 +46,12 @@ function! SyntaxHighlightWithTreesitter()
   -- }
 
   require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained",
+    ensure_installed = "",
     ignore_install = {},
     textobjects = { enable = true },
     highlight = {
       enable = true,
-      disable = { "c", "rust" },  -- list of language that will be disabled
+      disable = { },  -- list of language that will be disabled
     },
   }
 EOF

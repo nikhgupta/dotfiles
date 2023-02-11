@@ -20,7 +20,7 @@ let g:startify_session_dir = expand("~/.vim") . "/tmp/sessions/"
 " first four shortcuts should be available from home row
 let g:startify_custom_indices = [ 'a', 'd', 'f', 'l', 'w', 'p' ]
 " skip these files from the recent files list
-let g:startify_skiplist = [ 'COMMIT_EDITMSG', $VIMRUNTIME .'/doc', 'bundle/.*/doc', '/tmp' ]
+let g:startify_skiplist = [ 'COMMIT_EDITMSG', $VIMRUNTIME .'/doc', 'bundle/.*/doc', '/tmp', 'Library/*' ]
 
 " display shortcuts in the given order
 let g:startify_list_order = [
@@ -61,4 +61,3 @@ augroup vim_startup_screen
   au User Startified AirlineRefresh
   " au User Startified nnoremap <silent!> <buffer> <leader>st :e#<CR>
 augroup end
-

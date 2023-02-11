@@ -52,3 +52,6 @@ find ~/.ssh -type f -exec chmod 600 {} \;
 find ~/.gnupg -type f -exec chmod 600 {} \;
 find ~/.ssh -type d -exec chmod 700 {} \;
 find ~/.gnupg -type d -exec chmod 700 {} \;
+
+# phoenix
+ln -sf $_root/config/phoenix/dist/phoenix.js ~/.phoenix.js

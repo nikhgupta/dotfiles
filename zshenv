@@ -22,7 +22,7 @@ setenv ZSH_CACHE_DIR $HOME/.zcache
 
 # editor and browser
 setenv EDITOR nvim
-setenv VISUAL neovide
+setenv VISUAL nvim
 setenv GUIEDITOR $EDITOR
 setenv BROWSER "open -a 'Google Chrome'"
 
@@ -40,14 +40,16 @@ alias brew="${HOMEBREW_PREFIX}/bin/brew"
 
 # asdf, rbenv, pyenv, etc.
 . $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
-path_prepend $(yarn global bin)
+# path_prepend $(yarn global bin)
 # is_installed rbenv && init_cache rbenv "rbenv init -"
 # is_installed pyenv && init_cache pyenv "pyenv init -"
 # [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+path_prepend "/Applications/Postgres.app/Contents/Versions/latest/bin"
 
 # add custom scripts from dotcastle to $PATH
 path_append ~/.bin
 path_prepend ~/.local/bin
+
 
 # source secret credentials
 source ~/.config/user-dirs.dirs
