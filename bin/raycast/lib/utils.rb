@@ -33,8 +33,12 @@ class SonicBase
     if respond_to?(type)
       begin
         output = send(type, *args)
-        IO.popen('pbcopy', 'w') { |pipe| pipe.print output }
-        puts output
+        if system("which pbcopy 2>/dev/null >/dev/null")
+          IO.popen('pbcopy', 'w') { |pipe| pipe.print output }
+          puts output
+        else
+          puts "#{Digest::MD5.hexdigest(output)}: #{output}"
+        end
       rescue StandardError => e
         puts e.message
         exit 2
