@@ -54,7 +54,7 @@ color.tagged=
 #+-----+
 #+ Due +
 #+-----+
-color.due=red
+color.due=rgb433
 color.due.today=bold red
 color.overdue=bold red
 

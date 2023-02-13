@@ -52,14 +52,23 @@ urgency.tags.coefficient = 0
 urgency.project.coefficient = 0
 urgency.blocked.coefficient = -0.4
 urgency.blocking.coefficient = 0.4
-urgency.user.tag.iacm.coefficient = 1.6
-urgency.user.tag.health.coefficient = 2.0
+urgency.user.tag.iacm.coefficient = 2.0
+urgency.user.tag.health.coefficient = 2.4
 urgency.user.tag.dotfiles.coefficient = 0.8
+urgency.user.tag.capture.coefficient = 1.2
+urgency.user.tag.organize.coefficient = 1.2
+urgency.user.tag.code.coefficient = 0.8
 urgency.user.project.work.coefficient = 1.8
 urgency.user.project.idea.coefficient = 1.2
 urgency.uda.priority.L.coefficient=0
 urgency.uda.priority..coefficient=1.0
 urgency.user.tag.next.coefficient=2.0
+
+# report used in summary view for other programs
+report.summarize.columns=id,priority,project,tags,description.count,urgency
+report.summarize.labels=ID,P,Project,Tags,Description,Urg
+report.summarize.sort=urgency-
+report.summarize.filter=+READY status:pending -BLOCKED limit:page
 
 # next report: don't show annotations
 report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency

@@ -4,7 +4,7 @@
 source ~/.zsh/utils.sh
 
 # Reference: http://zsh.sourceforge.net/Doc/Release/Options.html
-unsetopt rm_star_silent       # Query the user on removing all files in a path
+unsetopt rm_star_silent # Query the user on removing all files in a path
 unsetopt nomatch
 unsetopt correct_all
 unsetopt flowcontrol
@@ -80,16 +80,5 @@ source ~/.zsh/prompt.zsh
 source ~/.zsh/completion.zsh
 source_if_exists ~/.zshrc.local
 
-# echo "\e[32mWelcome, Nick!\e[0m"
-# path_prepend "/usr/local/opt/openjdk/bin"
-# path_prepend "/usr/local/opt/postgresql@12/bin"
-
 # FIX: use ncurses pinentry when inside SSH connection
 [[ -n "$SSH_CONNECTION" || -n "$TMUX" ]] && export PINENTRY_USER_DATA="USE_CURSES=1" || true
-
-if [ -f '/Users/nikhgupta/.bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nikhgupta/.bin/google-cloud-sdk/path.zsh.inc'; fi
-if [ -f '/Users/nikhgupta/.bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nikhgupta/.bin/google-cloud-sdk/completion.zsh.inc'; fi
-
-path_append ~/Code/library/flutter/bin
-path_prepend ~/Code/plaintxt/bin
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

@@ -33,8 +33,8 @@ is_ubuntu && _PREFIX="/home/linuxbrew/.linuxbrew"
 setenv HOMEBREW_PREFIX $_PREFIX
 setenv HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
 setenv HOMEBREW_REPOSITORY $HOMEBREW_PREFIX
-setenv MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:";
-setenv INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}";
+setenv MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:"
+setenv INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 setenv HOMEBREW_NO_AUTO_UPDATE 1
 path_prepend "${HOMEBREW_PREFIX}/bin"
 path_prepend "${HOMEBREW_PREFIX}/sbin"
@@ -52,6 +52,12 @@ path_prepend "/Applications/Postgres.app/Contents/Versions/latest/bin"
 path_append ~/.bin
 path_prepend ~/.local/bin
 
+# yarn paths
+path_append ~/.yarn/bin
+path_append ~/.config/yarn/global/node_modules/.bin
+
+# raycast
+path_append ~/Code/dotfiles/bin/raycast
 
 # source secret credentials
 source ~/.config/user-dirs.dirs
