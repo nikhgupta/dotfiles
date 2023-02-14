@@ -54,7 +54,7 @@ noremap <leader>xw :q<CR>
 
 " Switch between the last two files
 let g:which_key_map.t.e.b = 'Switch between last 2 buffers'
-let g:which_key_map["'"] = 'Switch between last 2 buffers'
+let g:which_key_map["\'"] = 'Switch between last 2 buffers'
 nnoremap <leader>teb <C-^>
 nnoremap <leader>' <C-^>
 

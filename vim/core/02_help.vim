@@ -53,8 +53,24 @@ let g:which_key_map.z = { 'name' : '+Fold' }
 let g:which_key_map['='] = { 'name' : '+Format' }
 let g:which_key_map['<C-w>'] = { 'name' : '+Window' }
 
-" open `whichkey` after single Space press and small wait
 nnoremap <silent> <leader>       :<c-u>WhichKey       '<Space>'<CR>
 vnoremap <silent> <leader>       :<c-u>WhichKeyVisual '<Space>'<CR>
 nnoremap <silent> <localleader>  :<c-u>WhichKey       ','<CR>
 vnoremap <silent> <localleader>  :<c-u>WhichKeyVisual ','<CR>
+
+let g:which_key_display_names = {'<CR>': '↵', '<TAB>': '⇆'}
+let g:which_key_hspace = 5
+let g:which_key_centered = 1
+
+" autocmd! FileType which_key
+" autocmd  FileType which_key set laststatus=0 noshowmode noruler
+"   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+augroup which_key_theme
+  au!
+  autocmd FileType which_key highlight WhichKey cterm=bold ctermbg=grey ctermfg=0
+  autocmd FileType which_key highlight WhichKeySeperator ctermbg=grey ctermfg=darkgrey
+  autocmd FileType which_key highlight WhichKeyGroup cterm=bold ctermbg=grey ctermfg=8
+  autocmd FileType which_key highlight WhichKeyDesc ctermbg=grey ctermfg=8
+  autocmd FileType which_key highlight WhichKeyFloating ctermbg=grey ctermfg=0
+augroup end

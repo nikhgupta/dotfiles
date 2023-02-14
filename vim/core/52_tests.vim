@@ -8,9 +8,8 @@ let g:which_key_map.c.e.t.s = 'Run entire test suite'
 let g:which_key_map.c.e.t.l = 'Re-run last test'
 let g:which_key_map.c.e.t.v = 'Visit file for last test'
 
-nmap <leader>petn :TestNearest<CR>
-nmap <leader>petf :TestFile<CR>
-nmap <leader>pets :TestSuite<CR>
-nmap <leader>petl :TestLast<CR>
-nmap <leader>petv :TestVisit<CR>
-
+nmap <leader>cetn :TestNearest<CR>
+nmap <leader>cetf :TestFile<CR>
+nmap <leader>cets :TestSuite<CR>
+nmap <leader>cetl :TestLast<CR>
+nmap <leader>cetv :TestVisit<CR>

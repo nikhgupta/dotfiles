@@ -20,4 +20,6 @@ call SourceConfig("languages")
 call SourceIfExists(expand("$HOME")."/.vimrc.local")
 call plug#end()
 call ApplyThemeSettings('dark')
-call which_key#register('<space>', "g:which_key_map")
+
+" open `whichkey` after single Space press and small wait
+call which_key#register('<Space>', "g:which_key_map")

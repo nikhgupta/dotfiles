@@ -42,5 +42,3 @@ augroup help_window
   au filetype help nnoremap <buffer><bs> <c-T>
   au filetype help nnoremap <buffer>q :q<CR>
 augroup end
-
-

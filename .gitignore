@@ -7,3 +7,4 @@ vim/tmp
 bin/JDownloader2.0
 bin/google-cloud-sdk
 config/phoenix
+vim/plugged/

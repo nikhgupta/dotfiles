@@ -58,6 +58,7 @@ urgency.user.tag.dotfiles.coefficient = 0.8
 urgency.user.tag.capture.coefficient = 1.2
 urgency.user.tag.organize.coefficient = 1.2
 urgency.user.tag.code.coefficient = 0.8
+urgency.user.tag.mit.coefficient = 10
 urgency.user.project.work.coefficient = 1.8
 urgency.user.project.idea.coefficient = 1.2
 urgency.uda.priority.L.coefficient=0
