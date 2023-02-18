@@ -9,4 +9,5 @@ alias tp="t summarize pro:personal"
 alias tc="t summarize +code"
 alias tm="t summarize +mac"
 
+alias mit="task all +mit"
 alias iacm="task add pro:work +iacm"
