@@ -4,6 +4,9 @@
 # saved in a variable for frequent usage later.
 sp = "(?:|\.|-|_)"
 
+Warning[:deprecated] = false
+ENV['XDG_PICTURES_DIR'] = File.expand_path('~/Pictures')
+
 # An example funtion that can be used for processing files before they are
 # moved. `path` points to the file path for the file under consideration, and
 # `add_file_for_migration` is a function that allows adding new files for
@@ -95,6 +98,9 @@ Murti.configure do
     source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2018"
     source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2019"
     source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2020"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2021"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2022"
+    source_directory "#{ENV['XDG_PICTURES_DIR']}/Pictures/2023"
 
     # Target directory where the files will be moved/copied to.
     # `save_in` paths (specified in this config) are relative to this directory.
@@ -104,24 +110,25 @@ Murti.configure do
   # Another named group. I can ask Murti to focus on this group by passing the
   # cli option: `--group=external`
   group :external do
-    source_directory '/Volumes/PICTURES/DUMP'
-    source_directory '/Volumes/PICTURES/UNMATCHED'
-    source_directory '/Volumes/PICTURES/RAW/UNMATCHED'
-    source_directory '/Volumes/PICTURES/Videos/UNMATCHED'
-    source_directory '/Volumes/PICTURES/Pictures/UNMATCHED'
-    source_directory '/Volumes/PICTURES/Documents/UNMATCHED'
-    source_directory '/Volumes/PICTURES/Wallpapers/UNMATCHED'
-    source_directory '/Volumes/PICTURES/Screenshots/UNMATCHED'
-    source_directory '/Volumes/PICTURES/Live Photos/UNMATCHED'
-    source_directory '/Volumes/PICTURES/RAW', on: :refresh
-    source_directory '/Volumes/PICTURES/Videos', on: :refresh
-    source_directory '/Volumes/PICTURES/Pictures', on: :refresh
-    source_directory '/Volumes/PICTURES/Documents', on: :refresh
-    source_directory '/Volumes/PICTURES/Wallpapers', on: :refresh
-    source_directory '/Volumes/PICTURES/Screenshots', on: :refresh
-    source_directory '/Volumes/PICTURES/Live Photos', on: :refresh
+    source_directory '/Volumes/OneDrive/Pictures'
+    source_directory '/Volumes/OneDrive/Photography/DUMP'
+    source_directory '/Volumes/OneDrive/Photography/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/RAW/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/Videos/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/Pictures/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/Documents/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/Wallpapers/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/Screenshots/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/Live Photos/UNMATCHED'
+    source_directory '/Volumes/OneDrive/Photography/RAW', on: :refresh
+    source_directory '/Volumes/OneDrive/Photography/Videos', on: :refresh
+    source_directory '/Volumes/OneDrive/Photography/Pictures', on: :refresh
+    source_directory '/Volumes/OneDrive/Photography/Documents', on: :refresh
+    source_directory '/Volumes/OneDrive/Photography/Wallpapers', on: :refresh
+    source_directory '/Volumes/OneDrive/Photography/Screenshots', on: :refresh
+    source_directory '/Volumes/OneDrive/Photography/Live Photos', on: :refresh
 
-    target_directory '/Volumes/PICTURES'
+    target_directory '/Volumes/OneDrive/Photography'
   end
 
   # Murti comes bundled with 3 strategies: test, move and copy.
@@ -333,7 +340,7 @@ Murti.configure do
   end
 
   # I can, also, remove/delete a matched file. Here I am deleting sidecars.
-  rule extension: %i[dng xmp aae] do
+  rule extension: %i[dng xmp aae json] do
     remove!
   end
 

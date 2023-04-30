@@ -16,7 +16,7 @@
                 },
                 "rules": [
                     {
-                        "description": "Change caps_lock key to command+control+option if pressed with other keys (post Esc if pressed alone)",
+                        "description": "Change caps_lock key to command+control+option. (Post escape key when pressed alone)",
                         "manipulators": [
                             {
                                 "from": {
@@ -29,16 +29,15 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "right_gui",
+                                        "key_code": "left_alt",
                                         "modifiers": [
-                                            "right_control",
-                                            "right_alt"
+                                            "left_command",
+                                            "left_control"
                                         ]
                                     }
                                 ],
                                 "to_if_alone": [
                                     {
-                                        "hold_down_milliseconds": 100,
                                         "key_code": "escape"
                                     }
                                 ],
