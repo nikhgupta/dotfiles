@@ -84,3 +84,4 @@ source_if_exists ~/.zshrc.local
 [[ -n "$SSH_CONNECTION" || -n "$TMUX" ]] && export PINENTRY_USER_DATA="USE_CURSES=1" || true
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source "$HOME/.cargo/env"

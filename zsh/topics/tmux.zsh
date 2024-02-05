@@ -31,6 +31,7 @@ function workon(){
 
 # sign off from working on a project - take some rest!
 function workoff() {
+  tmuxkill
   if [[ -n "${1}" ]] && tmuxinator list | grep $1 &>/dev/null; then
     tmuxinator stop $1
   else

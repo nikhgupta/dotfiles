@@ -7,6 +7,18 @@ sp = "(?:|\.|-|_)"
 Warning[:deprecated] = false
 ENV['XDG_PICTURES_DIR'] = File.expand_path('~/Pictures')
 
+IMAGE_EXTENSIONS = [/jpe?g/, :png, :webp, :gif, :bmp, :tiff, :heic]
+VIDEO_EXTENSIONS = [:mp4, :mov, :"3gp", :avi]
+RAW_IMAGE_EXTENSIONS = [:cr2, :raw, :nef]
+SIDECAR_EXTENSIONS = [:aae, :xmp, :json, :dng]
+PHOTOSHOP_EXTENSIONS = [:psd, :eps, :svg, :ai]
+ALL_EXTENSIONS = (IMAGE_EXTENSIONS + VIDEO_EXTENSIONS + RAW_IMAGE_EXTENSIONS +
+  SIDECAR_EXTENSIONS + PHOTOSHOP_EXTENSIONS).flatten
+
+GOOGLE_NAME_REGEX = /\A([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}|[0-9a-f]{32})\.mp4\z/i
+GOOGLE_ARCHIVE_REGEX = %r{/Photos from (\d{4})/}
+LIVE_PHOTOS_IPHONE_REGEX = /\AIMG_\d+(?:|-\d+)\.(MOV|MP4)\z/i
+
 # An example funtion that can be used for processing files before they are
 # moved. `path` points to the file path for the file under consideration, and
 # `add_file_for_migration` is a function that allows adding new files for
@@ -158,8 +170,7 @@ Murti.configure do
   # I can ask Murti to skip specific extensions or only allow specific ones.
   # Oh, did I forget to tell you? This config is a Ruby DSL. You can use all
   # Ruby goodness here.
-  skip_if extension_not_in: [/jpe?g/, :mp4, :mov, :ai, :psd, :png, :bmp, :gif,
-                             :avi, :cr2, :webp, :tiff, :raw, :eps, :svg, :aae, :dng, :xmp]
+  skip_if extension_not_in: ALL_EXTENSIONS
   # skip_if extension: [/\A\z/, :pdf, :exe, :zip, :tar, :lrprev, /\Adocx?\z/]
 
   # Skip specific paths from organization. This is useful when we are organizing
@@ -179,11 +190,15 @@ Murti.configure do
   # Other options are :oldest, and :newest - which set the timestamp to the
   # oldest/newest timestamp found in any of the EXIF related fields.
   extract :timestamp, exif: :occurrence
+  extract :software
 
   # If we can't find the date from EXIF data, we move on to file name/path based
   # date recognition. The first rule to match will set the timestamp for the
   # image file.
-  #
+  extract :timestamp, path: %r{/(\d+#{sp}.+#{sp}\d{4})/} do |m|
+    "#{m[0]}"
+  end
+
   # In this case, we are looking for files with exactly 19 digits as their name.
   # This should, usually, be the unix timestamp down to nanoseconds.
   #
@@ -198,6 +213,11 @@ Murti.configure do
     Time.at(m[0].to_f / 1e3)
   end
 
+  # Same but for 14 digit files with timestamps
+  extract :timestamp, name: /\A(?:IMG|VID)(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/ do |m|
+    "#{m[0]}-#{m[1]}-#{m[2]} #{m[3]}:#{m[4]}:#{m[5]}"
+  end
+
   # More rules for extracting date-time from file names.
   # Some of them focus on whatsapp images/videos, others on iPhone generated
   # files, etc.
@@ -207,7 +227,7 @@ Murti.configure do
   extract :timestamp, name: /(\d{4})#{sp}(\d{2})#{sp}(\d{2})#{sp}(\d{2})#{sp}(\d{2})#{sp}(\d{2})/ do |m|
     "#{m[0]}/#{m[1]}/#{m[2]} #{m[3]}:#{m[4]}:#{m[5]}"
   end
-  extract :timestamp, name: /\A(?:IMG|VID)#{sp}(\d{4})(\d{2})(\d{2})#{sp}WA\d+/i do |m|
+  extract :timestamp, name: /\A(?:IMG|VID|null)#{sp}(\d{4})(\d{2})(\d{2})#{sp}WA\d+/i do |m|
     "#{m[0]}/#{m[1]}/#{m[2]}"
   end
   extract :timestamp, name: /\A(?:IMG|VID)#{sp}(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})\./ do |m|
@@ -261,14 +281,27 @@ Murti.configure do
   #
   # We will be repeating this rule later to, also, store iPhone
   # videos/live-photos where timestamp can not be found.
-  rule :valid_date, name_regex: /\AIMG_\d+(?:|-\d+)\.MOV\z/i do
+  rule :valid_date, name_regex: LIVE_PHOTOS_IPHONE_REGEX do
     size = File.stat(path).size / 1024.0 / 1024.0
-    save_in(size > 10 ? 'Videos/%{date_format}' : 'Live Photos/%{date_format}')
+    save_in(size > 16 ? 'Videos/%{date_format}' : 'Live Photos/%{date_format}')
+  end
+
+  rule :valid_date, name_regex: GOOGLE_NAME_REGEX do
+    size = File.stat(path).size / 1024.0 / 1024.0
+    save_in(size > 16 ? 'Videos/%{date_format}' : 'Live Photos/%{date_format}')
+  end
+
+  rule :valid_date, path_regex: /screenshots/i, extension: IMAGE_EXTENSIONS do
+    save_in 'Pictures/Screenshots/%{date_format}'
+  end
+
+  rule :is_unmatched, path_regex: /screenshots/i, extension: IMAGE_EXTENSIONS do
+    save_in 'Pictures/Screenshots/UNMATCHED'
   end
 
   # Next, we sort all files with `mp4`, `mov` and `avi` extension that have
   # a valid date to the `Videos` folder and arrange them as per their dates.
-  rule :valid_date, extension: %i[mp4 mov avi] do
+  rule :valid_date, extension: VIDEO_EXTENSIONS do
     save_in 'Videos/%{date_format}'
   end
 
@@ -285,14 +318,21 @@ Murti.configure do
   #
   # HINT: You can use the same method to pre-process various video formats into
   # `mp4` files, and then delete the old files and organize the new `mp4` ones.
-  rule :valid_date, extension: %i[cr2 raw nef] do
+  rule :valid_date, extension: RAW_IMAGE_EXTENSIONS - [:dng] do
     migrate(&raw2jpg)
+    save_in 'RAW/%{date_format}'
+  end
+  rule :valid_date, extension: [:dng] do
     save_in 'RAW/%{date_format}'
   end
 
   # Organize common image files into date folders.
-  rule :valid_date, extension: [/jpe?g/, :png, :webp, :gif, :bmp, :tiff] do
+  rule :valid_date, extension: IMAGE_EXTENSIONS do
     save_in 'Pictures/%{date_format}'
+  end
+
+  rule :valid_software, valid_date: true, extension: IMAGE_EXTENSIONS do
+    save_in 'Software/%{software}/%{date_format}'
   end
 
   # This is a blank `valid_date` rule that will match any file which has
@@ -302,6 +342,24 @@ Murti.configure do
   # add those to rules in this config file.
   rule :valid_date do
     save_in 'UNKNOWN/%{date_format}'
+  end
+
+  rule :valid_software, path_regex: GOOGLE_ARCHIVE_REGEX, extension: IMAGE_EXTENSIONS do |m|
+    year = path.match(GOOGLE_ARCHIVE_REGEX)[1]
+    save_in "Pictures/#{year}/%{software}"
+  end
+
+  rule :is_unmatched, name_regex: LIVE_PHOTOS_IPHONE_REGEX do
+    size = File.stat(path).size / 1024.0 / 1024.0
+    parent = size > 16 ? 'Videos' : 'Live Photos'
+    save_in "#{parent}/UNMATCHED/iPhone"
+  end
+
+  rule :is_unmatched, path_regex: GOOGLE_ARCHIVE_REGEX, name_regex: GOOGLE_NAME_REGEX do
+    year = path.match(GOOGLE_ARCHIVE_REGEX)[1]
+    size = File.stat(path).size / 1024.0 / 1024.0
+    parent = size > 16 ? 'Videos' : 'Live Photos'
+    save_in "#{parent}/#{year}/Google"
   end
 
   # If a file lands up to this rule, it means that we could not find timestamp
@@ -315,10 +373,19 @@ Murti.configure do
   #
   # TODO: allow to use other exif data to organize files here, e.g. make/model
   # of the camera.
-  rule name_regex: /\AIMG_\d+(?:|-\d+)\.MOV\z/i do
+  rule name_regex: LIVE_PHOTOS_IPHONE_REGEX do
     size = File.stat(path).size / 1024.0 / 1024.0
     parent = size > 10 ? 'Videos' : 'Live Photos'
     save_in "#{parent}/UNMATCHED/%{path_component}"
+  end
+
+  rule :is_unmatched, path_regex: %r{/iCloud Photos/}, extension: IMAGE_EXTENSIONS do
+    save_in "Pictures/UNMATCHED/iCloud"
+  end
+
+  rule extension: IMAGE_EXTENSIONS do |m|
+    @dont_match = true
+    puts [@exif[:make], @exif[:model], @exif[:software]].inspect
   end
 
   # Convert any RAW images to JPG in their place, and move them to
@@ -330,8 +397,11 @@ Murti.configure do
   # Therefore, if the source_directory is `/path/to/source`,
   # and RAW image was found in `/path/to/source/raw/images/1.CR2`,
   # this file will be moved to: `<target-directory>/RAW/UNMATCHED/raw/images/1.CR2`
-  rule extension: %i[cr2 raw nef] do
+  rule extension: RAW_IMAGE_EXTENSIONS - [:dng] do
     migrate(&raw2jpg)
+    save_in 'RAW/UNMATCHED/%{path_component}'
+  end
+  rule extension: [:dng] do
     save_in 'RAW/UNMATCHED/%{path_component}'
   end
 
@@ -340,15 +410,15 @@ Murti.configure do
   end
 
   # I can, also, remove/delete a matched file. Here I am deleting sidecars.
-  rule extension: %i[dng xmp aae json] do
+  rule extension: SIDECAR_EXTENSIONS do
     remove!
   end
 
-  rule extension: %i[mp4 mov avi] do
+  rule extension: VIDEO_EXTENSIONS do
     save_in 'Videos/UNMATCHED/%{path_component}'
   end
 
-  rule extension: [/jpe?g/, :png, :webp, :gif, :bmp, :tiff] do
+  rule extension: IMAGE_EXTENSIONS do
     save_in 'Pictures/UNMATCHED/%{path_component}'
   end
 

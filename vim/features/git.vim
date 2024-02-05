@@ -69,7 +69,7 @@ Plug 'airblade/vim-gitgutter'
 " enable gitgutter by default
 let g:gitgutter_enabled = 1
 " display signs by default
-let g:gitgutter_signs = 1
+let g:gitgutter_signs = 0
 " ignore whitespace
 let g:gitgutter_diff_args = '-w'
 " use the raw grep command
