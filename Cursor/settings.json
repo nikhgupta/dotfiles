@@ -1,0 +1,135 @@
+{
+  "vsicons.dontShowNewVersionMessage": true,
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Nord",
+  "workbench.editor.enablePreview": false,
+  "workbench.startupEditor": "newUntitledFile",
+  "editor.fontSize": 16,
+  "editor.fontLigatures": true,
+  "editor.suggestSelection": "first",
+  "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback','Font Awesome 5 Free', 'Font Awesome 5 Brands','FontAwesome'",
+  "vim.useCtrlKeys": true,
+  "customizeUI.titleBar": "inline",
+  "customizeUI.activityBar": "wide",
+  "customizeUI.statusBarPosition": "under-panel",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "redhat.telemetry.enabled": false,
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "skhdrc": "editorconfig",
+    "*.toml": "toml",
+    "*.rhai": "rhai"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.format.semicolons": "insert",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "javascript.preferences.quoteStyle": "double",
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "javascript.suggest.paths": true,
+  "prettier.printWidth": 120,
+  "prettier.enable": true,
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnType": true
+  },
+  "python.venvFolders": [".venv"],
+  "python.languageServer": "Pylance",
+  "python.venvPath": "~/.venv",
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "terminal.integrated.fontSize": 14,
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.minimap.enabled": false,
+  "[ruby]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "rubocop.vscode-rubocop"
+  },
+  "[erb]": {
+    "editor.defaultFormatter": "aliariff.vscode-erb-beautify"
+  },
+  "vscode-erb-beautify.keepBlankLines": 1,
+  "vscode-erb-beautify.tabStops": 4,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnknownArgumentType": "information",
+    "reportUnknownMemberType": "none",
+    "reportUnknownParameterType": "information",
+    "reportUnknownVariableType": "information",
+    "reportMissingTypeStubs": "none",
+    "reportUnusedImport": "information",
+    "reportImportCycles": "information"
+  },
+  "files.exclude": {
+    "**/__pycache__/": true,
+    "**/.vscode/": true
+  },
+  "search.exclude": {
+    "**/{tag,TAG,tags,TAGS}": true
+  },
+  "vim.enableNeovim": true,
+  "workbench.view.alwaysShowHeaderActions": true,
+  "editor.inlineSuggest.enabled": true,
+  "[markdown]": {
+    "vim.textwidth": 80,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "git.enableSmartCommit": true,
+  "editor.tabSize": 2,
+  "python.analysis.typeCheckingMode": "strict",
+  "ctagsSupport.ctagsFilename": "tags",
+  "editor.foldingStrategy": "auto",
+  "editor.defaultFoldingRangeProvider": "zokugun.explicit-folding",
+  "explicitFolding.rules": {
+    "*": {
+      "begin": "{{{",
+      "end": "}}}"
+    }
+  },
+  "beancount.mainBeanFile": "/Users/nikhgupta/OneDrive/Finances/beancount/personal/personal.beancount",
+  "beancount.runFavaOnActivate": true,
+  "beancount.separatorColumn": 60,
+  "beancountFormatter.currencyColumn": 72,
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.openRepositoryInParentFolders": "always",
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "jupyter.askForKernelRestart": false,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 120,
+  "svelte.enable-ts-plugin": true,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "cursor.cpp.disabledLanguages": ["plaintext", "scminput"],
+  "workbench.settings.applyToAllProfiles": []
+}

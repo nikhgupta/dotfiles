@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Serve Local Port
+# @raycast.mode compact
+
+# Optional parameters:
+# @raycast.icon 🤖
+# @raycast.argument1 { "type": "text", "placeholder": "Port" }
+# @raycast.packageName NIK Workflows
+
+# Documentation:
+# @raycast.description Serve a local port on the remote server at in.codewithsense.com
+# @raycast.author Nikhil Gupta
+# @raycast.authorURL nikhgupta.com
+
+if [ -z "$1" ]; then
+  echo "Please provide a port number as an argument."
+  exit 1
+fi
+
+autossh -f -M 0 -R "in.codewithsense.com:2${1}:localhost:${1}" dev \
+  -o ServerAliveInterval=60 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=no -N
+echo "http://in.codewithsense.com:2${1}" | pbcopy
+open -a 'Arc' "http://in.codewithsense.com:2${1}"

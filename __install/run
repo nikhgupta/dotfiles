@@ -1,0 +1,49 @@
+#!/usr/bin/env zsh
+
+root=$HOME/Code/dotfiles
+source $root/zsh/.zsh/utils.sh
+
+# ensure that we are using the correct version of dotfiles
+is_archlinux && error "Please checkout last supported version for Archlinux - v4.0"
+is_wsl && error "Please checkout last supported version for WSL systems - v3.0"
+is_debian && error "Please checkout last supported version for Ubuntu/Debian systems - v2.0"
+is_macosx || error "v5 of these dotfiles target Mac OSX. Please, use earlier versions on this system."
+
+mkdir -p ~/.cache
+
+highlight "Stowing"
+source $root/__install/stow.sh
+
+highlight "Setting up secrets"
+source $root/__install/secrets.sh
+
+highlight "Installing Homebrew packages"
+source $root/__install/brew.sh
+
+highlight "Installing asdf, plugins and languages"
+source $root/__install/asdf.sh
+
+highlight "Configuring macOS"
+source $root/__install/macos.sh
+
+highlight "Fixing permissions"
+find ~/.ssh -type f -exec chmod 600 {} \;
+find ~/.gnupg -type f -exec chmod 600 {} \;
+find ~/.ssh -type d -exec chmod 700 {} \;
+find ~/.gnupg -type d -exec chmod 700 {} \;
+
+highlight "Installing VIM plugins"
+\vim +PlugInstall +qall
+nvim +PlugInstall +UpdateRemotePlugins +qall
+
+highlight "Installing AntiBody for ZSH"
+is_installed antibody || brew install antibody
+antibody bundle <~/.zsh/plugs.txt >~/.zshplugs
+
+action "Enable ntfs-3g support by overriding CSF and replace mount_ntfs script"
+action "Setup OneDrive and Dropbox for backups and sync"
+action "Check if XDG directories are propertly setup"
+source ~/.zshrc && check_xdg_directories
+echo
+
+info "Done."

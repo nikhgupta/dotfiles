@@ -1,0 +1,61 @@
+#!/usr/bin/env zsh
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title sysinfo
+# @raycast.mode fullOutput
+# @raycast.argument1 { "type": "dropdown", "placeholder": "type", "data": [{"title": "Local IP", "value": "local-ip"}, {"title": "Remote IPv4", "value": "remote-ip"}, {"title": "All IPs", "value": "all-ips"}, {"title": "Consuming Network", "value": "consuming-net"}, {"title": "Local Ports", "value": "local-ports"}, {"title": "Disk Eating", "value": "disk-eating"}, {"title": "Active Interfaces", "value": "active-interfaces"}, {"title": "Processes Matching", "value": "processes-matching"}] }
+# @raycast.argument2 { "type": "text", "placeholder": "process name (for processes-matching)", "optional": true }
+
+# Optional parameters:
+# @raycast.icon 🌐
+# @raycast.packageName NIK Utils
+
+# Documentation:
+# @raycast.author Nikhil Gupta
+# @raycast.authorURL nikhgupta.com
+
+# Function to show IPs based on the selected option
+sysinfo() {
+  local option=$1
+
+  case $option in
+  local-ip)
+    ipconfig getifaddr en0
+    ;;
+  remote-ip)
+    timeout 3s echo $(curl -4s ipecho.net/plain)
+    ;;
+  all-ips)
+    ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, ""); print }'
+    ;;
+  consuming-net)
+    lsof -PbwnR +c15 -sTCP:LISTEN -iTCP
+    ;;
+  local-ports)
+    lsof -bwaRPiTCP@127.0.0.1 -sTCP:LISTEN
+    ;;
+  disk-eating)
+    du -sm {*,.*} NOERR | sort -n | tail
+    ;;
+  active-interfaces)
+    ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
+    ;;
+  processes-matching)
+    if [[ -z "$2" ]]; then
+      echo "Please provide a process name to match."
+      return 1
+    fi
+    pgrep "$2" && top $(pgrep "$2" | sed 's|^|-pid |g') || {
+      echo "Found no process with name matching: $2"
+      exit 1
+    }
+    ;;
+  *)
+    echo "Invalid option. Please choose from: local-ip, remote-ip, all-ips, consuming-net, local-ports, disk-eating, active-interfaces, processes-matching."
+    return 1
+    ;;
+  esac
+}
+
+sysinfo $@

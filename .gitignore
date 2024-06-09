@@ -1,11 +1,9 @@
 *.lnk
 .localrc
-vim/autoload
-vim/bundle
-vim/tmp
+vim/.vim/autoload
+vim/.vim/bundle
+vim/.vim/tmp
 *.decrypted-cache
-bin/JDownloader2.0
-bin/google-cloud-sdk
-config/phoenix
-vim/plugged/
+vim/.vim/plugged/
 phoenix/node_modules/
+.aider*
