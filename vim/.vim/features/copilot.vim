@@ -1,1 +1,0 @@
-Plug 'github/copilot.vim'

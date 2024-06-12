@@ -12,7 +12,7 @@ setopt no_beep                # do not beep
 setopt auto_pushd             # cd pushes the old directory onto directory stack
 setopt pushd_silent           # be quiet when using pushd
 setopt pushd_ignore_dups      # only push unique values in directorys stack
-setopt menu_complete          # complete first option when ambiguous
+# setopt menu_complete          # complete first option when ambiguous
 setopt hist_expire_dups_first # expire older dup commands first in history
 setopt hist_find_no_dups      # do not find dupes when searching history
 setopt hist_ignore_space      # do not add commands with a leading space in history

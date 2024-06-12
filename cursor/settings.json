@@ -2,7 +2,7 @@
   "vsicons.dontShowNewVersionMessage": true,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "workbench.iconTheme": "vscode-icons",
-  "workbench.colorTheme": "Nord",
+  "workbench.colorTheme": "Catppuccin Macchiato",
   "workbench.editor.enablePreview": false,
   "workbench.startupEditor": "newUntitledFile",
   "editor.fontSize": 16,
@@ -131,5 +131,6 @@
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "cursor.cpp.disabledLanguages": ["plaintext", "scminput"],
-  "workbench.settings.applyToAllProfiles": []
+  "workbench.settings.applyToAllProfiles": [],
+  "vim.neovimConfigPath": "~/.config/nvim/init-old.vim"
 }

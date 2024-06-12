@@ -1,0 +1,10 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.lang.json",
+    "lazyvim.plugins.extras.lang.markdown"
+  ],
+  "news": {
+    "NEWS.md": "6077"
+  },
+  "version": 6
+}
