@@ -27,7 +27,7 @@ setopt interactivecomments
 # Terminal settings
 typeset -U path                       # set $path variable to only have unique values
 export MAILCHECK=0                    # no mailcheck messages
-export TERM=xterm-256color            # 256 color support
+export TERM=screen-256color           # 256 color support
 export DISABLE_AUTO_TITLE=true        # otherwise, causes issues with terminal inside editors
 export GREP_COLORS=${GREP_COLORS:-31} # grep should use red for highlighting matches
 

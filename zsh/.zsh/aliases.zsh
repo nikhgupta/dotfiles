@@ -69,6 +69,7 @@ is_installed git && function diff() { git diff --no-index --color-words "$@"; }
 rtfm() { help $@ 2>/dev/null || man $@ 2>/dev/null || browse "http://www.google.com/search?q=$@"; }
 
 # useful commands
+alias mux=tmuxinator
 alias copy_gpg_key="gpg -a --export $GPGKEY COPY"
 alias copy_ssh_key="gpg --export-ssh-key $SSHKEY COPY"
 alias download="aria2c --file-allocation=none -s 8 -x 8"
