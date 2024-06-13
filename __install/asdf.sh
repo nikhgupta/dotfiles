@@ -25,14 +25,18 @@ asdfin nodejs 22.2.0
 
 highlight "Installing ruby"
 asdf plugin add ruby
-asdf install ruby 2.7.2
-asdf install ruby 3.3.0
-asdf global ruby 3.3.0 2.7.2
+asdfin ruby 2.7.2
+asdfin ruby latest
+asdf global ruby latest 2.7.2
 gem install neovim maid
 asdf reshim ruby
 
 highlight "Installing python"
 asdf plugin add python
-asdf install python 2.7.18
-asdf install python 3.12.4
-asdf global python 3.12.4 2.7.18
+asdfin python 2.7.18
+asdfin python latest
+asdf global python latest 2.7.18
+
+highlight "Installing Lua"
+asdf plugin add lua
+asdfin lua latest
