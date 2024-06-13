@@ -9,7 +9,7 @@ return {
         desc = "Telescope Builtins",
       },
     { "<C-b>", require("telescope.builtin").buffers, "Find Buffers" },
-    { "<C-p>", require("telescope.builtin").find_files, "Find Files" },
+    { "<C-p>", require("telescope.builtin").git_files, "Find Files" },
     { "<C-g>", require("telescope.builtin").live_grep, "Search by Grep" },
     { "<C-Space>", require("telescope.builtin").resume, "Resume Search" },
     { "??", LazyVim.pick("grep_string", { word_match = "-w" }), "Search Word under Cursor" },
