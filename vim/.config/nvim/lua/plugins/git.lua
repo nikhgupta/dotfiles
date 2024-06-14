@@ -4,6 +4,7 @@ return {
     cmd = "G",
     lazy = false,
   },
+  { "tpope/vim-rhubarb", lazy = false },
   {
     "NeogitOrg/neogit",
     dependencies = {
